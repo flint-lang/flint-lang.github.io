@@ -1,0 +1,6 @@
+[book]
+authors = ["Marc Zweiler"]
+language = "en"
+multilingual = false
+src = "src"
+title = "The Flint Wiki"
