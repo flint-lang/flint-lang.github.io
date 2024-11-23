@@ -4,3 +4,7 @@ language = "en"
 multilingual = false
 src = "src"
 title = "The Flint Wiki"
+
+[output.html]
+additional-js = ["custom.js"]
+additional-cs = ["custom.css"]
