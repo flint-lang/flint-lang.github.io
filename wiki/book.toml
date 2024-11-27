@@ -5,6 +5,9 @@ multilingual = false
 src = "src"
 title = "The Flint Wiki"
 
-[output.html]
-additional-js = ["custom.js"]
-additional-cs = ["custom.css"]
+[preprocessor.toc]
+collapsible = true
+#command = "mdbook-toc"
+#renderer = ["html"]
+
+[preprocessor.katex]
