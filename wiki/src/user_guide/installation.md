@@ -1,3 +1,0 @@
-# Installation
-
-Just DO IT.
