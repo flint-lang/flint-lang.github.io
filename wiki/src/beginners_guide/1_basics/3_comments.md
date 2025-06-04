@@ -8,9 +8,11 @@ In Flint, comments are used to explain code or temporarily disable parts of it d
 **Here’s how you use comments:**
 
 ```rs
+use Core.print
+
 def main():
     // This is a single-line comment explaining the print statement below
-    print("Hello, Flint!");
+    print("Hello, Flint!"\n);
 
     /*
      This is a multi-line comment.
@@ -21,3 +23,5 @@ def main():
 ```
 
 Comments are essential for writing clear, understandable, and maintainable code. Use them to explain your logic to others (or to yourself when revisiting code later).
+
+Try to copy the code above into your `hello.ft` file and try to compile and run it.

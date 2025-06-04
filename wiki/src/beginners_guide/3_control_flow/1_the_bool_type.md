@@ -11,6 +11,12 @@ bool is_hungry = false;
 
 Here, isLearning is set to true, meaning it’s "on," while isHungry is false, meaning it’s "off."
 
+## Checking for equality and inequality
+
+With floating points, errors tend to add up over time, especially when dealing with very small incremental changes in numbers. To check if a number is equal to another floating point number could be wrong, because a number might be *slightly* less or *slightly* more. For example, when doing `var == 0.3` the variable `var` could have the value `0.2999999` saved in it, but the comparison would still fail, as `var` is *not* `0.3`.
+
+This is the very reason why the `==` operator
+
 ## The if Statement
 
 The if statement lets your program execute code only when a condition evaluates to true. Here's how it works:
