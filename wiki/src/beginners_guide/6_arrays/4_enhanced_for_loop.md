@@ -15,5 +15,4 @@ i is the index (starts at -1).
 
 elem is the current value.
 
-
 Use enhanced loops when dealing with collections and ranges, but stick to normal loops for more complex conditions.

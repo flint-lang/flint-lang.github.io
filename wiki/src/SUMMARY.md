@@ -8,79 +8,112 @@
 
 # Syntax Cheatsheet
 
-- [Basics](./syntax_cheatsheet/basics.md)
-  - [Comments](./syntax_cheatsheet/basics/comments.md)
+- [Basics]()
+  - [Comments]()
 
 # Guides
 
 - [From Beginner to Intermediate](./beginners_guide.md)
 
   - [Basics](./beginners_guide/1_basics.md)
+
     - [The Hello World Program](./beginners_guide/1_basics/1_program.md)
     - [Compiling the Program](./beginners_guide/1_basics/2_compiling.md)
     - [Comments in Flint](./beginners_guide/1_basics/3_comments.md)
     - [Indentation in Flint](./beginners_guide/1_basics/4_indentation.md)
+
   - [Variables and Types](./beginners_guide/2_variables_and_types.md)
+
     - [Primitive Types](./beginners_guide/2_variables_and_types/1_primitive_types.md)
     - [Variables](./beginners_guide/2_variables_and_types/2_variables.md)
     - [Inferred Typing](./beginners_guide/2_variables_and_types/3_inferred_typing.md)
     - [Operators](./beginners_guide/2_variables_and_types/4_operators.md)
     - [Type Casting](./beginners_guide/2_variables_and_types/5_typecasting.md)
     - [String Interpolation](./beginners_guide/2_variables_and_types/6_string_interpolation.md)
+
   - [Control Flow](./beginners_guide/3_control_flow.md)
-    - [The bool Type and Conditional Statements](./beginners_guide/3_control_flow/1_the_bool_type.md)
+
+    - [The bool Type](./beginners_guide/3_control_flow/1_the_bool_type.md)
     - [Boolean Operations](./beginners_guide/3_control_flow/2_boolean_operations.md)
-    - [Loops: Why Repetition Matters](./beginners_guide/3_control_flow/3_loops.md)
-    - [Enhanced for Loop](./beginners_guide/3_control_flow/4_enhanced_for_loop.md)
-    - [The range Type](./beginners_guide/3_control_flow/5_the_range_type.md)
+    - [Branching](./beginners_guide/3_control_flow/3_branching.md)
+    - [Loops](./beginners_guide/3_control_flow/4_loops.md)
+
   - [Functions](./beginners_guide/4_functions.md)
+
     - [What is a Function?](./beginners_guide/4_functions/1_what_is_a_function.md)
     - [Adding Arguments](./beginners_guide/4_functions/2_adding_arguments.md)
     - [Returning Values](./beginners_guide/4_functions/3_returning_values.md)
     - [Returning Multiple Values](./beginners_guide/4_functions/4_returning_multiple_values.md)
+
   - [Data: The Core of Flint](./beginners_guide/5_data.md)
+
     - [Why Data?](./beginners_guide/5_data/1_why_data.md)
     - [Declaring Data Modules](./beginners_guide/5_data/2_declaring_data_modules.md)
     - [Default Values](./beginners_guide/5_data/3_default_values.md)
     - [Nested Data](./beginners_guide/5_data/4_nested_data.md)
     - [Using Data in Functions](./beginners_guide/5_data/5_using_data_in_functions.md)
+
   - [Arrays & Ranges](./beginners_guide/6_arrays.md)
+
     - [Introduction to Arrays](./beginners_guide/6_arrays/1_introduction.md)
     - [Iterating Over Arrays](./beginners_guide/6_arrays/2_iterating_over_arrays.md)
     - [Multidimensional Arrays](./beginners_guide/6_arrays/3_multidimensional_arrays.md)
-    - [Access Patterns with Ranges](./beginners_guide/6_arrays/4_access_patterns.md)
-    - [Multidimensional Access Patterns](./beginners_guide/6_arrays/5_multidimensional_access_patterns.md)
+    - [Enhanced for Loop](./beginners_guide/6_arrays/4_enhanced_for_loop.md)
+    - [The range Type](./beginners_guide/6_arrays/5_the_range_type.md)
+    - [Access Patterns](./beginners_guide/6_arrays/6_access_patterns.md)
+    - [Multidimensional Access Patterns](./beginners_guide/6_arrays/7_multidimensional_access_patterns.md)
+
   - [Entities, Func & Links](./beginners_guide/7_entities.md)
+
     - [Monolithic Entities: The Basics](./beginners_guide/7_entities/1_monolithic_entities.md)
     - [Func Modules: Modularizing Behavior](./beginners_guide/7_entities/2_func_modules.md)
     - [From Monolithic to Modular Entities](./beginners_guide/7_entities/3_from_monolithic_to_modular.md)
     - [Using Multiple Data and Func Modules](./beginners_guide/7_entities/4_using_multiple_data_and_func.md)
     - [Introducing Links](./beginners_guide/7_entities/5_introducing_links.md)
     - [Extending Entities](./beginners_guide/7_entities/6_extending_entities.md)
-  - [Building a Simple Program](./beginners_guide/8_simple_program.md)
-  - [Debugging Basics](./beginners_guide/9_debugging_basics.md)
 
-- [From Intermediate to Expert](./intermediates_guide.md)
+  - [Building a Simple Program]()
+
+  - [Debugging Basics]()
+
+- [From Intermediate to Expert]()
 
   - [Concurrency & shared data](./intermediates_guide/11_concurrency.md)
+
     - [Understanding Concurrency](./intermediates_guide/11_concurrency/1_understanding_concurrency.md)
     - [Flint's Concurrency Features](./intermediates_guide/11_concurrency/2_flints_concurrency_features.md)
     - [Shared Data](./intermediates_guide/11_concurrency/3_shared_data.md)
-  - [Errors & Enums (+ sets)](./intermediates_guide/12_errors.md)
-  - [Optionals & Variants (+ ?)](./intermediates_guide/13_optionals.md)
-  - [File IO & Serialization](./intermediates_guide/14_io.md)
-  - [Entity Design Patterns](./intermediates_guide/15_entity_design_patterns.md)
-  - [Using Libraries & FlintHub](./intermediates_guide/16_libraries_and_flinthub.md)
-  - [Building a Moderate Program](./intermediates_guide/17_moderate_program.md)
-  - [Testing and Validation](./intermediates_guide/18_testing.md)
-  - [Making Libraries & Publishing them](./intermediates_guide/19_making_libraries.md)
 
-- [From Expert to Master](./experts_guide.md)
-  - [Generic Types](./experts_guide/20_generics.md)
-  - [fn Type & Lambdas](./experts_guide/21_fn_type.md)
-  - [Pipes](./experts_guide/22_pipes.md)
-  - [Concurrency 2](./experts_guide/23_concurrency_2.md)
-  - [Advanced Memory Concepts (DIMA)](./experts_guide/24_dima.md)
-  - [SIMD (Grouping + par_for)](./experts_guide/25_simd.md)
-  - [Performance Optimization](./experts_guide/26_performance_optimization.md)
-  - [system_call & C++](./experts_guide/27_system_call.md)
+  - [Error Sets]()
+
+  - [Optionals & Variants]()
+
+  - [File IO & Serialization]()
+
+  - [Entity Design Patterns]()
+
+  - [Using Libraries & FlintHub]()
+
+  - [Building a Moderate Program]()
+
+  - [Testing and Validation]()
+
+  - [Making Libraries & Publishing them]()
+
+- [From Expert to Master]()
+
+  - [Generic Types]()
+
+  - [fn Type & Lambdas]()
+
+  - [Pipes]()
+
+  - [Concurrency 2]()
+
+  - [Advanced Memory Concepts (DIMA)]()
+
+  - [SIMD (Grouping + par_for)]()
+
+  - [Performance Optimization]()
+
+  - [system_call & C++]()

@@ -1,63 +1,69 @@
-# The `bool` Type and Conditional Statements
+# The `bool` Type
 
-## Introduction to bool
-
-In Flint, the bool type represents truth values: true or false. Boolean values are fundamental in programming, as they enable decision-making and control flow. For example:
+In Flint, the `bool` type represents truth values: `true` or `false`. Boolean values are fundamental in programming, as they enable decision-making and control flow. Boolean values are equal both in programming and in mathematics, they actually dont really differ. Here is a small example of how to declare a boolean variable and how to print its value to the console:
 
 ```rs
-bool is_learning = true;
-bool is_hungry = false;
+use Core.print
+
+def main():
+    bool is_learning = true;
+    bool is_hungry = false;
+    print($"is_learing = {is_learning}, is_hungry = {is_hungry}\n");
 ```
 
-Here, isLearning is set to true, meaning it’s "on," while isHungry is false, meaning it’s "off."
+This program prints this line to the console:
+
+> is_learing = true, is_hungry = false
 
 ## Checking for equality and inequality
 
-With floating points, errors tend to add up over time, especially when dealing with very small incremental changes in numbers. To check if a number is equal to another floating point number could be wrong, because a number might be *slightly* less or *slightly* more. For example, when doing `var == 0.3` the variable `var` could have the value `0.2999999` saved in it, but the comparison would still fail, as `var` is *not* `0.3`.
-
-This is the very reason why the `==` operator
-
-## The if Statement
-
-The if statement lets your program execute code only when a condition evaluates to true. Here's how it works:
+You can check if a boolean type is equal to another boolean type. The result of the `==` and `!=` operators is _always_ a `bool` type, because either they are equal or not. So, if you look if two `i32` values are equal, the result of this check will be of type `bool`.
 
 ```rs
-int age = 18;
+use Core.print
 
-if (age >= 18): // The condition evaluates to true
-    print($"You are {age} years old, so you can vote!");
+def main():
+    i32 val1 = 4;
+    i32 val2 = 6;
+    bool is_eq = val1 == val2;
+    bool is_neq = val1 != val2;
+    print($"val1 = {val1}, val2 = {val2}, is_eq = {is_eq}, is_neq = {is_neq}\n");
 ```
 
-If the condition evaluates to false, the program skips the block of code inside the if.
+This program prints this line to the console:
 
-**Indentation Reminder**: Remember to use hard tabs for indentation! Without proper indentation, Flint won't understand which code belongs to the if block.
+> val1 = 4, val2 = 6, is_eq = false, is_neq = true
 
-## The else Keyword
-
-What if you want to handle both possibilities? That’s where else comes in:
+But now lets compare two boolean values with one another:
 
 ```rs
-int age = 16;
+use Core.print
 
-if (age >= 18): // If this is false...
-    print($"You are {age} years old, so you can vote!");
-else: // ...then this block executes
-    print($"You are {age} years old, so you cannot vote.");
+def main():
+    bool t_eq_f = true == false;
+    print($"t_eq_f = {t_eq_f}\n");
+
+    bool t_neq_f = true != false;
+    print($"t_neq_f = {t_neq_f}\n");
+
+    bool t_eq_t = true == true;
+    print($"t_eq_t = {t_eq_t}\n");
+    bool t_neq_t = true != true;
+    print($"t_neq_t = {t_neq_t}\n");
+
+    bool f_eq_f = false == false;
+    print($"f_eq_f = {f_eq_f}\n");
+    bool f_neq_f = false != false;
+    print($"f_neq_f = {f_neq_f}\n");
 ```
 
-The else block runs only when the if condition is false.
+This program prints these lines to the console:
 
-## The else if Keyword
-
-Sometimes, you need multiple conditions. Instead of stacking multiple if statements, you can use else if to create a chain:
-
-```rs
-int age = 16;
-
-if (age >= 65):
-    print("You qualify for senior discounts.");
-else if (age >= 18):
-    print("You can vote but no senior discounts yet!");
-else:
-    print("You are too young to vote.");
+```
+t_eq_f = false
+t_neq_f = true
+t_eq_t = true
+t_neq_t = false
+f_eq_f = true
+f_neq_f = false
 ```

@@ -1,5 +1,13 @@
 # The range Type
 
+<div class="warning">
+
+Ranges are not yet implemented in the Flint compiler
+
+Ranges do not work, at all, in the compiler. But they *will* work in the future.
+
+</div>
+
 ## What is a range?
 
 A range represents a sequence of numbers. Use it in loops to iterate over specific values.
