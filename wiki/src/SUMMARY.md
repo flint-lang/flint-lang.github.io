@@ -41,9 +41,11 @@
   - [Functions](./beginners_guide/4_functions.md)
 
     - [What is a Function?](./beginners_guide/4_functions/1_what_is_a_function.md)
-    - [Adding Arguments](./beginners_guide/4_functions/2_adding_arguments.md)
+    - [Adding Parameters](./beginners_guide/4_functions/2_adding_parameters.md)
     - [Returning Values](./beginners_guide/4_functions/3_returning_values.md)
-    - [Returning Multiple Values](./beginners_guide/4_functions/4_returning_multiple_values.md)
+    - [Recursion](./beginners_guide/4_functions/4_recursion.md)
+    - [Returning Multiple Values](./beginners_guide/4_functions/5_returning_multiple_values.md)
+    - [Groups](./beginners_guide/4_functions/6_groups.md)
 
   - [Data: The Core of Flint](./beginners_guide/5_data.md)
 

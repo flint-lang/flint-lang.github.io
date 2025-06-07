@@ -1,35 +1,35 @@
 # What is a Function?
 
-## Introduction
+A function is a reusable block of code designed to perform a specific task. We have been working this entire time with a function, actually, the `main` function. No, actually we have worked with multiple functions, because we also have called the `print` function *a lot* throughout the last few chapters. Now is the time you are going to understand what a function really is and how to define your own ones!
 
-A function is a reusable block of code designed to perform a specific task. Functions make programs easier to read, debug, and maintain by encapsulating logic into manageable pieces. Think of a function like a recipe—you can reuse it to "cook" something multiple times without rewriting the steps.
-
-Here’s how you declare a simple function in Flint:
+Okay, lets start very simple first. We define a function with the `def` keyword (define). Following by the `def` keyword we put the name of the function and parenthesis `()`. Note that the names `main`, `_main` and all names starting with `__flint_` are disallowed by the compiler. Without these few exceptions, you can name your functions how you like.
 
 ```rs
+use Core.print
+
 def say_hello():
-    print("Hello, world!");
-```
-
-The function above doesn’t take any arguments or return anything. You define it using the def keyword, followed by the function name and parentheses ().
-
-## Example: Calling a Function
-Once a function is declared, you can "call" it to execute its logic:
-
-```rs
-def say_hello():
-    print("Hello, world!");
+    print("Hello, World!\n");
 
 def main():
-    say_hello(); // Outputs: Hello, world!
+    say_hello();
 ```
 
-## Why Use Functions?
+This program will print this line to the console:
 
-Functions allow you to:
-- Avoid repeating code.
-- Organize logic into clear, reusable blocks.
-- Make programs easier to read and debug.
+> Hello, World!
 
-## Hint for Next Chapter:
-While useful, functions are limited without the ability to take arguments. Imagine a function that prints a personalized greeting—how could you tell the function what name to use? We’ll explore that next.
+There is a ***very*** important note to make here. The ordering of definition does not matter in Flint. So, you can define a function like `say_hello` *after* the `main` function and still be able to use it within the main function:
+
+```rs
+use Core.print
+
+def main():
+    say_hello();
+
+def say_hello():
+    print("Hello, World!\n");
+```
+
+This is an important part of how Flint works. The reasons to why this works like this are a bit more technical, but just note that ordering of definition does not matter in Flint, which will make your life a lot easier in the future, trust me.
+
+While this function is cool, its not very useful yet because it will always only print the same message to the console. To make functions more useful we will need to add ways to pass data into and recieve data from functions. So, lets jump to the next chapter and discuss arguments.

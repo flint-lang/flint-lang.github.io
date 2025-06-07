@@ -1,42 +1,48 @@
 # Returning Values
 
-## Why Return Values?
-
-Imagine you want a function to calculate the area of a rectangle. It’s not enough to just print the result—you may need to use the value elsewhere in your program. This is where returning values is essential.
-
-## Basic Return Example
-
-Declare a return type after the -> symbol in the function header:
+Imagine you want a function to calculate the area of a rectangle. It’s not enough to just print the result – you may need to use the value elsewhere in your program. This is where returning values is essential to any program. Here is a small and easy example of a function which returns a value:
 
 ```rs
 def get_greeting() -> str:
-    return "Hello, Flint!";
+    return "Hello, Flint!\n";
 ```
 
-When the function is called, it **returns** the value to the caller:
+As you can see, you need to declare a return type after the `->` symbol in the function header. Also, if you want to return a value from within the function you need to use the `return` keyword followed by the value you want to return.
+
+So, here is the full example:
 
 ```rs
+use Core.print
+
+def get_greeting() -> str:
+    return "Hello, Flint!\n"
+
 def main():
     str greeting = get_geeting();
-    print(greeting); // Outputs: Hello, Flint!
+    print(greeting);
 ```
 
-## Adding Arguments and Returning Values
+This program will print this line to the console:
 
-Now let’s combine arguments with a return value:
+> Hello, Flint!
+
+## Adding Parameters and Returning Values
+
+Now let’s combine function parameters with a return value:
 
 ```rs
-def add_two_numbers(int a, int b) -> int:
+use Core.print
+
+def add_two_numbers(i32 a, i32 b) -> i32:
     return a + b;
-```
 
-You can use the returned value in various ways:
-
-```rs
 def main():
-    int result = add_two_numbers(10, 20);
-    print($"The result is {result}."); // Outputs: The result is 30.
+    i32 result = add_two_numbers(10, 20);
+    print($"The result is {result}\n");
 ```
 
-## What’s Next?
-Returning a single value is great, but what if a function needs to return multiple pieces of data? Flint supports this, as we’ll see in the next section.
+This program will print this line to the console:
+
+> The result is 30
+
+Okay, now that you know how to pass in arguments to a function and return values from the function lets move to the next chapter, *recursion*.
