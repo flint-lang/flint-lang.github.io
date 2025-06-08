@@ -49,11 +49,12 @@
 
   - [Data: The Core of Flint](./beginners_guide/5_data.md)
 
-    - [Why Data?](./beginners_guide/5_data/1_why_data.md)
-    - [Declaring Data Modules](./beginners_guide/5_data/2_declaring_data_modules.md)
-    - [Default Values](./beginners_guide/5_data/3_default_values.md)
-    - [Nested Data](./beginners_guide/5_data/4_nested_data.md)
-    - [Using Data in Functions](./beginners_guide/5_data/5_using_data_in_functions.md)
+    - [Declaring Data Modules](./beginners_guide/5_data/1_declaring_data_modules.md)
+    - [Default Values](./beginners_guide/5_data/2_default_values.md)
+    - [Nested Data](./beginners_guide/5_data/3_nested_data.md)
+    - [Using Data in Functions](./beginners_guide/5_data/4_using_data_in_functions.md)
+    - [Tuples](./beginners_guide/5_data/5_tuples.md)
+    - [Multi-Types](./beginners_guide/5_data/6_multi_types.md)
 
   - [Arrays & Ranges](./beginners_guide/6_arrays.md)
 
