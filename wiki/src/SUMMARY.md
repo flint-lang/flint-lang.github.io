@@ -66,26 +66,24 @@
     - [Access Patterns](./beginners_guide/6_arrays/6_access_patterns.md)
     - [Multidimensional Access Patterns](./beginners_guide/6_arrays/7_multidimensional_access_patterns.md)
 
-  - [Entities, Func & Links](./beginners_guide/7_entities.md)
+  - [Entities, Func & Links]()
 
-    - [Monolithic Entities: The Basics](./beginners_guide/7_entities/1_monolithic_entities.md)
-    - [Func Modules: Modularizing Behavior](./beginners_guide/7_entities/2_func_modules.md)
-    - [From Monolithic to Modular Entities](./beginners_guide/7_entities/3_from_monolithic_to_modular.md)
-    - [Using Multiple Data and Func Modules](./beginners_guide/7_entities/4_using_multiple_data_and_func.md)
-    - [Introducing Links](./beginners_guide/7_entities/5_introducing_links.md)
-    - [Extending Entities](./beginners_guide/7_entities/6_extending_entities.md)
+    - [Monolithic Entities: The Basics]()
+    - [Func Modules: Modularizing Behavior]()
+    - [From Monolithic to Modular Entities]()
+    - [Using Multiple Data and Func Modules]()
+    - [Introducing Links]()
+    - [Extending Entities]()
 
-  - [Building a Simple Program]()
-
-  - [Debugging Basics]()
+  - [Core Modules]()
 
 - [From Intermediate to Expert]()
 
-  - [Concurrency & shared data](./intermediates_guide/11_concurrency.md)
+  - [Concurrency & shared data]()
 
-    - [Understanding Concurrency](./intermediates_guide/11_concurrency/1_understanding_concurrency.md)
-    - [Flint's Concurrency Features](./intermediates_guide/11_concurrency/2_flints_concurrency_features.md)
-    - [Shared Data](./intermediates_guide/11_concurrency/3_shared_data.md)
+    - [Understanding Concurrency]()
+    - [Flint's Concurrency Features]()
+    - [Shared Data]()
 
   - [Error Sets]()
 

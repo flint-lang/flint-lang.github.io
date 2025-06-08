@@ -1,1 +1,0 @@
-# Entity Design Patterns
