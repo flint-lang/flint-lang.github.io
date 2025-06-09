@@ -37,6 +37,8 @@
     - [Boolean Operations](./beginners_guide/3_control_flow/2_boolean_operations.md)
     - [Branching](./beginners_guide/3_control_flow/3_branching.md)
     - [Loops](./beginners_guide/3_control_flow/4_loops.md)
+    - [Enums](./beginners_guide/3_control_flow/5_enums.md)
+    - [Switch](./beginners_guide/3_control_flow/6_switch.md)
 
   - [Functions](./beginners_guide/4_functions.md)
 
