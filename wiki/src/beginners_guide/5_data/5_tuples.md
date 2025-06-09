@@ -181,3 +181,44 @@ annyway. This program will print this line to the console:
 
 > tuple.($0, $1, $2) = (1, 4.7, hello)
 
+### Passing Tuples to functions
+
+Tuples can also be passed to functions as any value can:
+
+```rs
+use Core.print
+
+def print_tuple(data<i32, f32, str> tuple):
+    print($"tuple.(i32, f32, str) = ({tuple.$0}, {tuple.$1}, \"{tuple.$2}\")\n");
+
+def main():
+    data<i32, f32, str> tuple = (1, 2.2, "three");
+    print_tuple(tuple);
+```
+
+This program will print this message to the console:
+
+> tuple.(i32, f32, str) = (1, 2.2, "three")
+
+Also, like "normal" data, tuples can be passed to functions as mutable references:
+
+```rs
+use Core.print
+
+def change_tuple(mut data<i32, f32, str> tuple):
+    tuple.($0, $1, $2) = (2, 3.3, "four");
+
+def main():
+    data<i32, f32, str> tuple = (1, 2.2, "three");
+    print($"tuple.(i32, f32, str) = ({tuple.$0}, {tuple.$1}, \"{tuple.$2}\")\n");
+
+    change_tuple(tuple);
+    print($"tuple.(i32, f32, str) = ({tuple.$0}, {tuple.$1}, \"{tuple.$2}\")\n");
+```
+
+This program will print these lines to the console:
+
+```
+tuple.(i32, f32, str) = (1, 2.2, "three")
+tuple.(i32, f32, str) = (2, 3.3, "four")
+```

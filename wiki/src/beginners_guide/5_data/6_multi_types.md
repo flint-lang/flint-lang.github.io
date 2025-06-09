@@ -60,6 +60,8 @@ This program will print this line to the console:
 
 > (x, y) = (10, 20)
 
+As you can see, interoperability between mutli-types and groups *just works*. **Groups** are Flint's "type interoperability layer". You can pack multiple single values into a group, then store it in a tuple. Or access multiple fields of a tuple and store it in a multi-type etc. Groups are the real "middle-ground" of Flint's type system, because you can return a group of `(i32, i32)` and still store it in a mutli-type or you can return a `i32x2` and store it in a group. The group, however, could also be a grouped assignment of a tuple, so you could very well write `tuple.($0, $2) = get_vec_2(10, 20);` and store the `i32x2` return value on the `$0` and `$2` fields of the tuple, because its a grouped assignment and groups are natively meant to be interoperable with Flint's other types.
+
 ## Multi-Type Arithmetic
 
 Multi-types are **primitive types** in Flint, which means that they have first-class arithmetic support. The mutli-type variant of any type supports the same arithmetic operations as its underlying type. Here is one example of this:
