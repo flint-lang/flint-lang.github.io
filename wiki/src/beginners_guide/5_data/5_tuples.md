@@ -1,7 +1,7 @@
 # Tuples
 
 Tuples are a really nice concept in general and they exist in pretty much every language. But first, lets talk about what tuples even are and maybe take a closer look at `data` in general.
-In Flint, `data` is essentially just a `struct` from C, if you have seen that one before. So when we write 
+In Flint, `data` is essentially just a `struct` from C, if you have seen that one before. So when we write
 
 ```rs
 data Vector2:
@@ -19,7 +19,7 @@ typedef struct {
 } Vector2;
 ```
 
-Under the hood, both Flint's `data` module and C's `struct` are exactly the same. They are just collections of data packed into a struct. So, what are tuples then? Well, tuples are collections of data, packed into a struct too. But with one big difference: They are **anonymous**, meaning that they dont get a *type name*, but when looking at the lowest level, `data` and tuples are actually extremely similar.
+Under the hood, both Flint's `data` module and C's `struct` are exactly the same. They are just collections of data packed into a struct. So, what are tuples then? Well, tuples are collections of data, packed into a struct too. But with one big difference: They are **anonymous**, meaning that they dont get a _type name_, but when looking at the lowest level, `data` and tuples are actually extremely similar.
 
 ## Defining Tuples
 
@@ -57,11 +57,11 @@ def main():
 
 This program will print these lines to the console:
 
-```
-first = 3
-second = 2.2
-third = hello!
-```
+> ```
+> first = 3
+> second = 2.2
+> third = hello!
+> ```
 
 As you can clearly see, we access the elements of the tuple with the `.$N` syntax, where `N` is the index of the element we want to access. Like always for indices, we start at 0 as Flint has zero-based indexing. If we would try to access an element which is out of bounds, like `.$3` in our case we would actually get a compile error:
 
@@ -75,7 +75,7 @@ def main():
 
 The error message for this error has not been added yet.
 
-Currently the error is `Custom Error: 2` without giving *any* information what error it is.
+Currently the error is `Custom Error: 2` without giving _any_ information what error it is.
 
 </div>
 
@@ -100,11 +100,11 @@ def main():
 
 This program prints these lines to the console:
 
-```
-first = 7
-second = 4.7
-third = "yes"
-```
+> ```
+> first = 7
+> second = 4.7
+> third = "yes"
+> ```
 
 ## Grouped accesses and assignments
 
@@ -121,7 +121,9 @@ def main():
 
 This program prints this line to the console:
 
+> ```
 > tuple.($0, $1, $2) = (7, 4.7, "yes")
+> ```
 
 ## Addition Information
 
@@ -144,7 +146,7 @@ will throw a compilation error and tell you to use a `i32x3` type instead of the
 
 The error message for this error has not been added yet.
 
-Currently the error is `Custom Error: 2` without giving *any* information what error it is.
+Currently the error is `Custom Error: 2` without giving _any_ information what error it is.
 
 </div>
 
@@ -179,7 +181,9 @@ def main():
 
 annyway. This program will print this line to the console:
 
+> ```
 > tuple.($0, $1, $2) = (1, 4.7, hello)
+> ```
 
 ### Passing Tuples to functions
 
@@ -198,7 +202,9 @@ def main():
 
 This program will print this message to the console:
 
+> ```
 > tuple.(i32, f32, str) = (1, 2.2, "three")
+> ```
 
 Also, like "normal" data, tuples can be passed to functions as mutable references:
 
@@ -218,7 +224,7 @@ def main():
 
 This program will print these lines to the console:
 
-```
-tuple.(i32, f32, str) = (1, 2.2, "three")
-tuple.(i32, f32, str) = (2, 3.3, "four")
-```
+> ```
+> tuple.(i32, f32, str) = (1, 2.2, "three")
+> tuple.(i32, f32, str) = (2, 3.3, "four")
+> ```

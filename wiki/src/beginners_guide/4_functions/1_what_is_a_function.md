@@ -1,6 +1,6 @@
 # What is a Function?
 
-A function is a reusable block of code designed to perform a specific task. We have been working this entire time with a function, actually, the `main` function. No, actually we have worked with multiple functions, because we also have called the `print` function *a lot* throughout the last few chapters. Now is the time you are going to understand what a function really is and how to define your own ones!
+A function is a reusable block of code designed to perform a specific task. We have been working this entire time with a function, actually, the `main` function. No, actually we have worked with multiple functions, because we also have called the `print` function _a lot_ throughout the last few chapters. Now is the time you are going to understand what a function really is and how to define your own ones!
 
 Okay, lets start very simple first. We define a function with the `def` keyword (define). Following by the `def` keyword we put the name of the function and parenthesis `()`. Note that the names `main`, `_main` and all names starting with `__flint_` are disallowed by the compiler. Without these few exceptions, you can name your functions how you like.
 
@@ -16,9 +16,11 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > Hello, World!
+> ```
 
-There is a ***very*** important note to make here. The ordering of definition does not matter in Flint. So, you can define a function like `say_hello` *after* the `main` function and still be able to use it within the main function:
+There is a **_very_** important note to make here. The ordering of definition does not matter in Flint. So, you can define a function like `say_hello` _after_ the `main` function and still be able to use it within the main function:
 
 ```rs
 use Core.print

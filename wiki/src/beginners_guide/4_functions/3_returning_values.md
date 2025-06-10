@@ -24,7 +24,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > Hello, Flint!
+> ```
 
 ## Adding Parameters and Returning Values
 
@@ -43,6 +45,8 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > The result is 30
+> ```
 
-Okay, now that you know how to pass in arguments to a function and return values from the function lets move to the next chapter, *recursion*.
+Okay, now that you know how to pass in arguments to a function and return values from the function lets move to the next chapter, _recursion_.

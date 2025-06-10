@@ -17,7 +17,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > x = 1, y = 5
+> ```
 
 Okay, now lets say that we want to swap the values of `x` and `y`. With most languages, better said with almost every language, you would need to create a temporary value to swap values:
 
@@ -37,10 +39,10 @@ def main():
 
 This program will print these lines to the console:
 
-```
-x = 1, y = 5
-x = 5, y = 1
-```
+> ```
+> x = 1, y = 5
+> x = 5, y = 1
+> ```
 
 The temp variable exists because once we store the value of `y` into `x`, everything that was stored in `x` before is lost, so we need a way to keep track of the old value of `x` to be able to store it in `y`.
 
@@ -60,10 +62,10 @@ def main():
 
 This program will print these lines to the console:
 
-```
-x = 1, y = 5
-x = 5, y = 1
-```
+> ```
+> x = 1, y = 5
+> x = 5, y = 1
+> ```
 
 Okay, lets unpack what this group even says. We know that the right hand side of any assignment is always executed before assigning the value. So, we create a group and load the values of `y` and `x` into it. Note that a group does not create any temporary values or "store" the values anywhere. When we load `y` and `x` in the group `(y, x)` these values exist only in the cache of the CPU, they are not really stored annywhere else.
 
@@ -87,10 +89,10 @@ def main():
 
 This program will print these lines to the console:
 
-```
-a = 1, b = 2, c = 3, d = 4
-a = 3, b = 4, c = 1, d = 2
-```
+> ```
+> a = 1, b = 2, c = 3, d = 4
+> a = 3, b = 4, c = 1, d = 2
+> ```
 
 So, we assigned `c` to `a`, `d` to `b`, `a` to `c` and `b` to `d`. Try around a bit, you can also assign all values to `a` in the same group:
 
@@ -110,10 +112,10 @@ def main():
 
 This program will print these lines to the console:
 
-```
-a = 1, b = 2, c = 3, d = 4
-a = 1, b = 1, c = 1, d = 1
-```
+> ```
+> a = 1, b = 2, c = 3, d = 4
+> a = 1, b = 1, c = 1, d = 1
+> ```
 
 Funny thing is, you can also assign to the same variable twice inside a single group, because the order of operation is strictly defined. So, you can write this without a problem:
 
@@ -130,10 +132,10 @@ def main():
 
 This program will print these lines to the console:
 
-```
-a = 3
-a = 6
-```
+> ```
+> a = 3
+> a = 6
+> ```
 
 As you can see, this does not yield to an error...why? Because there is no reason why it should. The compiler should, however, print a warning describing the behaviour in this case. The right hand side of the grouped assignment is executed before any values are stored on the left, so first the group is evalueated to be `(4, 5, 6)` and then it is assigned to the group of `(a, a, a)`. Grouped assignments work from left to right, so we first assign `a` to be `4`, then to be `5` and finally to be `6`. The evaluation of a group is completely separate from the assignment of it, so this is a well-defined situation, and `a` will have its rightmost value from the group assigned to it.
 

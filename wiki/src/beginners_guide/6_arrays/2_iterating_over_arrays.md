@@ -1,45 +1,73 @@
 # Iterating Over Arrays
 
-Often, you’ll want to process each element of an array. Flint supports **two types of loops** for working with arrays:
-
-1. **Index-Based Loops**: Ideal for accessing and modifying elements at specific indices.
-2. **Enhanced For Loops**: Useful for iterating over all elements with simpler syntax.
-
-## Using the Index-Based Loop
+Often, you will want to process each element of an array inside of a loop. For this, you can easily use a `for` loop, like so:
 
 ```rs
+use Core.print
+
 def main():
-    // Initialize array of size 5 with values of 4
-    arr := int[5](4);
+    i32[] arr = i32[5](4);
     // Set each element to the double of the index
     for i := 0; i < 5; i++:
         arr[i] = i * 2;
-    print($"arr[3]: {arr[3]}"); // prints 'arr[3]: 6'
+        print($"Index: {i}, Value: {arr[i]}\n");
 ```
 
-## Using the Enhanced For Loop
+This program will print these lines to the console:
 
-In enhanced for loops, you can access both the index (i) and the element (elem), as learned in chapter [4](#4):
+> ```
+> Index: 0, Value: 0
+> Index: 1, Value: 2
+> Index: 2, Value: 4
+> Index: 3, Value: 6
+> Index: 4, Value: 8
+> ```
+
+With loops, we can better demonstrate the OOB-behaviour mentioned in the last chapter. Here is an example to better demonstrate this behaviour:
 
 ```rs
+use Core.print
+
 def main():
-    int[] arr = int[5](6); // Initialize array
-    for i, elem in arr:
-        print($"Index: {i}, Value: {elem}");
+    i32[] arr = i32[5](4);
+    for i := 0; i < 10; i++:
+        arr[i] = i * 2;
+        print($"Index: {i}, Value: {arr[i]}\n");
+
+    print("\n");
+    for i := 0; i < 5; i++:
+        print($"Index: {i}, Value: {arr[i]}\n");
 ```
 
-Output:
+This program will print these lines to the console:
 
 > ```
-> Index: 0, Value: 6
-> Index: 1, Value: 6
-> Index: 2, Value: 6
+> Index: 0, Value: 0
+> Index: 1, Value: 2
+> Index: 2, Value: 4
 > Index: 3, Value: 6
-> Index: 4, Value: 6
+> Index: 4, Value: 8
+> Out Of Bounds access occured: Arr Len: 5, Index: 5
+> Out Of Bounds access occured: Arr Len: 5, Index: 5
+> Index: 5, Value: 10
+> Out Of Bounds access occured: Arr Len: 5, Index: 6
+> Out Of Bounds access occured: Arr Len: 5, Index: 6
+> Index: 6, Value: 12
+> Out Of Bounds access occured: Arr Len: 5, Index: 7
+> Out Of Bounds access occured: Arr Len: 5, Index: 7
+> Index: 7, Value: 14
+> Out Of Bounds access occured: Arr Len: 5, Index: 8
+> Out Of Bounds access occured: Arr Len: 5, Index: 8
+> Index: 8, Value: 16
+> Out Of Bounds access occured: Arr Len: 5, Index: 9
+> Out Of Bounds access occured: Arr Len: 5, Index: 9
+> Index: 9, Value: 18
+>
+> Index: 0, Value: 0
+> Index: 1, Value: 2
+> Index: 2, Value: 4
+> Index: 3, Value: 6
+> Index: 4, Value: 18
 > ```
 
-## Iterables in Flint
-
-Flint arrays are **iterable**, meaning they can be used in enhanced for loops. Other iterables include **ranges**, which we’ll discuss later. Remember: the choice of loop depends on whether you need access to indices (`i`) or also elements (`elem`).
-
-**Hint**: The type of the indices (`i`) is *always* of type *uint* (no signed int values) and the type of the elements (`elem`) is *always* the type of the array elements. If you create a `str` array (`str[]`), for example, `elem` will be of type `str`.
+You can spot two out of bounds accesses here. The first one happens when we want to assign `i * 2` to the array at `i` and the second one is in the printing when trying to print `arr[i]` in the string interpolation. And then, at the end we print the current values of the array and you can clearly see that the last element at index 4 holds the value 18, which is double the last index of the last loop. As you can see, OOB accesses are considered "safe" in Flint, because it is well-defined what will happen when an OOB access occurs.

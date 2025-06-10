@@ -62,11 +62,12 @@
 
     - [Introduction to Arrays](./beginners_guide/6_arrays/1_introduction.md)
     - [Iterating Over Arrays](./beginners_guide/6_arrays/2_iterating_over_arrays.md)
-    - [Multidimensional Arrays](./beginners_guide/6_arrays/3_multidimensional_arrays.md)
-    - [Enhanced for Loop](./beginners_guide/6_arrays/4_enhanced_for_loop.md)
-    - [The range Type](./beginners_guide/6_arrays/5_the_range_type.md)
-    - [Access Patterns](./beginners_guide/6_arrays/6_access_patterns.md)
-    - [Multidimensional Access Patterns](./beginners_guide/6_arrays/7_multidimensional_access_patterns.md)
+    - [Strings](./beginners_guide/6_arrays/3_strings.md)
+    - [Multidimensional Arrays](./beginners_guide/6_arrays/4_multidimensional_arrays.md)
+    - [Enhanced for Loop](./beginners_guide/6_arrays/5_enhanced_for_loop.md)
+    - [The range Type]()
+    - [Access Patterns]()
+    - [Multidimensional Access Patterns]()
 
   - [Entities, Func & Links]()
 
@@ -79,7 +80,30 @@
 
   - [Core Modules]()
 
+    - [Multi-file projects]()
+    - [What are Core modules?]()
+    - [print]()
+    - [read]()
+    - [assert]()
+    - [env]()
+    - [filesystem]()
+    - [system]()
+
 - [From Intermediate to Expert]()
+
+  - [Optionals & Variants]()
+
+  - [Error Sets]()
+
+  - [Callables & Variable Persistence]()
+
+  - [Pipes]()
+
+  - [Composing Functions]()
+
+  - [Paralellism]()
+
+- [From Expert to Master]()
 
   - [Concurrency & shared data]()
 
@@ -87,36 +111,12 @@
     - [Flint's Concurrency Features]()
     - [Shared Data]()
 
-  - [Error Sets]()
+  - [Generics]()
 
-  - [Optionals & Variants]()
+  - [Compile-Time Evaluation]()
 
-  - [File IO & Serialization]()
+  - [Blueprints]()
 
-  - [Entity Design Patterns]()
-
-  - [Using Libraries & FlintHub]()
-
-  - [Building a Moderate Program]()
-
-  - [Testing and Validation]()
-
-  - [Making Libraries & Publishing them]()
-
-- [From Expert to Master]()
-
-  - [Generic Types]()
-
-  - [fn Type & Lambdas]()
-
-  - [Pipes]()
-
-  - [Concurrency 2]()
+  - [Interoperability]()
 
   - [Advanced Memory Concepts (DIMA)]()
-
-  - [SIMD (Grouping + par_for)]()
-
-  - [Performance Optimization]()
-
-  - [system_call & C++]()

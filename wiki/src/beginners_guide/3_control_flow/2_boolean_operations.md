@@ -17,7 +17,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > Is adult and has an ID? false
+> ```
 
 ## `or` Operator
 
@@ -34,7 +36,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > Is VIP or has a ticket? true
+> ```
 
 ## `not` Operator
 
@@ -50,7 +54,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > Is it not raining? true
+> ```
 
 ## Operator Precedence
 
@@ -71,7 +77,7 @@ def main():
 
 This program prints these lines to the console:
 
-```
-condition = true
-clarified = false
-```
+> ```
+> condition = true
+> clarified = false
+> ```

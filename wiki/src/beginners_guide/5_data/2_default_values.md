@@ -17,7 +17,7 @@ data MyData:
     MyData(x, y);
 ```
 
-When instantiating this data module, you can use `_` to signify using the default value for a field. The `_` operator is **only** used in *unused* or *default* contexts, nowhere else. So, if you see a single `_` in Flint you can **always** assume that either something is unused or set to a default.
+When instantiating this data module, you can use `_` to signify using the default value for a field. The `_` operator is **only** used in _unused_ or _default_ contexts, nowhere else. So, if you see a single `_` in Flint you can **always** assume that either something is unused or set to a default.
 
 ```rs
 use Core.print
@@ -34,7 +34,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > d.(x, y) = (5, 20)
+> ```
 
 If **all** fields of a given data type have default values set the constructor of the data type can be called with a single `_` operator to singify to **set every field to its default value**. But, note that this only works if **every** field in the given data type has a default value set. If one of them has no default value set this will fail.
 
@@ -53,7 +55,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > d.(x, y) = (5, 7)
+> ```
 
 1. Default values simplify initialization but are optional.
 2. If a field doesn’t have a default value, using `_` will result in a **compiler error**

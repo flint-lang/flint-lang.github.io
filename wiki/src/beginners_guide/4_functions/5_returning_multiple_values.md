@@ -34,7 +34,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > Area: 15, Perimeter: 16
+> ```
 
 As you can see, we can declare two variables at once using inferred typing (`:=`) from the call `calculate_rectangle`. Both `area` and `perimeter` are of type `i32` now and then we can print their values.
 

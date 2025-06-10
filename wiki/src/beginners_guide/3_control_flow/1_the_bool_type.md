@@ -13,7 +13,9 @@ def main():
 
 This program prints this line to the console:
 
+> ```
 > is_learing = true, is_hungry = false
+> ```
 
 ## Checking for equality and inequality
 
@@ -32,7 +34,9 @@ def main():
 
 This program prints this line to the console:
 
+> ```
 > val1 = 4, val2 = 6, is_eq = false, is_neq = true
+> ```
 
 But now lets compare two boolean values with one another:
 
@@ -59,11 +63,11 @@ def main():
 
 This program prints these lines to the console:
 
-```
-t_eq_f = false
-t_neq_f = true
-t_eq_t = true
-t_neq_t = false
-f_eq_f = true
-f_neq_f = false
-```
+> ```
+> t_eq_f = false
+> t_neq_f = true
+> t_eq_t = true
+> t_neq_t = false
+> f_eq_f = true
+> f_neq_f = false
+> ```

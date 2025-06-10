@@ -25,12 +25,12 @@ def main():
 
 This program will print these lines to the console:
 
-```
-rect.top_left.(x, y) = (0, 0)
-rect.bottom_right.(x, y) = (10, 10)
-```
+> ```
+> rect.top_left.(x, y) = (0, 0)
+> rect.bottom_right.(x, y) = (10, 10)
+> ```
 
-Note that storing the `Point` variables in the `rect` variable through its constructor creates *copies* of the points. In other languages this would need to be done manually, but in Flint its automatic. So, when changing `p1` and `p2` after the creation of `rect`, the `top_left` and `bottom_right` fields will not be changed:
+Note that storing the `Point` variables in the `rect` variable through its constructor creates _copies_ of the points. In other languages this would need to be done manually, but in Flint its automatic. So, when changing `p1` and `p2` after the creation of `rect`, the `top_left` and `bottom_right` fields will not be changed:
 
 ```rs
 use Core.print
@@ -67,17 +67,17 @@ def main():
 
 This program will print these lines to the console:
 
-```
-p1.(x, y) = (0, 0)
-p2.(x, y) = (10, 10)
-rect.top_left.(x, y) = (0, 0)
-rect.bottom_right.(x, y) = (10, 10)
-
-p1.(x, y) = (4, 5)
-p2.(x, y) = (22, 33)
-rect.top_left.(x, y) = (0, 0)
-rect.bottom_right.(x, y) = (10, 10)
-```
+> ```
+> p1.(x, y) = (0, 0)
+> p2.(x, y) = (10, 10)
+> rect.top_left.(x, y) = (0, 0)
+> rect.bottom_right.(x, y) = (10, 10)
+>
+> p1.(x, y) = (4, 5)
+> p2.(x, y) = (22, 33)
+> rect.top_left.(x, y) = (0, 0)
+> rect.bottom_right.(x, y) = (10, 10)
+> ```
 
 ## What about Circular References?
 

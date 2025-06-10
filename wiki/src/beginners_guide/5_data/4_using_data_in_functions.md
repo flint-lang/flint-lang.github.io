@@ -20,7 +20,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > Point(x: 3, y: 4)
+> ```
 
 ## Mutability and Immutability
 
@@ -45,10 +47,10 @@ def main():
 
 If you try to compile this program you will actually get a compile error:
 
-```
-Parse Error at main.ft:9:5
- -- Variable 'p' is marked as 'const' and cannot be modified!
-```
+> ```
+> Parse Error at main.ft:9:5
+>  -- Variable 'p' is marked as 'const' and cannot be modified!
+> ```
 
 But why is that? For this to explain we actually need to talk about **mutability** for a bit. Mutability is the ability to mutate (change) variables. Up until now this has not been a problem yet, because Flint actually has clear mutability rules:
 
@@ -78,7 +80,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > Point(x: 6, y: 7)
+> ```
 
 As you can see, the functions signature of the `increment_by` function now explicitely states that its parameter is a mutable one. This means that we can only pass in mutable `Point` variables to it when calling it. So, this example:
 
@@ -101,10 +105,10 @@ def main():
 
 will not compile again. Because now we have declared `p` to be immutable, but we try to pass it to to the call `increment_by` which expects a mutable `Point` argument, so we have a type mismatch here, because when we made `p` immutable it would be wrong if it could be modified by a function. We get this compile error:
 
-```
-Parse Error at main.ft:13:18
- -- Variable 'p' is marked as 'const' and cannot be modified!
-```
+> ```
+> Parse Error at main.ft:13:18
+>  -- Variable 'p' is marked as 'const' and cannot be modified!
+> ```
 
 ## Returning Data from Functions
 
@@ -135,4 +139,3 @@ def main():
 ```
 
 By using functions with data, you can create and manipulate complex structures easily.
-

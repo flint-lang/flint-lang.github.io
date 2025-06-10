@@ -38,7 +38,7 @@ enum MyEnum:
 
 ## Comparing Enums
 
-Enums are considered equal if their type *and* their tag match. Here is an example of what this means:
+Enums are considered equal if their type _and_ their tag match. Here is an example of what this means:
 
 ```rs
 use Core.print
@@ -58,25 +58,25 @@ def main():
 
 This program will print this error to the console:
 
-```
-Parse Error at main.ft:12:8
- -- Type mismatch of expression e1 == Enum2.TAG1
- -- Expected Enum1 but got Enum2
-```
+> ```
+> Parse Error at main.ft:12:8
+>  -- Type mismatch of expression e1 == Enum2.TAG1
+>  -- Expected Enum1 but got Enum2
+> ```
 
 <div class="warning">
 
 The error message differs in the current version of the compiler.
 
-The above error message is the message that *should* be displayed. But in its current form the compiler will produce this error message instead:
+The above error message is the message that _should_ be displayed. But in its current form the compiler will produce this error message instead:
 
-```
-Parse Error at main.ft:1:1
- -- Type mismatch of expression EOF
- -- Expected Enum1 but got Enum2
-```
+> ```
+> Parse Error at main.ft:1:1
+>  -- Type mismatch of expression EOF
+>  -- Expected Enum1 but got Enum2
+> ```
 
-There is no information contained *where* the mismatch happened or *what* the expression the error happened in was. This will be fixed eventually, but requires some changes in unrelated areas of the compiler, so it might take a while for it to be fixed.
+There is no information contained _where_ the mismatch happened or _what_ the expression the error happened in was. This will be fixed eventually, but requires some changes in unrelated areas of the compiler, so it might take a while for it to be fixed.
 
 </div>
 
@@ -112,7 +112,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > is bigger
+> ```
 
 The above program is very useless, though, as it would be much more efficient to remove the enum entirely and just use the comparisons directly. But these examples are not always meant to be absolutely useful, they are there to get a point across. So, we can not only return enums from a function but also pass them to a function. Lets dive into a bit bigger example now.
 
@@ -157,10 +159,10 @@ def main():
 
 This program will print these lines to the console:
 
-```
-container.(a, b, c) = (-10, 22.5, 889)
-container.(a, b, c) = (-7, 25.9, 892)
-container.(a, b, c) = (-49, 186.479996, 6244)
-container.(a, b, c) = (-71, 164.37999, 6222)
-container.(a, b, c) = (-11, 23.823187, 1037)
-```
+> ```
+> container.(a, b, c) = (-10, 22.5, 889)
+> container.(a, b, c) = (-7, 25.9, 892)
+> container.(a, b, c) = (-49, 186.479996, 6244)
+> container.(a, b, c) = (-71, 164.37999, 6222)
+> container.(a, b, c) = (-11, 23.823187, 1037)
+> ```

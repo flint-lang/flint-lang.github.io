@@ -46,7 +46,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > v2.x = 10, v2.y = 20
+> ```
 
 As you can see, the variable of type `Vector2` now contains two fields of type `i32`, `x` and `y` and we can access and modify themthrough the `.` access.
 
@@ -71,10 +73,10 @@ def main():
 
 This program will print these lines to the console:
 
-```
-v2.x = 10, v2.y = 20
-v2.x = 15, v2.y = 20
-```
+> ```
+> v2.x = 10, v2.y = 20
+> v2.x = 15, v2.y = 20
+> ```
 
 As you can see, we can only modify a single field of data without touching the other fields. But thats not all... now let's talk about how groups can make our life with data easier.
 
@@ -99,9 +101,11 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > (x, y, z) = (1, 2, 3)
+> ```
 
-The syntax is pretty easy, actually. First, we say the variable we want to access the fields in: `v3.` and then we open a left paren `(` and within the parenthesis we describe the *names* of the fields we want to access and we wrap it up with the closing paren `)`. You could see that this line: `v3.(x, y, z)` is actually the same as writing this: `(v3.x, v3.y, v3.z)` but it's much neater to look at and to write. Why should we write `v3.` three times when we only want to access multiple fields of it?
+The syntax is pretty easy, actually. First, we say the variable we want to access the fields in: `v3.` and then we open a left paren `(` and within the parenthesis we describe the _names_ of the fields we want to access and we wrap it up with the closing paren `)`. You could see that this line: `v3.(x, y, z)` is actually the same as writing this: `(v3.x, v3.y, v3.z)` but it's much neater to look at and to write. Why should we write `v3.` three times when we only want to access multiple fields of it?
 
 ## Grouped Field Assignment
 
@@ -125,10 +129,10 @@ def main():
 
 This program will print these lines to the console:
 
-```
-v3.(x, y, z) = (1, 2, 3)
-v3.(x, y, z) = (3, 1, 2)
-```
+> ```
+> v3.(x, y, z) = (1, 2, 3)
+> v3.(x, y, z) = (3, 1, 2)
+> ```
 
 As you can see, we did the same thing as we did for variable swaps, but now on data fields. This is only possible through the concoept of groups. A very important thing is that groups themselves have a type. If you would write out the type of the access `v3.(x, y, z)` it would look like this: `(f32, f32, f32)`. As you can see, this looks exactly like the return type of a function when we would return multiple values, enforcing the connection that a function returning multiple values returns a group of values.
 
@@ -153,9 +157,9 @@ def main():
 
 This program will print these lines to the console:
 
-```
-v3.(x, y, z) = (1, 2, 3)
-v3.(x, y, z) = (2, 3, 4)
-```
+> ```
+> v3.(x, y, z) = (1, 2, 3)
+> v3.(x, y, z) = (2, 3, 4)
+> ```
 
 As you can clearly see, all fields of the variable `v3` have been incremented by one. By combining data with groups you can create very powerful and still compact code.

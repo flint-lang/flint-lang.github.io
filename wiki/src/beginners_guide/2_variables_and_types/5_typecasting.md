@@ -11,11 +11,11 @@ def main():
 
 The compiler will throw an error like:
 
-```
-Parse Error at main.ft:2:15
- -- Type mismatch of expression 3.3;
- -- Expected i32 but got f32
-```
+> ```
+> Parse Error at main.ft:2:15
+>  -- Type mismatch of expression 3.3;
+>  -- Expected i32 but got f32
+> ```
 
 and it will tell you exactly what went wrong. The type of `i32` was expected, beause we want to store something of type `i32` in the variable `val`, but we provided a floating point number, which defaults to `f32`. So, we need to convert the type of `f32` to `i32` in this case.
 
@@ -45,7 +45,9 @@ def main():
 
 You will see the message
 
+> ```
 > fval = 3.3
+> ```
 
 printed to the console.
 
@@ -67,11 +69,15 @@ def main():
 
 This small program prints this message to the console:
 
+> ```
 > fval = 3.7, ival = 3
+> ```
 
 You maybe expected a result like
 
+> ```
 > fval = 3.7, ival = 4
+> ```
 
 but here comes some very important information about type casting: When casting floating point types to integer types the fractional part is simply **cut off**. Its never rounded, only cut. But that definitely can be a good thing, if used correctly. Just remember, that when casting floating point values to integer values you will simply loose the fractional information.
 
@@ -92,7 +98,9 @@ def main():
 
 Notice how we did not write _any_ explicit casting whatsoever? This program prints this message to the console:
 
+> ```
 > fval = 3.0
+> ```
 
 Note that the floating point to string conversion happened implicitely?
 

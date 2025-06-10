@@ -1,6 +1,6 @@
 # Branching
 
-Branching is the act of executing different "blocks" of code depending on conditions (booleans). But, before we can talk about branching we need to talk about what this *block* really is. Take the main function, for example:
+Branching is the act of executing different "blocks" of code depending on conditions (booleans). But, before we can talk about branching we need to talk about what this _block_ really is. Take the main function, for example:
 
 ```rs
 use Core.print
@@ -11,9 +11,9 @@ def main():
     print($"{val} = {val_i}\n");
 ```
 
-In this function, everything thats indented once is considered to be "inside" the main function. But what does this "inside" really mean? There exists a formal description for this "inside", it's called a `Scope`. The Scope of the main function is everything thats written down within the main functions *body* ("inside" the function).
+In this function, everything thats indented once is considered to be "inside" the main function. But what does this "inside" really mean? There exists a formal description for this "inside", it's called a `Scope`. The Scope of the main function is everything thats written down within the main functions _body_ ("inside" the function).
 
-Scopes are a really important concept in programming, because there exist several consistent and deterministic rules about scopes and *subscopes*. But thats enough theory for now, lets look at the easiest example for branching, the `if` statement.
+Scopes are a really important concept in programming, because there exist several consistent and deterministic rules about scopes and _subscopes_. But thats enough theory for now, lets look at the easiest example for branching, the `if` statement.
 
 ## The if Statement
 
@@ -31,9 +31,11 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > You are 18 years old, so you can vote!
+> ```
 
-Try changing the `age` to `17` and watch what happens. 
+Try changing the `age` to `17` and watch what happens.
 
 If the condition evaluates to false, the program skips the block of code inside the `if` statement. We say that the `print` call here is **inside the if statement's scope**. But what does scope really mean? Have a look at this example:
 
@@ -54,10 +56,10 @@ Here, the declaration of the `age` variable is inside the `main` function's scop
 
 If yout try to compile this program you will see a compilation error:
 
-```
-Parse Error at main.ft:10:26
- -- Use of undeclared variable 'somevalue'
-```
+> ```
+> Parse Error at main.ft:10:26
+>  -- Use of undeclared variable 'somevalue'
+> ```
 
 But why is that? We did define the variable `somevalue` in the if statement's scope, right? Yes, we defined the variable in the if statement's scope, but here comes one of the mentioned rules of scopes into play: Visibility.
 
@@ -73,7 +75,7 @@ def main():
     i32 val2 = 2;
 ```
 
-what i described above means nothing else than the simple fact that `val1` is **visible** inside the if statements scope, but `val2` is *not*, because `val2` is defined **after** the if statements scope. So, a child scope can only see variables of its parent scope that have been declared **before** it.
+what i described above means nothing else than the simple fact that `val1` is **visible** inside the if statements scope, but `val2` is _not_, because `val2` is defined **after** the if statements scope. So, a child scope can only see variables of its parent scope that have been declared **before** it.
 
 Parent scopes **do not** inherit **any** variable definitions of their child scopes. This program, for example:
 
@@ -89,7 +91,7 @@ def main():
     print($"val1 = {val1}, val2 = {val2}\n");
 ```
 
-will compile and run fine. But lets discuss why that is. The variable `val2` is defined *inside* the if statements scope, this means that its visible for the rest of the if statements scope and all possible child scopes of it, but it is not visible for its parent scope. Because the variable `val2` does not exist in the main function's scope yet, this works fine, as no variable definition is shadowed. Because the variable `val2` never existed in the main function's scope, we can declare a new variable `val2` inside the main function.
+will compile and run fine. But lets discuss why that is. The variable `val2` is defined _inside_ the if statements scope, this means that its visible for the rest of the if statements scope and all possible child scopes of it, but it is not visible for its parent scope. Because the variable `val2` does not exist in the main function's scope yet, this works fine, as no variable definition is shadowed. Because the variable `val2` never existed in the main function's scope, we can declare a new variable `val2` inside the main function.
 
 This behaviour of visibility given down to children but never up to parents is the very reason why the compile error from above happened, becaue the variable `somevalue` was never defined in the main functions scope, so it simply does not exist at the position we wanted to use it.
 
@@ -111,7 +113,9 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > You are 16 years old, so you cannot vote.
+> ```
 
 Try changing the `age` variable to, lets say 20, and see what happens.
 
@@ -135,7 +139,8 @@ def main():
 
 This program will print this line to the console:
 
+> ```
 > You are too young to vote.
+> ```
 
 Play around a bit. Change the value of `age` and see what happens. Try to write your own conditions and branches.
-

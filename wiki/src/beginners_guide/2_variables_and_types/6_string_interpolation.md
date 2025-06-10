@@ -17,7 +17,6 @@ We create the `message` variable and then write `+=` over and over again to fill
 
 The syntax of string interpolation is quite simple. You write a normal string, like `"Hello Flint"`. Then you put a dollar sign in front of the string: `$"Hello, Flint"`. And thats (almost) it. Now, everything thats written in between curly braces `{}` is handled as an **expression**. Expressions are everything that you would write on the right side of the equals sign, for example. So, here an easy example:
 
-
 ```rs
 use Core.print
 
@@ -29,7 +28,9 @@ def main():
 
 Output:
 
+> ```
 > Hello, my name is Flint and I am 1 years old.
+> ```
 
 And now you see why its important that almost any type can be implicitely cast to a `str` type, because otherwise we would need to write `str(age)` here, or need to write `str(..)` any time we would want to use string interpolation.
 
@@ -48,8 +49,7 @@ def main():
 
 Which prints these lines to the console:
 
-```
-The value of pi is approximately 3.14
-2 + 2 equals 4
-```
-
+> ```
+> The value of pi is approximately 3.14
+> 2 + 2 equals 4
+> ```
