@@ -98,7 +98,7 @@
 
   - [Optionals & Variants]()
 
-  - [Error Sets]()
+  - [Error Sets](./intermediates_guide/2_error_sets.md)
 
   - [Callables & Variable Persistence]()
 
