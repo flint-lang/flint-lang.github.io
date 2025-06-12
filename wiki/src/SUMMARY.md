@@ -65,9 +65,25 @@
     - [Strings](./beginners_guide/6_arrays/3_strings.md)
     - [Multidimensional Arrays](./beginners_guide/6_arrays/4_multidimensional_arrays.md)
     - [Enhanced for Loop](./beginners_guide/6_arrays/5_enhanced_for_loop.md)
+    - [CLI Arguments](./beginners_guide/6_arrays/6_cli_arguments.md)
     - [The range Type]()
     - [Access Patterns]()
     - [Multidimensional Access Patterns]()
+
+  - [Imports](./beginners_guide/7_imports.md)
+
+    - [The `use` Clausel](./beginners_guide/7_imports/1_the_use_clausel.md)
+    - [Circular Dependencies](./beginners_guide/7_imports/2_circular_dependencies.md)
+    - [Import Aliasing](./beginners_guide/7_imports/3_import_aliasing.md)
+
+  - [Core Modules](./beginners_guide/8_core_modules.md)
+
+    - [print](./beginners_guide/8_core_modules/1_print.md)
+    - [read](./beginners_guide/8_core_modules/2_read.md)
+    - [assert](./beginners_guide/8_core_modules/3_assert.md)
+    - [filesystem](./beginners_guide/8_core_modules/4_filesystem.md)
+    - [env](./beginners_guide/8_core_modules/5_env.md)
+    - [system]()
 
   - [Entities, Func & Links]()
 
@@ -77,17 +93,6 @@
     - [Using Multiple Data and Func Modules]()
     - [Introducing Links]()
     - [Extending Entities]()
-
-  - [Core Modules]()
-
-    - [Multi-file projects]()
-    - [What are Core modules?]()
-    - [print]()
-    - [read]()
-    - [assert]()
-    - [env]()
-    - [filesystem]()
-    - [system]()
 
 - [From Intermediate to Expert]()
 
