@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - The Flint Wiki</title>
-        <base href="/">
+        <title>Primitive Types - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -13,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -103,7 +102,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -138,7 +137,7 @@
                     <h1 class="menu-title">The Flint Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -167,14 +166,63 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
-
+                        <h1 id="primitive-types"><a class="header" href="#primitive-types">Primitive Types</a></h1>
+<p>Primitive types are Flint's fundamental building blocks for representing data. They are the simplest forms of values you can use in your programs. Flint has the following primitive types:</p>
+<ol>
+<li><code>i32</code>
+Represents whole numbers, both positive and negative. Use <code>i32</code> for counting, indexing, or whenever you need discrete values.</li>
+</ol>
+<pre><code class="language-rs">i32 x = 42; // A positive integer
+i32 y = -15; // A negative integer
+i32 z = 0; // Zero is also an integer
+</code></pre>
+<ol start="2">
+<li><code>u32</code>
+Represents whole numbers, but only positive ones. Use <code>u32</code> for IDs.</li>
+</ol>
+<pre><code class="language-rs">u32 id_1 = 1;
+u32 id_0 = 0:
+</code></pre>
+<ol start="3">
+<li><code>f32</code>
+Represents floating-point numbers (decimal numbers). Use <code>f32</code> for measurements, precise calculations, or any value that requires a fractional component.</li>
+</ol>
+<pre><code class="language-rs">f32 pi = 3.14; // Approximation of π
+f32 zero_kelvin = -273.15; // Negative floating point values are valid
+f32 zero = 0.0; // Zero with a decimal
+</code></pre>
+<ol start="4">
+<li><code>str</code>
+Represents a sequence of characters or text, as already described in the printing chapter. Use <code>str</code> for names, messages, or any textual data. Strings must be enclosed in double quotes (<code>"</code>).</li>
+</ol>
+<pre><code class="language-rs">str name = "Flint"; // A simple string
+str empty = ""; // An empty string
+str greeting = "Hello, World!"; // A common example
+</code></pre>
+<p>These types are the foundation of Flint's data handling. As you write more complex programs, you'll combine them in creative ways to represent and manipulate information. But these are not the only primitive types there are available for Flint, they are just the most frequently used ones.</p>
+<h2 id="bit-width"><a class="header" href="#bit-width">Bit-Width</a></h2>
+<p>Now lets talk a bit about bit-width. You surely have seen the number after <code>i</code>, <code>u</code> and <code>f</code>. This is the <strong>bit-width</strong>. Computers work with bits, in this case it means that the integer and floating point types are 32 bits long. Here is a full list of all primitive types in Flint and their minimum and maximum values:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">Type</th><th>Description</th><th style="text-align: center">Min</th><th style="text-align: center">Max</th><th>Precision</th></tr></thead><tbody>
+<tr><td style="text-align: center"><code>u8</code></td><td>unsigned 8 bit integer</td><td style="text-align: center"><code>0</code></td><td style="text-align: center"><code>255</code></td><td>Whole numbers</td></tr>
+<tr><td style="text-align: center"><code>u32</code></td><td>unsigned 32 bit integer</td><td style="text-align: center"><code>0</code></td><td style="text-align: center"><code>4,294,967,295</code></td><td>Whole numbers</td></tr>
+<tr><td style="text-align: center"><code>u64</code></td><td>unsigned 64 bit integer</td><td style="text-align: center"><code>0</code></td><td style="text-align: center">≈ <code>1.844 × 10^19</code></td><td>Whole numbers</td></tr>
+<tr><td style="text-align: center"><code>i32</code></td><td>signed 32 bit integer</td><td style="text-align: center"><code>-2,147,486,648</code></td><td style="text-align: center"><code>2,147,486,647</code></td><td>Whole numbers</td></tr>
+<tr><td style="text-align: center"><code>i64</code></td><td>signed 64 bit integer</td><td style="text-align: center">≈ <code>-1.844 × 10^19</code></td><td style="text-align: center">≈ <code>1.844 × 10^19</code></td><td>Whole numbers</td></tr>
+<tr><td style="text-align: center"><code>f32</code></td><td>32 bit floating point number</td><td style="text-align: center">≈ <code>±1.175 × 10^-38</code></td><td style="text-align: center">≈ <code>±1.701 × 10^38</code></td><td>≈ 6 - 9 digits</td></tr>
+<tr><td style="text-align: center"><code>f64</code></td><td>64 bit floating point number</td><td style="text-align: center">≈ <code>±1 × 10^-383</code></td><td style="text-align: center">≈ <code>±9.999 × 10^384</code></td><td>≈ 16 digits</td></tr>
+</tbody></table>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/2_variables_and_types.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next prefetch" href="../../beginners_guide/2_variables_and_types/2_variables.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -182,7 +230,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/2_variables_and_types.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next prefetch" href="../../beginners_guide/2_variables_and_types/2_variables.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -195,13 +249,13 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 

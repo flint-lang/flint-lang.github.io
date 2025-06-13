@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - The Flint Wiki</title>
-        <base href="/">
+        <title>Nested Data - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -13,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -103,7 +102,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -138,7 +137,7 @@
                     <h1 class="menu-title">The Flint Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -167,14 +166,104 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="nested-data"><a class="header" href="#nested-data">Nested Data</a></h1>
+<p>Data modules can include other data modules as fields. This allows you to create nested structures, which are common in real-world programming. Here is an example of this concept in action:</p>
+<pre><code class="language-rs">use Core.print
+
+data Point:
+    i32 x;
+    i32 y;
+    Point(x, y);
+
+data Rectangle:
+    Point top_left;
+    Point bottom_right;
+    Rectangle(top_left, bottom_right);
+
+def main():
+    Point p1 = Point(0, 0);
+    Point p2 = Point(10, 10);
+    Rectangle rect = Rectangle(p1, p2);
+    print($"rect.top_left.(x, y) = ({rect.top_left.x}, {rect.top_left.y})\n");
+    print($"rect.bottom_right.(x, y) = ({rect.bottom_right.x}, {rect.bottom_right.y})\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>rect.top_left.(x, y) = (0, 0)
+rect.bottom_right.(x, y) = (10, 10)
+</code></pre>
+</blockquote>
+<p>Note that storing the <code>Point</code> variables in the <code>rect</code> variable through its constructor creates <em>copies</em> of the points. In other languages this would need to be done manually, but in Flint its automatic. So, when changing <code>p1</code> and <code>p2</code> after the creation of <code>rect</code>, the <code>top_left</code> and <code>bottom_right</code> fields will not be changed:</p>
+<pre><code class="language-rs">use Core.print
+
+data Point:
+    i32 x;
+    i32 y;
+    Point(x, y);
+
+data Rectangle:
+    Point top_left;
+    Point bottom_right;
+    Rectangle(top_left, bottom_right);
+
+def main():
+    Point p1 = Point(0, 0);
+    Point p2 = Point(10, 10);
+    Rectangle rect = Rectangle(p1, p2);
+
+    print($"p1.(x, y) = ({p1.x}, {p1.y})\n");
+    print($"p2.(x, y) = ({p2.x}, {p2.y})\n");
+    print($"rect.top_left.(x, y) = ({rect.top_left.x}, {rect.top_left.y})\n");
+    print($"rect.bottom_right.(x, y) = ({rect.bottom_right.x}, {rect.bottom_right.y})\n");
+
+    print("\n");
+    p1.(x, y) = (4, 5);
+    p2.(x, y) = (22, 33);
+
+    print($"p1.(x, y) = ({p1.x}, {p1.y})\n");
+    print($"p2.(x, y) = ({p2.x}, {p2.y})\n");
+    print($"rect.top_left.(x, y) = ({rect.top_left.x}, {rect.top_left.y})\n");
+    print($"rect.bottom_right.(x, y) = ({rect.bottom_right.x}, {rect.bottom_right.y})\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>p1.(x, y) = (0, 0)
+p2.(x, y) = (10, 10)
+rect.top_left.(x, y) = (0, 0)
+rect.bottom_right.(x, y) = (10, 10)
+
+p1.(x, y) = (4, 5)
+p2.(x, y) = (22, 33)
+rect.top_left.(x, y) = (0, 0)
+rect.bottom_right.(x, y) = (10, 10)
+</code></pre>
+</blockquote>
+<h2 id="what-about-circular-references"><a class="header" href="#what-about-circular-references">What about Circular References?</a></h2>
+<div class="warning">
+<p>The below example actually compiles, but its impossible to run.</p>
+<p>Data is actually allowed to contain itself, but its impossible to initialize, as Flint has noo concept of <strong>nullpointers</strong> or <strong>null</strong> like other languages have. Flint has its optionals <code>Opt&lt;T&gt;</code> instead, but they are not implemented yet. Its amusing how the below example actually compiles fine.</p>
+</div>
+<p>Flint does not allow a data module to reference itself directly or indirectly like showcased below:</p>
+<pre><code class="language-rs">data Node:
+    i32 value;
+    Node next;
+    Node(value, next);
+</code></pre>
+<p>While this may seem restrictive, it is pretty easy explained why this does not work: If you try to initialize a new variable of type <code>Node</code> you need to provide both its fields for the initializer. The <code>value</code> is fine, you can just pass in a literal, but what about the second field, <code>next</code>? To create a new variable of type <code>Node</code> you need an already existent variable of the same type to pass into, and thats impossible.</p>
+<h2 id="hint"><a class="header" href="#hint">Hint:</a></h2>
+<p>Flint can handle circular references with the help of the <strong>optional type (<code>Opt</code>)</strong>. These convert a reference to a wek reference in circular context's, thus enabling the use of data in of itself, for example for <strong>linked lists</strong>.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/5_data/2_default_values.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next prefetch" href="../../beginners_guide/5_data/4_using_data_in_functions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -182,7 +271,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/5_data/2_default_values.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next prefetch" href="../../beginners_guide/5_data/4_using_data_in_functions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -195,13 +290,13 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 

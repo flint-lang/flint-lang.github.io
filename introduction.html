@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="light" dir="ltr">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
@@ -24,26 +24,40 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
-    </head>
-    <body class="sidebar-visible no-js">
-    <div id="body-container">
-        <!-- Provide site root to javascript -->
-        <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
 
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -57,24 +71,22 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            var body = document.querySelector('body');
-            body.classList.remove('no-js')
-            body.classList.add('js');
+            html.classList.add("js");
         </script>
 
         <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var body = document.querySelector('body');
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -82,45 +94,25 @@
                 sidebar = 'hidden';
             }
             sidebar_toggle.checked = sidebar === 'visible';
-            body.classList.remove('sidebar-visible');
-            body.classList.add("sidebar-" + sidebar);
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html" class="active">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">User Guide</li><li class="chapter-item expanded "><a href="user_guide/installation.html"><strong aria-hidden="true">1.</strong> Installation</a></li><li class="chapter-item expanded affix "><li class="part-title">Syntax Cheatsheet</li><li class="chapter-item expanded "><a href="syntax_cheatsheet/basics.html"><strong aria-hidden="true">2.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="syntax_cheatsheet/basics/comments.html"><strong aria-hidden="true">2.1.</strong> Comments</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Guides</li><li class="chapter-item expanded "><a href="beginners_guide.html"><strong aria-hidden="true">3.</strong> From Beginner to Intermediate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="beginners_guide/1_hello_world.html"><strong aria-hidden="true">3.1.</strong> Hello World</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="beginners_guide/1_hello_world/1_program.html"><strong aria-hidden="true">3.1.1.</strong> The Hello Wprld Program</a></li><li class="chapter-item expanded "><a href="beginners_guide/1_hello_world/2_compiling.html"><strong aria-hidden="true">3.1.2.</strong> Compiling the Program</a></li></ol></li><li class="chapter-item expanded "><a href="beginners_guide/2_flint_basics.html"><strong aria-hidden="true">3.2.</strong> Flint Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="beginners_guide/2_flint_basics/1_comments.html"><strong aria-hidden="true">3.2.1.</strong> Comments in Flint</a></li><li class="chapter-item expanded "><a href="beginners_guide/2_flint_basics/2_indentation.html"><strong aria-hidden="true">3.2.2.</strong> Indentation in Flint</a></li></ol></li><li class="chapter-item expanded "><a href="beginners_guide/3_variables_and_types.html"><strong aria-hidden="true">3.3.</strong> Variables and Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="beginners_guide/3_variables_and_types/1_primitive_types.html"><strong aria-hidden="true">3.3.1.</strong> Primitive Types</a></li><li class="chapter-item expanded "><a href="beginners_guide/3_variables_and_types/2_implicit_typing.html"><strong aria-hidden="true">3.3.2.</strong> Implicit Typing</a></li><li class="chapter-item expanded "><a href="beginners_guide/3_variables_and_types/3_string_interpolation.html"><strong aria-hidden="true">3.3.3.</strong> String Interpolation</a></li></ol></li><li class="chapter-item expanded "><a href="beginners_guide/4_control_flow.html"><strong aria-hidden="true">3.4.</strong> Bool, If and Loops</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="beginners_guide/4_control_flow/1_the_bool_type.html"><strong aria-hidden="true">3.4.1.</strong> The bool Type and Conditional Statements</a></li><li class="chapter-item expanded "><a href="beginners_guide/4_control_flow/2_boolean_operations.html"><strong aria-hidden="true">3.4.2.</strong> Boolean Operations</a></li><li class="chapter-item expanded "><a href="beginners_guide/4_control_flow/3_loops.html"><strong aria-hidden="true">3.4.3.</strong> Loops: Why Repetition Matters</a></li><li class="chapter-item expanded "><a href="beginners_guide/4_control_flow/4_enhanced_for_loop.html"><strong aria-hidden="true">3.4.4.</strong> Enhanced for Loop</a></li><li class="chapter-item expanded "><a href="beginners_guide/4_control_flow/5_the_range_type.html"><strong aria-hidden="true">3.4.5.</strong> The range Type</a></li></ol></li><li class="chapter-item expanded "><a href="beginners_guide/5_functions.html"><strong aria-hidden="true">3.5.</strong> Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="beginners_guide/5_functions/1_what_is_a_function.html"><strong aria-hidden="true">3.5.1.</strong> What is a Function?</a></li><li class="chapter-item expanded "><a href="beginners_guide/5_functions/2_adding_arguments.html"><strong aria-hidden="true">3.5.2.</strong> Adding Arguments</a></li><li class="chapter-item expanded "><a href="beginners_guide/5_functions/3_returning_values.html"><strong aria-hidden="true">3.5.3.</strong> Returning Values</a></li><li class="chapter-item expanded "><a href="beginners_guide/5_functions/4_returning_multiple_values.html"><strong aria-hidden="true">3.5.4.</strong> Returning Multiple Values</a></li></ol></li><li class="chapter-item expanded "><a href="beginners_guide/6_data.html"><strong aria-hidden="true">3.6.</strong> Data: The Core of Flint</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="beginners_guide/6_data/1_why_data.html"><strong aria-hidden="true">3.6.1.</strong> Why Data?</a></li><li class="chapter-item expanded "><a href="beginners_guide/6_data/2_declaring_data_modules.html"><strong aria-hidden="true">3.6.2.</strong> Declaring Data Modules</a></li><li class="chapter-item expanded "><a href="beginners_guide/6_data/3_default_values.html"><strong aria-hidden="true">3.6.3.</strong> Default Values</a></li><li class="chapter-item expanded "><a href="beginners_guide/6_data/4_nested_data.html"><strong aria-hidden="true">3.6.4.</strong> Nested Data</a></li><li class="chapter-item expanded "><a href="beginners_guide/6_data/5_using_data_in_functions.html"><strong aria-hidden="true">3.6.5.</strong> Using Data in Functions</a></li></ol></li><li class="chapter-item expanded "><a href="beginners_guide/7_arrays.html"><strong aria-hidden="true">3.7.</strong> Arrays & Ranges</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="beginners_guide/7_arrays/1_introduction.html"><strong aria-hidden="true">3.7.1.</strong> Introduction to Arrays</a></li><li class="chapter-item expanded "><a href="beginners_guide/7_arrays/2_iterating_over_arrays.html"><strong aria-hidden="true">3.7.2.</strong> Iterating Over Arrays</a></li><li class="chapter-item expanded "><a href="beginners_guide/7_arrays/3_multidimensional_arrays.html"><strong aria-hidden="true">3.7.3.</strong> Multidimensional Arrays</a></li><li class="chapter-item expanded "><a href="beginners_guide/7_arrays/4_access_patterns.html"><strong aria-hidden="true">3.7.4.</strong> Access Patterns with Ranges</a></li><li class="chapter-item expanded "><a href="beginners_guide/7_arrays/5_multidimensional_access_patterns.html"><strong aria-hidden="true">3.7.5.</strong> Multidimensional Access Patterns</a></li></ol></li><li class="chapter-item expanded "><a href="beginners_guide/8_entities.html"><strong aria-hidden="true">3.8.</strong> Entities, Func & Links</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="beginners_guide/8_entities/1_monolithic_entities.html"><strong aria-hidden="true">3.8.1.</strong> Monolithic Entities: The Basics</a></li><li class="chapter-item expanded "><a href="beginners_guide/8_entities/2_func_modules.html"><strong aria-hidden="true">3.8.2.</strong> Func Modules: Modularizing Behavior</a></li><li class="chapter-item expanded "><a href="beginners_guide/8_entities/3_from_monolithic_to_modular.html"><strong aria-hidden="true">3.8.3.</strong> From Monolithic to Modular Entities</a></li><li class="chapter-item expanded "><a href="beginners_guide/8_entities/4_using_multiple_data_and_func.html"><strong aria-hidden="true">3.8.4.</strong> Using Multiple Data and Func Modules</a></li><li class="chapter-item expanded "><a href="beginners_guide/8_entities/5_introducing_links.html"><strong aria-hidden="true">3.8.5.</strong> Introducing Links</a></li><li class="chapter-item expanded "><a href="beginners_guide/8_entities/6_extending_entities.html"><strong aria-hidden="true">3.8.6.</strong> Extending Entities</a></li></ol></li><li class="chapter-item expanded "><a href="beginners_guide/9_simple_program.html"><strong aria-hidden="true">3.9.</strong> Building a Simple Program</a></li><li class="chapter-item expanded "><a href="beginners_guide/10_debugging_basics.html"><strong aria-hidden="true">3.10.</strong> Debugging Basics</a></li></ol></li><li class="chapter-item expanded "><a href="intermediates_guide.html"><strong aria-hidden="true">4.</strong> From Intermediate to Expert</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="intermediates_guide/11_concurrency.html"><strong aria-hidden="true">4.1.</strong> Concurrency & shared data</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="intermediates_guide/11_concurrency/1_understanding_concurrency.html"><strong aria-hidden="true">4.1.1.</strong> Understanding Concurrency</a></li><li class="chapter-item expanded "><a href="intermediates_guide/11_concurrency/2_flints_concurrency_features.html"><strong aria-hidden="true">4.1.2.</strong> Flint's Concurrency Features</a></li><li class="chapter-item expanded "><a href="intermediates_guide/11_concurrency/3_shared_data.html"><strong aria-hidden="true">4.1.3.</strong> Shared Data</a></li></ol></li><li class="chapter-item expanded "><a href="intermediates_guide/12_errors.html"><strong aria-hidden="true">4.2.</strong> Errors & Enums (+ sets)</a></li><li class="chapter-item expanded "><a href="intermediates_guide/13_optionals.html"><strong aria-hidden="true">4.3.</strong> Optionals & Variants (+ ?)</a></li><li class="chapter-item expanded "><a href="intermediates_guide/14_io.html"><strong aria-hidden="true">4.4.</strong> File IO & Serialization</a></li><li class="chapter-item expanded "><a href="intermediates_guide/15_entity_design_patterns.html"><strong aria-hidden="true">4.5.</strong> Entity Design Patterns</a></li><li class="chapter-item expanded "><a href="intermediates_guide/16_libraries_and_flinthub.html"><strong aria-hidden="true">4.6.</strong> Using Libraries & FlintHub</a></li><li class="chapter-item expanded "><a href="intermediates_guide/17_moderate_program.html"><strong aria-hidden="true">4.7.</strong> Building a Moderate Program</a></li><li class="chapter-item expanded "><a href="intermediates_guide/18_testing.html"><strong aria-hidden="true">4.8.</strong> Testing and Validation</a></li><li class="chapter-item expanded "><a href="intermediates_guide/19_making_libraries.html"><strong aria-hidden="true">4.9.</strong> Making Libraries & Publishing them</a></li></ol></li><li class="chapter-item expanded "><a href="experts_guide.html"><strong aria-hidden="true">5.</strong> From Expert to Master</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="experts_guide/20_generics.html"><strong aria-hidden="true">5.1.</strong> Generic Types</a></li><li class="chapter-item expanded "><a href="experts_guide/21_fn_type.html"><strong aria-hidden="true">5.2.</strong> fn Type & Lambdas</a></li><li class="chapter-item expanded "><a href="experts_guide/22_pipes.html"><strong aria-hidden="true">5.3.</strong> Pipes</a></li><li class="chapter-item expanded "><a href="experts_guide/23_concurrency_2.html"><strong aria-hidden="true">5.4.</strong> Concurrency 2</a></li><li class="chapter-item expanded "><a href="experts_guide/24_dima.html"><strong aria-hidden="true">5.5.</strong> Advanced Memory Concepts (DIMA)</a></li><li class="chapter-item expanded "><a href="experts_guide/25_simd.html"><strong aria-hidden="true">5.6.</strong> SIMD (Grouping + par_for)</a></li><li class="chapter-item expanded "><a href="experts_guide/26_performance_optimization.html"><strong aria-hidden="true">5.7.</strong> Performance Optimization</a></li><li class="chapter-item expanded "><a href="experts_guide/27_system_call.html"><strong aria-hidden="true">5.8.</strong> system_call & C++</a></li></ol></li></ol>
-            </div>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <!-- Track and set sidebar scroll position -->
-        <script>
-            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
-            sidebarScrollbox.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') {
-                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
-                }
-            }, { passive: true });
-            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
-            sessionStorage.removeItem('sidebar-scroll');
-            if (sidebarScrollTop) {
-                // preserve sidebar scroll position when navigating via links within sidebar
-                sidebarScrollbox.scrollTop = sidebarScrollTop;
-            } else {
-                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
-                var activeSection = document.querySelector('#sidebar .active');
-                if (activeSection) {
-                    activeSection.scrollIntoView({ block: 'center' });
-                }
-            }
-        </script>
-
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -130,13 +122,14 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -173,9 +166,9 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p>This is the Flint Wiki. You will have the whole Wiki, examples, beginners guide, syntax cheatsheet, and more in this book!</p>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>This is the Flint Wiki. You will be able to find anything regarding Flint in this Wiki. It's primary focus is the syntax of Flint, how it works and how to use the language effectively. All features of Flint and how to use them are explained in this Wiki. All chapters are structured in a way where later chapters build on the lessions of earlier chapters, so you will naturally have the best experience with Flint if you follow the guide closely from front to end.</p>
+<p>Flint is a high‐level, statically‐typed language designed to deliver maximum power in the most approachable way. Its core philosophy is the Data-Object Convergence Paradigm — an ECS-inspired model where data is separated from behavior and then composed deterministically into class-like entities. Every function in Flint is pure (no side effects), and functions themselves are data that can be passed around or even hot-reloaded — thanks to the Thread Stack, which eliminates the possibility of race conditions by design. Write fast, predictable code without hidden complexity.</p>
 
                     </main>
 

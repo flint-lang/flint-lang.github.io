@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - The Flint Wiki</title>
-        <base href="/">
+        <title>Adding Parameters - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -13,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -103,7 +102,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -138,7 +137,7 @@
                     <h1 class="menu-title">The Flint Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -167,14 +166,57 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="adding-parameters"><a class="header" href="#adding-parameters">Adding Parameters</a></h1>
+<p>Parameters are "variables" of functions which you can change when calling the function, enabling the function to operate on different data, making them far more versatile and useful. Lets start with an example where we add a single parameter to a function:</p>
+<pre><code class="language-rs">use Core.print
+
+def greet(str name):
+    print($"Hello, {name}!\n");
+
+def main():
+    greet("Alice");
+    greet("Bob");
+</code></pre>
+<p>Its a pretty simple example, but you can clearly see that we insert the paramter <code>name</code> into the string interpolation when calling the <code>print</code> function. So, the above example will print these lines to the console:</p>
+<blockquote>
+<pre><code>Hello, Alice!
+Hello, Bob!
+</code></pre>
+</blockquote>
+<h2 id="multiple-parameters"><a class="header" href="#multiple-parameters">Multiple Parameters</a></h2>
+<p>Functions can have multiple parameters. To declare multiple parameters, we separate them by commas, like this:</p>
+<pre><code class="language-rs">use Core.print
+
+def add_two_numbers(i32 a, i32 b):
+    print($"The sum is {a + b}.\n");
+
+def main():
+    add_two_numbers(5, 7);
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>The sum is 12.
+</code></pre>
+</blockquote>
+<h2 id="important-notes"><a class="header" href="#important-notes">Important Notes:</a></h2>
+<ol>
+<li>The <strong>type</strong> of each argument matters. For example, if <code>a</code> and <code>b</code> are declared as <code>i32</code>, you cannot pass values of any other type, like <code>f32</code> or <code>u32</code>.</li>
+<li>The order of arguments also matters. Always pass values in the same order as declared in the function.</li>
+</ol>
+<p>There is an important difference between <code>parameters</code> and <code>arguments</code>, alltough this difference is only conceptual. When we define a function the "variables" that are defined, like <code>a</code> and <code>b</code> in our <code>add_two_numbers</code> function are called <strong>parameters</strong> of the function.</p>
+<p>When we call a function and pass in values, like the values <code>5</code> and <code>7</code> for the call <code>add_two_numbers(5, 7)</code>, they are called <strong>arguments</strong> of the function call. This difference is important in later chapters, as they are not interchangably used by this wiki. So, if we talk about arguments we talk about <em>calls</em> and if we talk about parameters we talk about function <em>definitions</em>.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/4_functions/1_what_is_a_function.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next prefetch" href="../../beginners_guide/4_functions/3_returning_values.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -182,7 +224,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/4_functions/1_what_is_a_function.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next prefetch" href="../../beginners_guide/4_functions/3_returning_values.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -195,13 +243,13 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 

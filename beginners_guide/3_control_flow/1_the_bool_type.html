@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - The Flint Wiki</title>
-        <base href="/">
+        <title>The bool Type - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -13,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -103,7 +102,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -138,7 +137,7 @@
                     <h1 class="menu-title">The Flint Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -167,14 +166,78 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="the-bool-type"><a class="header" href="#the-bool-type">The <code>bool</code> Type</a></h1>
+<p>In Flint, the <code>bool</code> type represents truth values: <code>true</code> or <code>false</code>. Boolean values are fundamental in programming, as they enable decision-making and control flow. Boolean values are equal both in programming and in mathematics, they actually dont really differ. Here is a small example of how to declare a boolean variable and how to print its value to the console:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    bool is_learning = true;
+    bool is_hungry = false;
+    print($"is_learing = {is_learning}, is_hungry = {is_hungry}\n");
+</code></pre>
+<p>This program prints this line to the console:</p>
+<blockquote>
+<pre><code>is_learing = true, is_hungry = false
+</code></pre>
+</blockquote>
+<h2 id="checking-for-equality-and-inequality"><a class="header" href="#checking-for-equality-and-inequality">Checking for equality and inequality</a></h2>
+<p>You can check if a boolean type is equal to another boolean type. The result of the <code>==</code> and <code>!=</code> operators is <em>always</em> a <code>bool</code> type, because either they are equal or not. So, if you look if two <code>i32</code> values are equal, the result of this check will be of type <code>bool</code>.</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32 val1 = 4;
+    i32 val2 = 6;
+    bool is_eq = val1 == val2;
+    bool is_neq = val1 != val2;
+    print($"val1 = {val1}, val2 = {val2}, is_eq = {is_eq}, is_neq = {is_neq}\n");
+</code></pre>
+<p>This program prints this line to the console:</p>
+<blockquote>
+<pre><code>val1 = 4, val2 = 6, is_eq = false, is_neq = true
+</code></pre>
+</blockquote>
+<p>But now lets compare two boolean values with one another:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    bool t_eq_f = true == false;
+    print($"t_eq_f = {t_eq_f}\n");
+
+    bool t_neq_f = true != false;
+    print($"t_neq_f = {t_neq_f}\n");
+
+    bool t_eq_t = true == true;
+    print($"t_eq_t = {t_eq_t}\n");
+    bool t_neq_t = true != true;
+    print($"t_neq_t = {t_neq_t}\n");
+
+    bool f_eq_f = false == false;
+    print($"f_eq_f = {f_eq_f}\n");
+    bool f_neq_f = false != false;
+    print($"f_neq_f = {f_neq_f}\n");
+</code></pre>
+<p>This program prints these lines to the console:</p>
+<blockquote>
+<pre><code>t_eq_f = false
+t_neq_f = true
+t_eq_t = true
+t_neq_t = false
+f_eq_f = true
+f_neq_f = false
+</code></pre>
+</blockquote>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/3_control_flow.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next prefetch" href="../../beginners_guide/3_control_flow/2_boolean_operations.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -182,7 +245,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/3_control_flow.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next prefetch" href="../../beginners_guide/3_control_flow/2_boolean_operations.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -195,13 +264,13 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 

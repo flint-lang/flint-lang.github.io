@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - The Flint Wiki</title>
-        <base href="/">
+        <title>Using Data in Functions - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -13,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -103,7 +102,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -138,7 +137,7 @@
                     <h1 class="menu-title">The Flint Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -167,14 +166,132 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="using-data-in-functions"><a class="header" href="#using-data-in-functions">Using Data in Functions</a></h1>
+<p>Data modules can be passed to and returned from functions, enabling you to manipulate them easily.</p>
+<pre><code class="language-rs">use Core.print
+
+data Point:
+    i32 x;
+    i32 y;
+    Point(x, y);
+
+def print_point(Point p):
+    print($"Point(x: {p.x}, y: {p.y})\n");
+
+def main():
+    Point p = Point(3, 4);
+    print_point(p);
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>Point(x: 3, y: 4)
+</code></pre>
+</blockquote>
+<h2 id="mutability-and-immutability"><a class="header" href="#mutability-and-immutability">Mutability and Immutability</a></h2>
+<p>Okay, but what if we want to modify the point in a function? Lets look at an example:</p>
+<pre><code class="language-rs">use Core.print
+
+data Point:
+    i32 x;
+    i32 y;
+    Point(x, y);
+
+def increment_by(Point p, i32 value):
+    p.(x, y) += (value, value);
+
+def main():
+    Point p = Point(3, 4);
+    increment_by(p, 3);
+    print($"Point(x: {p.x}, y: {p.y})\n");
+</code></pre>
+<p>If you try to compile this program you will actually get a compile error:</p>
+<blockquote>
+<pre><code>Parse Error at main.ft:9:5
+ -- Variable 'p' is marked as 'const' and cannot be modified!
+</code></pre>
+</blockquote>
+<p>But why is that? For this to explain we actually need to talk about <strong>mutability</strong> for a bit. Mutability is the ability to mutate (change) variables. Up until now this has not been a problem yet, because Flint actually has clear mutability rules:</p>
+<ul>
+<li>Local variables declared within a scope are always <strong>mutable</strong> except explicitely made immutable</li>
+<li>Function parameters are always <strong>immutable</strong> except explicitely made mutable</li>
+</ul>
+<p>Flint has two keywords for this very reason: <code>mut</code> and <code>const</code>. You can use <code>const</code> when declaring a variable in a scope to make the variable constant, thus not-changable after its declaration and you can use <code>mut</code> to make parameters of functions explicitely mutable. Note that putting <code>const</code> in front of a function parameter has no effect, as its const annyway, same as putting <code>mut</code> in front of a variable declaration, as variables are mutable annyway.</p>
+<p>So, to fix our little compile error we need to change the signature of our function a bit:</p>
+<pre><code class="language-rs">use Core.print
+
+data Point:
+    i32 x;
+    i32 y;
+    Point(x, y);
+
+def increment_by(mut Point p, i32 value):
+    p.(x, y) += (value, value);
+
+def main():
+    Point p = Point(3, 4);
+    increment_by(p, 3);
+    print($"Point(x: {p.x}, y: {p.y})\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>Point(x: 6, y: 7)
+</code></pre>
+</blockquote>
+<p>As you can see, the functions signature of the <code>increment_by</code> function now explicitely states that its parameter is a mutable one. This means that we can only pass in mutable <code>Point</code> variables to it when calling it. So, this example:</p>
+<pre><code class="language-rs">use Core.print
+
+data Point:
+    i32 x;
+    i32 y;
+    Point(x, y);
+
+def increment_by(mut Point p, i32 value):
+    p.(x, y) += (value, value);
+
+def main():
+    const Point p = Point(3, 4);
+    increment_by(p, 3);
+    print($"Point(x: {p.x}, y: {p.y})\n");
+</code></pre>
+<p>will not compile again. Because now we have declared <code>p</code> to be immutable, but we try to pass it to to the call <code>increment_by</code> which expects a mutable <code>Point</code> argument, so we have a type mismatch here, because when we made <code>p</code> immutable it would be wrong if it could be modified by a function. We get this compile error:</p>
+<blockquote>
+<pre><code>Parse Error at main.ft:13:18
+ -- Variable 'p' is marked as 'const' and cannot be modified!
+</code></pre>
+</blockquote>
+<h2 id="returning-data-from-functions"><a class="header" href="#returning-data-from-functions">Returning Data from Functions</a></h2>
+<div class="warning">
+<p>Returning data variables from functions does not wory yet.</p>
+<p>The error lies somewhere hidden in the codebase, but its a nontrivial fix so i just did not bother for now. So, you will need to pass mutable references to functions for now, but thats fine in my view.</p>
+</div>
+<p>You can also return data from functions, for example when creating them inside the function.</p>
+<pre><code class="language-rs">use Core.print
+
+data Point:
+    i32 x;
+    i32 y;
+    Point(x, y);
+
+def create_point(i32 x, i32 y) -&gt; Point:
+    return Point(x, y);
+
+def main():
+    Point p = create_point(5, 7);
+    print($"Point(x: {p.x}, y: {p.y})\n");
+</code></pre>
+<p>By using functions with data, you can create and manipulate complex structures easily.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/5_data/3_nested_data.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next prefetch" href="../../beginners_guide/5_data/5_tuples.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -182,7 +299,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/5_data/3_nested_data.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next prefetch" href="../../beginners_guide/5_data/5_tuples.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -195,13 +318,13 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 

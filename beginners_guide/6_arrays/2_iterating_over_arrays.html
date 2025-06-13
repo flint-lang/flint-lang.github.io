@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - The Flint Wiki</title>
-        <base href="/">
+        <title>Iterating Over Arrays - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -13,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -103,7 +102,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -138,7 +137,7 @@
                     <h1 class="menu-title">The Flint Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -167,14 +166,82 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="iterating-over-arrays"><a class="header" href="#iterating-over-arrays">Iterating Over Arrays</a></h1>
+<p>Often, you will want to process each element of an array inside of a loop. For this, you can easily use a <code>for</code> loop, like so:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32[] arr = i32[5](4);
+    // Set each element to the double of the index
+    for i := 0; i &lt; 5; i++:
+        arr[i] = i * 2;
+        print($"Index: {i}, Value: {arr[i]}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>Index: 0, Value: 0
+Index: 1, Value: 2
+Index: 2, Value: 4
+Index: 3, Value: 6
+Index: 4, Value: 8
+</code></pre>
+</blockquote>
+<p>With loops, we can better demonstrate the OOB-behaviour mentioned in the last chapter. Here is an example to better demonstrate this behaviour:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32[] arr = i32[5](4);
+    for i := 0; i &lt; 10; i++:
+        arr[i] = i * 2;
+        print($"Index: {i}, Value: {arr[i]}\n");
+
+    print("\n");
+    for i := 0; i &lt; 5; i++:
+        print($"Index: {i}, Value: {arr[i]}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>Index: 0, Value: 0
+Index: 1, Value: 2
+Index: 2, Value: 4
+Index: 3, Value: 6
+Index: 4, Value: 8
+Out Of Bounds access occured: Arr Len: 5, Index: 5
+Out Of Bounds access occured: Arr Len: 5, Index: 5
+Index: 5, Value: 10
+Out Of Bounds access occured: Arr Len: 5, Index: 6
+Out Of Bounds access occured: Arr Len: 5, Index: 6
+Index: 6, Value: 12
+Out Of Bounds access occured: Arr Len: 5, Index: 7
+Out Of Bounds access occured: Arr Len: 5, Index: 7
+Index: 7, Value: 14
+Out Of Bounds access occured: Arr Len: 5, Index: 8
+Out Of Bounds access occured: Arr Len: 5, Index: 8
+Index: 8, Value: 16
+Out Of Bounds access occured: Arr Len: 5, Index: 9
+Out Of Bounds access occured: Arr Len: 5, Index: 9
+Index: 9, Value: 18
+
+Index: 0, Value: 0
+Index: 1, Value: 2
+Index: 2, Value: 4
+Index: 3, Value: 6
+Index: 4, Value: 18
+</code></pre>
+</blockquote>
+<p>You can spot two out of bounds accesses here. The first one happens when we want to assign <code>i * 2</code> to the array at <code>i</code> and the second one is in the printing when trying to print <code>arr[i]</code> in the string interpolation. And then, at the end we print the current values of the array and you can clearly see that the last element at index 4 holds the value 18, which is double the last index of the last loop. As you can see, OOB accesses are considered "safe" in Flint, because it is well-defined what will happen when an OOB access occurs.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/6_arrays/1_introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next prefetch" href="../../beginners_guide/6_arrays/3_strings.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -182,7 +249,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/6_arrays/1_introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next prefetch" href="../../beginners_guide/6_arrays/3_strings.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -195,13 +268,13 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 
