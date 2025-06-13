@@ -1,3 +1,5 @@
 # Introduction
 
-This is the Flint Wiki. You will have the whole Wiki, examples, beginners guide, syntax cheatsheet, and more in this book!
+This is the Flint Wiki. You will be able to find anything regarding Flint in this Wiki. It's primary focus is the syntax of Flint, how it works and how to use the language effectively. All features of Flint and how to use them are explained in this Wiki. All chapters are structured in a way where later chapters build on the lessions of earlier chapters, so you will naturally have the best experience with Flint if you follow the guide closely from front to end.
+
+Flint is a high‐level, statically‐typed language designed to deliver maximum power in the most approachable way. Its core philosophy is the Data-Object Convergence Paradigm — an ECS-inspired model where data is separated from behavior and then composed deterministically into class-like entities. Every function in Flint is pure (no side effects), and functions themselves are data that can be passed around or even hot-reloaded — thanks to the Thread Stack, which eliminates the possibility of race conditions by design. Write fast, predictable code without hidden complexity. 
