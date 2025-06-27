@@ -3131,6 +3131,56 @@ NEW_ENV_VARIABLE craeted? true
 NEW_ENV_VARIABLE content: some nice value
 </code></pre>
 </blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="system"><a class="header" href="#system">system</a></h1>
+<pre><code class="language-rs">use Core.system
+</code></pre>
+<p>The <code>system</code> module provides functions to interact with the system, for example to execute system commands.</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Can Throw?</th></tr></thead><tbody>
+<tr><td style="text-align: right"><code>system_command</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>i32</code>, <code>str</code></td><td style="text-align: center">Yes</td></tr>
+</tbody></table>
+</div>
+<h2 id="system_command"><a class="header" href="#system_command">system_command</a></h2>
+<p>The <code>system_command</code> function executes a given command, for example <code>ls -lah</code> and returns the exit code of the given command together with the output of the command, stored in a string. The function can throw an error if the process (the command) cannot be created.</p>
+<pre><code class="language-rs">use Core.print
+use Core.system
+
+def main():
+    (exit_code, output) = system_command("ls");
+    print($"exit_code = {exit_code}\n");
+    print($"output = '{output}'\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>exit_code = 0
+output = 'build
+build.zig
+build.zig.zon
+cmake
+CMakeLists.txt
+compile_flags.txt
+documents
+examples
+fetch_crt.sh
+include
+LICENSE
+logfile
+lsp
+main
+main.o
+main.obj
+output.ll
+README.md
+resources
+scripts
+src
+test
+test_files
+test.o
+tests
+vendor
+'
+</code></pre>
+</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="error-sets"><a class="header" href="#error-sets">Error Sets</a></h1>
 <div class="warning">
 <p>Everything regarding error handling <strong>will</strong> definitely change for later releases.</p>
