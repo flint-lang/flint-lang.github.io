@@ -83,7 +83,7 @@
     - [assert](./beginners_guide/8_core_modules/3_assert.md)
     - [filesystem](./beginners_guide/8_core_modules/4_filesystem.md)
     - [env](./beginners_guide/8_core_modules/5_env.md)
-    - [system]()
+    - [system](./beginners_guide/8_core_modules/6_system.md)
 
   - [Entities, Func & Links]()
 
