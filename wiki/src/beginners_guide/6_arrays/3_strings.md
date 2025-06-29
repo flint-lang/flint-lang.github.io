@@ -58,7 +58,7 @@ This program will print these lines to the console:
 > character 'D' is 68
 > ```
 
-## Getting a strings length
+## Getting a string's length
 
 It is not uncommon to have a string as a paramter of a function, for example, and then we often want to get the length of the string somehow, maybe we dont know the length of a string beforehand, for example when parsing user input (will be talked about in a later chapter). But, very often we don't know the size of a string when writing the program, so we need a way to get a strings length at runtime. Here is a small program demonstrating how to get and use the length of a string:
 

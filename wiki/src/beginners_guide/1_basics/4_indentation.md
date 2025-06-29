@@ -22,6 +22,8 @@ When you run the above code, you’ll see an error message:
 This happens because Flint expects all code inside main to be indented. Here’s the correct way to write it:
 
 ```rs
+use Core.print
+
 def main():
 	print("This is correctly indented.\n"); // Properly indented
 ```

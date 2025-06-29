@@ -12,7 +12,7 @@ use Core.print
 
 def main():
     // This is a single-line comment explaining the print statement below
-    print("Hello, Flint!"\n);
+    print("Hello, Flint!\n");
 
     /*
      This is a multi-line comment.

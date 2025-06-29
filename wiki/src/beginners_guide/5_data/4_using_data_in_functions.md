@@ -114,9 +114,16 @@ will not compile again. Because now we have declared `p` to be immutable, but we
 
 <div class="warning">
 
-Returning data variables from functions does not wory yet.
+Returning the constructed data directly does not work yet.
 
-The error lies somewhere hidden in the codebase, but its a nontrivial fix so i just did not bother for now. So, you will need to pass mutable references to functions for now, but thats fine in my view.
+When you write
+```rs
+def create_point(i32 x, i32 y) -> Point:
+    return Point(x, y);
+```
+what Flint actually does under the hood will lead to a compilation error, as the code generation phase will fail. This is because a constructor is actually just a group under the hood, and the "element" values of data are stored in the Point variable directly. This means that the function tries to return a `(i32, i32)` instead of a `Point`, essentailly. It's not a mistake of Flint's type system or anything similar, it's just how the data declaration works at the moment, which is a bit flawed. That's also the reason why nested data constructors cannot be written directly into the constructor of the data which contains them.
+
+The below example will work perfectly fine, as we store the `Point` in a varaible first, before returning it.
 
 </div>
 
@@ -131,11 +138,18 @@ data Point:
     Point(x, y);
 
 def create_point(i32 x, i32 y) -> Point:
-    return Point(x, y);
+    Point p = Point(x, y);
+    return p;
 
 def main():
     Point p = create_point(5, 7);
     print($"Point(x: {p.x}, y: {p.y})\n");
 ```
+
+This program will print this line to the console:
+
+> ```
+> Point(x: 5, y: 7)
+> ```
 
 By using functions with data, you can create and manipulate complex structures easily.

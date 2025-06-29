@@ -5,32 +5,36 @@ Primitive types are Flint's fundamental building blocks for representing data. T
 1. `i32`
 Represents whole numbers, both positive and negative. Use `i32` for counting, indexing, or whenever you need discrete values.
 ```rs
-i32 x = 42; // A positive integer
-i32 y = -15; // A negative integer
-i32 z = 0; // Zero is also an integer
+def main():
+    i32 x = 42; // A positive integer
+    i32 y = -15; // A negative integer
+    i32 z = 0; // Zero is also an integer
 ```
 
 2. `u32`
 Represents whole numbers, but only positive ones. Use `u32` for IDs.
 ```rs
-u32 id_1 = 1;
-u32 id_0 = 0:
+def main():
+    u32 id_1 = 1;
+    u32 id_0 = 0;
 ```
 
 3. `f32`
 Represents floating-point numbers (decimal numbers). Use `f32` for measurements, precise calculations, or any value that requires a fractional component.
 ```rs
-f32 pi = 3.14; // Approximation of π
-f32 zero_kelvin = -273.15; // Negative floating point values are valid
-f32 zero = 0.0; // Zero with a decimal
+def main():
+    f32 pi = 3.14; // Approximation of Pi
+    f32 zero_kelvin = -273.15; // Negative floating point values are valid
+    f32 zero = 0.0; // Zero with a decimal
 ```
 
 4. `str`
 Represents a sequence of characters or text, as already described in the printing chapter. Use `str` for names, messages, or any textual data. Strings must be enclosed in double quotes (`"`).
 ```rs
-str name = "Flint"; // A simple string
-str empty = ""; // An empty string
-str greeting = "Hello, World!"; // A common example
+def main():
+    str name = "Flint"; // A simple string
+    str empty = ""; // An empty string
+    str greeting = "Hello, World!"; // A common example
 ```
 
 These types are the foundation of Flint's data handling. As you write more complex programs, you'll combine them in creative ways to represent and manipulate information. But these are not the only primitive types there are available for Flint, they are just the most frequently used ones.

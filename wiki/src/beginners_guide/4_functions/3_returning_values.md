@@ -15,10 +15,10 @@ So, here is the full example:
 use Core.print
 
 def get_greeting() -> str:
-    return "Hello, Flint!\n"
+    return "Hello, Flint!\n";
 
 def main():
-    str greeting = get_geeting();
+    str greeting = get_greeting();
     print(greeting);
 ```
 

@@ -60,7 +60,7 @@ This program will print these lines to the console:
 > ```
 > first = 3
 > second = 2.2
-> third = hello!
+> third = "hello!"
 > ```
 
 As you can clearly see, we access the elements of the tuple with the `.$N` syntax, where `N` is the index of the element we want to access. Like always for indices, we start at 0 as Flint has zero-based indexing. If we would try to access an element which is out of bounds, like `.$3` in our case we would actually get a compile error:
@@ -75,7 +75,13 @@ def main():
 
 The error message for this error has not been added yet.
 
-Currently the error is `Custom Error: 2` without giving _any_ information what error it is.
+Currently the error is:
+> ```
+> Parse Error at main.ft:3:5
+> -- Failed to parse statement: i32 = tuple . $ 3;
+> ```
+
+Which is just a generic message stating something went wrong with the statement, but not stating that the `$3` is the wrong part, as it's larger than the size of the tuple.
 
 </div>
 

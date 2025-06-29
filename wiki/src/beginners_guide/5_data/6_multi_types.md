@@ -9,14 +9,14 @@ def main():
     i32x3 v3 = (1, 2, 3);
     print($"v3.(x, y, z) = ({v3.x}, {v3.y}, {v3.z})\n");
     v3.(x, y, z) = (4, 5, 6);
-    print($"v3.(x, y, z) = ({v3.x}, {v3.y}, {v3.z})\n");
+    print($"v3 = {v3}\n");
 ```
 
 This program will print these lines to the console:
 
 > ```
 > v3.(x, y, z) = (1, 2, 3)
-> v3.(x, y, z) = (4, 5, 6)
+> v3 = (4, 5, 6)
 > ```
 
 As you can see, the 3-width i32 multi-type has the "fields" of x, y and z, each being of type `i32`. There exist several multi-types in Flint today:
@@ -75,7 +75,7 @@ def main():
     i32x4 v4_1 = (1, 2, 3, 4);
     i32x4 v4_2 = (5, 6, 7, 8);
     i32x4 sum = v4_1 + v4_2;
-    print($"sum = ({sum.r}, {sum.g}, {sum.b}, {sum.a})\n");
+    print($"sum = {sum}\n");
 ```
 
 This program will print this line to the console:
