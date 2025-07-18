@@ -85,7 +85,7 @@ This program will print these lines to the console:
 
 The below example actually compiles, but its impossible to run.
 
-Data is actually allowed to contain itself, but its impossible to initialize, as Flint has noo concept of **nullpointers** or **null** like other languages have. Flint has its optionals `Opt<T>` instead, but they are not implemented yet. Its amusing how the below example actually compiles fine.
+Data is actually allowed to contain itself, but its impossible to initialize, as Flint has noo concept of **nullpointers** or **null** like other languages have. Flint has its optionals `T?` instead, but they are not implemented yet. Its amusing how the below example actually compiles fine.
 
 </div>
 
@@ -102,4 +102,4 @@ While this may seem restrictive, it is pretty easy explained why this does not w
 
 ## Hint:
 
-Flint can handle circular references with the help of the **optional type (`Opt`)**. These convert a reference to a wek reference in circular context's, thus enabling the use of data in of itself, for example for **linked lists**.
+Flint can handle circular references with the help of the **optional type (`?`)**. These convert a reference to a wek reference in circular context's, thus enabling the use of data in of itself, for example for **linked lists**.

@@ -94,11 +94,26 @@
     - [Introducing Links]()
     - [Extending Entities]()
 
-- [From Intermediate to Expert]()
+- [From Intermediate to Expert](./intermediates_guide.md)
 
-  - [Optionals & Variants]()
+  - [Optionals](./intermediates_guide/1_optionals.md)
 
-  - [Error Sets](./intermediates_guide/2_error_sets.md)
+    - [Introduction](./intermediates_guide/1_optionals/1_introduction.md)
+    - [Unwrapping](./intermediates_guide/1_optionals/2_unwrapping.md)
+    - [Comparing Optionals](./intermediates_guide/1_optionals/3_comparing_optionals.md)
+    - [Null Coalescing Operator](./intermediates_guide/1_optionals/4_null_coalescing.md)
+    - [Switching on Optionals](./intermediates_guide/1_optionals/5_optional_switch.md)
+    - [Optional Chaining]()
+
+  - [Variants]()
+
+    - [Introduction]()
+    - [Tagged Variants]()
+    - [Variant Comparison]()
+    - [Switching on Variants]()
+    - [Variant Extraction]()
+
+  - [Error Sets](./intermediates_guide/3_error_sets.md)
 
   - [Callables & Variable Persistence]()
 

@@ -1,13 +1,5 @@
 # Switch
 
-<div class="warning">
-
-Switch statements and expressions do not work yet.
-
-Switch statements are not yet implemented in the compiler, at all. You will get compile errors front and center if you try to use them.
-
-</div>
-
 ## Switch Statements
 
 Switch statements are actually pretty easy to understand once you grasped if chains. `switch` statements are primarily used for pattern-matching purposes or for cases where you have a limited selection of possible values, like with enums, where you only have the possibilities of each tag.
@@ -31,11 +23,11 @@ def compare(i32 x, i32 y) -> ComparisonResult:
 def main():
     ComparisonResult result = compare(10, 5);
     switch result:
-        ComparisonResult.BIGGER:
+        BIGGER:
             print("is bigger\n");
-        ComparisonResult.SMALLER:
+        SMALLER:
             print("is smaller\n");
-        ComparisonResult.EQUAL:
+        EQUAL:
             print("is equal\n");
 ```
 
@@ -108,6 +100,15 @@ This program will print this line to the console:
 
 And this is the behaviour that Flint has by default. In Flint, falltrough is not opt-out but rather opt-in. We don't actually have a keyword for this but rather an annotation. Here is an example of it:
 
+<div class="warning">
+
+Flint does not support annotations (`#...`) yet
+
+The below example will not compile, as Flint does not support annotations yet. So, at this moment in time it is not possible to have a fallthrough-behaviour in a Flint switch.
+
+</div>
+
+
 ```rs
 use Core.print
 
@@ -118,11 +119,11 @@ def main():
     MyEnum e = MyEnum.VAL1;
     switch e:
         #fallthrough
-        MyEnum.VAL1:
+        VAL1:
             print("is val1\n");
-        MyEnum.VAL2:
+        VAL2:
             print("is val2\n");
-        MyEnum.VAL3:
+        VAL3:
             print("is val3\n");
 ```
 
@@ -148,10 +149,10 @@ enum MyEnum:
 def main():
     MyEnum e = MyEnum.VAL1;
     i32 result = switch e:
-        MyEnum.VAL1 -> 1;
-        MyEnum.VAL2 -> 2;
-        MyEnum.VAL3 -> 4;
-    print("result = {result}\n");
+        VAL1 -> 1;
+        VAL2 -> 2;
+        VAL3 -> 4;
+    print($"result = {result}\n");
 ```
 
 This program will print this line to the console:
