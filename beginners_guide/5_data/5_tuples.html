@@ -36,6 +36,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -208,7 +217,7 @@ def main():
 <blockquote>
 <pre><code>first = 3
 second = 2.2
-third = hello!
+third = "hello!"
 </code></pre>
 </blockquote>
 <p>As you can clearly see, we access the elements of the tuple with the <code>.$N</code> syntax, where <code>N</code> is the index of the element we want to access. Like always for indices, we start at 0 as Flint has zero-based indexing. If we would try to access an element which is out of bounds, like <code>.$3</code> in our case we would actually get a compile error:</p>
@@ -218,7 +227,13 @@ third = hello!
 </code></pre>
 <div class="warning">
 <p>The error message for this error has not been added yet.</p>
-<p>Currently the error is <code>Custom Error: 2</code> without giving <em>any</em> information what error it is.</p>
+<p>Currently the error is:</p>
+<blockquote>
+<pre><code>Parse Error at main.ft:3:5
+-- Failed to parse statement: i32 = tuple . $ 3;
+</code></pre>
+</blockquote>
+<p>Which is just a generic message stating something went wrong with the statement, but not stating that the <code>$3</code> is the wrong part, as it's larger than the size of the tuple.</p>
 </div>
 <h2 id="tuple-assignment"><a class="header" href="#tuple-assignment">Tuple Assignment</a></h2>
 <p>Just like we can access elements from a tuple, we can also assign new values to the elements of a tuple. Here is a simple example of this in action:</p>
@@ -380,6 +395,7 @@ tuple.(i32, f32, str) = (2, 3.3, "four")
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

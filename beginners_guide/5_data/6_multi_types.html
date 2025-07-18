@@ -36,6 +36,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -174,12 +183,12 @@ def main():
     i32x3 v3 = (1, 2, 3);
     print($"v3.(x, y, z) = ({v3.x}, {v3.y}, {v3.z})\n");
     v3.(x, y, z) = (4, 5, 6);
-    print($"v3.(x, y, z) = ({v3.x}, {v3.y}, {v3.z})\n");
+    print($"v3 = {v3}\n");
 </code></pre>
 <p>This program will print these lines to the console:</p>
 <blockquote>
 <pre><code>v3.(x, y, z) = (1, 2, 3)
-v3.(x, y, z) = (4, 5, 6)
+v3 = (4, 5, 6)
 </code></pre>
 </blockquote>
 <p>As you can see, the 3-width i32 multi-type has the "fields" of x, y and z, each being of type <code>i32</code>. There exist several multi-types in Flint today:</p>
@@ -227,7 +236,7 @@ def main():
     i32x4 v4_1 = (1, 2, 3, 4);
     i32x4 v4_2 = (5, 6, 7, 8);
     i32x4 sum = v4_1 + v4_2;
-    print($"sum = ({sum.r}, {sum.g}, {sum.b}, {sum.a})\n");
+    print($"sum = {sum}\n");
 </code></pre>
 <p>This program will print this line to the console:</p>
 <blockquote>
@@ -283,6 +292,7 @@ def main():
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

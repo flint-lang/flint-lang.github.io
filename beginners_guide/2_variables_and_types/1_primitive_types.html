@@ -36,6 +36,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -172,32 +181,36 @@
 <li><code>i32</code>
 Represents whole numbers, both positive and negative. Use <code>i32</code> for counting, indexing, or whenever you need discrete values.</li>
 </ol>
-<pre><code class="language-rs">i32 x = 42; // A positive integer
-i32 y = -15; // A negative integer
-i32 z = 0; // Zero is also an integer
+<pre><code class="language-rs">def main():
+    i32 x = 42; // A positive integer
+    i32 y = -15; // A negative integer
+    i32 z = 0; // Zero is also an integer
 </code></pre>
 <ol start="2">
 <li><code>u32</code>
 Represents whole numbers, but only positive ones. Use <code>u32</code> for IDs.</li>
 </ol>
-<pre><code class="language-rs">u32 id_1 = 1;
-u32 id_0 = 0:
+<pre><code class="language-rs">def main():
+    u32 id_1 = 1;
+    u32 id_0 = 0;
 </code></pre>
 <ol start="3">
 <li><code>f32</code>
 Represents floating-point numbers (decimal numbers). Use <code>f32</code> for measurements, precise calculations, or any value that requires a fractional component.</li>
 </ol>
-<pre><code class="language-rs">f32 pi = 3.14; // Approximation of π
-f32 zero_kelvin = -273.15; // Negative floating point values are valid
-f32 zero = 0.0; // Zero with a decimal
+<pre><code class="language-rs">def main():
+    f32 pi = 3.14; // Approximation of Pi
+    f32 zero_kelvin = -273.15; // Negative floating point values are valid
+    f32 zero = 0.0; // Zero with a decimal
 </code></pre>
 <ol start="4">
 <li><code>str</code>
 Represents a sequence of characters or text, as already described in the printing chapter. Use <code>str</code> for names, messages, or any textual data. Strings must be enclosed in double quotes (<code>"</code>).</li>
 </ol>
-<pre><code class="language-rs">str name = "Flint"; // A simple string
-str empty = ""; // An empty string
-str greeting = "Hello, World!"; // A common example
+<pre><code class="language-rs">def main():
+    str name = "Flint"; // A simple string
+    str empty = ""; // An empty string
+    str greeting = "Hello, World!"; // A common example
 </code></pre>
 <p>These types are the foundation of Flint's data handling. As you write more complex programs, you'll combine them in creative ways to represent and manipulate information. But these are not the only primitive types there are available for Flint, they are just the most frequently used ones.</p>
 <h2 id="bit-width"><a class="header" href="#bit-width">Bit-Width</a></h2>
@@ -258,6 +271,7 @@ str greeting = "Hello, World!"; // A common example
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

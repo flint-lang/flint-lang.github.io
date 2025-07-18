@@ -36,6 +36,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -241,7 +250,7 @@ rect.bottom_right.(x, y) = (10, 10)
 <h2 id="what-about-circular-references"><a class="header" href="#what-about-circular-references">What about Circular References?</a></h2>
 <div class="warning">
 <p>The below example actually compiles, but its impossible to run.</p>
-<p>Data is actually allowed to contain itself, but its impossible to initialize, as Flint has noo concept of <strong>nullpointers</strong> or <strong>null</strong> like other languages have. Flint has its optionals <code>Opt&lt;T&gt;</code> instead, but they are not implemented yet. Its amusing how the below example actually compiles fine.</p>
+<p>Data is actually allowed to contain itself, but its impossible to initialize, as Flint has noo concept of <strong>nullpointers</strong> or <strong>null</strong> like other languages have. Flint has its optionals <code>T?</code> instead, but they are not implemented yet. Its amusing how the below example actually compiles fine.</p>
 </div>
 <p>Flint does not allow a data module to reference itself directly or indirectly like showcased below:</p>
 <pre><code class="language-rs">data Node:
@@ -251,7 +260,7 @@ rect.bottom_right.(x, y) = (10, 10)
 </code></pre>
 <p>While this may seem restrictive, it is pretty easy explained why this does not work: If you try to initialize a new variable of type <code>Node</code> you need to provide both its fields for the initializer. The <code>value</code> is fine, you can just pass in a literal, but what about the second field, <code>next</code>? To create a new variable of type <code>Node</code> you need an already existent variable of the same type to pass into, and thats impossible.</p>
 <h2 id="hint"><a class="header" href="#hint">Hint:</a></h2>
-<p>Flint can handle circular references with the help of the <strong>optional type (<code>Opt</code>)</strong>. These convert a reference to a wek reference in circular context's, thus enabling the use of data in of itself, for example for <strong>linked lists</strong>.</p>
+<p>Flint can handle circular references with the help of the <strong>optional type (<code>?</code>)</strong>. These convert a reference to a wek reference in circular context's, thus enabling the use of data in of itself, for example for <strong>linked lists</strong>.</p>
 
                     </main>
 
@@ -299,6 +308,7 @@ rect.bottom_right.(x, y) = (10, 10)
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

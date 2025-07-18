@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>system - The Flint Wiki</title>
+        <title>Comparing Optionals - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -175,66 +175,66 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="system"><a class="header" href="#system">system</a></h1>
-<pre><code class="language-rs">use Core.system
-</code></pre>
-<p>The <code>system</code> module provides functions to interact with the system, for example to execute system commands.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Can Throw?</th></tr></thead><tbody>
-<tr><td style="text-align: right"><code>system_command</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>i32</code>, <code>str</code></td><td style="text-align: center">Yes</td></tr>
-</tbody></table>
-</div>
-<h2 id="system_command"><a class="header" href="#system_command">system_command</a></h2>
-<p>The <code>system_command</code> function executes a given command, for example <code>ls -lah</code> and returns the exit code of the given command together with the output of the command, stored in a string. The function can throw an error if the process (the command) cannot be created.</p>
+                        <h1 id="comparing-optionals"><a class="header" href="#comparing-optionals">Comparing Optionals</a></h1>
+<p>We now know how to access the value of an optional variable, but how do we check if the variable <em>actually</em> holds a valid value at all? It's pretty simple, actually. <strong>Any</strong> optional value can bo compared with the <code>none</code> literal, so we can compare for equality / inequality extremely easily. Here is an example of that:</p>
 <pre><code class="language-rs">use Core.print
-use Core.system
 
 def main():
-    (exit_code, output) = system_command("ls");
-    print($"exit_code = {exit_code}\n");
-    print($"output = '{output}'\n");
+    i32? maybe = none;
+    if maybe == none:
+        print("has no value\n");
+
+    maybe = 69;
+    if maybe != none:
+        print($"has value: {maybe!}\n");
+</code></pre>
+<p>This program prints these lines to the console:</p>
+<blockquote>
+<pre><code>has no value
+has value: 69
+</code></pre>
+</blockquote>
+<p>But why can we compare any optional variable with <code>none</code> (including <code>none</code> itself)? Here is a small fun fact on how this is within the compiler: The <code>none</code> literal actually has the type <code>void?</code>, so its either <em>nothing</em> or <em>nothing</em>, so it's really <em>nothing</em> after all!</p>
+<p>But we cannot only compare optional values to the <code>none</code> literal, but to other optional values too:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32? maybe_1 = none;
+    i32? maybe_2 = none;
+    if maybe_1 == maybe_2:
+        print("are equal\n");
+
+    maybe_1 = 69;
+    if maybe_1 != maybe_2:
+        print($"are inequal, maybe_1 = {maybe_1!}, maybe_2 = 'none'\n");
+
+    maybe_2 = 420;
+    if maybe_1 != maybe_2:
+        print($"are inequal, maybe_1 = {maybe_1!}, maybe_2 = {maybe_2!}\n");
+
+    maybe_2 = 69;
+    if maybe_1 == maybe_2:
+        print($"are equal, maybe_1 = {maybe_1!}, maybe_2 = {maybe_2!}\n");
 </code></pre>
 <p>This program will print these lines to the console:</p>
 <blockquote>
-<pre><code>exit_code = 0
-output = 'build
-build.zig
-build.zig.zon
-cmake
-CMakeLists.txt
-compile_flags.txt
-documents
-examples
-fetch_crt.sh
-include
-LICENSE
-logfile
-lsp
-main
-main.o
-main.obj
-output.ll
-README.md
-resources
-scripts
-src
-test
-test_files
-test.o
-tests
-vendor
-'
+<pre><code>are equal
+are inequal, maybe_1 = 69, maybe_2 = 'none'
+are inequal, maybe_1 = 69, maybe_2 = 420
+are equal, maybe_1 = 69, maybe_2 = 69
 </code></pre>
 </blockquote>
+<p>So, you can see that two variables of type <code>i32?</code> match if either they are both <code>none</code> or their <em>actual</em> values match. If one of them is <code>none</code> but the other one is not, they do not match, and same goes when both have a value but that value differs, then they also do not match. As you can see, we have used quite a bit of unwrapping (<code>!</code>) in this example and the program <em>would</em> definitely crash if we would set both variables to <code>none</code> before the last <code>if</code> statement. So, you still need to use the unwrapping with caution.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../beginners_guide/8_core_modules/5_env.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../intermediates_guide/1_optionals/2_unwrapping.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../intermediates_guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../intermediates_guide/1_optionals/4_null_coalescing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -244,11 +244,11 @@ vendor
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../beginners_guide/8_core_modules/5_env.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../intermediates_guide/1_optionals/2_unwrapping.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../intermediates_guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../intermediates_guide/1_optionals/4_null_coalescing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

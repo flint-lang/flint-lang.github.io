@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>system - The Flint Wiki</title>
+        <title>Optionals - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -12,34 +12,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../../favicon.svg">
-        <link rel="shortcut icon" href="../../favicon.png">
-        <link rel="stylesheet" href="../../css/variables.css">
-        <link rel="stylesheet" href="../../css/general.css">
-        <link rel="stylesheet" href="../../css/chrome.css">
-        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "../../";
+            const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex.js";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -106,7 +106,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -141,7 +141,7 @@
                     <h1 class="menu-title">The Flint Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -175,66 +175,36 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="system"><a class="header" href="#system">system</a></h1>
-<pre><code class="language-rs">use Core.system
-</code></pre>
-<p>The <code>system</code> module provides functions to interact with the system, for example to execute system commands.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Can Throw?</th></tr></thead><tbody>
-<tr><td style="text-align: right"><code>system_command</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>i32</code>, <code>str</code></td><td style="text-align: center">Yes</td></tr>
-</tbody></table>
-</div>
-<h2 id="system_command"><a class="header" href="#system_command">system_command</a></h2>
-<p>The <code>system_command</code> function executes a given command, for example <code>ls -lah</code> and returns the exit code of the given command together with the output of the command, stored in a string. The function can throw an error if the process (the command) cannot be created.</p>
-<pre><code class="language-rs">use Core.print
-use Core.system
-
-def main():
-    (exit_code, output) = system_command("ls");
-    print($"exit_code = {exit_code}\n");
-    print($"output = '{output}'\n");
-</code></pre>
-<p>This program will print these lines to the console:</p>
-<blockquote>
-<pre><code>exit_code = 0
-output = 'build
-build.zig
-build.zig.zon
-cmake
-CMakeLists.txt
-compile_flags.txt
-documents
-examples
-fetch_crt.sh
-include
-LICENSE
-logfile
-lsp
-main
-main.o
-main.obj
-output.ll
-README.md
-resources
-scripts
-src
-test
-test_files
-test.o
-tests
-vendor
-'
-</code></pre>
-</blockquote>
+                        <h1 id="optionals"><a class="header" href="#optionals">Optionals</a></h1>
+<p>Welcome to the first chapter of the intermediates guide. In this first chapter we look at the optional type and what you can do with it. Other languages don't necessarily "need" an optional type because of other designs like Java's <code>null</code>, C's <code>NULL</code> or C++'s <code>nullptr</code>. In Flint, however, not every varaible or "object" can be "null" or "empty" implicitely.</p>
+<h2 id="what-are-optionals"><a class="header" href="#what-are-optionals">What are Optionals?</a></h2>
+<p>An optional is essentially just a struct under the hood, composed of a boolean value whether the optional has a value followed by the actual data of the optional. So an optional looks like <code>{ i1, T }</code> in memory. Optionals are crucial to be able to build up "possible" values (or possible absence of values) which is the basis of linked lists, for example, and much much more.</p>
+<h2 id="why-are-optionals-important"><a class="header" href="#why-are-optionals-important">Why are Optionals Important?</a></h2>
+<p>Optionals are an essential part of Flint because they allow you to:</p>
+<ul>
+<li>Describe the possibility of a value's absence</li>
+<li>Make initialization able to be "lazy"</li>
+</ul>
+<h2 id="what-to-expect"><a class="header" href="#what-to-expect">What to Expect</a></h2>
+<p>In this chapter, we will cover the following topics:</p>
+<ul>
+<li>Declaring and using optional variables</li>
+<li>Unwrapping and force-unwrapping of optional variables</li>
+<li>Comparing optional values with one another</li>
+<li>Providing default values through the null coalescence operator</li>
+<li>Switching on optional values</li>
+<li>Building optional chains through the optional chaining operator</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../beginners_guide/8_core_modules/5_env.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../intermediates_guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../intermediates_guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../intermediates_guide/1_optionals/1_introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -244,11 +214,11 @@ vendor
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../beginners_guide/8_core_modules/5_env.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../intermediates_guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../intermediates_guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../intermediates_guide/1_optionals/1_introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -263,13 +233,13 @@ vendor
         </script>
 
 
-        <script src="../../elasticlunr.min.js"></script>
-        <script src="../../mark.min.js"></script>
-        <script src="../../searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../../clipboard.min.js"></script>
-        <script src="../../highlight.js"></script>
-        <script src="../../book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 

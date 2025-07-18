@@ -36,6 +36,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -261,8 +270,13 @@ def main():
 </blockquote>
 <h2 id="returning-data-from-functions"><a class="header" href="#returning-data-from-functions">Returning Data from Functions</a></h2>
 <div class="warning">
-<p>Returning data variables from functions does not wory yet.</p>
-<p>The error lies somewhere hidden in the codebase, but its a nontrivial fix so i just did not bother for now. So, you will need to pass mutable references to functions for now, but thats fine in my view.</p>
+<p>Returning the constructed data directly does not work yet.</p>
+<p>When you write</p>
+<pre><code class="language-rs">def create_point(i32 x, i32 y) -&gt; Point:
+    return Point(x, y);
+</code></pre>
+<p>what Flint actually does under the hood will lead to a compilation error, as the code generation phase will fail. This is because a constructor is actually just a group under the hood, and the "element" values of data are stored in the Point variable directly. This means that the function tries to return a <code>(i32, i32)</code> instead of a <code>Point</code>, essentailly. It's not a mistake of Flint's type system or anything similar, it's just how the data declaration works at the moment, which is a bit flawed. That's also the reason why nested data constructors cannot be written directly into the constructor of the data which contains them.</p>
+<p>The below example will work perfectly fine, as we store the <code>Point</code> in a varaible first, before returning it.</p>
 </div>
 <p>You can also return data from functions, for example when creating them inside the function.</p>
 <pre><code class="language-rs">use Core.print
@@ -273,12 +287,18 @@ data Point:
     Point(x, y);
 
 def create_point(i32 x, i32 y) -&gt; Point:
-    return Point(x, y);
+    Point p = Point(x, y);
+    return p;
 
 def main():
     Point p = create_point(5, 7);
     print($"Point(x: {p.x}, y: {p.y})\n");
 </code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>Point(x: 5, y: 7)
+</code></pre>
+</blockquote>
 <p>By using functions with data, you can create and manipulate complex structures easily.</p>
 
                     </main>
@@ -327,6 +347,7 @@ def main():
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

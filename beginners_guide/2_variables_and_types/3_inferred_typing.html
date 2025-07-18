@@ -36,6 +36,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -169,16 +178,18 @@
                         <h1 id="inferred-typing"><a class="header" href="#inferred-typing">Inferred Typing</a></h1>
 <p>Flint allows for inferred typing, meaning you don't always need to explicitly state the type of a variable. The compiler can infer the type based on the assigned value.</p>
 <h2 id="how-it-works"><a class="header" href="#how-it-works">How it works</a></h2>
-<pre><code class="language-rs">x := 42; // The compiler infers that x is an i32
-pi := 3.14; // The compiler infers that pi is a f32
-greeting := "Hello, Flint!"; // The compiler infers that greeting is a str
+<pre><code class="language-rs">def main():
+    x := 42; // The compiler infers that x is an i32
+    pi := 3.14; // The compiler infers that pi is a f32
+    greeting := "Hello, Flint!"; // The compiler infers that greeting is a str
 </code></pre>
 <p>While inferred typing is convenient and makes code concise, explicit typing can improve readability in more complex programs. You can always use explicit typing if you prefer its clarity:</p>
-<pre><code class="language-rs">i32 x = 42; // Explicitly declare x as an i32
-f32 pi = 3.14; // Explicitly declare pi as a f32
-str greeting = "Hello, Flint!"; // Explicitly declare greeting as a str
+<pre><code class="language-rs">def main():
+    i32 x = 42; // Explicitly declare x as an i32
+    f32 pi = 3.14; // Explicitly declare pi as a f32
+    str greeting = "Hello, Flint!"; // Explicitly declare greeting as a str
 </code></pre>
-<p>Use inferred typing for shorter, simpler programs and explicit typing when clarity is crucial.</p>
+<p>Use inferred typing for shorter, simpler programs and explicit typing when clarity is crucial. It's also important to note that <em>only</em> varaibles are allowed to have inferred typing, nothing else.</p>
 
                     </main>
 
@@ -226,6 +237,7 @@ str greeting = "Hello, Flint!"; // Explicitly declare greeting as a str
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

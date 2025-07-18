@@ -37,6 +37,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -93,10 +94,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -147,7 +151,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -232,7 +241,7 @@ def main():
 
 def main():
     // This is a single-line comment explaining the print statement below
-    print("Hello, Flint!"\n);
+    print("Hello, Flint!\n");
 
     /*
      This is a multi-line comment.
@@ -259,7 +268,9 @@ print("This is not indented correctly.");
 </code></pre>
 </blockquote>
 <p>This happens because Flint expects all code inside main to be indented. Here’s the correct way to write it:</p>
-<pre><code class="language-rs">def main():
+<pre><code class="language-rs">use Core.print
+
+def main():
 	print("This is correctly indented.\n"); // Properly indented
 </code></pre>
 <p>Proper indentation is not just a stylistic choice in Flint – it’s a fundamental part of the syntax. You do not need to indent using hard tabs (<code>\t</code>), <strong>4 spaces</strong> are interpreted as tabs by the Flint compiler.</p>
@@ -292,32 +303,36 @@ print("This is not indented correctly.");
 <li><code>i32</code>
 Represents whole numbers, both positive and negative. Use <code>i32</code> for counting, indexing, or whenever you need discrete values.</li>
 </ol>
-<pre><code class="language-rs">i32 x = 42; // A positive integer
-i32 y = -15; // A negative integer
-i32 z = 0; // Zero is also an integer
+<pre><code class="language-rs">def main():
+    i32 x = 42; // A positive integer
+    i32 y = -15; // A negative integer
+    i32 z = 0; // Zero is also an integer
 </code></pre>
 <ol start="2">
 <li><code>u32</code>
 Represents whole numbers, but only positive ones. Use <code>u32</code> for IDs.</li>
 </ol>
-<pre><code class="language-rs">u32 id_1 = 1;
-u32 id_0 = 0:
+<pre><code class="language-rs">def main():
+    u32 id_1 = 1;
+    u32 id_0 = 0;
 </code></pre>
 <ol start="3">
 <li><code>f32</code>
 Represents floating-point numbers (decimal numbers). Use <code>f32</code> for measurements, precise calculations, or any value that requires a fractional component.</li>
 </ol>
-<pre><code class="language-rs">f32 pi = 3.14; // Approximation of π
-f32 zero_kelvin = -273.15; // Negative floating point values are valid
-f32 zero = 0.0; // Zero with a decimal
+<pre><code class="language-rs">def main():
+    f32 pi = 3.14; // Approximation of Pi
+    f32 zero_kelvin = -273.15; // Negative floating point values are valid
+    f32 zero = 0.0; // Zero with a decimal
 </code></pre>
 <ol start="4">
 <li><code>str</code>
 Represents a sequence of characters or text, as already described in the printing chapter. Use <code>str</code> for names, messages, or any textual data. Strings must be enclosed in double quotes (<code>"</code>).</li>
 </ol>
-<pre><code class="language-rs">str name = "Flint"; // A simple string
-str empty = ""; // An empty string
-str greeting = "Hello, World!"; // A common example
+<pre><code class="language-rs">def main():
+    str name = "Flint"; // A simple string
+    str empty = ""; // An empty string
+    str greeting = "Hello, World!"; // A common example
 </code></pre>
 <p>These types are the foundation of Flint's data handling. As you write more complex programs, you'll combine them in creative ways to represent and manipulate information. But these are not the only primitive types there are available for Flint, they are just the most frequently used ones.</p>
 <h2 id="bit-width"><a class="header" href="#bit-width">Bit-Width</a></h2>
@@ -352,8 +367,9 @@ Now lets look at how to assign new values to the variable:</p>
 </code></pre>
 <p>You can try to compile this program yourself and see what you get. But to make things a bit easier i show you. You will get this error:</p>
 <blockquote>
-<p>Parse Error at main.ft:3:9
--- Variable 'x' already exists</p>
+<pre><code>Parse Error at main.ft:3:9
+ -- Variable 'x' already exists
+</code></pre>
 </blockquote>
 <p>As you can see, Flint only allows one single variable with the identifier <code>x</code> to exist within the main function, even if its type differs:</p>
 <pre><code class="language-rs">def main():
@@ -365,16 +381,18 @@ Now lets look at how to assign new values to the variable:</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="inferred-typing"><a class="header" href="#inferred-typing">Inferred Typing</a></h1>
 <p>Flint allows for inferred typing, meaning you don't always need to explicitly state the type of a variable. The compiler can infer the type based on the assigned value.</p>
 <h2 id="how-it-works"><a class="header" href="#how-it-works">How it works</a></h2>
-<pre><code class="language-rs">x := 42; // The compiler infers that x is an i32
-pi := 3.14; // The compiler infers that pi is a f32
-greeting := "Hello, Flint!"; // The compiler infers that greeting is a str
+<pre><code class="language-rs">def main():
+    x := 42; // The compiler infers that x is an i32
+    pi := 3.14; // The compiler infers that pi is a f32
+    greeting := "Hello, Flint!"; // The compiler infers that greeting is a str
 </code></pre>
 <p>While inferred typing is convenient and makes code concise, explicit typing can improve readability in more complex programs. You can always use explicit typing if you prefer its clarity:</p>
-<pre><code class="language-rs">i32 x = 42; // Explicitly declare x as an i32
-f32 pi = 3.14; // Explicitly declare pi as a f32
-str greeting = "Hello, Flint!"; // Explicitly declare greeting as a str
+<pre><code class="language-rs">def main():
+    i32 x = 42; // Explicitly declare x as an i32
+    f32 pi = 3.14; // Explicitly declare pi as a f32
+    str greeting = "Hello, Flint!"; // Explicitly declare greeting as a str
 </code></pre>
-<p>Use inferred typing for shorter, simpler programs and explicit typing when clarity is crucial.</p>
+<p>Use inferred typing for shorter, simpler programs and explicit typing when clarity is crucial. It's also important to note that <em>only</em> varaibles are allowed to have inferred typing, nothing else.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="operators"><a class="header" href="#operators">Operators</a></h1>
 <p>Flint has quite a few operators in its disposal. The most common and most simple ones, however, are <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code>. The <code>+</code> and <code>-</code> operators dont need much explaination, really.</p>
 <h2 id="integer-arithmetic"><a class="header" href="#integer-arithmetic">Integer Arithmetic</a></h2>
@@ -1073,10 +1091,6 @@ container.(a, b, c) = (-11, 23.823187, 1037)
 </code></pre>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="switch"><a class="header" href="#switch">Switch</a></h1>
-<div class="warning">
-<p>Switch statements and expressions do not work yet.</p>
-<p>Switch statements are not yet implemented in the compiler, at all. You will get compile errors front and center if you try to use them.</p>
-</div>
 <h2 id="switch-statements"><a class="header" href="#switch-statements">Switch Statements</a></h2>
 <p>Switch statements are actually pretty easy to understand once you grasped if chains. <code>switch</code> statements are primarily used for pattern-matching purposes or for cases where you have a limited selection of possible values, like with enums, where you only have the possibilities of each tag.</p>
 <p>Let's actually re-write the same example from the previous example, but without the if chain we now use a switch statement:</p>
@@ -1096,11 +1110,11 @@ def compare(i32 x, i32 y) -&gt; ComparisonResult:
 def main():
     ComparisonResult result = compare(10, 5);
     switch result:
-        ComparisonResult.BIGGER:
+        BIGGER:
             print("is bigger\n");
-        ComparisonResult.SMALLER:
+        SMALLER:
             print("is smaller\n");
-        ComparisonResult.EQUAL:
+        EQUAL:
             print("is equal\n");
 </code></pre>
 <p>This program will print this line to the console:</p>
@@ -1160,6 +1174,10 @@ int main() {
 </code></pre>
 </blockquote>
 <p>And this is the behaviour that Flint has by default. In Flint, falltrough is not opt-out but rather opt-in. We don't actually have a keyword for this but rather an annotation. Here is an example of it:</p>
+<div class="warning">
+<p>Flint does not support annotations (<code>#...</code>) yet</p>
+<p>The below example will not compile, as Flint does not support annotations yet. So, at this moment in time it is not possible to have a fallthrough-behaviour in a Flint switch.</p>
+</div>
 <pre><code class="language-rs">use Core.print
 
 enum MyEnum:
@@ -1169,11 +1187,11 @@ def main():
     MyEnum e = MyEnum.VAL1;
     switch e:
         #fallthrough
-        MyEnum.VAL1:
+        VAL1:
             print("is val1\n");
-        MyEnum.VAL2:
+        VAL2:
             print("is val2\n");
-        MyEnum.VAL3:
+        VAL3:
             print("is val3\n");
 </code></pre>
 <p>This program will print these lines to the console:</p>
@@ -1193,10 +1211,10 @@ enum MyEnum:
 def main():
     MyEnum e = MyEnum.VAL1;
     i32 result = switch e:
-        MyEnum.VAL1 -&gt; 1;
-        MyEnum.VAL2 -&gt; 2;
-        MyEnum.VAL3 -&gt; 4;
-    print("result = {result}\n");
+        VAL1 -&gt; 1;
+        VAL2 -&gt; 2;
+        VAL3 -&gt; 4;
+    print($"result = {result}\n");
 </code></pre>
 <p>This program will print this line to the console:</p>
 <blockquote>
@@ -1302,10 +1320,10 @@ def main():
 <pre><code class="language-rs">use Core.print
 
 def get_greeting() -&gt; str:
-    return "Hello, Flint!\n"
+    return "Hello, Flint!\n";
 
 def main():
-    str greeting = get_geeting();
+    str greeting = get_greeting();
     print(greeting);
 </code></pre>
 <p>This program will print this line to the console:</p>
@@ -1758,7 +1776,7 @@ rect.bottom_right.(x, y) = (10, 10)
 <h2 id="what-about-circular-references"><a class="header" href="#what-about-circular-references">What about Circular References?</a></h2>
 <div class="warning">
 <p>The below example actually compiles, but its impossible to run.</p>
-<p>Data is actually allowed to contain itself, but its impossible to initialize, as Flint has noo concept of <strong>nullpointers</strong> or <strong>null</strong> like other languages have. Flint has its optionals <code>Opt&lt;T&gt;</code> instead, but they are not implemented yet. Its amusing how the below example actually compiles fine.</p>
+<p>Data is actually allowed to contain itself, but its impossible to initialize, as Flint has noo concept of <strong>nullpointers</strong> or <strong>null</strong> like other languages have. Flint has its optionals <code>T?</code> instead, but they are not implemented yet. Its amusing how the below example actually compiles fine.</p>
 </div>
 <p>Flint does not allow a data module to reference itself directly or indirectly like showcased below:</p>
 <pre><code class="language-rs">data Node:
@@ -1768,7 +1786,7 @@ rect.bottom_right.(x, y) = (10, 10)
 </code></pre>
 <p>While this may seem restrictive, it is pretty easy explained why this does not work: If you try to initialize a new variable of type <code>Node</code> you need to provide both its fields for the initializer. The <code>value</code> is fine, you can just pass in a literal, but what about the second field, <code>next</code>? To create a new variable of type <code>Node</code> you need an already existent variable of the same type to pass into, and thats impossible.</p>
 <h2 id="hint"><a class="header" href="#hint">Hint:</a></h2>
-<p>Flint can handle circular references with the help of the <strong>optional type (<code>Opt</code>)</strong>. These convert a reference to a wek reference in circular context's, thus enabling the use of data in of itself, for example for <strong>linked lists</strong>.</p>
+<p>Flint can handle circular references with the help of the <strong>optional type (<code>?</code>)</strong>. These convert a reference to a wek reference in circular context's, thus enabling the use of data in of itself, for example for <strong>linked lists</strong>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="using-data-in-functions"><a class="header" href="#using-data-in-functions">Using Data in Functions</a></h1>
 <p>Data modules can be passed to and returned from functions, enabling you to manipulate them easily.</p>
 <pre><code class="language-rs">use Core.print
@@ -1864,8 +1882,13 @@ def main():
 </blockquote>
 <h2 id="returning-data-from-functions"><a class="header" href="#returning-data-from-functions">Returning Data from Functions</a></h2>
 <div class="warning">
-<p>Returning data variables from functions does not wory yet.</p>
-<p>The error lies somewhere hidden in the codebase, but its a nontrivial fix so i just did not bother for now. So, you will need to pass mutable references to functions for now, but thats fine in my view.</p>
+<p>Returning the constructed data directly does not work yet.</p>
+<p>When you write</p>
+<pre><code class="language-rs">def create_point(i32 x, i32 y) -&gt; Point:
+    return Point(x, y);
+</code></pre>
+<p>what Flint actually does under the hood will lead to a compilation error, as the code generation phase will fail. This is because a constructor is actually just a group under the hood, and the "element" values of data are stored in the Point variable directly. This means that the function tries to return a <code>(i32, i32)</code> instead of a <code>Point</code>, essentailly. It's not a mistake of Flint's type system or anything similar, it's just how the data declaration works at the moment, which is a bit flawed. That's also the reason why nested data constructors cannot be written directly into the constructor of the data which contains them.</p>
+<p>The below example will work perfectly fine, as we store the <code>Point</code> in a varaible first, before returning it.</p>
 </div>
 <p>You can also return data from functions, for example when creating them inside the function.</p>
 <pre><code class="language-rs">use Core.print
@@ -1876,12 +1899,18 @@ data Point:
     Point(x, y);
 
 def create_point(i32 x, i32 y) -&gt; Point:
-    return Point(x, y);
+    Point p = Point(x, y);
+    return p;
 
 def main():
     Point p = create_point(5, 7);
     print($"Point(x: {p.x}, y: {p.y})\n");
 </code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>Point(x: 5, y: 7)
+</code></pre>
+</blockquote>
 <p>By using functions with data, you can create and manipulate complex structures easily.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tuples"><a class="header" href="#tuples">Tuples</a></h1>
 <p>Tuples are a really nice concept in general and they exist in pretty much every language. But first, lets talk about what tuples even are and maybe take a closer look at <code>data</code> in general.
@@ -1925,7 +1954,7 @@ def main():
 <blockquote>
 <pre><code>first = 3
 second = 2.2
-third = hello!
+third = "hello!"
 </code></pre>
 </blockquote>
 <p>As you can clearly see, we access the elements of the tuple with the <code>.$N</code> syntax, where <code>N</code> is the index of the element we want to access. Like always for indices, we start at 0 as Flint has zero-based indexing. If we would try to access an element which is out of bounds, like <code>.$3</code> in our case we would actually get a compile error:</p>
@@ -1935,7 +1964,13 @@ third = hello!
 </code></pre>
 <div class="warning">
 <p>The error message for this error has not been added yet.</p>
-<p>Currently the error is <code>Custom Error: 2</code> without giving <em>any</em> information what error it is.</p>
+<p>Currently the error is:</p>
+<blockquote>
+<pre><code>Parse Error at main.ft:3:5
+-- Failed to parse statement: i32 = tuple . $ 3;
+</code></pre>
+</blockquote>
+<p>Which is just a generic message stating something went wrong with the statement, but not stating that the <code>$3</code> is the wrong part, as it's larger than the size of the tuple.</p>
 </div>
 <h2 id="tuple-assignment"><a class="header" href="#tuple-assignment">Tuple Assignment</a></h2>
 <p>Just like we can access elements from a tuple, we can also assign new values to the elements of a tuple. Here is a simple example of this in action:</p>
@@ -2058,12 +2093,12 @@ def main():
     i32x3 v3 = (1, 2, 3);
     print($"v3.(x, y, z) = ({v3.x}, {v3.y}, {v3.z})\n");
     v3.(x, y, z) = (4, 5, 6);
-    print($"v3.(x, y, z) = ({v3.x}, {v3.y}, {v3.z})\n");
+    print($"v3 = {v3}\n");
 </code></pre>
 <p>This program will print these lines to the console:</p>
 <blockquote>
 <pre><code>v3.(x, y, z) = (1, 2, 3)
-v3.(x, y, z) = (4, 5, 6)
+v3 = (4, 5, 6)
 </code></pre>
 </blockquote>
 <p>As you can see, the 3-width i32 multi-type has the "fields" of x, y and z, each being of type <code>i32</code>. There exist several multi-types in Flint today:</p>
@@ -2111,7 +2146,7 @@ def main():
     i32x4 v4_1 = (1, 2, 3, 4);
     i32x4 v4_2 = (5, 6, 7, 8);
     i32x4 sum = v4_1 + v4_2;
-    print($"sum = ({sum.r}, {sum.g}, {sum.b}, {sum.a})\n");
+    print($"sum = {sum}\n");
 </code></pre>
 <p>This program will print this line to the console:</p>
 <blockquote>
@@ -2339,7 +2374,7 @@ def main():
 character 'D' is 68
 </code></pre>
 </blockquote>
-<h2 id="getting-a-strings-length"><a class="header" href="#getting-a-strings-length">Getting a strings length</a></h2>
+<h2 id="getting-a-strings-length"><a class="header" href="#getting-a-strings-length">Getting a string's length</a></h2>
 <p>It is not uncommon to have a string as a paramter of a function, for example, and then we often want to get the length of the string somehow, maybe we dont know the length of a string beforehand, for example when parsing user input (will be talked about in a later chapter). But, very often we don't know the size of a string when writing the program, so we need a way to get a strings length at runtime. Here is a small program demonstrating how to get and use the length of a string:</p>
 <pre><code class="language-rs">use Core.print
 
@@ -3181,6 +3216,238 @@ vendor
 '
 </code></pre>
 </blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="from-intermediate-to-expert"><a class="header" href="#from-intermediate-to-expert">From Intermediate to Expert</a></h1>
+<p>Welcome to the Intermediates guide! In this guide you will learn new and bigger concepts of Flint and also become more familiar with how Flint handles various systems and <em>stuff</em> under the hood. Being great in a language does not necessarily only mean knowing all it's syntax, but clearly understanding <em>what</em> the language does under the hood for you and then choosing the right feature for the job, based on this holistic knowledge of the language. While you will not learn <strong>everything</strong> that's going on under Flint's hood in this guide (Thats more for the expert's guide), you will learn quite a lot of new concepts and features which make your life using Flint much easier.</p>
+<p>The goal of this guide is not only to teach the <em>how</em> but also the <em>why</em>, which is equally as important. Flint is open source, so the more you understand about the language itself the more you essentially understand about it's compiler, as the compiler is just a "mapper" which maps semantic concepts to machine code, and if you know exactly which behaviour it needs to map you essentially understand the compiler as well.</p>
+<p>So, let's get started!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="optionals"><a class="header" href="#optionals">Optionals</a></h1>
+<p>Welcome to the first chapter of the intermediates guide. In this first chapter we look at the optional type and what you can do with it. Other languages don't necessarily "need" an optional type because of other designs like Java's <code>null</code>, C's <code>NULL</code> or C++'s <code>nullptr</code>. In Flint, however, not every varaible or "object" can be "null" or "empty" implicitely.</p>
+<h2 id="what-are-optionals"><a class="header" href="#what-are-optionals">What are Optionals?</a></h2>
+<p>An optional is essentially just a struct under the hood, composed of a boolean value whether the optional has a value followed by the actual data of the optional. So an optional looks like <code>{ i1, T }</code> in memory. Optionals are crucial to be able to build up "possible" values (or possible absence of values) which is the basis of linked lists, for example, and much much more.</p>
+<h2 id="why-are-optionals-important"><a class="header" href="#why-are-optionals-important">Why are Optionals Important?</a></h2>
+<p>Optionals are an essential part of Flint because they allow you to:</p>
+<ul>
+<li>Describe the possibility of a value's absence</li>
+<li>Make initialization able to be "lazy"</li>
+</ul>
+<h2 id="what-to-expect-4"><a class="header" href="#what-to-expect-4">What to Expect</a></h2>
+<p>In this chapter, we will cover the following topics:</p>
+<ul>
+<li>Declaring and using optional variables</li>
+<li>Unwrapping and force-unwrapping of optional variables</li>
+<li>Comparing optional values with one another</li>
+<li>Providing default values through the null coalescence operator</li>
+<li>Switching on optional values</li>
+<li>Building optional chains through the optional chaining operator</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction-1"><a class="header" href="#introduction-1">Introduction</a></h1>
+<p>In Flint, we need to explicitely define which values possibly have no value. There is no implicit nullability like in other languages, nullability is very explicit in Flint, and that's a good thing. This means that we do not check everywhere if our object maybe is null, because when it's not an optional type it is <strong>required</strong> to be initialized, as there <em>is no uninitialized state in Flint</em>.</p>
+<p>We do this through the optional type. Optional values can either have a value or they can be "empty". This "empty" state is achieved through the <code>none</code> literal. If an optional variable is set to <code>none</code> it effectively has no longer any value stored on it. But let's look at optionals in an example, they are best understood through examples:</p>
+<pre><code class="language-rs">def main():
+    i32? maybe = none;
+</code></pre>
+<p>This program will not print anything to the console, but we can see quite some things already. As you can see, an optional type is defined directly inline by just slapping a question mark at the end of the type. This makes the whole type optional, which means it now can be "nothing". You can see this through us assigning <code>none</code> to the <code>maybe</code> variable.</p>
+<p>Let's discuss what actually happens here under the hood within the compiler and within Flint itself. You already know what a <code>struct</code> is in other languages, and in Flint thats either an anonymous tuple or <code>data</code>. So, an optional is essentially nothing else than a small struct containing of a <code>bool</code> value together with the <em>actual</em> value of the optional. In the case of our optional, this means that <code>maybe</code> is essentially the same as if we would write:</p>
+<pre><code class="language-rs">def main():
+    data&lt;bool, i32&gt; maybe = (false, 0);
+</code></pre>
+<p>A boolean <code>false</code> is simply <code>0</code> in memory, as you already know. The <code>none</code> literal literally just stores zeroes on the entire optional structure. It's a <code>zeroinitializer</code> if you know this from C, its a <code>{0}</code>. Because the flag is 0 when false we can set all values to zeroes through the <code>none</code> type. This means that the <code>value</code> field of the optional structure will also be set to zeroes when storing a <code>none</code> literal on it. But here, when using the tuple, we need to specify the <code>value</code> we want to store in it, even if we want to store <code>none</code> (<code>(false, 0)</code>) on it.</p>
+<p>Because we store all-zeroes on the optional when storing <code>none</code> on it, you now may be able to see that accessing the value of an optional when there is nothing stored in it can be considered as an error, as it's all just zeroes. But how do we even access the value of an optional variable in the first place? You will learn this in the next chapter!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="unwrapping"><a class="header" href="#unwrapping">Unwrapping</a></h1>
+<p>Unwrapping is the act of recieving / reading the value of an optional variable. When there is nothing stored in the optional, however, it is considered an error to access it's value, as this could lead to wrong and potentially harmful behaviour (like undefined behaviour, nullpointers or many other things that could go wrong).</p>
+<p>Because of this very reason Flint decides that accessing the value of an <code>none</code> optional is an error, and the program will crash with a simple message to the console stating that we tried to access the value of an empty optional. But enough talk, here is a small example showcasing exactly that:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32? maybe = 10;
+    print($"maybe = {maybe!}\n");
+
+    maybe = none;
+    print($"mabye = {maybe!}\n");
+    print("after access\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>maybe = 10
+Bad optional access occurred
+</code></pre>
+</blockquote>
+<p>Currently, this does not <code>throw</code> an error (like <code>asssert</code> would, for example) but it hard-crashes the program instad. This is open for debate whether it should throw an error and be catchable instead (like an assertion error we then would have a bad optional access error). For now, hard-crashing is fine and works, because accessing an optional which has no value is considered a programmer error, not a user error. But how do we check if the variable has a value, to prevent this crash from happening? You will learn about this in the next chapter.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="comparing-optionals"><a class="header" href="#comparing-optionals">Comparing Optionals</a></h1>
+<p>We now know how to access the value of an optional variable, but how do we check if the variable <em>actually</em> holds a valid value at all? It's pretty simple, actually. <strong>Any</strong> optional value can bo compared with the <code>none</code> literal, so we can compare for equality / inequality extremely easily. Here is an example of that:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32? maybe = none;
+    if maybe == none:
+        print("has no value\n");
+
+    maybe = 69;
+    if maybe != none:
+        print($"has value: {maybe!}\n");
+</code></pre>
+<p>This program prints these lines to the console:</p>
+<blockquote>
+<pre><code>has no value
+has value: 69
+</code></pre>
+</blockquote>
+<p>But why can we compare any optional variable with <code>none</code> (including <code>none</code> itself)? Here is a small fun fact on how this is within the compiler: The <code>none</code> literal actually has the type <code>void?</code>, so its either <em>nothing</em> or <em>nothing</em>, so it's really <em>nothing</em> after all!</p>
+<p>But we cannot only compare optional values to the <code>none</code> literal, but to other optional values too:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32? maybe_1 = none;
+    i32? maybe_2 = none;
+    if maybe_1 == maybe_2:
+        print("are equal\n");
+
+    maybe_1 = 69;
+    if maybe_1 != maybe_2:
+        print($"are inequal, maybe_1 = {maybe_1!}, maybe_2 = 'none'\n");
+
+    maybe_2 = 420;
+    if maybe_1 != maybe_2:
+        print($"are inequal, maybe_1 = {maybe_1!}, maybe_2 = {maybe_2!}\n");
+
+    maybe_2 = 69;
+    if maybe_1 == maybe_2:
+        print($"are equal, maybe_1 = {maybe_1!}, maybe_2 = {maybe_2!}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>are equal
+are inequal, maybe_1 = 69, maybe_2 = 'none'
+are inequal, maybe_1 = 69, maybe_2 = 420
+are equal, maybe_1 = 69, maybe_2 = 69
+</code></pre>
+</blockquote>
+<p>So, you can see that two variables of type <code>i32?</code> match if either they are both <code>none</code> or their <em>actual</em> values match. If one of them is <code>none</code> but the other one is not, they do not match, and same goes when both have a value but that value differs, then they also do not match. As you can see, we have used quite a bit of unwrapping (<code>!</code>) in this example and the program <em>would</em> definitely crash if we would set both variables to <code>none</code> before the last <code>if</code> statement. So, you still need to use the unwrapping with caution.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="null-coalescing-operator"><a class="header" href="#null-coalescing-operator">Null Coalescing Operator</a></h1>
+<p>The Null Coalescing Operator <code>??</code> is a pretty interesting operator in the sense that it "removes" the need for the optional unwrapping operator (in certain scenarios). It is used to provide a "default" value of an optional for the case that the optional is empty. It is a binary operator, like arithmetic operators, but has a very distinct purpose. It is called like that for historical reasons as it is called like that in every other language that has it, alltough we should rather call it the <code>Optional Coalescing Operator</code> in Flint, but that's besids the point.</p>
+<p>If we take a varaible <code>x</code> and it is of type <code>i32?</code>, then a binary operator expression using the <code>??</code> operator would return a value of type <code>i32</code>. But let's look at an example maybe, then everything should be more clear:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32? maybe = none;
+
+    i32 x = maybe ?? 0;
+    print($"x = {x}\n");
+
+    maybe = 69;
+    x = maybe ?? 0;
+    print($"x = {x}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>x = 0
+x = 69
+</code></pre>
+</blockquote>
+<p>But why? And how does this even work? The null coalescing operator operates on an optional-typed value as it's <code>lhs</code> which is of type <code>T?</code>, where <code>T</code> stands as a "placeholder" type, you can put any type you want in there. If the <code>lhs</code> of the <code>??</code> operator is of type <code>T?</code> then the <code>rhs</code> of the operator <strong>must be</strong> of type <code>T</code> and the result of the null coalescing expression will <strong>always</strong> be of type <code>T</code>.</p>
+<p>In our case this means that the <code>lhs</code> has the type <code>i32?</code> and the <code>rhs</code> has the type <code>i32</code> and the result of the coalescing operation is of type <code>i32</code> as well. The operator essentailly just does these things:</p>
+<ul>
+<li>Does the <code>lhs</code> have a value?</li>
+<li>If yes, take that value and unwrap it</li>
+<li>Else, take the provided default-value from the <code>rhs</code></li>
+</ul>
+<p>So, it is simply impossible to get an hard crash with the null coalescing operator, unlike the unwrap operator which crashes when the optional is empty. But, it is not possible to provide default values in all cases. The null coalescing operator will become extremely important in the area of <code>linearization</code> in a much later chapter when we come around to <code>Blueprints</code> but it's still a long journey until then.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="switching-on-optionals"><a class="header" href="#switching-on-optionals">Switching on Optionals</a></h1>
+<p>We can also switch on optional values to gain access to their stored value as well. The syntax for switching on optionals is a bit different than the syntax on switching on enums. The <code>switch</code> statement and expression have different syntax based on the type they switch on, it is the only statement in Flint where this is true (except for the pipe operator <code>|&gt;</code>). But let's have a look at a simple example:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+	i32? maybe = none;
+	
+	switch maybe:
+		none: print("none\n");
+		v: print($"value = {v}\n");
+	
+	maybe = 69;
+	switch maybe:
+		none: print("none\n");
+		v: print($"value = {v}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>none
+value = 69
+</code></pre>
+</blockquote>
+<p>As you can see, we have one switch branch for the <code>none</code> case, where there isn't anything stored in the optional value at all, and we have one case for the value case. But what is that <code>v</code> there? <code>v</code> is like a "variable declaration" here, it's just a name we give to access the value field of the optional directly. Note that the type of the <code>v</code> "variable" is <code>i32</code> here, so we can not set the variable <code>maybe</code> to be <code>none</code> through the <code>v</code> variable.</p>
+<p>But what we can do is do a little "trick". You see, the variable <code>v</code> gives us a direct mutable reference to the value field of <code>maybe</code>, it's not simply a <em>copy</em> of the value field, it's a <em>reference</em> to it, as seen in the next code example:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32? maybe = 30;
+    print($"value = {maybe!}\n");
+
+    switch maybe:
+        none: print("none\n");
+        v: v = 10;
+    print($"value = {maybe!}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>value = 30
+value = 10
+</code></pre>
+</blockquote>
+<p>So, this mutability actually allows us to circumvent Flint's safety mechanisms around accessing the value field of an empty optional variable, which is rather interesting:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+	i32? maybe = 30;
+	
+	switch maybe:
+		none: print("none\n");
+		v:
+			print($"v = {v}\n");
+			maybe = none;
+			print($"v = {v}\n");
+</code></pre>
+<p>This code will print these lines to the console:</p>
+<blockquote>
+<pre><code>v = 30
+v = 0
+</code></pre>
+</blockquote>
+<p>So, you are not allowed to access the value when there is nothing stored on it but if there <em>was</em> something stored on it and you <em>still</em> have the reference to the value field you can actually still modify it. Maybe we will add a system to detect and prevent this behaviour, but it's very funny in my opinion that you can do it at all.
+Also, this is a great example to showcase the behaviour of the <code>none</code> assignment we have talked about earlier, that the <code>none</code> literal is literally a zeroinitializer of the given type it is meant to be stored at. In our <code>i32?</code> example that's not a big deal, the value is just set to 0, but think about what happens if that would have been a <code>str?</code>. Strings are not "stack"-allocated in Flint, so they are pointers under the hood. And all values set to 0 interpreted as a pointer is a <code>nullptr</code>, so accessing the value would crash our program, but with a mysterious <code>Segmentation Fault</code> instead.</p>
+<p>So, keep your eyes open for this "bug" (or "feature" if you will) as it could be not what you would want. In this simple example it is clear that we should not do <code>maybe = none</code>, but what if that would be a function call instead and somewhere down the line the optional is set to <code>none</code> and then we try to use the value <code>v</code> after the call? That's where the problems start to happen. So, as a general rule of thumb: Try avoiding the variable which is switched on within the value block of the switch entirely, you should <em>only</em> access the value field directly, not the switched-on variable. (Maybe we could make this into a compiler-rule, as this then would not be a runtime-check but a compile-time check to see if the variable that's switched on is accessed in the value-block).</p>
+<p>We can also put the switch statement in a separate function entirely and pass the optional value to said function. The optional value will be passed by reference, not by value, so this means that any modifications to the optional will be visible at the callers side as well:</p>
+<div class="warning">
+<p>Optionals are passed by value at this moment in time</p>
+<p>Alltough optionals <em>should</em> be passed by reference, they are actually passed by value, so the below program will not show the expected output. Keep this in mind when using optionals at this moment in time. Okay, but this also means that the point i made earlier about <em>"passing the variable which is switched on to a function causes problems"</em> is actually not that big of a problem at all, as the switched-on variable cannot be set to <code>none</code> by the function this way, and setting the switched-on variable to <code>none</code> within the value block is a very easy to spot mistake... so, maybe passing optionals as copies has it's upsides as well. This definitely needs some more time (and testing) to find out what design fits Flint the best.</p>
+</div>
+<pre><code class="language-rs">use Core.print
+
+def print_opt(i32? value):
+	switch value:
+		none: print("none\n");
+		v: print($"value = {v}\n");
+
+def set_value(mut i32? opt, i32 value):
+	if opt == none:
+		opt = value;
+
+def main():
+	i32? maybe = none;
+	print_opt(maybe);
+
+	maybe = 69;
+	print_opt(maybe);
+
+	set_value(maybe, 20);
+	print_opt(maybe);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>none
+value = 69
+value = 20
+</code></pre>
+</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="error-sets"><a class="header" href="#error-sets">Error Sets</a></h1>
 <div class="warning">
 <p>Everything regarding error handling <strong>will</strong> definitely change for later releases.</p>
@@ -3290,6 +3557,7 @@ result = 3
             window.setTimeout(window.print, 100);
         });
         </script>
+
 
     </div>
     </body>
