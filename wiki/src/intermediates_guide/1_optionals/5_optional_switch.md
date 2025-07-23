@@ -79,14 +79,6 @@ So, keep your eyes open for this "bug" (or "feature" if you will) as it could be
 
 We can also put the switch statement in a separate function entirely and pass the optional value to said function. The optional value will be passed by reference, not by value, so this means that any modifications to the optional will be visible at the callers side as well:
 
-<div class="warning">
-
-Optionals are passed by value at this moment in time
-
-Alltough optionals *should* be passed by reference, they are actually passed by value, so the below program will not show the expected output. Keep this in mind when using optionals at this moment in time. Okay, but this also means that the point i made earlier about *"passing the variable which is switched on to a function causes problems"* is actually not that big of a problem at all, as the switched-on variable cannot be set to `none` by the function this way, and setting the switched-on variable to `none` within the value block is a very easy to spot mistake... so, maybe passing optionals as copies has it's upsides as well. This definitely needs some more time (and testing) to find out what design fits Flint the best.
-
-</div>
-
 ```rs
 use Core.print
 
@@ -96,8 +88,7 @@ def print_opt(i32? value):
 		v: print($"value = {v}\n");
 
 def set_value(mut i32? opt, i32 value):
-	if opt == none:
-		opt = value;
+	opt = value;
 
 def main():
 	i32? maybe = none;

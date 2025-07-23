@@ -105,13 +105,15 @@
     - [Switching on Optionals](./intermediates_guide/1_optionals/5_optional_switch.md)
     - [Optional Chaining]()
 
-  - [Variants]()
+  - [Variants](./intermediates_guide/2_variants.md)
 
-    - [Introduction]()
-    - [Tagged Variants]()
+    - [Introduction](./intermediates_guide/2_variants/1_introduction.md)
+    - [Switching on Variants](./intermediates_guide/2_variants/2_variant_switch.md)
+    - [Tagged Variants](./intermediates_guide/2_variants/3_tagged.md)
     - [Variant Comparison]()
-    - [Switching on Variants]()
+    - [Unwrapping Variants]()
     - [Variant Extraction]()
+    - [Optional Variants]()
 
   - [Error Sets](./intermediates_guide/3_error_sets.md)
 
