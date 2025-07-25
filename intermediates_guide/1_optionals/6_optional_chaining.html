@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Switching on Optionals - The Flint Wiki</title>
+        <title>Optional Chaining - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -175,107 +175,131 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="switching-on-optionals"><a class="header" href="#switching-on-optionals">Switching on Optionals</a></h1>
-<p>We can also switch on optional values to gain access to their stored value as well. The syntax for switching on optionals is a bit different than the syntax on switching on enums. The <code>switch</code> statement and expression have different syntax based on the type they switch on, it is the only statement in Flint where this is true (except for the pipe operator <code>|&gt;</code>). But let's have a look at a simple example:</p>
+                        <h1 id="optional-chaining"><a class="header" href="#optional-chaining">Optional Chaining</a></h1>
+<p>Optional chaining is quite interesting in Flint. You already have seen the <code>!</code> operator. You have been told until now that this operator is an <em>unary</em> operator, but that was not quite correct, actually. It's one of Flint's few "in-between operators" (There is no industry standard name for them, actually). One "in-between operator" is the dot <code>.</code>, actually. When you do a <code>var.field</code> the <code>.</code> is an operator itself. This operator has no clear name either, as it is used quite often in quite a lot of places. But, similar to how you can write the dot <code>.</code> "in-between" two identifiers to <strong>form</strong> an expression, the optional chaining operators <code>!</code> and <code>?</code> are used to <strong>form</strong> an expression too.</p>
+<h2 id="foce-unwrapping-operator"><a class="header" href="#foce-unwrapping-operator">Foce-Unwrapping Operator</a></h2>
+<p>Let's look at a very simple example with the unwrapping-operator, as you already know that one:</p>
 <pre><code class="language-rs">use Core.print
 
+data Vec2:
+	i32 x;
+	i32 y,
+	Vec2(x, y);
+
 def main():
-	i32? maybe = none;
+	Vec2 v2 = Vec2(10, 20);
+	Vec2? v2m = v2;
 	
-	switch maybe:
-		none: print("none\n");
-		v: print($"value = {v}\n");
+	i32 x = v2m!.x;
+	print($"x = {x}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>x = 10
+</code></pre>
+</blockquote>
+<p>As you can see, the optional force-unwrap operator <code>!</code> can not only be used as an unary operator (at the end of an expression) but as an "in-between operator" (i will call them <em>innies</em> from now on) as well. The above code showcases exactly what that operator does. It, again, force-unwraps the lhs and allows us to access it as if it was no optional. But, it will still hard-crash if there is no value stored in the unwrapped optional. We can also unwrap multiple fields of the vector at once:</p>
+<pre><code class="language-rs">use Core.print
+
+data Vec2:
+	i32 x;
+	i32 y,
+	Vec2(x, y);
+
+def main():
+	Vec2 v2 = Vec2(10, 20);
+	Vec2? v2m = v2;
 	
-	maybe = 69;
-	switch maybe:
-		none: print("none\n");
-		v: print($"value = {v}\n");
+	(x, y) := v2m!.(x, y);
+	print($"(x, y) = ({x}, {y})\n");
 </code></pre>
-<p>This program will print these lines to the console:</p>
+<p>This program will print this line to the console:</p>
 <blockquote>
-<pre><code>none
-value = 69
+<pre><code>(x, y) = (10, 20)
 </code></pre>
 </blockquote>
-<p>As you can see, we have one switch branch for the <code>none</code> case, where there isn't anything stored in the optional value at all, and we have one case for the value case. But what is that <code>v</code> there? <code>v</code> is like a "variable declaration" here, it's just a name we give to access the value field of the optional directly. Note that the type of the <code>v</code> "variable" is <code>i32</code> here, so we can not set the variable <code>maybe</code> to be <code>none</code> through the <code>v</code> variable.</p>
-<p>But what we can do is do a little "trick". You see, the variable <code>v</code> gives us a direct mutable reference to the value field of <code>maybe</code>, it's not simply a <em>copy</em> of the value field, it's a <em>reference</em> to it, as seen in the next code example:</p>
+<p>And we can do array-accesses as well:</p>
 <pre><code class="language-rs">use Core.print
 
 def main():
-    i32? maybe = 30;
-    print($"value = {maybe!}\n");
-
-    switch maybe:
-        none: print("none\n");
-        v: v = 10;
-    print($"value = {maybe!}\n");
+	i32[]? arr = i32[10](9);
+	print($"arr[4] = {arr![4]}\n");
 </code></pre>
-<p>This program will print these lines to the console:</p>
+<p>This program will print this line to the console:</p>
 <blockquote>
-<pre><code>value = 30
-value = 10
+<pre><code>arr[4] = 9
 </code></pre>
 </blockquote>
-<p>So, this mutability actually allows us to circumvent Flint's safety mechanisms around accessing the value field of an empty optional variable, which is rather interesting:</p>
+<p>In general, the optional force-unwrap operator can be used <strong>exactly</strong> the same way as if the variable would not be an optional at all. A normal array access would be <code>arr[4]</code>, optional it's <code>arr![4]</code>, so it's only the single operator added in between the "normal" operation on the variable.</p>
+<h2 id="optional-chaining-operator"><a class="header" href="#optional-chaining-operator">Optional Chaining Operator</a></h2>
+<p>The Optional Chaining Operator <code>?</code>, however, is quite a bit more complex to use and understand, but you will get the hang of it pretty quickly for sure. It is used <em>exactly</em> like the optional force-unwrapping operator <code>!</code> but it has a bit different semantics. When you force-unwrap an optional of type <code>T?</code> the result will be of type <code>T</code>. But, the optional chaining operator works a bit different. Here is an example:</p>
 <pre><code class="language-rs">use Core.print
 
+data Vec2:
+	i32 x;
+	i32 y,
+	Vec2(x, y);
+
 def main():
-	i32? maybe = 30;
+	Vec2 v2 = Vec2(10, 20);
+	Vec2? v2m = v2;
 	
-	switch maybe:
-		none: print("none\n");
-		v:
-			print($"v = {v}\n");
-			maybe = none;
-			print($"v = {v}\n");
+	i32? x = v2m?.x;
+	if x == none:
+		print("has no value!\n");
+	else:
+		print($"x! = {x!}\n");
 </code></pre>
-<p>This code will print these lines to the console:</p>
+<p>This program will print this line to the console:</p>
 <blockquote>
-<pre><code>v = 30
-v = 0
+<pre><code>x! = 10
 </code></pre>
 </blockquote>
-<p>So, you are not allowed to access the value when there is nothing stored on it but if there <em>was</em> something stored on it and you <em>still</em> have the reference to the value field you can actually still modify it. Maybe we will add a system to detect and prevent this behaviour, but it's very funny in my opinion that you can do it at all.
-Also, this is a great example to showcase the behaviour of the <code>none</code> assignment we have talked about earlier, that the <code>none</code> literal is literally a zeroinitializer of the given type it is meant to be stored at. In our <code>i32?</code> example that's not a big deal, the value is just set to 0, but think about what happens if that would have been a <code>str?</code>. Strings are not "stack"-allocated in Flint, so they are pointers under the hood. And all values set to 0 interpreted as a pointer is a <code>nullptr</code>, so accessing the value would crash our program, but with a mysterious <code>Segmentation Fault</code> instead.</p>
-<p>So, keep your eyes open for this "bug" (or "feature" if you will) as it could be not what you would want. In this simple example it is clear that we should not do <code>maybe = none</code>, but what if that would be a function call instead and somewhere down the line the optional is set to <code>none</code> and then we try to use the value <code>v</code> after the call? That's where the problems start to happen. So, as a general rule of thumb: Try avoiding the variable which is switched on within the value block of the switch entirely, you should <em>only</em> access the value field directly, not the switched-on variable. (Maybe we could make this into a compiler-rule, as this then would not be a runtime-check but a compile-time check to see if the variable that's switched on is accessed in the value-block).</p>
-<p>We can also put the switch statement in a separate function entirely and pass the optional value to said function. The optional value will be passed by reference, not by value, so this means that any modifications to the optional will be visible at the callers side as well:</p>
+<p>As you can see, the optional chaining operator does <em>not</em> "remove" the optionality entirely, as now the variable <code>v2m</code> still <em>could</em> be <code>none</code>. If the "base expression" of an optional chain is <code>none</code> the whole optional chain will resolve to <code>none</code>, no matter how long that chain may be. The above example is not quite useful, as we could just check for the presence of a value in <code>v2m</code> directly here, but think about nested optionals and you want to access a field deep inside the structure, you then could stack optional chains together and get <em>one</em> value in <em>one</em> expression. Here is a small example of that:</p>
+<div class="warning">
+<p>Nested optional chains do not work properly yet</p>
+<p>I am working on getting them up and running, but they do not work yet. The semantics and syntax of them is already fixed, though, so what you see below will not change much in the future.</p>
+</div>
 <pre><code class="language-rs">use Core.print
 
-def print_opt(i32? value):
-	switch value:
-		none: print("none\n");
-		v: print($"value = {v}\n");
+data Vec2:
+	i32 x;
+	i32 y,
+	Vec2(x, y);
 
-def set_value(mut i32? opt, i32 value):
-	opt = value;
+data Nested:
+	Vec2? v2m;
+	Nested(v2m);
 
 def main():
-	i32? maybe = none;
-	print_opt(maybe);
-
-	maybe = 69;
-	print_opt(maybe);
-
-	set_value(maybe, 20);
-	print_opt(maybe);
+	Vec2 v2 = Vec2(10, 20);
+	Vec2? v2m = v2;
+	Nested n = Nested(v2m);
+	Nested? nm = n;
+	
+	i32? x = nm?.v2m?.x;
+	if x == none:
+		print("one value in the chain has has no value!\n");
+	else:
+		print($"x! = {x!}\n");
 </code></pre>
-<p>This program will print these lines to the console:</p>
+<p>This program will print this line to the console:</p>
 <blockquote>
-<pre><code>none
-value = 69
-value = 20
+<pre><code>x! = 10
 </code></pre>
 </blockquote>
+<p>As you can see, optional chains allow you to access fields deep inside optional chains. And now we can also talk about what type an optional chain has. The whole chain does <strong>always</strong> have the type of the rightmost operation wrapped in an optional. An operation could be a call, an access, or anything else, realistically. But it's important to know that <strong>the whole chain has either the value as it's end or it had a <code>none</code> value somewhere in between thus resulting in <code>none</code> itself</strong>.</p>
+<p>You can also mix and match optional chains with optional force-unwrapping. In the above example, we can for example write <code>nm!.v2m?.x</code> and have a force-unwrap on the nested but a optional chain on the vec itself. This style also <strong>clearly communicates intent</strong>. From this small snippet you can directly see the assertions of the programmer: The programmer asserts that <code>nm</code> will <em>always</em> have a value, whereas <code>v2m</code> within <code>nm</code> could <em>potentially</em> be <code>none</code>, so you need to handle that <em>potential</em> case of the value's absence. It's not only a nicee QOL improvement, but it also very clearly communicates intent, without a single comment written. Also, the <code>!</code> and <code>?</code> are unique to optionals, so whenever you find one of those operators you can be <em>sure</em> that there is an optional in play. Well, that operator exists in a different form for variants as well, namely the <code>!(T)</code> and <code>?(T)</code> operator, but you will learn about variants in the next chapter.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../intermediates_guide/1_optionals/4_null_coalescing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../intermediates_guide/1_optionals/5_optional_switch.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../intermediates_guide/1_optionals/6_optional_chaining.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../intermediates_guide/2_variants.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -285,11 +309,11 @@ value = 20
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../intermediates_guide/1_optionals/4_null_coalescing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../intermediates_guide/1_optionals/5_optional_switch.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../intermediates_guide/1_optionals/6_optional_chaining.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../intermediates_guide/2_variants.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

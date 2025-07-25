@@ -3416,10 +3416,6 @@ v = 0
 Also, this is a great example to showcase the behaviour of the <code>none</code> assignment we have talked about earlier, that the <code>none</code> literal is literally a zeroinitializer of the given type it is meant to be stored at. In our <code>i32?</code> example that's not a big deal, the value is just set to 0, but think about what happens if that would have been a <code>str?</code>. Strings are not "stack"-allocated in Flint, so they are pointers under the hood. And all values set to 0 interpreted as a pointer is a <code>nullptr</code>, so accessing the value would crash our program, but with a mysterious <code>Segmentation Fault</code> instead.</p>
 <p>So, keep your eyes open for this "bug" (or "feature" if you will) as it could be not what you would want. In this simple example it is clear that we should not do <code>maybe = none</code>, but what if that would be a function call instead and somewhere down the line the optional is set to <code>none</code> and then we try to use the value <code>v</code> after the call? That's where the problems start to happen. So, as a general rule of thumb: Try avoiding the variable which is switched on within the value block of the switch entirely, you should <em>only</em> access the value field directly, not the switched-on variable. (Maybe we could make this into a compiler-rule, as this then would not be a runtime-check but a compile-time check to see if the variable that's switched on is accessed in the value-block).</p>
 <p>We can also put the switch statement in a separate function entirely and pass the optional value to said function. The optional value will be passed by reference, not by value, so this means that any modifications to the optional will be visible at the callers side as well:</p>
-<div class="warning">
-<p>Optionals are passed by value at this moment in time</p>
-<p>Alltough optionals <em>should</em> be passed by reference, they are actually passed by value, so the below program will not show the expected output. Keep this in mind when using optionals at this moment in time. Okay, but this also means that the point i made earlier about <em>"passing the variable which is switched on to a function causes problems"</em> is actually not that big of a problem at all, as the switched-on variable cannot be set to <code>none</code> by the function this way, and setting the switched-on variable to <code>none</code> within the value block is a very easy to spot mistake... so, maybe passing optionals as copies has it's upsides as well. This definitely needs some more time (and testing) to find out what design fits Flint the best.</p>
-</div>
 <pre><code class="language-rs">use Core.print
 
 def print_opt(i32? value):
@@ -3428,8 +3424,7 @@ def print_opt(i32? value):
 		v: print($"value = {v}\n");
 
 def set_value(mut i32? opt, i32 value):
-	if opt == none:
-		opt = value;
+	opt = value;
 
 def main():
 	i32? maybe = none;
@@ -3448,6 +3443,406 @@ value = 69
 value = 20
 </code></pre>
 </blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="optional-chaining"><a class="header" href="#optional-chaining">Optional Chaining</a></h1>
+<p>Optional chaining is quite interesting in Flint. You already have seen the <code>!</code> operator. You have been told until now that this operator is an <em>unary</em> operator, but that was not quite correct, actually. It's one of Flint's few "in-between operators" (There is no industry standard name for them, actually). One "in-between operator" is the dot <code>.</code>, actually. When you do a <code>var.field</code> the <code>.</code> is an operator itself. This operator has no clear name either, as it is used quite often in quite a lot of places. But, similar to how you can write the dot <code>.</code> "in-between" two identifiers to <strong>form</strong> an expression, the optional chaining operators <code>!</code> and <code>?</code> are used to <strong>form</strong> an expression too.</p>
+<h2 id="foce-unwrapping-operator"><a class="header" href="#foce-unwrapping-operator">Foce-Unwrapping Operator</a></h2>
+<p>Let's look at a very simple example with the unwrapping-operator, as you already know that one:</p>
+<pre><code class="language-rs">use Core.print
+
+data Vec2:
+	i32 x;
+	i32 y,
+	Vec2(x, y);
+
+def main():
+	Vec2 v2 = Vec2(10, 20);
+	Vec2? v2m = v2;
+	
+	i32 x = v2m!.x;
+	print($"x = {x}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>x = 10
+</code></pre>
+</blockquote>
+<p>As you can see, the optional force-unwrap operator <code>!</code> can not only be used as an unary operator (at the end of an expression) but as an "in-between operator" (i will call them <em>innies</em> from now on) as well. The above code showcases exactly what that operator does. It, again, force-unwraps the lhs and allows us to access it as if it was no optional. But, it will still hard-crash if there is no value stored in the unwrapped optional. We can also unwrap multiple fields of the vector at once:</p>
+<pre><code class="language-rs">use Core.print
+
+data Vec2:
+	i32 x;
+	i32 y,
+	Vec2(x, y);
+
+def main():
+	Vec2 v2 = Vec2(10, 20);
+	Vec2? v2m = v2;
+	
+	(x, y) := v2m!.(x, y);
+	print($"(x, y) = ({x}, {y})\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>(x, y) = (10, 20)
+</code></pre>
+</blockquote>
+<p>And we can do array-accesses as well:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+	i32[]? arr = i32[10](9);
+	print($"arr[4] = {arr![4]}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>arr[4] = 9
+</code></pre>
+</blockquote>
+<p>In general, the optional force-unwrap operator can be used <strong>exactly</strong> the same way as if the variable would not be an optional at all. A normal array access would be <code>arr[4]</code>, optional it's <code>arr![4]</code>, so it's only the single operator added in between the "normal" operation on the variable.</p>
+<h2 id="optional-chaining-operator"><a class="header" href="#optional-chaining-operator">Optional Chaining Operator</a></h2>
+<p>The Optional Chaining Operator <code>?</code>, however, is quite a bit more complex to use and understand, but you will get the hang of it pretty quickly for sure. It is used <em>exactly</em> like the optional force-unwrapping operator <code>!</code> but it has a bit different semantics. When you force-unwrap an optional of type <code>T?</code> the result will be of type <code>T</code>. But, the optional chaining operator works a bit different. Here is an example:</p>
+<pre><code class="language-rs">use Core.print
+
+data Vec2:
+	i32 x;
+	i32 y,
+	Vec2(x, y);
+
+def main():
+	Vec2 v2 = Vec2(10, 20);
+	Vec2? v2m = v2;
+	
+	i32? x = v2m?.x;
+	if x == none:
+		print("has no value!\n");
+	else:
+		print($"x! = {x!}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>x! = 10
+</code></pre>
+</blockquote>
+<p>As you can see, the optional chaining operator does <em>not</em> "remove" the optionality entirely, as now the variable <code>v2m</code> still <em>could</em> be <code>none</code>. If the "base expression" of an optional chain is <code>none</code> the whole optional chain will resolve to <code>none</code>, no matter how long that chain may be. The above example is not quite useful, as we could just check for the presence of a value in <code>v2m</code> directly here, but think about nested optionals and you want to access a field deep inside the structure, you then could stack optional chains together and get <em>one</em> value in <em>one</em> expression. Here is a small example of that:</p>
+<div class="warning">
+<p>Nested optional chains do not work properly yet</p>
+<p>I am working on getting them up and running, but they do not work yet. The semantics and syntax of them is already fixed, though, so what you see below will not change much in the future.</p>
+</div>
+<pre><code class="language-rs">use Core.print
+
+data Vec2:
+	i32 x;
+	i32 y,
+	Vec2(x, y);
+
+data Nested:
+	Vec2? v2m;
+	Nested(v2m);
+
+def main():
+	Vec2 v2 = Vec2(10, 20);
+	Vec2? v2m = v2;
+	Nested n = Nested(v2m);
+	Nested? nm = n;
+	
+	i32? x = nm?.v2m?.x;
+	if x == none:
+		print("one value in the chain has has no value!\n");
+	else:
+		print($"x! = {x!}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>x! = 10
+</code></pre>
+</blockquote>
+<p>As you can see, optional chains allow you to access fields deep inside optional chains. And now we can also talk about what type an optional chain has. The whole chain does <strong>always</strong> have the type of the rightmost operation wrapped in an optional. An operation could be a call, an access, or anything else, realistically. But it's important to know that <strong>the whole chain has either the value as it's end or it had a <code>none</code> value somewhere in between thus resulting in <code>none</code> itself</strong>.</p>
+<p>You can also mix and match optional chains with optional force-unwrapping. In the above example, we can for example write <code>nm!.v2m?.x</code> and have a force-unwrap on the nested but a optional chain on the vec itself. This style also <strong>clearly communicates intent</strong>. From this small snippet you can directly see the assertions of the programmer: The programmer asserts that <code>nm</code> will <em>always</em> have a value, whereas <code>v2m</code> within <code>nm</code> could <em>potentially</em> be <code>none</code>, so you need to handle that <em>potential</em> case of the value's absence. It's not only a nicee QOL improvement, but it also very clearly communicates intent, without a single comment written. Also, the <code>!</code> and <code>?</code> are unique to optionals, so whenever you find one of those operators you can be <em>sure</em> that there is an optional in play. Well, that operator exists in a different form for variants as well, namely the <code>!(T)</code> and <code>?(T)</code> operator, but you will learn about variants in the next chapter.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="variants"><a class="header" href="#variants">Variants</a></h1>
+<p>Welcome to the second chapter of the intermediates guide. In this chapter we look at the variant type and what you can do with it. The <code>variant</code> type is used to define a type that could be <strong>one of</strong> a given collection of other types. Where optionalls allowed us to define <strong>emptiness</strong>, the <code>variant</code> type allows us to define <em>variation</em> in types.</p>
+<h2 id="what-are-variants"><a class="header" href="#what-are-variants">What are Variants?</a></h2>
+<p>A variant is, once again, essentially just a struct under the hood. It is composed of a 1 Byte flag value to determine which type it holds followed by the actual type of the variant. This "type" as the second value is just <strong>N</strong> bytes of storage, where <code>N</code> is the number of bytes needed to store the <strong>biggest</strong> of all possible types.</p>
+<h2 id="why-are-variants-important"><a class="header" href="#why-are-variants-important">Why are Variants Important?</a></h2>
+<p>Variants are an essential part of Flint because they allow you to:</p>
+<ul>
+<li>Describe the possibility that a value might be one of a given kind</li>
+<li>Store multiple different "data" in a very small space, as the variant does not occupy space for <em>each</em> value it could be</li>
+</ul>
+<h2 id="what-to-expect-5"><a class="header" href="#what-to-expect-5">What to Expect</a></h2>
+<p>In this chapter, we will cover the following topics:</p>
+<ul>
+<li>Declaring and using variant types</li>
+<li>Tagging variants</li>
+<li>Variant Comparison</li>
+<li>Force-unwrapping a variant variable</li>
+<li>Switching on variant values</li>
+<li>Building optional chains through the variant extraction operator</li>
+<li>Making variants optional and how variants interact with optionals</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction-2"><a class="header" href="#introduction-2">Introduction</a></h1>
+<p>When we want to express the probability that a value could have one of a given collection of types we need to use <code>variant</code>s for it. You may have heard the term <code>tagged union</code> or <code>union</code> in other languages, like C, before. Flint's variants are exactly that.</p>
+<p>A Variant in Flint, is defined like this:</p>
+<pre><code class="language-rs">variant MyVariant:
+	i32, f32, u64;
+
+def main():
+	MyVariant var = 5;
+</code></pre>
+<p>This program will compile fine, and will have no output when being run. But before we can go deeper into variants we first need to look how they are <em>actually</em> stored in memory and how they work under the hood.</p>
+<p>First, let's recap the structure of optionals for a second. An optional <code>i32?</code> looks like this in memory roughly:</p>
+<pre><code class="language-c">struct {
+    bool has_value;
+    i32 value;
+}
+</code></pre>
+<p>Note that this is not valid C code, it's just for demonstation purposes. Okay, but how does the <code>MyVariant</code> look like? It surely doesn't look like this:</p>
+<pre><code class="language-c">struct {
+    u8 type;
+    i32 t0;
+    f32 t1;
+    u64 t2;
+}
+</code></pre>
+<p>right? Yeah it <strong>definitely</strong> does not look like that above, because the struct above would actually be <code>17</code> bytes big (ignoring padding and alignment for a second here). That's way to big for our types. So, what do we do then? Well, we know at compile-time what's the <strong>maximum</strong> space our <code>value</code> needs, we just need to look at all possible types the variant could have: <code>4</code> bytes for <code>i32</code>, <code>4</code> bytes for <code>f32</code> and <code>8</code> bytes for <code>u64</code>. We then just ask "what's the biggest value i possibly need to store?" and the answer to that would definitely be <code>u64</code> with <code>8</code> bytes.</p>
+<p>So, we need atmost 8 bytes to store our value, so what do we do? It's pretty simple, we just do:</p>
+<pre><code class="language-c">struct {
+    u8 type;
+    u8[8] value;
+}
+</code></pre>
+<p>We reserve <code>8</code> bytes for our value field of the struct. If we will now store an <code>i32</code> in the <code>value</code> the first 4 bytes will be used for that value and the other 4 bytes just stay empty. This means that our whole <code>variant</code> now uses exactly <code>9</code> bytes of memory, and if we would add another 10 possible types it would still only use the maximum size of them.</p>
+<p>Okay and now let's talk about the <code>type</code> flag, because it's pretty interesting as well... When we define our variant from left to right we actually assign type IDs to each possible type of our variant. In our case the type <code>i32</code> will have the ID of <code>1</code>, <code>f32</code> will have <code>2</code> and <code>u64</code> will have <code>3</code>. But where is the <code>0</code>, you may ask. This will be explained in a <a href="intermediates_guide/2_variants/">later</a> chapter, but for now just know that it's reserved for the absence of values (optionals).</p>
+<p>Okay, now you can define <code>variant</code> types and know how they look like under the hood, but how do you use them? We will learn this in the next chapter!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="switching-on-variants"><a class="header" href="#switching-on-variants">Switching on Variants</a></h1>
+<p>In the last chapter we have looked at how to define variant types, but now we come to the fun part of variants, actually using them. You see, because a variant <em>can</em> be one of our defined types we also need to check which one it actually <em>is</em> before we can safely access the data that's stored within that variant. The easiest apporach to extract a variant's value is through a switch statement. Here is a small example of that:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVariant:
+	i32, f32, u64;
+
+def print_var(MyVariant var):
+	switch var:
+		i32(i): print($"holds i32 value of {i}\n");
+		f32(f): print($"holds f32 value of {f}\n");
+		u64(u): print($"holds u64 value of {u}\n");
+
+def main():
+	MyVariant var = -5;
+	print_var(var);
+
+	var = 3.4;
+	print_var(var);
+
+	var = u64(55);
+	print_var(var);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>holds i32 value of -5
+holds f32 value of 3.4
+holds u64 value of 55
+</code></pre>
+</blockquote>
+<p>There is quite a lot to unpack here. First, we pass the variant to the function. Variants are considere complex data types in Flint, this means they are passed by <strong>reference</strong>, <em>not</em> by <strong>value</strong>. This also means that changes to the variant within a function would result in these changes taking effect over at the callside of the function as well. You can see this behaviour in this example here:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVariant:
+	i32, f32, u64;
+
+def print_var(MyVariant var):
+	switch var:
+		i32(i): print($"holds i32 value of {i}\n");
+		f32(f): print($"holds f32 value of {f}\n");
+		u64(u): print($"holds u64 value of {u}\n");
+
+def set_i32(mut MyVariant var, i32 value):
+	var = value;
+
+def set_f32(mut MyVariant var, f32 value):
+	var = value;
+
+def set_u64(mut MyVariant var, u64 value):
+	var = value;
+
+def main():
+	MyVariant var = -5;
+	set_i32(var, -10);
+	print_var(var);
+
+	set_f32(var, 3.4);
+	print_var(var);
+
+	set_u64(var, u64(55));
+	print_var(var);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>holds i32 value of -10
+holds f32 value of 3.4
+holds u64 value of 55
+</code></pre>
+</blockquote>
+<p>But we need to discuss one more thing here and now: naming. You see that the accessor-variables of the variant have been named <code>i</code>, <code>f</code> and <code>u</code>. You actually do not need to give them separate accessing-names, because these "variables" will only be accessible within their respective switch branch:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVariant:
+	i32, f32, u64;
+
+def main():
+	MyVariant var = -10;
+	switch var:
+		i32(v): print($"holds i32 value of {v}\n");
+		f32(v): print($"holds f32 value of {v}\n");
+		u64(v): print($"holds u64 value of {v}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>holds i32 value of -10
+</code></pre>
+</blockquote>
+<p>As you can see, you can name your value references however you like and their names will not collide. Again, just like with the value reference for optionals, you can mess up everything by setting the variant value you are switching on while you are still on one branch. This will be resolved eventually, but it also works at this point in time for variants:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVariant:
+	bool8, u8, i32;
+
+def main():
+	bool8 b8 = 'A';
+	MyVariant var = b8;
+	switch var:
+		bool8(v):
+			print($"holds bool8 value of {v}\n");
+			var = 47;
+			print($"holds bool8 value of {v}\n");
+		u8(v): print($"holds u8 value of {v}\n");
+		i32(v): print($"holds i32 value of {v}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>holds bool8 value of 01000001
+holds bool8 value of 00101111
+</code></pre>
+</blockquote>
+<p>This is actually a bit more dangerous than the same behaviour with optionals. In optionals, the value is just set to <code>0</code> through and thgough, leading to nullpointers etc. But here we could have a variant that can hold both an <code>u64</code> and a <code>str</code>, but the <code>str</code> is a pointer under the hood. This means that we can store a <code>u64</code> value in the variant inside the <code>str</code> branch and then we could point to <em>any</em> memory address and possibly read strings from it. So, while this problem seemed to be only a small one for optionals, it's actually quite a large problem for variants, so this definitely needs to be fixed at some point.</p>
+<p>I need to pre-empt this here, but currently through this we are also allowed to do some shenanigans, like native bitmasking for example. But for the following example i pre-empt tagged variants a bit, just bare with me for a second, you will understand what's going on down here by the next chapter!</p>
+<pre><code class="language-rs">use Core.print
+
+variant BitMask:
+	Bits(bool8, bool8, bool8, bool8), Value(u32);
+
+def main():
+	bool8 empty = '0';
+	data&lt;bool8, bool8, bool8, bool8&gt; b8 = (empty, empty, empty, empty);
+	BitMask var = b8;
+	switch var:
+		BitMask.Bits(b):
+			print($"BitMask: {b.$0} {b.$1} {b.$2} {b.$3}\n");
+			var = u32(1665025);
+			print($"BitMask: {b.$0} {b.$1} {b.$2} {b.$3}\n");
+		BitMask.Value(v): print($"holds u64 value of {v}\n");
+</code></pre>
+<p>This program prints these lines to the console:</p>
+<blockquote>
+<pre><code>BitMask: 00110000 00110000 00110000 00110000
+BitMask: 00000001 01101000 00011001 00000000
+</code></pre>
+</blockquote>
+<p>And as you can see, the above mentioned problem can also be a feature. It's quite a lot more nuanced than just saying it's just bad, because now we can do bitmasking with it, without any temporaries, as the accessors are references to the same value. So, if the bitmask and the actual value have the same width, like in our case, both are <code>4</code> bytes in size, we can do pretty cool stuff with variants, as we can directly modify the memory in the <code>value</code> field and interpret it as a whole number or a mask where we can access each individual element.</p>
+<p>So, whether this is a bug or a feature is open to debate, but in my opinion it could be a feature <em>if</em> <strong>none</strong> of the possible types are complex and thus are pointers under the hood. If all values are <em>real</em> values and not pointers under the hood i can't see why this should not be allowed for variants, as it's a pretty exploitable system for sure. And if no pointer can be stored in the variant, nothing can be accessed or written to at an arbitrary point in memory, which means the program will definitely not crash, it could only happen that you will get the wrong or unexpected values if you do exploit this. I think there should be a warning that mutating the variable inside the branch could lead to problems, but there should only be a compile-error if one of the variant's types is complex.</p>
+<p>I cannot really think of a practical use case of this implication, honestly, especially since Flint will support shift operators <code>&lt;&lt;</code>, <code>&gt;&gt;</code> and bitwise operators like <code>|</code>, <code>&amp;</code> and <code>!</code> as well in the future, so bitmasking for example is not really needed and useful when we have access to direct bit-manipulation as well.</p>
+<p>And switch expressions work exactly the same way, just with a <code>-&gt;</code> instead of the <code>:</code> and with no scope but a single expression after the arrow, as usual. But now let's move on to the next chapter of tagging.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tagged-variants"><a class="header" href="#tagged-variants">Tagged Variants</a></h1>
+<p>Until now we have learned how to declare variants and how to extract values of a certain type as well. But you may have noticed that all types we have used in the variant have been simple types like <code>i32</code>, <code>f32</code> etc. Let's look at a bit more complicated example then and it's implications on extracting the right type in a switch:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVariant:
+	i32, f32, data&lt;i32, f32, bool8&gt;;
+
+def print_var(MyVariant var):
+	switch var:
+		i32(i): print($"holds i32 value of {i}\n");
+		f32(f): print($"holds f32 value of {f}\n");
+		data&lt;i32, f32, bool8&gt;(t): print($"holds tuple value of ({t.$0}, {t.$1}, {t.$2})\n");
+
+def main():
+	MyVariant var = -5;
+	print_var(var);
+
+	var = 3.4;
+	print_var(var);
+
+	// Flint currently has no way of using a group as the rhs of a variant assignment
+	// when a tuple needs to be stored in the variant, but it will have it *eventually*
+	data&lt;i32, f32, bool8&gt; tuple = (5, 6.9, bool8(u8(33)));
+	var = tuple;
+	print_var(var);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>holds i32 value of -5
+holds f32 value of 3.4
+holds tuple value of (5, 6.9, 00100001)
+</code></pre>
+</blockquote>
+<p>As you can see it is very very tedious to write the type <code>data&lt;i32, f32, bool8</code> <strong>every single time</strong> you want to use a variation of that type. And we actually have a solution for that: <em>Tags</em>. A Tag is nothing else than a "name" you give to a variation of a variant. This name can be any identifier, actually. Here is the exact same program as above, but re-written using Tags:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVariant:
+	Int(i32), Float(f32), Tuple(i32, f32, bool8);
+
+def print_var(MyVariant var):
+	switch var:
+		MyVariant.Int(i): print($"holds i32 value of {i}\n");
+		MyVariant.Float(f): print($"holds f32 value of {f}\n");
+		MyVariant.Tuple(t): print($"holds tuple value of ({t.$0}, {t.$1}, {t.$2})\n");
+
+def main():
+	MyVariant var = -5;
+	print_var(var);
+
+	var = 3.4;
+	print_var(var);
+
+	// Flint currently has no way of using a group as the rhs of a variant assignment
+	// when a tuple needs to be stored in the variant, but it will have it *eventually*
+	data&lt;i32, f32, bool8&gt; tuple = (5, 6.9, bool8(u8(33)));
+	var = tuple;
+	print_var(var);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>holds i32 value of -5
+holds f32 value of 3.4
+holds tuple value of (5, 6.9, 00100001)
+</code></pre>
+</blockquote>
+<p>You may notice that we have removed the <code>data&lt; .. &gt;</code> part of the tuple definition in the variant, but why? Well, because nothing else than tuples can hold multiple data at once and is anonymous as well. If we would have a <code>data</code> module defined somewhere, we would write the type of said module in between the parenthesis too. Parenthesis are not part of any type definition and this is the reason to why we can have the syntax <code>NAME(TYPE)</code> for variant tagging(Well, they actually are used to define <code>fn</code> typed variables which take no arguments, but you will learn about them later on). Comma-separated values in between the parenthesis define a tuple type as one possible variation of that variant.</p>
+<p>When accessing / extracting the actual value of a tagged variant, we <strong>need</strong> to prefix the extraction with the type of the variant to signify we actually want to get a tag, not a type. Here is an example:</p>
+<pre><code class="language-rs">use Core.print
+
+data Tuple:
+	i32 x;
+	f32 y;
+	bool8 z;
+	Tuple(x, y, z);
+
+variant MyVariant:
+	Tuple, Tuple(u64, f64), i32;
+
+def main():
+	MyVariant var = 10;
+	switch var:
+		Tuple(t): print($"Is Tuple: ({t.x}, {t.y}, {t.z})\n");
+		MyVariant.Tuple(t): print($"Is MyVariant.Tuple: ({t.$0}, {t.$1})\n");
+		i32(i): print($"Is i32: {i}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>Is i32: 10
+</code></pre>
+</blockquote>
+<p>There is, again, quite a lot to go through. First of all, the Type is absolutely needed for tagged accesses to be able to differentiate between a tagged access and an access of that type. This also prevents future collisions if you would, for example, later define a type with the same name as your variant tag. If we would not do this differentiation, you would then later on need to change your tag and change it everywhere you have used it or you would need to change your created type's name to something different to prevent collisions. Both would be a horrible experience. So, this is the reason to why it is <strong>required</strong> to explicitely state the type of the variant before the tag, if the variant's type is missing the "tag" is interpreted as a type and compilation will fail!</p>
+<p>This decision might annoy you at first, but we hope that you will be able to see the reasons behind it and why it's so important to have this rule in place, as it also completely removes any ambuguity from the programmer itself.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="error-sets"><a class="header" href="#error-sets">Error Sets</a></h1>
 <div class="warning">
 <p>Everything regarding error handling <strong>will</strong> definitely change for later releases.</p>

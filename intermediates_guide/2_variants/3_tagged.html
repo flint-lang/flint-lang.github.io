@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Error Sets - The Flint Wiki</title>
+        <title>Tagged Variants - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -12,34 +12,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "../";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex.js";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -106,7 +106,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -141,7 +141,7 @@
                     <h1 class="menu-title">The Flint Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -175,83 +175,110 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="error-sets"><a class="header" href="#error-sets">Error Sets</a></h1>
-<div class="warning">
-<p>Everything regarding error handling <strong>will</strong> definitely change for later releases.</p>
-<p>The current implementation of everything error-handling related is not final for Flint, and it will change quite a lot. This segment of the guide will be updated when the new system works and is in place. For the time being, the description of how it <em>currently</em> works in FLint is written here. So, expect substantial re-writes of this chapter for future releases.</p>
-</div>
-<p>Flint's error system is quite unique. <strong>Every</strong> function can fail. Absolutely every single function a user defines in his code <em>can</em> fail. Because <em>every</em> function can fail, Flint can deeply integrate error handling into the language. A function returning a <code>str</code> value, for example, actually returns a <code>(i32, str)</code> value. The first <em>implicit</em> return type of <strong>any</strong> Flint function is the error value of said function. This error value, however, is completely hidden from the user outside of Flint's error handling syntax.</p>
-<p>Flint has two keywords for error handling: <code>throw</code> and <code>catch</code>. But, unlike Java or C++, where the error handling happens outside the normal execution path ("happy path" / "unhappy path") which completely breaks execution consistency and results in lots of context switching for the CPU, Flint has it's error handling system built directly into the calling / returning code of every function, which makes it much faster than traditional exception-based error handling.</p>
-<h2 id="throwing-an-error"><a class="header" href="#throwing-an-error">Throwing an error</a></h2>
-<p>Throwing an error is actually really simple. Here is a small examlpe:</p>
+                        <h1 id="tagged-variants"><a class="header" href="#tagged-variants">Tagged Variants</a></h1>
+<p>Until now we have learned how to declare variants and how to extract values of a certain type as well. But you may have noticed that all types we have used in the variant have been simple types like <code>i32</code>, <code>f32</code> etc. Let's look at a bit more complicated example then and it's implications on extracting the right type in a switch:</p>
 <pre><code class="language-rs">use Core.print
 
-def throw_if_bigger_than(i32 x, i32 y):
-    if x &gt; y:
-        // We can only throw i32 values at the moment
-        throw 69;
+variant MyVariant:
+	i32, f32, data&lt;i32, f32, bool8&gt;;
+
+def print_var(MyVariant var):
+	switch var:
+		i32(i): print($"holds i32 value of {i}\n");
+		f32(f): print($"holds f32 value of {f}\n");
+		data&lt;i32, f32, bool8&gt;(t): print($"holds tuple value of ({t.$0}, {t.$1}, {t.$2})\n");
 
 def main():
-    throw_if_bigger_than(10, 5);
-</code></pre>
-<p>This program will print this line to the console:</p>
-<blockquote>
-<pre><code>ERROR: Program exited with exit code '69'
-</code></pre>
-</blockquote>
-<p>You have already seen this <code>ERROR: </code> message before, actually, at the <code>assert</code> core module. Even the <code>main</code> function returns an implicit <code>i32</code> error value. And if the main function returns an error value, the error value gets printed to the console like seen above. Because <em>every</em> function can throw an error, <em>every</em> function automatically propagates its returned error up the stack, if we dont handle the error. This is the reason why the call <code>throw_if_bigger_than</code> let the error bubble up to the main function.</p>
-<h2 id="catching-an-error"><a class="header" href="#catching-an-error">Catching an error</a></h2>
-<p>Catching an error is a bit more complicated.</p>
-<pre><code class="language-rs">use Core.print
+	MyVariant var = -5;
+	print_var(var);
 
-def err_div(i32 x, i32 y) -&gt; i32:
-    if y == 0:
-        throw 69;
-    return x / y;
+	var = 3.4;
+	print_var(var);
 
-def main():
-    i32 result = err_div(10, 0) catch err:
-        print($"err = {err}\n");
-    print($"result = {result}\n");
-</code></pre>
-<p>This program will print these linese to the console:</p>
-<blockquote>
-<pre><code>err = 69
-result = 0
-</code></pre>
-</blockquote>
-<p>As you can see, if we <code>catch</code> an error explicitely, the first implicit return value of the function is stored inside the <code>err</code> variable. It is now up to us to handle the error. Because the error is just an <code>i32</code> value, the <code>err</code> variable is also of type <code>i32</code> here. We can just compare it to values, and for some values we can set the <code>result</code> value, or for another value we could manually re-throw the error with a <code>throw</code> statement.</p>
-<p>Because there does not exist such thing as "uninitialized state" in Flint, the <code>result</code> variable is set to its default value in the case of an error. For the type <code>i32</code> this default value is <code>0</code>. For the <code>str</code> type the default value would be an empty string, a string of size 0, <code>""</code>.</p>
-<p>We can also change the <code>result</code> variable within the catch block:</p>
-<pre><code class="language-rs">use Core.print
-
-def err_div(i32 x, i32 y) -&gt; i32:
-    if y == 0:
-        throw 69;
-    return x / y;
-
-def main():
-    i32 result = err_div(10, 0) catch err:
-        print($"err = {err}\n");
-        result = 3;
-    print($"result = {result}\n");
+	// Flint currently has no way of using a group as the rhs of a variant assignment
+	// when a tuple needs to be stored in the variant, but it will have it *eventually*
+	data&lt;i32, f32, bool8&gt; tuple = (5, 6.9, bool8(u8(33)));
+	var = tuple;
+	print_var(var);
 </code></pre>
 <p>This program will print these lines to the console:</p>
 <blockquote>
-<pre><code>err = 69
-result = 3
+<pre><code>holds i32 value of -5
+holds f32 value of 3.4
+holds tuple value of (5, 6.9, 00100001)
 </code></pre>
 </blockquote>
-<p>But that's basically it. That's all you need to know about Flint's current error handling features!</p>
+<p>As you can see it is very very tedious to write the type <code>data&lt;i32, f32, bool8</code> <strong>every single time</strong> you want to use a variation of that type. And we actually have a solution for that: <em>Tags</em>. A Tag is nothing else than a "name" you give to a variation of a variant. This name can be any identifier, actually. Here is the exact same program as above, but re-written using Tags:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVariant:
+	Int(i32), Float(f32), Tuple(i32, f32, bool8);
+
+def print_var(MyVariant var):
+	switch var:
+		MyVariant.Int(i): print($"holds i32 value of {i}\n");
+		MyVariant.Float(f): print($"holds f32 value of {f}\n");
+		MyVariant.Tuple(t): print($"holds tuple value of ({t.$0}, {t.$1}, {t.$2})\n");
+
+def main():
+	MyVariant var = -5;
+	print_var(var);
+
+	var = 3.4;
+	print_var(var);
+
+	// Flint currently has no way of using a group as the rhs of a variant assignment
+	// when a tuple needs to be stored in the variant, but it will have it *eventually*
+	data&lt;i32, f32, bool8&gt; tuple = (5, 6.9, bool8(u8(33)));
+	var = tuple;
+	print_var(var);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>holds i32 value of -5
+holds f32 value of 3.4
+holds tuple value of (5, 6.9, 00100001)
+</code></pre>
+</blockquote>
+<p>You may notice that we have removed the <code>data&lt; .. &gt;</code> part of the tuple definition in the variant, but why? Well, because nothing else than tuples can hold multiple data at once and is anonymous as well. If we would have a <code>data</code> module defined somewhere, we would write the type of said module in between the parenthesis too. Parenthesis are not part of any type definition and this is the reason to why we can have the syntax <code>NAME(TYPE)</code> for variant tagging(Well, they actually are used to define <code>fn</code> typed variables which take no arguments, but you will learn about them later on). Comma-separated values in between the parenthesis define a tuple type as one possible variation of that variant.</p>
+<p>When accessing / extracting the actual value of a tagged variant, we <strong>need</strong> to prefix the extraction with the type of the variant to signify we actually want to get a tag, not a type. Here is an example:</p>
+<pre><code class="language-rs">use Core.print
+
+data Tuple:
+	i32 x;
+	f32 y;
+	bool8 z;
+	Tuple(x, y, z);
+
+variant MyVariant:
+	Tuple, Tuple(u64, f64), i32;
+
+def main():
+	MyVariant var = 10;
+	switch var:
+		Tuple(t): print($"Is Tuple: ({t.x}, {t.y}, {t.z})\n");
+		MyVariant.Tuple(t): print($"Is MyVariant.Tuple: ({t.$0}, {t.$1})\n");
+		i32(i): print($"Is i32: {i}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>Is i32: 10
+</code></pre>
+</blockquote>
+<p>There is, again, quite a lot to go through. First of all, the Type is absolutely needed for tagged accesses to be able to differentiate between a tagged access and an access of that type. This also prevents future collisions if you would, for example, later define a type with the same name as your variant tag. If we would not do this differentiation, you would then later on need to change your tag and change it everywhere you have used it or you would need to change your created type's name to something different to prevent collisions. Both would be a horrible experience. So, this is the reason to why it is <strong>required</strong> to explicitely state the type of the variant before the tag, if the variant's type is missing the "tag" is interpreted as a type and compilation will fail!</p>
+<p>This decision might annoy you at first, but we hope that you will be able to see the reasons behind it and why it's so important to have this rule in place, as it also completely removes any ambuguity from the programmer itself.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../intermediates_guide/2_variants/3_tagged.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../intermediates_guide/2_variants/2_variant_switch.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
+                            <a rel="next prefetch" href="../../intermediates_guide/3_error_sets.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -259,10 +286,13 @@ result = 3
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../intermediates_guide/2_variants/3_tagged.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../intermediates_guide/2_variants/2_variant_switch.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
+                    <a rel="next prefetch" href="../../intermediates_guide/3_error_sets.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -275,13 +305,13 @@ result = 3
         </script>
 
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 

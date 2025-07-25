@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Switching on Optionals - The Flint Wiki</title>
+        <title>Switching on Variants - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -175,107 +175,154 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="switching-on-optionals"><a class="header" href="#switching-on-optionals">Switching on Optionals</a></h1>
-<p>We can also switch on optional values to gain access to their stored value as well. The syntax for switching on optionals is a bit different than the syntax on switching on enums. The <code>switch</code> statement and expression have different syntax based on the type they switch on, it is the only statement in Flint where this is true (except for the pipe operator <code>|&gt;</code>). But let's have a look at a simple example:</p>
+                        <h1 id="switching-on-variants"><a class="header" href="#switching-on-variants">Switching on Variants</a></h1>
+<p>In the last chapter we have looked at how to define variant types, but now we come to the fun part of variants, actually using them. You see, because a variant <em>can</em> be one of our defined types we also need to check which one it actually <em>is</em> before we can safely access the data that's stored within that variant. The easiest apporach to extract a variant's value is through a switch statement. Here is a small example of that:</p>
 <pre><code class="language-rs">use Core.print
 
+variant MyVariant:
+	i32, f32, u64;
+
+def print_var(MyVariant var):
+	switch var:
+		i32(i): print($"holds i32 value of {i}\n");
+		f32(f): print($"holds f32 value of {f}\n");
+		u64(u): print($"holds u64 value of {u}\n");
+
 def main():
-	i32? maybe = none;
-	
-	switch maybe:
-		none: print("none\n");
-		v: print($"value = {v}\n");
-	
-	maybe = 69;
-	switch maybe:
-		none: print("none\n");
-		v: print($"value = {v}\n");
+	MyVariant var = -5;
+	print_var(var);
+
+	var = 3.4;
+	print_var(var);
+
+	var = u64(55);
+	print_var(var);
 </code></pre>
 <p>This program will print these lines to the console:</p>
 <blockquote>
-<pre><code>none
-value = 69
+<pre><code>holds i32 value of -5
+holds f32 value of 3.4
+holds u64 value of 55
 </code></pre>
 </blockquote>
-<p>As you can see, we have one switch branch for the <code>none</code> case, where there isn't anything stored in the optional value at all, and we have one case for the value case. But what is that <code>v</code> there? <code>v</code> is like a "variable declaration" here, it's just a name we give to access the value field of the optional directly. Note that the type of the <code>v</code> "variable" is <code>i32</code> here, so we can not set the variable <code>maybe</code> to be <code>none</code> through the <code>v</code> variable.</p>
-<p>But what we can do is do a little "trick". You see, the variable <code>v</code> gives us a direct mutable reference to the value field of <code>maybe</code>, it's not simply a <em>copy</em> of the value field, it's a <em>reference</em> to it, as seen in the next code example:</p>
+<p>There is quite a lot to unpack here. First, we pass the variant to the function. Variants are considere complex data types in Flint, this means they are passed by <strong>reference</strong>, <em>not</em> by <strong>value</strong>. This also means that changes to the variant within a function would result in these changes taking effect over at the callside of the function as well. You can see this behaviour in this example here:</p>
 <pre><code class="language-rs">use Core.print
 
-def main():
-    i32? maybe = 30;
-    print($"value = {maybe!}\n");
+variant MyVariant:
+	i32, f32, u64;
 
-    switch maybe:
-        none: print("none\n");
-        v: v = 10;
-    print($"value = {maybe!}\n");
+def print_var(MyVariant var):
+	switch var:
+		i32(i): print($"holds i32 value of {i}\n");
+		f32(f): print($"holds f32 value of {f}\n");
+		u64(u): print($"holds u64 value of {u}\n");
+
+def set_i32(mut MyVariant var, i32 value):
+	var = value;
+
+def set_f32(mut MyVariant var, f32 value):
+	var = value;
+
+def set_u64(mut MyVariant var, u64 value):
+	var = value;
+
+def main():
+	MyVariant var = -5;
+	set_i32(var, -10);
+	print_var(var);
+
+	set_f32(var, 3.4);
+	print_var(var);
+
+	set_u64(var, u64(55));
+	print_var(var);
 </code></pre>
 <p>This program will print these lines to the console:</p>
 <blockquote>
-<pre><code>value = 30
-value = 10
+<pre><code>holds i32 value of -10
+holds f32 value of 3.4
+holds u64 value of 55
 </code></pre>
 </blockquote>
-<p>So, this mutability actually allows us to circumvent Flint's safety mechanisms around accessing the value field of an empty optional variable, which is rather interesting:</p>
+<p>But we need to discuss one more thing here and now: naming. You see that the accessor-variables of the variant have been named <code>i</code>, <code>f</code> and <code>u</code>. You actually do not need to give them separate accessing-names, because these "variables" will only be accessible within their respective switch branch:</p>
 <pre><code class="language-rs">use Core.print
 
+variant MyVariant:
+	i32, f32, u64;
+
 def main():
-	i32? maybe = 30;
-	
-	switch maybe:
-		none: print("none\n");
-		v:
-			print($"v = {v}\n");
-			maybe = none;
-			print($"v = {v}\n");
+	MyVariant var = -10;
+	switch var:
+		i32(v): print($"holds i32 value of {v}\n");
+		f32(v): print($"holds f32 value of {v}\n");
+		u64(v): print($"holds u64 value of {v}\n");
 </code></pre>
-<p>This code will print these lines to the console:</p>
+<p>This program will print this line to the console:</p>
 <blockquote>
-<pre><code>v = 30
-v = 0
+<pre><code>holds i32 value of -10
 </code></pre>
 </blockquote>
-<p>So, you are not allowed to access the value when there is nothing stored on it but if there <em>was</em> something stored on it and you <em>still</em> have the reference to the value field you can actually still modify it. Maybe we will add a system to detect and prevent this behaviour, but it's very funny in my opinion that you can do it at all.
-Also, this is a great example to showcase the behaviour of the <code>none</code> assignment we have talked about earlier, that the <code>none</code> literal is literally a zeroinitializer of the given type it is meant to be stored at. In our <code>i32?</code> example that's not a big deal, the value is just set to 0, but think about what happens if that would have been a <code>str?</code>. Strings are not "stack"-allocated in Flint, so they are pointers under the hood. And all values set to 0 interpreted as a pointer is a <code>nullptr</code>, so accessing the value would crash our program, but with a mysterious <code>Segmentation Fault</code> instead.</p>
-<p>So, keep your eyes open for this "bug" (or "feature" if you will) as it could be not what you would want. In this simple example it is clear that we should not do <code>maybe = none</code>, but what if that would be a function call instead and somewhere down the line the optional is set to <code>none</code> and then we try to use the value <code>v</code> after the call? That's where the problems start to happen. So, as a general rule of thumb: Try avoiding the variable which is switched on within the value block of the switch entirely, you should <em>only</em> access the value field directly, not the switched-on variable. (Maybe we could make this into a compiler-rule, as this then would not be a runtime-check but a compile-time check to see if the variable that's switched on is accessed in the value-block).</p>
-<p>We can also put the switch statement in a separate function entirely and pass the optional value to said function. The optional value will be passed by reference, not by value, so this means that any modifications to the optional will be visible at the callers side as well:</p>
+<p>As you can see, you can name your value references however you like and their names will not collide. Again, just like with the value reference for optionals, you can mess up everything by setting the variant value you are switching on while you are still on one branch. This will be resolved eventually, but it also works at this point in time for variants:</p>
 <pre><code class="language-rs">use Core.print
 
-def print_opt(i32? value):
-	switch value:
-		none: print("none\n");
-		v: print($"value = {v}\n");
-
-def set_value(mut i32? opt, i32 value):
-	opt = value;
+variant MyVariant:
+	bool8, u8, i32;
 
 def main():
-	i32? maybe = none;
-	print_opt(maybe);
-
-	maybe = 69;
-	print_opt(maybe);
-
-	set_value(maybe, 20);
-	print_opt(maybe);
+	bool8 b8 = 'A';
+	MyVariant var = b8;
+	switch var:
+		bool8(v):
+			print($"holds bool8 value of {v}\n");
+			var = 47;
+			print($"holds bool8 value of {v}\n");
+		u8(v): print($"holds u8 value of {v}\n");
+		i32(v): print($"holds i32 value of {v}\n");
 </code></pre>
 <p>This program will print these lines to the console:</p>
 <blockquote>
-<pre><code>none
-value = 69
-value = 20
+<pre><code>holds bool8 value of 01000001
+holds bool8 value of 00101111
 </code></pre>
 </blockquote>
+<p>This is actually a bit more dangerous than the same behaviour with optionals. In optionals, the value is just set to <code>0</code> through and thgough, leading to nullpointers etc. But here we could have a variant that can hold both an <code>u64</code> and a <code>str</code>, but the <code>str</code> is a pointer under the hood. This means that we can store a <code>u64</code> value in the variant inside the <code>str</code> branch and then we could point to <em>any</em> memory address and possibly read strings from it. So, while this problem seemed to be only a small one for optionals, it's actually quite a large problem for variants, so this definitely needs to be fixed at some point.</p>
+<p>I need to pre-empt this here, but currently through this we are also allowed to do some shenanigans, like native bitmasking for example. But for the following example i pre-empt tagged variants a bit, just bare with me for a second, you will understand what's going on down here by the next chapter!</p>
+<pre><code class="language-rs">use Core.print
+
+variant BitMask:
+	Bits(bool8, bool8, bool8, bool8), Value(u32);
+
+def main():
+	bool8 empty = '0';
+	data&lt;bool8, bool8, bool8, bool8&gt; b8 = (empty, empty, empty, empty);
+	BitMask var = b8;
+	switch var:
+		BitMask.Bits(b):
+			print($"BitMask: {b.$0} {b.$1} {b.$2} {b.$3}\n");
+			var = u32(1665025);
+			print($"BitMask: {b.$0} {b.$1} {b.$2} {b.$3}\n");
+		BitMask.Value(v): print($"holds u64 value of {v}\n");
+</code></pre>
+<p>This program prints these lines to the console:</p>
+<blockquote>
+<pre><code>BitMask: 00110000 00110000 00110000 00110000
+BitMask: 00000001 01101000 00011001 00000000
+</code></pre>
+</blockquote>
+<p>And as you can see, the above mentioned problem can also be a feature. It's quite a lot more nuanced than just saying it's just bad, because now we can do bitmasking with it, without any temporaries, as the accessors are references to the same value. So, if the bitmask and the actual value have the same width, like in our case, both are <code>4</code> bytes in size, we can do pretty cool stuff with variants, as we can directly modify the memory in the <code>value</code> field and interpret it as a whole number or a mask where we can access each individual element.</p>
+<p>So, whether this is a bug or a feature is open to debate, but in my opinion it could be a feature <em>if</em> <strong>none</strong> of the possible types are complex and thus are pointers under the hood. If all values are <em>real</em> values and not pointers under the hood i can't see why this should not be allowed for variants, as it's a pretty exploitable system for sure. And if no pointer can be stored in the variant, nothing can be accessed or written to at an arbitrary point in memory, which means the program will definitely not crash, it could only happen that you will get the wrong or unexpected values if you do exploit this. I think there should be a warning that mutating the variable inside the branch could lead to problems, but there should only be a compile-error if one of the variant's types is complex.</p>
+<p>I cannot really think of a practical use case of this implication, honestly, especially since Flint will support shift operators <code>&lt;&lt;</code>, <code>&gt;&gt;</code> and bitwise operators like <code>|</code>, <code>&amp;</code> and <code>!</code> as well in the future, so bitmasking for example is not really needed and useful when we have access to direct bit-manipulation as well.</p>
+<p>And switch expressions work exactly the same way, just with a <code>-&gt;</code> instead of the <code>:</code> and with no scope but a single expression after the arrow, as usual. But now let's move on to the next chapter of tagging.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../intermediates_guide/1_optionals/4_null_coalescing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../intermediates_guide/2_variants/1_introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../intermediates_guide/1_optionals/6_optional_chaining.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../intermediates_guide/2_variants/3_tagged.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -285,11 +332,11 @@ value = 20
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../intermediates_guide/1_optionals/4_null_coalescing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../intermediates_guide/2_variants/1_introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../intermediates_guide/1_optionals/6_optional_chaining.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../intermediates_guide/2_variants/3_tagged.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
