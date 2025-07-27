@@ -111,6 +111,7 @@
     - [Introduction](./intermediates_guide/2_variants/1_introduction.md)
     - [Switching on Variants](./intermediates_guide/2_variants/2_variant_switch.md)
     - [Tagged Variants](./intermediates_guide/2_variants/3_tagged.md)
+    - [Inline Variants](./intermediates_guide/2_variants/4_inline_variants.md)
     - [Variant Comparison]()
     - [Unwrapping Variants]()
     - [Variant Extraction]()
