@@ -6,14 +6,40 @@ use Core.filesystem
 
 The `filesystem` module provides several functions to read data from and write data to files.
 
-| Function Name | Parameter Types | Return Types | Can Throw? |
-|--------------:|:----------------|:------------:|:----------:|
-| `read_file`   | `str`           | `str`        | Yes        |
-| `read_lines`  | `str`           | `str[]`      | Yes        |
-| `file_exists` | `str`           | `bool`       | No         |
-| `write_file`  | `str`, `str`    | No           | Yes        |
-| `append_file` | `str`, `str`    | No           | Yes        |
-| `is_file`     | `str`           | `bool`       | No         |
+| Function Name | Parameter Types | Return Types | Possible Errors |
+|--------------:|:----------------|:------------:|:---------------:|
+| `read_file`   | `str`           | `str`        | `ErrFS`         |
+| `read_lines`  | `str`           | `str[]`      | `ErrFS`         |
+| `file_exists` | `str`           | `bool`       | No              |
+| `write_file`  | `str`, `str`    | No           | `ErrFS`         |
+| `append_file` | `str`, `str`    | No           | `ErrFS`         |
+| `is_file`     | `str`           | `bool`       | No              |
+
+
+## error sets
+
+These are the error sets this Core module provides.
+
+### ErrIO
+
+This error set does not have a parent error, so it directly and only extends `anyerror` directly. These are the possible values this error could have:
+
+| Error Value     | Description                              |
+|:----------------|:-----------------------------------------|
+| `OpenFailed`    | Could not open the file                  |
+| `NotFound`      | File does not exist                      |
+| `NotReadable`   | Exists but is not readable               |
+| `NotWritable`   | Exists but is not writable (permissions) |
+| `UnexpectedEOF` | Hit EOF in the middle of a read          |
+
+### ErrFS
+
+This error set extens the `ErrIO` error set. These are the possible values this error set could have in addition to all the error values from `ErrIO`:
+
+| Error Value   | Description                              |
+|:--------------|:-----------------------------------------|
+| `TooLarge`    | File is unreasonably large               |
+| `InvalidPath` | Path string is malformed                 |
 
 ## read_file
 

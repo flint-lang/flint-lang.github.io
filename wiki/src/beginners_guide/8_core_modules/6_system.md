@@ -6,9 +6,22 @@ use Core.system
 
 The `system` module provides functions to interact with the system, for example to execute system commands.
 
-| Function Name    | Parameter Types | Return Types | Can Throw? |
-|-----------------:|:----------------|:------------:|:----------:|
-| `system_command` | `str`           | `i32`, `str` | Yes        |
+| Function Name    | Parameter Types | Return Types | Possible Errors |
+|-----------------:|:----------------|:------------:|:---------------:|
+| `system_command` | `str`           | `i32`, `str` | `ErrSystem`     |
+
+## error sets
+
+These are the error sets this Core module provides.
+
+### ErrSystem
+
+This error set does not have a parent error, so it directly and only extends `anyerror` directly. These are the possible values this error could have:
+
+| Error Value     | Description                                        |
+|:----------------|:---------------------------------------------------|
+| `SpawnFailed`   | Process could not be created                       |
+| `ExecFailed`    | Process start succeeded but exec returned an error |
 
 ## system_command
 
