@@ -24,10 +24,12 @@ These are the error sets this Core module provides.
 
 This error set does not have a parent error, so it directly and only extends `anyerror` directly. These are the possible values this error could have:
 
-| Error Value   | Description                            |
-|:--------------|:---------------------------------------|
-| `ParseInt`    | Could not parse text to integer        |
-| `ParseFloat`  | Could not parse text to floating‑point |
+| Error Value    | Description                                      |
+|:---------------|:-------------------------------------------------|
+| `ReadLines`    | Could not read lines from console                |
+| `ParseInt`     | Could not parse text to integer                  |
+| `NegativeUint` | Negative input not allowed for unsigned integers |
+| `ParseFloat`   | Could not parse text to floating‑point           |
 
 ## read_str
 
