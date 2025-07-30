@@ -21,7 +21,6 @@ This error set does not have a parent error, so it directly and only extends `an
 | Error Value     | Description                                        |
 |:----------------|:---------------------------------------------------|
 | `SpawnFailed`   | Process could not be created                       |
-| `ExecFailed`    | Process start succeeded but exec returned an error |
 
 ## system_command
 
