@@ -8,7 +8,7 @@ The `filesystem` module provides several functions to read data from and write d
 
 | Function Name | Parameter Types | Return Types | Possible Errors |
 |--------------:|:----------------|:------------:|:---------------:|
-| `read_file`   | `str`           | `str`        | `ErrFS`         |
+| `read_file`   | `str`           | `str`        | `ErrIO`         |
 | `read_lines`  | `str`           | `str[]`      | `ErrFS`         |
 | `file_exists` | `str`           | `bool`       | No              |
 | `write_file`  | `str`, `str`    | No           | `ErrFS`         |
