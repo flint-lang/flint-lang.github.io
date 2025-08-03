@@ -119,6 +119,17 @@
 
   - [Error Sets](./intermediates_guide/3_error_sets.md)
 
+    - [Introduction](./intermediates_guide/3_error_sets/1_introduction.md)
+    - [Error Set Refinement](./intermediates_guide/3_error_sets/2_refinement.md)
+    - [Function Signatures](./intermediates_guide/3_error_sets/3_signatures.md)
+    - [The Error Structure](./intermediates_guide/3_error_sets/4_structure.md)
+    - [Error Context](./intermediates_guide/3_error_sets/5_context.md)
+    - [Throwing Anonymous Errors](./intermediates_guide/3_error_sets/6_anonymous.md)
+    - [Internals](./intermediates_guide/3_error_sets/7_internals.md)
+    - [Best Practices](./intermediates_guide/3_error_sets/8_best_practices.md)
+    - [Error Switch Inlining]()
+    - [Linearization]()
+
   - [Callables & Variable Persistence]()
 
   - [Pipes]()
