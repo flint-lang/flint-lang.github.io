@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>system - The Flint Wiki</title>
+        <title>Error Set Refinement - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -175,74 +175,66 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="system"><a class="header" href="#system">system</a></h1>
-<pre><code class="language-rs">use Core.system
-</code></pre>
-<p>The <code>system</code> module provides functions to interact with the system, for example to execute system commands.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
-<tr><td style="text-align: right"><code>system_command</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>i32</code>, <code>str</code></td><td style="text-align: center"><code>ErrSystem</code></td></tr>
-</tbody></table>
-</div>
-<h2 id="error-sets"><a class="header" href="#error-sets">error sets</a></h2>
-<p>These are the error sets this Core module provides.</p>
-<h3 id="errsystem"><a class="header" href="#errsystem">ErrSystem</a></h3>
-<p>This error set does not have a parent error, so it directly and only extends <code>anyerror</code> directly. These are the possible values this error could have:</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
-<tr><td style="text-align: left"><code>SpawnFailed</code></td><td style="text-align: left">Process could not be created</td></tr>
-</tbody></table>
-</div>
-<h2 id="system_command"><a class="header" href="#system_command">system_command</a></h2>
-<p>The <code>system_command</code> function executes a given command, for example <code>ls -lah</code> and returns the exit code of the given command together with the output of the command, stored in a string. The function can throw an error if the process (the command) cannot be created.</p>
-<pre><code class="language-rs">use Core.print
-use Core.system
+                        <h1 id="error-set-refinement"><a class="header" href="#error-set-refinement">Error Set Refinement</a></h1>
+<p>Error set refinement, what a beautiful name for a very simple concept. You have learnt in the last chapter how to create a new error set type using the <code>error</code> keyword. Now you will learn another important concept of how Flint's errors work under the hood. A set is a collection of values, both in set theory in mathematics and in Flint that's also true. So, the error set from the last chapter, <code>error ErrorSet: Value1, Value2;</code> contains exactly two values: <code>Value1</code> and <code>Value2</code>.
+We can define set-relationships in Flint. One Error set could "extend" a base error set, and becomes a more specialized error by doing so. Here is a small example of that:</p>
+<pre><code class="language-rs">error ErrBase:
+	B1, B2;
+
+error ErrSpecial(ErrBase):
+	S1, S2;
 
 def main():
-    (exit_code, output) = system_command("ls");
-    print($"exit_code = {exit_code}\n");
-    print($"output = '{output}'\n");
+	throw ErrSpecial.B1;
 </code></pre>
-<p>This program will print these lines to the console:</p>
+<p>This program will print this line to the console:</p>
 <blockquote>
-<pre><code>exit_code = 0
-output = 'build
-build.zig
-build.zig.zon
-cmake
-CMakeLists.txt
-compile_flags.txt
-documents
-examples
-fetch_crt.sh
-include
-LICENSE
-logfile
-lsp
-main
-main.o
-main.obj
-output.ll
-README.md
-resources
-scripts
-src
-test
-test_files
-test.o
-tests
-vendor
-'
+<pre><code>ERROR: Program exited with exit code '803109534'
 </code></pre>
 </blockquote>
+<div class="warning">
+<p>This error message will change in the future, currently it just prints the type id</p>
+<p>In the future the message should look more like <code>ERROR: Program exited due to thrown error: ErrSpecial.B1</code> but it will take more time and developement effort until this message can actually be printed.</p>
+</div>
+<p>The error set <code>ErrSpecial</code> is an extension of the error set <code>ErrBase</code>, thus contains all values of it's base set. The error set <code>ErrBase</code> contains the values <code>[B1, B2]</code> and the error set <code>ErrSpecial</code> contains the values <code>[B1, B2, S1, S2]</code>. This is a very important concept in Flint. The more "special" an erro becomes the <strong>bigger</strong> does it's set become. This might seem counter-intuitive but when looked at it from the mathematical standpoint this is just how it works.</p>
+<h2 id="the-null-set"><a class="header" href="#the-null-set">The null-set</a></h2>
+<p>Mathematical sets all have a null-set, a set which contains no value and as a result is the "base" set of <strong>every</strong> other set. Because <strong>every</strong> set contains the null-set and is a superset of it. In Flint, this "null-set" for errors is represented as the type <code>anyerror</code>. The <code>anyerror</code> "set" is a true null-set meaning it does not "contain" any values. This is only true semantically, of course, as under the hood the <code>anyerror</code> is actually the same structure as any other error too. But this allows us to "cast" every error to an <code>anyerror</code>, because every error set <strong>is</strong> (contains) an <code>anyerror</code>. So, when we now look at this example here:</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrBase:
+	B1, B2;
+
+error ErrSpecial(ErrBase):
+	S1, S2;
+
+def crash():
+	throw ErrSpecial.B1;
+
+def main():
+	crash() catch err:
+		print("Error catched\n");
+</code></pre>
+<p>which prints this line to the console:</p>
+<blockquote>
+<pre><code>Error catched
+</code></pre>
+</blockquote>
+<p>we can look at the function <code>crash</code> and look at the type of the returned error. In our case, the type of the returned error is <code>anyerror?</code>, it is <code>none</code> if there was no error. If there was an error, however, we directly unwrap it and put the error accessible into the <code>err</code> variable. So, in this above case the <code>err</code> variable is of type <code>anyerror</code>. The type anyerror however is, like said before, not really "nothing", it still contains the thrown error, but this error just could be <em>any</em> error, hence the name.
+Also, what was not told until now is that even the <code>ErrBase</code> extends a set, the <code>anyerror</code> null-set! So, the error definition from above actually looks more like that:</p>
+<pre><code class="language-rs">error ErrBase(anyerror):
+	B1, B2;
+</code></pre>
+<p>But the <code>anyerror</code> set contains no values, so the <code>ErrBase</code> set still only contains the values <code>[B1, B2]</code> but now it formally extends from the error set of <code>anyerror</code> and thus is "castable" to that set.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../beginners_guide/8_core_modules/5_env.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../intermediates_guide/3_error_sets/1_introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../intermediates_guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../intermediates_guide/3_error_sets/3_signatures.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -252,11 +244,11 @@ vendor
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../beginners_guide/8_core_modules/5_env.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../intermediates_guide/3_error_sets/1_introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../intermediates_guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../intermediates_guide/3_error_sets/3_signatures.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

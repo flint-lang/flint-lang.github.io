@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>system - The Flint Wiki</title>
+        <title>Best Practices - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -175,76 +175,79 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="system"><a class="header" href="#system">system</a></h1>
-<pre><code class="language-rs">use Core.system
-</code></pre>
-<p>The <code>system</code> module provides functions to interact with the system, for example to execute system commands.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
-<tr><td style="text-align: right"><code>system_command</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>i32</code>, <code>str</code></td><td style="text-align: center"><code>ErrSystem</code></td></tr>
-</tbody></table>
-</div>
-<h2 id="error-sets"><a class="header" href="#error-sets">error sets</a></h2>
-<p>These are the error sets this Core module provides.</p>
-<h3 id="errsystem"><a class="header" href="#errsystem">ErrSystem</a></h3>
-<p>This error set does not have a parent error, so it directly and only extends <code>anyerror</code> directly. These are the possible values this error could have:</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
-<tr><td style="text-align: left"><code>SpawnFailed</code></td><td style="text-align: left">Process could not be created</td></tr>
-</tbody></table>
-</div>
-<h2 id="system_command"><a class="header" href="#system_command">system_command</a></h2>
-<p>The <code>system_command</code> function executes a given command, for example <code>ls -lah</code> and returns the exit code of the given command together with the output of the command, stored in a string. The function can throw an error if the process (the command) cannot be created.</p>
-<pre><code class="language-rs">use Core.print
-use Core.system
+                        <h1 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h1>
+<p>Let's discuss best practices regarding error handling in Flint next.</p>
+<h2 id="naming"><a class="header" href="#naming">Naming</a></h2>
+<p>Let's start with naming and with how Flint names it's errors internally. All Errors inside Flint start with <code>Err...</code> followed by the actual are of error, like <code>ErrNetwork</code>, <code>ErrSystem</code>, <code>ErrAssert</code>, <code>ErrEnv</code>, <code>ErrFS</code> and so on. Then, unlike enums where the values are prefered to be written in <code>SCREAMING_SNAKE_CASE</code>, the error values are written in <code>PascalCase</code>, just like errors. Also, error values may not start with the <code>Error</code> prefix, as this is handled by the <code>Err</code> prefix on the error set type. So you would end up writing <code>ErrName.ValueName</code> instead of <code>Something.ErrorName</code>. This recommendation exists to prevent collisions with other definitions, as there exist quite a few of definitions in Flint: <code>data</code>, <code>enum</code>, <code>variant</code>, <code>func</code>, <code>entity</code> and <code>error</code>. So, having clear naming for all of them keeps your code visually pleasing and easy to follow.</p>
+<h2 id="throwing-errors-and-signatures"><a class="header" href="#throwing-errors-and-signatures">Throwing Errors and Signatures</a></h2>
+<p>With great power comes great responsibility. With the power of extending error sets also come unique challenges not found in other languages. Here is an example of a 4-deep error set extension chain:</p>
+<pre><code class="language-rs">error ErrBase:
+	Critical, Abortion;
+
+error ErrParsing(ErrBase):
+	UnexpectedToken, MissingToken, DuplicateDefinition;
+
+error ErrStatement(ErrParsing):
+	MissingSemicolon, EmptyScope, TypeMismatch;
+
+error ErrExpression(ErrStatement):
+	MissingOperator, UnknownType;
+
+
+def parse_expression() {ErrExpression}:
+	// Do some work and possibly throw an ErrExpression
+	// This means it could be *any* from the above errors
+	// because they all end up in the 'ErrExpression' set
+
+def parse_statement() {ErrStatement}:
+	parse_expression() catch err:
+		ErrExpression(e):
+			// Handle all expression-specific errors
+			switch e:
+				MissingOperator: // handle case
+				UnknownType:     // handle case
+				else:
+					// The rest are all errors from base error sets
+					// This means that we simply "recast" the error
+					// and return it as a statement error
+					ErrStatement es = e;
+					throw es;
+		// Just rethrow any other errors
+		anyerror(e): throw e;
+
+def parse_file() {ErrParsing}:
+	parse_expression() catch err:
+		ErrStatement(e):
+			// Handle all statement-specific errors
+			switch e:
+				MissingSemicolon: // handle case
+				EmptyScope:       // handle case
+				TypeMismatch:     // handle case
+				else:
+					// The rest are all errors from base error sets
+					// This means that we simply "recast" the error
+					// and return it as a parsing error
+					ErrParsing ep = e;
+					throw ep;
+		// Just rethrow any other errors
+		anyerror(e): throw e;
 
 def main():
-    (exit_code, output) = system_command("ls");
-    print($"exit_code = {exit_code}\n");
-    print($"output = '{output}'\n");
+	parse_file() catch err:
+		// Now we can handle the parsing and check for all potential 
+		// general parsing errors.
 </code></pre>
-<p>This program will print these lines to the console:</p>
-<blockquote>
-<pre><code>exit_code = 0
-output = 'build
-build.zig
-build.zig.zon
-cmake
-CMakeLists.txt
-compile_flags.txt
-documents
-examples
-fetch_crt.sh
-include
-LICENSE
-logfile
-lsp
-main
-main.o
-main.obj
-output.ll
-README.md
-resources
-scripts
-src
-test
-test_files
-test.o
-tests
-vendor
-'
-</code></pre>
-</blockquote>
+<p>This is what I would consider a true "separation of concerns". Through the error set extension system we not only are able to specialize our errors but also keep the actual handling of those errors to higher levels while only focusing on the lower levels for the specialized sets. This is still a quite simple example. Just imagine having a dozen error set types where the most special error would have a hundred possible values it could be. Imagine writing a 100-branch switch in the specialized function, a 80 branch switch in the one above etc. That would be insane... this is why I would consider it best practice to keep only handling the "added" special errors in the error set at the deepest level, and just re-throwing the error as the more general value if it is not any of the specialized ones, because in that case it is <em>guaranteed</em> to be a value from the base sets instead.</p>
+<p>There does not exist a way to make this all safe, though. Because if you would now add a new error to the error set <code>ErrExpression</code> for example you would not get a compiler error that you have not checked for that value in the switch, and the branch where you try to cast the error value to the base set type would be executed. As "workaroun" (or actual solution, we will see), casting a specialized error to it's base error while that specialized value holds an actual value greater than it's base type's capacity will crash the program loud and clear. We know at compile-time how big the set <code>ErrStatement</code> is, for example. It's exactly <code>8</code> values big currently. So, if we would try to cast a value with a <code>value_id &gt;= 8</code> to that type it would just crash. It will be just a simple condition under the hood, but this condition prevents errors bubbling up to the main level (which would crash the program annyway most of times).</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../beginners_guide/8_core_modules/5_env.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../intermediates_guide/3_error_sets/7_internals.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../intermediates_guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -252,13 +255,10 @@ vendor
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../beginners_guide/8_core_modules/5_env.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../intermediates_guide/3_error_sets/7_internals.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../intermediates_guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>

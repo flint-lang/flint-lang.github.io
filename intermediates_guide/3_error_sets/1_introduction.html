@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>system - The Flint Wiki</title>
+        <title>Introduction - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -175,74 +175,78 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="system"><a class="header" href="#system">system</a></h1>
-<pre><code class="language-rs">use Core.system
-</code></pre>
-<p>The <code>system</code> module provides functions to interact with the system, for example to execute system commands.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
-<tr><td style="text-align: right"><code>system_command</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>i32</code>, <code>str</code></td><td style="text-align: center"><code>ErrSystem</code></td></tr>
-</tbody></table>
-</div>
-<h2 id="error-sets"><a class="header" href="#error-sets">error sets</a></h2>
-<p>These are the error sets this Core module provides.</p>
-<h3 id="errsystem"><a class="header" href="#errsystem">ErrSystem</a></h3>
-<p>This error set does not have a parent error, so it directly and only extends <code>anyerror</code> directly. These are the possible values this error could have:</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
-<tr><td style="text-align: left"><code>SpawnFailed</code></td><td style="text-align: left">Process could not be created</td></tr>
-</tbody></table>
-</div>
-<h2 id="system_command"><a class="header" href="#system_command">system_command</a></h2>
-<p>The <code>system_command</code> function executes a given command, for example <code>ls -lah</code> and returns the exit code of the given command together with the output of the command, stored in a string. The function can throw an error if the process (the command) cannot be created.</p>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>Flint's error system is quite unique. <strong>Every</strong> function can fail. Absolutely every single function a user defines in his code <em>can</em> fail. Because <em>every</em> function can fail, Flint can deeply integrate error handling into the language. A function returning a <code>str</code> value, for example, actually returns a <code>(err, str)</code> value. The first <em>implicit</em> return type of <strong>any</strong> Flint function is the error value of said function. This error value, however, is completely hidden from the user outside of Flint's error handling syntax.</p>
+<p>Flint has two keywords for error handling: <code>throw</code> and <code>catch</code>. But, unlike Java or C++, where the error handling happens outside the normal execution path ("happy path" / "unhappy path") which completely breaks execution consistency and results in lots of context switching for the CPU, Flint has it's error handling system built directly into the calling / returning code of every function, which makes it much faster than traditional exception-based error handling.</p>
+<p>Flint's error handling system, however, is based around the idea of <code>Error Sets</code>. An error set is basically just a type, a set type, consisting of every possible value the error could have. Here is a small example of that:</p>
 <pre><code class="language-rs">use Core.print
-use Core.system
+
+error ErrorSet:
+	Value1, Value2;
 
 def main():
-    (exit_code, output) = system_command("ls");
-    print($"exit_code = {exit_code}\n");
-    print($"output = '{output}'\n");
+	print("Hello, World!\n");
+</code></pre>
+<p>This program will just print this line to the console:</p>
+<blockquote>
+<pre><code>Hello, World
+</code></pre>
+</blockquote>
+<h2 id="throwing-errors"><a class="header" href="#throwing-errors">Throwing errors</a></h2>
+<p>But here you can directly see how to define a new error set. We use the <code>error</code> keyword for that. And an error set looks pretty similar to an <code>enum</code> defiition, actually, but they are vastly different from one another. Let's look into how to throw an eror next.</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrorSet:
+	Value1, Value2;
+
+def fail():
+	throw ErrorSet.Value1;
+
+def main():
+	fail();
+	print("Normal execution continues\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>ERROR: Program exited with exit code '-286738258'
+</code></pre>
+</blockquote>
+<div class="warning">
+<p>This error message will change in the future, currently it just prints the type id</p>
+<p>In the future the message should look more like <code>ERROR: Program exited due to thrown error: ErrorSet.Value1</code> but it will take more time and developement effort until this message can actually be printed.</p>
+</div>
+<h2 id="catching-errors"><a class="header" href="#catching-errors">Catching errors</a></h2>
+<p>But what would an error be used for if we would not have a way to catch it? Here is how we catch errors in Flint:</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrorSet:
+	Value1, Value2;
+
+def fail():
+	throw ErrorSet.Value1;
+
+def main():
+	fail() catch err:
+		print("Error catched!\n");
+	print("Normal execution continues\n");
 </code></pre>
 <p>This program will print these lines to the console:</p>
 <blockquote>
-<pre><code>exit_code = 0
-output = 'build
-build.zig
-build.zig.zon
-cmake
-CMakeLists.txt
-compile_flags.txt
-documents
-examples
-fetch_crt.sh
-include
-LICENSE
-logfile
-lsp
-main
-main.o
-main.obj
-output.ll
-README.md
-resources
-scripts
-src
-test
-test_files
-test.o
-tests
-vendor
-'
+<pre><code>Error catched!
+Normal execution continues
 </code></pre>
 </blockquote>
+<p>The program now does no longer print the <code>ERROR: ...</code> message, as no error was thrown from the main function. This is a core concept of Flint: When an error is catched and it is handled it is consiered that the error is "no longer a problem" and execution will continue as if there was no error at all. But there is still a lot more to cover before we are able to completely understand what errors really are and how to effectively use them.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../beginners_guide/8_core_modules/5_env.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../intermediates_guide/3_error_sets.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../intermediates_guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../intermediates_guide/3_error_sets/2_refinement.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -252,11 +256,11 @@ vendor
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../beginners_guide/8_core_modules/5_env.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../intermediates_guide/3_error_sets.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../intermediates_guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../intermediates_guide/3_error_sets/2_refinement.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

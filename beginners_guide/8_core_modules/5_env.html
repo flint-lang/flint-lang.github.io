@@ -179,9 +179,19 @@
 <pre><code class="language-rs">use Core.env
 </code></pre>
 <p>The <code>env</code> module provides several functions to read from and write to environment variables.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Can Throw?</th></tr></thead><tbody>
-<tr><td style="text-align: right"><code>get_env</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>str</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>set_env</code></td><td style="text-align: left"><code>str</code>, <code>str</code>, <code>bool</code></td><td style="text-align: center"><code>bool</code></td><td style="text-align: center">No</td></tr>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
+<tr><td style="text-align: right"><code>get_env</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>str</code></td><td style="text-align: center"><code>ErrEnv</code></td></tr>
+<tr><td style="text-align: right"><code>set_env</code></td><td style="text-align: left"><code>str</code>, <code>str</code>, <code>bool</code></td><td style="text-align: center"><code>bool</code></td><td style="text-align: center"><code>ErrEnv</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="error-sets"><a class="header" href="#error-sets">error sets</a></h2>
+<p>These are the error sets this Core module provides.</p>
+<h3 id="errenv"><a class="header" href="#errenv">ErrEnv</a></h3>
+<p>This error set does not have a parent error, so it directly and only extends <code>anyerror</code> directly. These are the possible values this error could have:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>VarNotFound</code></td><td style="text-align: left">Requested variable not set</td></tr>
+<tr><td style="text-align: left"><code>InvalidName</code></td><td style="text-align: left">Name contains illegal characters</td></tr>
+<tr><td style="text-align: left"><code>InvalidValue</code></td><td style="text-align: left">Value cannot be used (e.g. embedded NUL)</td></tr>
 </tbody></table>
 </div>
 <h2 id="get_env"><a class="header" href="#get_env">get_env</a></h2>
@@ -198,7 +208,7 @@ def main():
 </code></pre>
 </blockquote>
 <h2 id="set_env"><a class="header" href="#set_env">set_env</a></h2>
-<p>The <code>set_env</code> function sets a given environment variable (<code>str</code>) to a newly specified value (<code>str</code>). The third parameter (<code>bool</code>) controls whether the given environment variable should be overwritten if it already exists. If the third parameter is <code>false</code> an already existent environment variable wont be overwritten. This function cannot throw any errors.</p>
+<p>The <code>set_env</code> function sets a given environment variable (<code>str</code>) to a newly specified value (<code>str</code>). The third parameter (<code>bool</code>) controls whether the given environment variable should be overwritten if it already exists. If the third parameter is <code>false</code> an already existent environment variable wont be overwritten. This function will throw an error if the environment variable or the content of the variable contain invalid characters.</p>
 <pre><code class="language-rs">use Core.print
 use Core.env
 

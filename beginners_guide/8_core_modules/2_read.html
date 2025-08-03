@@ -179,14 +179,25 @@
 <pre><code class="language-rs">use Core.read
 </code></pre>
 <p>The <code>read</code> module provides several functions to read input from the command line and to read input from the user, like numbers or text edited by the user.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Can Throw?</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
 <tr><td style="text-align: right"><code>read_str</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>str</code></td><td style="text-align: center">No</td></tr>
-<tr><td style="text-align: right"><code>read_i32</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>i32</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>read_i64</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>i64</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>read_u32</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>u32</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>read_u64</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>u64</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>read_f32</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>f32</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>read_f64</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>f64</code></td><td style="text-align: center">Yes</td></tr>
+<tr><td style="text-align: right"><code>read_i32</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>i32</code></td><td style="text-align: center">ErrRead</td></tr>
+<tr><td style="text-align: right"><code>read_i64</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>i64</code></td><td style="text-align: center">ErrRead</td></tr>
+<tr><td style="text-align: right"><code>read_u32</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>u32</code></td><td style="text-align: center">ErrRead</td></tr>
+<tr><td style="text-align: right"><code>read_u64</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>u64</code></td><td style="text-align: center">ErrRead</td></tr>
+<tr><td style="text-align: right"><code>read_f32</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>f32</code></td><td style="text-align: center">ErrRead</td></tr>
+<tr><td style="text-align: right"><code>read_f64</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>f64</code></td><td style="text-align: center">ErrRead</td></tr>
+</tbody></table>
+</div>
+<h2 id="error-sets"><a class="header" href="#error-sets">error sets</a></h2>
+<p>These are the error sets this Core module provides.</p>
+<h3 id="errread"><a class="header" href="#errread">ErrRead</a></h3>
+<p>This error set does not have a parent error, so it directly and only extends <code>anyerror</code> directly. These are the possible values this error could have:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>ReadLines</code></td><td style="text-align: left">Could not read lines from console</td></tr>
+<tr><td style="text-align: left"><code>ParseInt</code></td><td style="text-align: left">Could not parse text to integer</td></tr>
+<tr><td style="text-align: left"><code>NegativeUint</code></td><td style="text-align: left">Negative input not allowed for unsigned integers</td></tr>
+<tr><td style="text-align: left"><code>ParseFloat</code></td><td style="text-align: left">Could not parse text to floating‑point</td></tr>
 </tbody></table>
 </div>
 <h2 id="read_str"><a class="header" href="#read_str">read_str</a></h2>

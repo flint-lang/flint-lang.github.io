@@ -176,82 +176,44 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="error-sets"><a class="header" href="#error-sets">Error Sets</a></h1>
-<div class="warning">
-<p>Everything regarding error handling <strong>will</strong> definitely change for later releases.</p>
-<p>The current implementation of everything error-handling related is not final for Flint, and it will change quite a lot. This segment of the guide will be updated when the new system works and is in place. For the time being, the description of how it <em>currently</em> works in FLint is written here. So, expect substantial re-writes of this chapter for future releases.</p>
-</div>
-<p>Flint's error system is quite unique. <strong>Every</strong> function can fail. Absolutely every single function a user defines in his code <em>can</em> fail. Because <em>every</em> function can fail, Flint can deeply integrate error handling into the language. A function returning a <code>str</code> value, for example, actually returns a <code>(i32, str)</code> value. The first <em>implicit</em> return type of <strong>any</strong> Flint function is the error value of said function. This error value, however, is completely hidden from the user outside of Flint's error handling syntax.</p>
-<p>Flint has two keywords for error handling: <code>throw</code> and <code>catch</code>. But, unlike Java or C++, where the error handling happens outside the normal execution path ("happy path" / "unhappy path") which completely breaks execution consistency and results in lots of context switching for the CPU, Flint has it's error handling system built directly into the calling / returning code of every function, which makes it much faster than traditional exception-based error handling.</p>
-<h2 id="throwing-an-error"><a class="header" href="#throwing-an-error">Throwing an error</a></h2>
-<p>Throwing an error is actually really simple. Here is a small examlpe:</p>
-<pre><code class="language-rs">use Core.print
-
-def throw_if_bigger_than(i32 x, i32 y):
-    if x &gt; y:
-        // We can only throw i32 values at the moment
-        throw 69;
-
-def main():
-    throw_if_bigger_than(10, 5);
-</code></pre>
-<p>This program will print this line to the console:</p>
-<blockquote>
-<pre><code>ERROR: Program exited with exit code '69'
-</code></pre>
-</blockquote>
-<p>You have already seen this <code>ERROR: </code> message before, actually, at the <code>assert</code> core module. Even the <code>main</code> function returns an implicit <code>i32</code> error value. And if the main function returns an error value, the error value gets printed to the console like seen above. Because <em>every</em> function can throw an error, <em>every</em> function automatically propagates its returned error up the stack, if we dont handle the error. This is the reason why the call <code>throw_if_bigger_than</code> let the error bubble up to the main function.</p>
-<h2 id="catching-an-error"><a class="header" href="#catching-an-error">Catching an error</a></h2>
-<p>Catching an error is a bit more complicated.</p>
-<pre><code class="language-rs">use Core.print
-
-def err_div(i32 x, i32 y) -&gt; i32:
-    if y == 0:
-        throw 69;
-    return x / y;
-
-def main():
-    i32 result = err_div(10, 0) catch err:
-        print($"err = {err}\n");
-    print($"result = {result}\n");
-</code></pre>
-<p>This program will print these linese to the console:</p>
-<blockquote>
-<pre><code>err = 69
-result = 0
-</code></pre>
-</blockquote>
-<p>As you can see, if we <code>catch</code> an error explicitely, the first implicit return value of the function is stored inside the <code>err</code> variable. It is now up to us to handle the error. Because the error is just an <code>i32</code> value, the <code>err</code> variable is also of type <code>i32</code> here. We can just compare it to values, and for some values we can set the <code>result</code> value, or for another value we could manually re-throw the error with a <code>throw</code> statement.</p>
-<p>Because there does not exist such thing as "uninitialized state" in Flint, the <code>result</code> variable is set to its default value in the case of an error. For the type <code>i32</code> this default value is <code>0</code>. For the <code>str</code> type the default value would be an empty string, a string of size 0, <code>""</code>.</p>
-<p>We can also change the <code>result</code> variable within the catch block:</p>
-<pre><code class="language-rs">use Core.print
-
-def err_div(i32 x, i32 y) -&gt; i32:
-    if y == 0:
-        throw 69;
-    return x / y;
-
-def main():
-    i32 result = err_div(10, 0) catch err:
-        print($"err = {err}\n");
-        result = 3;
-    print($"result = {result}\n");
-</code></pre>
-<p>This program will print these lines to the console:</p>
-<blockquote>
-<pre><code>err = 69
-result = 3
-</code></pre>
-</blockquote>
-<p>But that's basically it. That's all you need to know about Flint's current error handling features!</p>
+<p>Welcome to the third chapter of the intermediates guide. In this chapter we look at the error set type and what you can do with it. The <code>error</code> type is used to define error sets which we can use in Flint's error handling system through the <code>throw</code> and <code>catch</code> keywords respectively.</p>
+<h2 id="what-are-error-sets"><a class="header" href="#what-are-error-sets">What are Error Sets?</a></h2>
+<p>Errors sets are collections of possible throwable error values. Error sets are sets in the mathematical sense in the aspect of superset / subset relationships.</p>
+<h2 id="why-are-error-sets-important"><a class="header" href="#why-are-error-sets-important">Why are Error Sets Important?</a></h2>
+<p>Errors are an integral part of programming because sometimes things dont work as expected, but through errors we can "expect the unexpected" and handle cases in which our program would fail otherwise. So, using errors we can:</p>
+<ul>
+<li>Describe the possibility that something fails</li>
+<li>Describe what to do in the event of such a failure</li>
+<li>Continue execution after a failure safely</li>
+</ul>
+<h2 id="what-to-expect"><a class="header" href="#what-to-expect">What to Expect</a></h2>
+<p>In this chapter, we will ocver the following topics:</p>
+<ul>
+<li>Declaring and using error set types</li>
+<li>How to throw and catch errors</li>
+<li>The concept of error set refinement through superset relationships through the <code>anyerror</code> nullset</li>
+<li>Specifying possible error sets in the signatures of functions</li>
+<li>Switching on error set variants</li>
+<li>Switching on error sets</li>
+<li>Adding context to thrown errors</li>
+<li>Throwing anonymous errors</li>
+<li>Internals of the error set system</li>
+<li>Best practices when using error sets</li>
+<li>Error Switch Inlining</li>
+<li>Linearization</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../intermediates_guide/2_variants/3_tagged.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../intermediates_guide/2_variants/4_inline_variants.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
+                            <a rel="next prefetch" href="../intermediates_guide/3_error_sets/1_introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -259,10 +221,13 @@ result = 3
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../intermediates_guide/2_variants/3_tagged.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../intermediates_guide/2_variants/4_inline_variants.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
+                    <a rel="next prefetch" href="../intermediates_guide/3_error_sets/1_introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>

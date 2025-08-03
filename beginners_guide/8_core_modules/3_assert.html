@@ -179,6 +179,19 @@
 <pre><code class="language-rs">use Core.assert
 </code></pre>
 <p>The <code>assert</code> module provides a single <code>assert</code> function, which returns an error if the given condition evaluates to false. It is used for code-assertions and to fail loud and clear.</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
+<tr><td style="text-align: right"><code>assert</code></td><td style="text-align: left"><code>bool</code></td><td style="text-align: center">No</td><td style="text-align: center"><code>ErrAssert</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="error-sets"><a class="header" href="#error-sets">error sets</a></h2>
+<p>These are the error sets this Core module provides.</p>
+<h3 id="errassert"><a class="header" href="#errassert">ErrAssert</a></h3>
+<p>This error set does not have a parent error, so it directly and only extends <code>anyerror</code> directly. These are the possible values this error could have:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>AssertionFailed</code></td><td style="text-align: left">The assertion has failed</td></tr>
+</tbody></table>
+</div>
+<h2 id="assert-1"><a class="header" href="#assert-1">assert</a></h2>
 <pre><code class="language-rs">use Core.assert
 
 def main():

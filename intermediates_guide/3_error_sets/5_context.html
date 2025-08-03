@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>system - The Flint Wiki</title>
+        <title>Error Context - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -175,74 +175,60 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="system"><a class="header" href="#system">system</a></h1>
-<pre><code class="language-rs">use Core.system
-</code></pre>
-<p>The <code>system</code> module provides functions to interact with the system, for example to execute system commands.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
-<tr><td style="text-align: right"><code>system_command</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>i32</code>, <code>str</code></td><td style="text-align: center"><code>ErrSystem</code></td></tr>
-</tbody></table>
-</div>
-<h2 id="error-sets"><a class="header" href="#error-sets">error sets</a></h2>
-<p>These are the error sets this Core module provides.</p>
-<h3 id="errsystem"><a class="header" href="#errsystem">ErrSystem</a></h3>
-<p>This error set does not have a parent error, so it directly and only extends <code>anyerror</code> directly. These are the possible values this error could have:</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
-<tr><td style="text-align: left"><code>SpawnFailed</code></td><td style="text-align: left">Process could not be created</td></tr>
-</tbody></table>
-</div>
-<h2 id="system_command"><a class="header" href="#system_command">system_command</a></h2>
-<p>The <code>system_command</code> function executes a given command, for example <code>ls -lah</code> and returns the exit code of the given command together with the output of the command, stored in a string. The function can throw an error if the process (the command) cannot be created.</p>
+                        <h1 id="error-context"><a class="header" href="#error-context">Error Context</a></h1>
+<p>Next up will be the topic of error context. The error context is a simple string message which will be passed alongside / inside the error structure. We already have talked about the error structure itself, so now we can talk about what that <code>message</code> field really is. With every error you throw you have the additional ability to pass in a string message, the context of the thrown error. You can also define default messages for the case that no message is added in the throw. Below is an example of it all:</p>
 <pre><code class="language-rs">use Core.print
-use Core.system
+
+error ErrBase:
+	B1("Base Error 1"),
+	B2("Base Error 2");
+
+error ErrSpecial(ErrBase):
+	S1("Special Error 1"),
+	S2("Special Error 2");
+
+def throw_error(bool override) {ErrSpecial}:
+	if override:
+		throw ErrSpecial.S2($"Overwritten message: {override}");
+	else:
+		throw ErrSpecial.S1;
+
+def print_err(bool override):
+	throw_error(override) catch err:
+		switch err:
+			ErrSpecial(e):
+				print($"type_id = {e.type_id}\n");
+				print($"value_id = {e.value_id}\n");
+				print($"message = {e.message}\n");
+			anyerror(e): print("is anyerror\n");
 
 def main():
-    (exit_code, output) = system_command("ls");
-    print($"exit_code = {exit_code}\n");
-    print($"output = '{output}'\n");
+	print_err(false);
+	print("\n");
+	print_err(true);
 </code></pre>
-<p>This program will print these lines to the console:</p>
+<p>This program prints these lines to the console:</p>
 <blockquote>
-<pre><code>exit_code = 0
-output = 'build
-build.zig
-build.zig.zon
-cmake
-CMakeLists.txt
-compile_flags.txt
-documents
-examples
-fetch_crt.sh
-include
-LICENSE
-logfile
-lsp
-main
-main.o
-main.obj
-output.ll
-README.md
-resources
-scripts
-src
-test
-test_files
-test.o
-tests
-vendor
-'
+<pre><code>type_id = 803109534
+value_id = 2
+message = Special Error 1
+
+type_id = 803109534
+value_id = 3
+message = Overwritten message: true
 </code></pre>
 </blockquote>
+<p>As you can see, the default message from the error set definition is being stored in the returned error by default, but when providing a custom message the provided message is passed within the thrown error structure instead. You may also be able to recognize that <strong>any</strong> expression can be put in between the parenthesis of the throw. So, even calls or variables or string interpolation, it really just does not matter, the result just has to be of type <code>str</code>. You can use the <code>message</code> field to pass in an error context in the thrown error.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../beginners_guide/8_core_modules/5_env.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../intermediates_guide/3_error_sets/4_structure.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../intermediates_guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../intermediates_guide/3_error_sets/6_anonymous.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -252,11 +238,11 @@ vendor
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../beginners_guide/8_core_modules/5_env.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../intermediates_guide/3_error_sets/4_structure.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../intermediates_guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../intermediates_guide/3_error_sets/6_anonymous.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

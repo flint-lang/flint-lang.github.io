@@ -1881,15 +1881,6 @@ def main():
 </code></pre>
 </blockquote>
 <h2 id="returning-data-from-functions"><a class="header" href="#returning-data-from-functions">Returning Data from Functions</a></h2>
-<div class="warning">
-<p>Returning the constructed data directly does not work yet.</p>
-<p>When you write</p>
-<pre><code class="language-rs">def create_point(i32 x, i32 y) -&gt; Point:
-    return Point(x, y);
-</code></pre>
-<p>what Flint actually does under the hood will lead to a compilation error, as the code generation phase will fail. This is because a constructor is actually just a group under the hood, and the "element" values of data are stored in the Point variable directly. This means that the function tries to return a <code>(i32, i32)</code> instead of a <code>Point</code>, essentailly. It's not a mistake of Flint's type system or anything similar, it's just how the data declaration works at the moment, which is a bit flawed. That's also the reason why nested data constructors cannot be written directly into the constructor of the data which contains them.</p>
-<p>The below example will work perfectly fine, as we store the <code>Point</code> in a varaible first, before returning it.</p>
-</div>
 <p>You can also return data from functions, for example when creating them inside the function.</p>
 <pre><code class="language-rs">use Core.print
 
@@ -1899,8 +1890,7 @@ data Point:
     Point(x, y);
 
 def create_point(i32 x, i32 y) -&gt; Point:
-    Point p = Point(x, y);
-    return p;
+    return Point(x, y);
 
 def main():
     Point p = create_point(5, 7);
@@ -2859,7 +2849,7 @@ def main():
 <pre><code class="language-rs">use Core.print
 </code></pre>
 <p>The <code>print</code> core module provides several print functions. Here are all the print functions this module provides. There exist <em>a lot</em> of builtin print overloads for the print function.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: center">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Can Throw?</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
 <tr><td style="text-align: center"><code>str</code></td><td style="text-align: center"><code>void</code></td><td style="text-align: center">No</td></tr>
 <tr><td style="text-align: center"><code>i32</code></td><td style="text-align: center"><code>void</code></td><td style="text-align: center">No</td></tr>
 <tr><td style="text-align: center"><code>i64</code></td><td style="text-align: center"><code>void</code></td><td style="text-align: center">No</td></tr>
@@ -2877,14 +2867,25 @@ def main():
 <pre><code class="language-rs">use Core.read
 </code></pre>
 <p>The <code>read</code> module provides several functions to read input from the command line and to read input from the user, like numbers or text edited by the user.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Can Throw?</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
 <tr><td style="text-align: right"><code>read_str</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>str</code></td><td style="text-align: center">No</td></tr>
-<tr><td style="text-align: right"><code>read_i32</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>i32</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>read_i64</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>i64</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>read_u32</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>u32</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>read_u64</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>u64</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>read_f32</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>f32</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>read_f64</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>f64</code></td><td style="text-align: center">Yes</td></tr>
+<tr><td style="text-align: right"><code>read_i32</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>i32</code></td><td style="text-align: center">ErrRead</td></tr>
+<tr><td style="text-align: right"><code>read_i64</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>i64</code></td><td style="text-align: center">ErrRead</td></tr>
+<tr><td style="text-align: right"><code>read_u32</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>u32</code></td><td style="text-align: center">ErrRead</td></tr>
+<tr><td style="text-align: right"><code>read_u64</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>u64</code></td><td style="text-align: center">ErrRead</td></tr>
+<tr><td style="text-align: right"><code>read_f32</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>f32</code></td><td style="text-align: center">ErrRead</td></tr>
+<tr><td style="text-align: right"><code>read_f64</code></td><td style="text-align: left">No</td><td style="text-align: center"><code>f64</code></td><td style="text-align: center">ErrRead</td></tr>
+</tbody></table>
+</div>
+<h2 id="error-sets"><a class="header" href="#error-sets">error sets</a></h2>
+<p>These are the error sets this Core module provides.</p>
+<h3 id="errread"><a class="header" href="#errread">ErrRead</a></h3>
+<p>This error set does not have a parent error, so it directly and only extends <code>anyerror</code> directly. These are the possible values this error could have:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>ReadLines</code></td><td style="text-align: left">Could not read lines from console</td></tr>
+<tr><td style="text-align: left"><code>ParseInt</code></td><td style="text-align: left">Could not parse text to integer</td></tr>
+<tr><td style="text-align: left"><code>NegativeUint</code></td><td style="text-align: left">Negative input not allowed for unsigned integers</td></tr>
+<tr><td style="text-align: left"><code>ParseFloat</code></td><td style="text-align: left">Could not parse text to floating‑point</td></tr>
 </tbody></table>
 </div>
 <h2 id="read_str"><a class="header" href="#read_str">read_str</a></h2>
@@ -2954,6 +2955,19 @@ def main():
 <pre><code class="language-rs">use Core.assert
 </code></pre>
 <p>The <code>assert</code> module provides a single <code>assert</code> function, which returns an error if the given condition evaluates to false. It is used for code-assertions and to fail loud and clear.</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
+<tr><td style="text-align: right"><code>assert</code></td><td style="text-align: left"><code>bool</code></td><td style="text-align: center">No</td><td style="text-align: center"><code>ErrAssert</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="error-sets-1"><a class="header" href="#error-sets-1">error sets</a></h2>
+<p>These are the error sets this Core module provides.</p>
+<h3 id="errassert"><a class="header" href="#errassert">ErrAssert</a></h3>
+<p>This error set does not have a parent error, so it directly and only extends <code>anyerror</code> directly. These are the possible values this error could have:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>AssertionFailed</code></td><td style="text-align: left">The assertion has failed</td></tr>
+</tbody></table>
+</div>
+<h2 id="assert-1"><a class="header" href="#assert-1">assert</a></h2>
 <pre><code class="language-rs">use Core.assert
 
 def main():
@@ -2978,13 +2992,32 @@ def main():
 <pre><code class="language-rs">use Core.filesystem
 </code></pre>
 <p>The <code>filesystem</code> module provides several functions to read data from and write data to files.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Can Throw?</th></tr></thead><tbody>
-<tr><td style="text-align: right"><code>read_file</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>str</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>read_lines</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>str[]</code></td><td style="text-align: center">Yes</td></tr>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
+<tr><td style="text-align: right"><code>read_file</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>str</code></td><td style="text-align: center"><code>ErrIO</code></td></tr>
+<tr><td style="text-align: right"><code>read_lines</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>str[]</code></td><td style="text-align: center"><code>ErrFS</code></td></tr>
 <tr><td style="text-align: right"><code>file_exists</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>bool</code></td><td style="text-align: center">No</td></tr>
-<tr><td style="text-align: right"><code>write_file</code></td><td style="text-align: left"><code>str</code>, <code>str</code></td><td style="text-align: center">No</td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>append_file</code></td><td style="text-align: left"><code>str</code>, <code>str</code></td><td style="text-align: center">No</td><td style="text-align: center">Yes</td></tr>
+<tr><td style="text-align: right"><code>write_file</code></td><td style="text-align: left"><code>str</code>, <code>str</code></td><td style="text-align: center">No</td><td style="text-align: center"><code>ErrFS</code></td></tr>
+<tr><td style="text-align: right"><code>append_file</code></td><td style="text-align: left"><code>str</code>, <code>str</code></td><td style="text-align: center">No</td><td style="text-align: center"><code>ErrFS</code></td></tr>
 <tr><td style="text-align: right"><code>is_file</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>bool</code></td><td style="text-align: center">No</td></tr>
+</tbody></table>
+</div>
+<h2 id="error-sets-2"><a class="header" href="#error-sets-2">error sets</a></h2>
+<p>These are the error sets this Core module provides.</p>
+<h3 id="errio"><a class="header" href="#errio">ErrIO</a></h3>
+<p>This error set does not have a parent error, so it directly and only extends <code>anyerror</code> directly. These are the possible values this error could have:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>OpenFailed</code></td><td style="text-align: left">Could not open the file</td></tr>
+<tr><td style="text-align: left"><code>NotFound</code></td><td style="text-align: left">File does not exist</td></tr>
+<tr><td style="text-align: left"><code>NotReadable</code></td><td style="text-align: left">Exists but is not readable</td></tr>
+<tr><td style="text-align: left"><code>NotWritable</code></td><td style="text-align: left">Exists but is not writable (permissions)</td></tr>
+<tr><td style="text-align: left"><code>UnexpectedEOF</code></td><td style="text-align: left">Hit EOF in the middle of a read</td></tr>
+</tbody></table>
+</div>
+<h3 id="errfs"><a class="header" href="#errfs">ErrFS</a></h3>
+<p>This error set extens the <code>ErrIO</code> error set. These are the possible values this error set could have in addition to all the error values from <code>ErrIO</code>:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>TooLarge</code></td><td style="text-align: left">File is unreasonably large</td></tr>
+<tr><td style="text-align: left"><code>InvalidPath</code></td><td style="text-align: left">Path string is malformed</td></tr>
 </tbody></table>
 </div>
 <h2 id="read_file"><a class="header" href="#read_file">read_file</a></h2>
@@ -3126,9 +3159,19 @@ is 'somegarbage' a file? false
 <pre><code class="language-rs">use Core.env
 </code></pre>
 <p>The <code>env</code> module provides several functions to read from and write to environment variables.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Can Throw?</th></tr></thead><tbody>
-<tr><td style="text-align: right"><code>get_env</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>str</code></td><td style="text-align: center">Yes</td></tr>
-<tr><td style="text-align: right"><code>set_env</code></td><td style="text-align: left"><code>str</code>, <code>str</code>, <code>bool</code></td><td style="text-align: center"><code>bool</code></td><td style="text-align: center">No</td></tr>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
+<tr><td style="text-align: right"><code>get_env</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>str</code></td><td style="text-align: center"><code>ErrEnv</code></td></tr>
+<tr><td style="text-align: right"><code>set_env</code></td><td style="text-align: left"><code>str</code>, <code>str</code>, <code>bool</code></td><td style="text-align: center"><code>bool</code></td><td style="text-align: center"><code>ErrEnv</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="error-sets-3"><a class="header" href="#error-sets-3">error sets</a></h2>
+<p>These are the error sets this Core module provides.</p>
+<h3 id="errenv"><a class="header" href="#errenv">ErrEnv</a></h3>
+<p>This error set does not have a parent error, so it directly and only extends <code>anyerror</code> directly. These are the possible values this error could have:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>VarNotFound</code></td><td style="text-align: left">Requested variable not set</td></tr>
+<tr><td style="text-align: left"><code>InvalidName</code></td><td style="text-align: left">Name contains illegal characters</td></tr>
+<tr><td style="text-align: left"><code>InvalidValue</code></td><td style="text-align: left">Value cannot be used (e.g. embedded NUL)</td></tr>
 </tbody></table>
 </div>
 <h2 id="get_env"><a class="header" href="#get_env">get_env</a></h2>
@@ -3145,7 +3188,7 @@ def main():
 </code></pre>
 </blockquote>
 <h2 id="set_env"><a class="header" href="#set_env">set_env</a></h2>
-<p>The <code>set_env</code> function sets a given environment variable (<code>str</code>) to a newly specified value (<code>str</code>). The third parameter (<code>bool</code>) controls whether the given environment variable should be overwritten if it already exists. If the third parameter is <code>false</code> an already existent environment variable wont be overwritten. This function cannot throw any errors.</p>
+<p>The <code>set_env</code> function sets a given environment variable (<code>str</code>) to a newly specified value (<code>str</code>). The third parameter (<code>bool</code>) controls whether the given environment variable should be overwritten if it already exists. If the third parameter is <code>false</code> an already existent environment variable wont be overwritten. This function will throw an error if the environment variable or the content of the variable contain invalid characters.</p>
 <pre><code class="language-rs">use Core.print
 use Core.env
 
@@ -3170,8 +3213,16 @@ NEW_ENV_VARIABLE content: some nice value
 <pre><code class="language-rs">use Core.system
 </code></pre>
 <p>The <code>system</code> module provides functions to interact with the system, for example to execute system commands.</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Can Throw?</th></tr></thead><tbody>
-<tr><td style="text-align: right"><code>system_command</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>i32</code>, <code>str</code></td><td style="text-align: center">Yes</td></tr>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Function Name</th><th style="text-align: left">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
+<tr><td style="text-align: right"><code>system_command</code></td><td style="text-align: left"><code>str</code></td><td style="text-align: center"><code>i32</code>, <code>str</code></td><td style="text-align: center"><code>ErrSystem</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="error-sets-4"><a class="header" href="#error-sets-4">error sets</a></h2>
+<p>These are the error sets this Core module provides.</p>
+<h3 id="errsystem"><a class="header" href="#errsystem">ErrSystem</a></h3>
+<p>This error set does not have a parent error, so it directly and only extends <code>anyerror</code> directly. These are the possible values this error could have:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Error Value</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>SpawnFailed</code></td><td style="text-align: left">Process could not be created</td></tr>
 </tbody></table>
 </div>
 <h2 id="system_command"><a class="header" href="#system_command">system_command</a></h2>
@@ -3843,74 +3894,550 @@ def main():
 </blockquote>
 <p>There is, again, quite a lot to go through. First of all, the Type is absolutely needed for tagged accesses to be able to differentiate between a tagged access and an access of that type. This also prevents future collisions if you would, for example, later define a type with the same name as your variant tag. If we would not do this differentiation, you would then later on need to change your tag and change it everywhere you have used it or you would need to change your created type's name to something different to prevent collisions. Both would be a horrible experience. So, this is the reason to why it is <strong>required</strong> to explicitely state the type of the variant before the tag, if the variant's type is missing the "tag" is interpreted as a type and compilation will fail!</p>
 <p>This decision might annoy you at first, but we hope that you will be able to see the reasons behind it and why it's so important to have this rule in place, as it also completely removes any ambuguity from the programmer itself.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="error-sets"><a class="header" href="#error-sets">Error Sets</a></h1>
-<div class="warning">
-<p>Everything regarding error handling <strong>will</strong> definitely change for later releases.</p>
-<p>The current implementation of everything error-handling related is not final for Flint, and it will change quite a lot. This segment of the guide will be updated when the new system works and is in place. For the time being, the description of how it <em>currently</em> works in FLint is written here. So, expect substantial re-writes of this chapter for future releases.</p>
-</div>
-<p>Flint's error system is quite unique. <strong>Every</strong> function can fail. Absolutely every single function a user defines in his code <em>can</em> fail. Because <em>every</em> function can fail, Flint can deeply integrate error handling into the language. A function returning a <code>str</code> value, for example, actually returns a <code>(i32, str)</code> value. The first <em>implicit</em> return type of <strong>any</strong> Flint function is the error value of said function. This error value, however, is completely hidden from the user outside of Flint's error handling syntax.</p>
-<p>Flint has two keywords for error handling: <code>throw</code> and <code>catch</code>. But, unlike Java or C++, where the error handling happens outside the normal execution path ("happy path" / "unhappy path") which completely breaks execution consistency and results in lots of context switching for the CPU, Flint has it's error handling system built directly into the calling / returning code of every function, which makes it much faster than traditional exception-based error handling.</p>
-<h2 id="throwing-an-error"><a class="header" href="#throwing-an-error">Throwing an error</a></h2>
-<p>Throwing an error is actually really simple. Here is a small examlpe:</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="inline-variants"><a class="header" href="#inline-variants">Inline Variants</a></h1>
+<p>Variants can not only be defined explicitely but also, like <code>data</code>, inline too. For <code>data</code> this inline definition then is a <code>tuple</code>, but for varaints this inline-definition is, well, an inline-defined variant.</p>
+<p>Here is a small example of just that:</p>
 <pre><code class="language-rs">use Core.print
 
-def throw_if_bigger_than(i32 x, i32 y):
-    if x &gt; y:
-        // We can only throw i32 values at the moment
-        throw 69;
+def print_var(variant&lt;i32, f32, str&gt; var):
+	switch var:
+		i32(i): print($"i = {i}\n");
+		f32(f): print($"f = {f}\n");
+		str(s): print($"s = {s}\n");
 
 def main():
-    throw_if_bigger_than(10, 5);
-</code></pre>
-<p>This program will print this line to the console:</p>
-<blockquote>
-<pre><code>ERROR: Program exited with exit code '69'
-</code></pre>
-</blockquote>
-<p>You have already seen this <code>ERROR: </code> message before, actually, at the <code>assert</code> core module. Even the <code>main</code> function returns an implicit <code>i32</code> error value. And if the main function returns an error value, the error value gets printed to the console like seen above. Because <em>every</em> function can throw an error, <em>every</em> function automatically propagates its returned error up the stack, if we dont handle the error. This is the reason why the call <code>throw_if_bigger_than</code> let the error bubble up to the main function.</p>
-<h2 id="catching-an-error"><a class="header" href="#catching-an-error">Catching an error</a></h2>
-<p>Catching an error is a bit more complicated.</p>
-<pre><code class="language-rs">use Core.print
+	variant&lt;i32, f32, str&gt; var = -55;
+	print_var(var);
 
-def err_div(i32 x, i32 y) -&gt; i32:
-    if y == 0:
-        throw 69;
-    return x / y;
-
-def main():
-    i32 result = err_div(10, 0) catch err:
-        print($"err = {err}\n");
-    print($"result = {result}\n");
-</code></pre>
-<p>This program will print these linese to the console:</p>
-<blockquote>
-<pre><code>err = 69
-result = 0
-</code></pre>
-</blockquote>
-<p>As you can see, if we <code>catch</code> an error explicitely, the first implicit return value of the function is stored inside the <code>err</code> variable. It is now up to us to handle the error. Because the error is just an <code>i32</code> value, the <code>err</code> variable is also of type <code>i32</code> here. We can just compare it to values, and for some values we can set the <code>result</code> value, or for another value we could manually re-throw the error with a <code>throw</code> statement.</p>
-<p>Because there does not exist such thing as "uninitialized state" in Flint, the <code>result</code> variable is set to its default value in the case of an error. For the type <code>i32</code> this default value is <code>0</code>. For the <code>str</code> type the default value would be an empty string, a string of size 0, <code>""</code>.</p>
-<p>We can also change the <code>result</code> variable within the catch block:</p>
-<pre><code class="language-rs">use Core.print
-
-def err_div(i32 x, i32 y) -&gt; i32:
-    if y == 0:
-        throw 69;
-    return x / y;
-
-def main():
-    i32 result = err_div(10, 0) catch err:
-        print($"err = {err}\n");
-        result = 3;
-    print($"result = {result}\n");
+	var = 3.14;
+	print_var(var);
+	
+	var = str("Hello There");
+	print_var(var);
 </code></pre>
 <p>This program will print these lines to the console:</p>
 <blockquote>
-<pre><code>err = 69
-result = 3
+<pre><code>i = -55
+f = 3.14
+s = Hello There
 </code></pre>
 </blockquote>
-<p>But that's basically it. That's all you need to know about Flint's current error handling features!</p>
+<p>There are a few differences of inline-defined variants and "properly" defined variants. Inline-defined variants <strong>cannot</strong> be tagged, because the varaint type itself does not even have a name, so tagging is impossible. This means that the type of an inline-variant needs to be specified when we want to unwrap the value a variant currently holds, which can be seen in the <code>print_var</code> function. But other than this fact, that tagging is impossible, inline-defined variants behave exactly the same as normally defined variants.</p>
+<p>Inline-defined variants become useful when we do not want to pullute our global namespace with yet another symbol name for yet another variant type, for example when a field in custom-defined <code>data</code> can be either <code>i32</code> or <code>f32</code>:</p>
+<div class="warning">
+<p>The below example does not work yet because of several reasons</p>
+<p>Firstly, it is not possible to switch on a non-variable expression at the moment. It will take some time until Flint is robust enough to support switching on more things when switching on optionals and varaints. This is due to the references, in our case <code>i</code> and <code>f</code> which at the moment only work properly with varaible expressions, so everything that isn't a variable in the switch statement will throw an compile error.
+And secondly, some other things regarding how the variants are defined in data is horribly wrong too, which leads to all sorts of unexpected code generation output. So, it is best to avoid using variants within data for now.</p>
+</div>
+<pre><code class="language-rs">use Core.print
+
+data MyData:
+	bool8 flags;
+	variant&lt;i32, f32&gt; value;
+	MyData(flags, value);
+
+def main():
+	variant&lt;i32, f32&gt; var = -10;
+	MyData md = MyData(u8(0), var);
+	print($"flags = {md.flags}\n");
+	switch md.value:
+		i32(i): print($"i = {i}\n");
+		f32(f): print($"f = {f}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>flags = 00000000
+i = -10
+</code></pre>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="error-sets-5"><a class="header" href="#error-sets-5">Error Sets</a></h1>
+<p>Welcome to the third chapter of the intermediates guide. In this chapter we look at the error set type and what you can do with it. The <code>error</code> type is used to define error sets which we can use in Flint's error handling system through the <code>throw</code> and <code>catch</code> keywords respectively.</p>
+<h2 id="what-are-error-sets"><a class="header" href="#what-are-error-sets">What are Error Sets?</a></h2>
+<p>Errors sets are collections of possible throwable error values. Error sets are sets in the mathematical sense in the aspect of superset / subset relationships.</p>
+<h2 id="why-are-error-sets-important"><a class="header" href="#why-are-error-sets-important">Why are Error Sets Important?</a></h2>
+<p>Errors are an integral part of programming because sometimes things dont work as expected, but through errors we can "expect the unexpected" and handle cases in which our program would fail otherwise. So, using errors we can:</p>
+<ul>
+<li>Describe the possibility that something fails</li>
+<li>Describe what to do in the event of such a failure</li>
+<li>Continue execution after a failure safely</li>
+</ul>
+<h2 id="what-to-expect-6"><a class="header" href="#what-to-expect-6">What to Expect</a></h2>
+<p>In this chapter, we will ocver the following topics:</p>
+<ul>
+<li>Declaring and using error set types</li>
+<li>How to throw and catch errors</li>
+<li>The concept of error set refinement through superset relationships through the <code>anyerror</code> nullset</li>
+<li>Specifying possible error sets in the signatures of functions</li>
+<li>Switching on error set variants</li>
+<li>Switching on error sets</li>
+<li>Adding context to thrown errors</li>
+<li>Throwing anonymous errors</li>
+<li>Internals of the error set system</li>
+<li>Best practices when using error sets</li>
+<li>Error Switch Inlining</li>
+<li>Linearization</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction-3"><a class="header" href="#introduction-3">Introduction</a></h1>
+<p>Flint's error system is quite unique. <strong>Every</strong> function can fail. Absolutely every single function a user defines in his code <em>can</em> fail. Because <em>every</em> function can fail, Flint can deeply integrate error handling into the language. A function returning a <code>str</code> value, for example, actually returns a <code>(err, str)</code> value. The first <em>implicit</em> return type of <strong>any</strong> Flint function is the error value of said function. This error value, however, is completely hidden from the user outside of Flint's error handling syntax.</p>
+<p>Flint has two keywords for error handling: <code>throw</code> and <code>catch</code>. But, unlike Java or C++, where the error handling happens outside the normal execution path ("happy path" / "unhappy path") which completely breaks execution consistency and results in lots of context switching for the CPU, Flint has it's error handling system built directly into the calling / returning code of every function, which makes it much faster than traditional exception-based error handling.</p>
+<p>Flint's error handling system, however, is based around the idea of <code>Error Sets</code>. An error set is basically just a type, a set type, consisting of every possible value the error could have. Here is a small example of that:</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrorSet:
+	Value1, Value2;
+
+def main():
+	print("Hello, World!\n");
+</code></pre>
+<p>This program will just print this line to the console:</p>
+<blockquote>
+<pre><code>Hello, World
+</code></pre>
+</blockquote>
+<h2 id="throwing-errors"><a class="header" href="#throwing-errors">Throwing errors</a></h2>
+<p>But here you can directly see how to define a new error set. We use the <code>error</code> keyword for that. And an error set looks pretty similar to an <code>enum</code> defiition, actually, but they are vastly different from one another. Let's look into how to throw an eror next.</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrorSet:
+	Value1, Value2;
+
+def fail():
+	throw ErrorSet.Value1;
+
+def main():
+	fail();
+	print("Normal execution continues\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>ERROR: Program exited with exit code '-286738258'
+</code></pre>
+</blockquote>
+<div class="warning">
+<p>This error message will change in the future, currently it just prints the type id</p>
+<p>In the future the message should look more like <code>ERROR: Program exited due to thrown error: ErrorSet.Value1</code> but it will take more time and developement effort until this message can actually be printed.</p>
+</div>
+<h2 id="catching-errors"><a class="header" href="#catching-errors">Catching errors</a></h2>
+<p>But what would an error be used for if we would not have a way to catch it? Here is how we catch errors in Flint:</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrorSet:
+	Value1, Value2;
+
+def fail():
+	throw ErrorSet.Value1;
+
+def main():
+	fail() catch err:
+		print("Error catched!\n");
+	print("Normal execution continues\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>Error catched!
+Normal execution continues
+</code></pre>
+</blockquote>
+<p>The program now does no longer print the <code>ERROR: ...</code> message, as no error was thrown from the main function. This is a core concept of Flint: When an error is catched and it is handled it is consiered that the error is "no longer a problem" and execution will continue as if there was no error at all. But there is still a lot more to cover before we are able to completely understand what errors really are and how to effectively use them.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="error-set-refinement"><a class="header" href="#error-set-refinement">Error Set Refinement</a></h1>
+<p>Error set refinement, what a beautiful name for a very simple concept. You have learnt in the last chapter how to create a new error set type using the <code>error</code> keyword. Now you will learn another important concept of how Flint's errors work under the hood. A set is a collection of values, both in set theory in mathematics and in Flint that's also true. So, the error set from the last chapter, <code>error ErrorSet: Value1, Value2;</code> contains exactly two values: <code>Value1</code> and <code>Value2</code>.
+We can define set-relationships in Flint. One Error set could "extend" a base error set, and becomes a more specialized error by doing so. Here is a small example of that:</p>
+<pre><code class="language-rs">error ErrBase:
+	B1, B2;
+
+error ErrSpecial(ErrBase):
+	S1, S2;
+
+def main():
+	throw ErrSpecial.B1;
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>ERROR: Program exited with exit code '803109534'
+</code></pre>
+</blockquote>
+<div class="warning">
+<p>This error message will change in the future, currently it just prints the type id</p>
+<p>In the future the message should look more like <code>ERROR: Program exited due to thrown error: ErrSpecial.B1</code> but it will take more time and developement effort until this message can actually be printed.</p>
+</div>
+<p>The error set <code>ErrSpecial</code> is an extension of the error set <code>ErrBase</code>, thus contains all values of it's base set. The error set <code>ErrBase</code> contains the values <code>[B1, B2]</code> and the error set <code>ErrSpecial</code> contains the values <code>[B1, B2, S1, S2]</code>. This is a very important concept in Flint. The more "special" an erro becomes the <strong>bigger</strong> does it's set become. This might seem counter-intuitive but when looked at it from the mathematical standpoint this is just how it works.</p>
+<h2 id="the-null-set"><a class="header" href="#the-null-set">The null-set</a></h2>
+<p>Mathematical sets all have a null-set, a set which contains no value and as a result is the "base" set of <strong>every</strong> other set. Because <strong>every</strong> set contains the null-set and is a superset of it. In Flint, this "null-set" for errors is represented as the type <code>anyerror</code>. The <code>anyerror</code> "set" is a true null-set meaning it does not "contain" any values. This is only true semantically, of course, as under the hood the <code>anyerror</code> is actually the same structure as any other error too. But this allows us to "cast" every error to an <code>anyerror</code>, because every error set <strong>is</strong> (contains) an <code>anyerror</code>. So, when we now look at this example here:</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrBase:
+	B1, B2;
+
+error ErrSpecial(ErrBase):
+	S1, S2;
+
+def crash():
+	throw ErrSpecial.B1;
+
+def main():
+	crash() catch err:
+		print("Error catched\n");
+</code></pre>
+<p>which prints this line to the console:</p>
+<blockquote>
+<pre><code>Error catched
+</code></pre>
+</blockquote>
+<p>we can look at the function <code>crash</code> and look at the type of the returned error. In our case, the type of the returned error is <code>anyerror?</code>, it is <code>none</code> if there was no error. If there was an error, however, we directly unwrap it and put the error accessible into the <code>err</code> variable. So, in this above case the <code>err</code> variable is of type <code>anyerror</code>. The type anyerror however is, like said before, not really "nothing", it still contains the thrown error, but this error just could be <em>any</em> error, hence the name.
+Also, what was not told until now is that even the <code>ErrBase</code> extends a set, the <code>anyerror</code> null-set! So, the error definition from above actually looks more like that:</p>
+<pre><code class="language-rs">error ErrBase(anyerror):
+	B1, B2;
+</code></pre>
+<p>But the <code>anyerror</code> set contains no values, so the <code>ErrBase</code> set still only contains the values <code>[B1, B2]</code> but now it formally extends from the error set of <code>anyerror</code> and thus is "castable" to that set.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="function-signatures"><a class="header" href="#function-signatures">Function Signatures</a></h1>
+<p>So far we have learnt how we can define errors, extend from other errors to form bigger and more specialized sets and how to throw and catch errors, but on the catching side we have not yet done anything with the catched <code>err</code> variable. This will change in this chapter, as we dive deeper into how to specify the possible errors a function could throw directly in it's signature. Let's look at a very simple example for this at first:</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrArithmetic:
+	NullDivision, Negative;
+
+def divide(i32 x, i32 y) -&gt; i32 {ErrArithmetic}:
+	if y == 0:
+		throw ErrArithmetic.NullDivision;
+	if x &lt; 0 or y &lt; 0:
+		// We just made up that error just to have a second error case
+		throw ErrArithmetic.Negative;
+	return x / y;
+
+def main():
+	i32 res = divide(10, 0) catch err:
+		print("Error happened\n");
+	print($"res = {res}\n");
+</code></pre>
+<p>This program will simply print these lines to the console:</p>
+<blockquote>
+<pre><code>Error happened
+res = 0
+</code></pre>
+</blockquote>
+<p>There is quite a lot going on here, so let's unpack it bit by bit. First, as you can see we have declared which error the function <code>divide</code> is able to throw in it's signature. Through the <code>{ErrArithmetic}</code> syntax we specify all possible errors the function could throw. It's only allowed to put error set types in between the <code>{}</code> symbols. We can put more than one error type in them to signify that the function is capable of throwing these errors. Normally a function would return an error of type <code>anyerror?</code> if we do not specify any error here. But by defining the errors we directly change the functions error return type to now be a <code>variant&lt;anyerror, ErrArithmetic&gt;?</code>. So, the error this function could throw is now either an <code>ErrArithmetic</code> or <em>something else</em>. If we specify more than one error type in the signature the variant will become bigger. It's still an optional, but that optional will disappear when catching the error, so the <code>err</code> variable is only of type <code>variant&lt;anyerror, ErrArithmetic&gt;</code>.</p>
+<p>And this is the secret of how to tell which error actually was returned from a function, because now we can simply switch on the <code>err</code> variable and handle the error depending on which error it was.</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrArithmetic:
+	NullDivision, Negative;
+
+def divide(i32 x, i32 y) -&gt; i32 {ErrArithmetic}:
+	if y == 0:
+		throw ErrArithmetic.NullDivision;
+	if x &lt; 0 or y &lt; 0:
+		// We just made up that error just to have a second error case
+		throw ErrArithmetic.Negative;
+	return x / y;
+
+def main():
+	i32 res = divide(10, 0) catch err:
+		switch err:
+			ErrArithmetic(e):
+				print("Is ErrArithmetic\n");
+			anyerror(e):
+				print("Is anyerror\n");
+	print($"res = {res}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>Is ErrArithmetic
+res = 0
+</code></pre>
+</blockquote>
+<p>Okay and next up we look at switching on the error set directly. It works just like when switching on enums:</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrArithmetic:
+	NullDivision, Negative;
+
+def divide(i32 x, i32 y) -&gt; i32 {ErrArithmetic}:
+	if y == 0:
+		throw ErrArithmetic.NullDivision;
+	if x &lt; 0 or y &lt; 0:
+		// We just made up that error just to have a second error case
+		throw ErrArithmetic.Negative;
+	return x / y;
+
+def main():
+	i32 res = divide(10, 0) catch err:
+		switch err:
+			ErrArithmetic(e):
+				print("Is ErrArithmetic\n");
+				switch e:
+					NullDivision: print("Is NullDivision\n");
+					Negative: print("Is Negative\n");
+			anyerror(e):
+				print("Is anyerror\n");
+	print($"res = {res}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>Is ErrArithmetic
+Is NullDivision
+res = 0
+</code></pre>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-error-structure"><a class="header" href="#the-error-structure">The Error Structure</a></h1>
+<p><strong>Every</strong> error is represented the exact same way in memory:</p>
+<pre><code class="language-c">struct {
+	u32 type_id;
+	u32 value_id;
+	str message;
+}
+</code></pre>
+<p>The <code>type_id</code> is a unique id of the error set type. It is the result of a hashing function, where the name of the error set type is being hashed. This means that the same error set will <em>always</em> result in the same type id. The <code>value_id</code> is the index of the actual thrown value. Given these error sets:</p>
+<pre><code class="language-rs">error ErrBase:
+	B1, // value 0
+	B2; // Value 1
+
+error ErrSpecial1(ErrBase):
+	S1, // value 2
+	S2; // value 3
+
+error ErrSpecial2(ErrBase):
+	S1, // value 2
+	S2; // value 3
+
+error ErrSuperSpecial(ErrSpecail1):
+	SS1, // value 4
+	SS2; // value 5
+</code></pre>
+<p>you can cleary see in the example how the values directly correlate to which error it is. For example when writing <code>ErrSuperSpecial.S1</code> the error set type is of type <code>ErrSuperSpecial</code> but the <code>value_id</code> is value <code>2</code>.</p>
+<p>When we have a variable which is a error set type, we can directly access those fields through their names through <code>type_id</code>, <code>value_id</code> and <code>message</code>. Here is a small example showcasing this:</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrArithmetic:
+	NullDivision, Negative;
+
+def divide(i32 x, i32 y) -&gt; i32 {ErrArithmetic}:
+	if y == 0:
+		throw ErrArithmetic.NullDivision;
+	if x &lt; 0 or y &lt; 0:
+		// We just made up that error just to have a second error case
+		throw ErrArithmetic.Negative;
+	return x / y;
+
+def main():
+	i32 res = divide(10, 0) catch err:
+		switch err:
+			ErrArithmetic(e):
+				print($"type_id = {e.type_id}\n");
+				print($"value_id = {e.value_id}\n");
+				print($"message = {e.message}\n");
+				switch e:
+					NullDivision: print("Is NullDivision\n");
+					Negative: print("Is Negative\n");
+			anyerror(e):
+				print("Is anyerror\n");
+	print($"res = {res}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>type_id = 1484029712
+value_id = 0
+message = 
+Is NullDivision
+res = 0
+</code></pre>
+</blockquote>
+<p>As you can see, the <code>NullDivision</code> is value <code>0</code> and the hashing function outputs the <code>u32</code> hash of <code>1484029712</code> for the type <code>ErrArithmetic</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="error-context"><a class="header" href="#error-context">Error Context</a></h1>
+<p>Next up will be the topic of error context. The error context is a simple string message which will be passed alongside / inside the error structure. We already have talked about the error structure itself, so now we can talk about what that <code>message</code> field really is. With every error you throw you have the additional ability to pass in a string message, the context of the thrown error. You can also define default messages for the case that no message is added in the throw. Below is an example of it all:</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrBase:
+	B1("Base Error 1"),
+	B2("Base Error 2");
+
+error ErrSpecial(ErrBase):
+	S1("Special Error 1"),
+	S2("Special Error 2");
+
+def throw_error(bool override) {ErrSpecial}:
+	if override:
+		throw ErrSpecial.S2($"Overwritten message: {override}");
+	else:
+		throw ErrSpecial.S1;
+
+def print_err(bool override):
+	throw_error(override) catch err:
+		switch err:
+			ErrSpecial(e):
+				print($"type_id = {e.type_id}\n");
+				print($"value_id = {e.value_id}\n");
+				print($"message = {e.message}\n");
+			anyerror(e): print("is anyerror\n");
+
+def main():
+	print_err(false);
+	print("\n");
+	print_err(true);
+</code></pre>
+<p>This program prints these lines to the console:</p>
+<blockquote>
+<pre><code>type_id = 803109534
+value_id = 2
+message = Special Error 1
+
+type_id = 803109534
+value_id = 3
+message = Overwritten message: true
+</code></pre>
+</blockquote>
+<p>As you can see, the default message from the error set definition is being stored in the returned error by default, but when providing a custom message the provided message is passed within the thrown error structure instead. You may also be able to recognize that <strong>any</strong> expression can be put in between the parenthesis of the throw. So, even calls or variables or string interpolation, it really just does not matter, the result just has to be of type <code>str</code>. You can use the <code>message</code> field to pass in an error context in the thrown error.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="throwing-anonymous-errors"><a class="header" href="#throwing-anonymous-errors">Throwing Anonymous Errors</a></h1>
+<div class="warning">
+<p>Anonymous errors do not work yet</p>
+<p>While the design around anonymous errors is finished for the compiler already, they have not been implemented yet. So, this section will become important eventually, but not yet.</p>
+</div>
+<p>Having to define an error set first and then choose when throwing an error which value from the error set to throw is tedious and quite a lot of work when just prototyping stuff, or when throwing special-case errors which are not really part of a broader error set at all for example. This happens quite often, actually, so for this very own reason Flint supports anonymous errors. But what even <em>are</em> anonymous errors?</p>
+<p>Lets look at an actual example first before continuing with the theory:</p>
+<pre><code class="language-rs">use Core.print
+
+def crash():
+	throw error.Crash("Custom Message");
+
+def main():
+	crash() catch err:
+		print($"err.type_id = {err.type_id}\n");
+		print($"err.value_id = {err.value_id}\n");
+		print($"err.message = {err.message}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>err.type_id = 0123456789 // FIX THE ID WITH THE CORRECT ID EVENTUALLY
+err.value_id = 0
+err.message = Custom Message
+</code></pre>
+</blockquote>
+<p>But how do anonymous errors even work? Well, firstly anonymous errors have no underlying error set type visible to the programmer, like when defining your own error set types. This means that it is not possible to tell which error was thrown when throwing anonymous errors, only <strong>that</strong> an error has happened. Also note that we can still access the fields <code>type_id</code>, <code>value_id</code> and <code>message</code> on an error of type <code>anyerror</code>. The error structure did not change at all, as you know already. When using anonymous errors, the compiler will just "make up" a name for an error set on a per-function basis. This means that, if you would throw a few anonymous errors within the same function, all those anonymous errors would actually end up in the same internal error set type:</p>
+<pre><code class="language-rs">use Core.print
+
+def crash(i32 v):
+	switch v:
+		0: throw error.Crash("Custom Message");
+		1: throw error.CrashOther;
+		else: throw error.CrashLast("LAST");
+
+def print_crash(i32 v):
+	crash(v) catch err:
+		print($"err.type_id = {err.type_id}\n");
+		print($"err.value_id = {err.value_id}\n");
+		print($"err.message = {err.message}\n");
+
+def main():
+	print_crash(0);
+	print("\n");
+	print_crash(1);
+	print("\n");
+	print_crash(2);
+	print("\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>err.type_id = 0
+err.value_id = 0
+err.message = Custom Message
+
+err.type_id = 0
+err.value_id = 1
+err.message = 
+
+err.type_id = 0
+err.value_id = 2
+err.message = LAST
+</code></pre>
+</blockquote>
+<p>As you can clearly see in the output of this example, the <code>type_id</code> is identical, but the <code>value_id</code> differs, because all those error values <code>[Crash, CrashOther, CrashLast]</code> are paret of the same error set. It would be called: <code>__flint_type_anonymous_err__print_crash__i32__void</code>. That's quite a long name, I know, but it's just internal annyway. It starts with <code>__flint</code> because <em>nothing</em> user-defined is allowed to start with this. All Flint-internal things start with this prefix, actually. Then there is <code>type</code> to signify it's a type and then <code>anonymous_err</code>. Then comes the name of the function in which to create the anonymous error in followed by all return types, separated by one <code>_</code> and then followed by all return types of the function. So, we have the full function singature encoded in the type, and we need that actually for overloading. So, under the hood the error set:</p>
+<pre><code class="language-rs">error __flint_type_anonymous_err__print_crash__i32__void:
+	Crash, CrashOther, CrashLast;
+</code></pre>
+<p>is created. So, there is actually nothing "magical" about anonymous errors whatsoever.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="internals"><a class="header" href="#internals">Internals</a></h1>
+<p>There are still some things to cover, especially around the internals of the error handling system. You have seen the <code>variant&lt;anyerror, ErrSpecial&gt;?</code> type earlier and you surely have wondered how this type looks under the hood. If it would be <em>any</em> other type it would look something like this:</p>
+<pre><code class="language-c">struct {
+	bool has_value;
+	struct {
+		u8 variation;
+		byte[16] data;
+	} value;
+}
+</code></pre>
+<p>But i think it is needless to say how inefficient and utterly stupid this all would be. Lets look at it in detail. Let's unpack it from inside out, so lets actually start at the variant first. In a variant we have a 8 bit number determining which variation it actually is. In our case this would mean <code>0</code> for <code>anyerror</code> and <code>1</code> for the <code>ErrSpecial</code> case. However, we have the <code>type_id</code> field of our error structure. This field directly encapsulates all the needed information, as it contains the information which error set <strong>type</strong> it is. This means that we can completely erase the whole "variant" part entirely. Good, then what does a switch on an error variant actually do? It just switches on the <code>type_id</code> field of the error value directly.
+So, when we write</p>
+<pre><code class="language-rs">switch err:
+	ErrSpecial(e): ...
+	anyerror(e): ...
+</code></pre>
+<p>all type IDs are known at compile-time so the type ids are directly inlined. But what does the <code>anyerror</code> branch become? The <code>anyerror</code> has no distinct type ID, the <code>anyerror</code> just means any error. When switching on an error variant this becomes <em>any other error</em>... so, the <code>anyerror</code> case is actually the <code>else</code> case of the switch!</p>
+<p>And now let's move on to the outer part of the <code>variant&lt;anyerror, ErrSpecial&gt;?</code> type, the optional. The hashing function of Flint's errors is written in a way to make it <strong>impossible</strong> to have a result type id of <code>0</code>. This works by actually calculating a <code>31</code> bit hash and then just shifting all bits of the result hash one to the left. If the result would happen to be <code>0</code> it becomes <code>1</code>. This way it is <strong>guaranteed</strong> for the <code>type_id</code> to be inequal to 0. This was not implemented this way by accident or anything, but by design. Because now we can use the <code>type_id == 0</code> to represent the "no error" case, the <code>none</code> case of the optional!</p>
+<p>So, as you might have guessed by now: The type <code>variant&lt;anyerror, ErrSpecial&gt;?</code> actually boils down to be <strong>just the simple 16 Byte error structure that we already know about</strong>. So, everything from the error value itself to the set to the variant to the optional variant is <strong>all</strong> the same structure under the hood, which makes it very efficient.</p>
+<p>This also imposes a unique side effect... we can not mix error types in variants of "normal" types. I think that this is a good thing, as this means that we are <em>only</em> allowed to define variants which contain <em>either</em> only error set types <em>or</em> "normal" types and we are not allowed to mix and match them as we whish. That's a trade-off for sure, but the gains are a vastly simpler and more efficient error handling system, which is always a good thing.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h1>
+<p>Let's discuss best practices regarding error handling in Flint next.</p>
+<h2 id="naming"><a class="header" href="#naming">Naming</a></h2>
+<p>Let's start with naming and with how Flint names it's errors internally. All Errors inside Flint start with <code>Err...</code> followed by the actual are of error, like <code>ErrNetwork</code>, <code>ErrSystem</code>, <code>ErrAssert</code>, <code>ErrEnv</code>, <code>ErrFS</code> and so on. Then, unlike enums where the values are prefered to be written in <code>SCREAMING_SNAKE_CASE</code>, the error values are written in <code>PascalCase</code>, just like errors. Also, error values may not start with the <code>Error</code> prefix, as this is handled by the <code>Err</code> prefix on the error set type. So you would end up writing <code>ErrName.ValueName</code> instead of <code>Something.ErrorName</code>. This recommendation exists to prevent collisions with other definitions, as there exist quite a few of definitions in Flint: <code>data</code>, <code>enum</code>, <code>variant</code>, <code>func</code>, <code>entity</code> and <code>error</code>. So, having clear naming for all of them keeps your code visually pleasing and easy to follow.</p>
+<h2 id="throwing-errors-and-signatures"><a class="header" href="#throwing-errors-and-signatures">Throwing Errors and Signatures</a></h2>
+<p>With great power comes great responsibility. With the power of extending error sets also come unique challenges not found in other languages. Here is an example of a 4-deep error set extension chain:</p>
+<pre><code class="language-rs">error ErrBase:
+	Critical, Abortion;
+
+error ErrParsing(ErrBase):
+	UnexpectedToken, MissingToken, DuplicateDefinition;
+
+error ErrStatement(ErrParsing):
+	MissingSemicolon, EmptyScope, TypeMismatch;
+
+error ErrExpression(ErrStatement):
+	MissingOperator, UnknownType;
+
+
+def parse_expression() {ErrExpression}:
+	// Do some work and possibly throw an ErrExpression
+	// This means it could be *any* from the above errors
+	// because they all end up in the 'ErrExpression' set
+
+def parse_statement() {ErrStatement}:
+	parse_expression() catch err:
+		ErrExpression(e):
+			// Handle all expression-specific errors
+			switch e:
+				MissingOperator: // handle case
+				UnknownType:     // handle case
+				else:
+					// The rest are all errors from base error sets
+					// This means that we simply "recast" the error
+					// and return it as a statement error
+					ErrStatement es = e;
+					throw es;
+		// Just rethrow any other errors
+		anyerror(e): throw e;
+
+def parse_file() {ErrParsing}:
+	parse_expression() catch err:
+		ErrStatement(e):
+			// Handle all statement-specific errors
+			switch e:
+				MissingSemicolon: // handle case
+				EmptyScope:       // handle case
+				TypeMismatch:     // handle case
+				else:
+					// The rest are all errors from base error sets
+					// This means that we simply "recast" the error
+					// and return it as a parsing error
+					ErrParsing ep = e;
+					throw ep;
+		// Just rethrow any other errors
+		anyerror(e): throw e;
+
+def main():
+	parse_file() catch err:
+		// Now we can handle the parsing and check for all potential 
+		// general parsing errors.
+</code></pre>
+<p>This is what I would consider a true "separation of concerns". Through the error set extension system we not only are able to specialize our errors but also keep the actual handling of those errors to higher levels while only focusing on the lower levels for the specialized sets. This is still a quite simple example. Just imagine having a dozen error set types where the most special error would have a hundred possible values it could be. Imagine writing a 100-branch switch in the specialized function, a 80 branch switch in the one above etc. That would be insane... this is why I would consider it best practice to keep only handling the "added" special errors in the error set at the deepest level, and just re-throwing the error as the more general value if it is not any of the specialized ones, because in that case it is <em>guaranteed</em> to be a value from the base sets instead.</p>
+<p>There does not exist a way to make this all safe, though. Because if you would now add a new error to the error set <code>ErrExpression</code> for example you would not get a compiler error that you have not checked for that value in the switch, and the branch where you try to cast the error value to the base set type would be executed. As "workaroun" (or actual solution, we will see), casting a specialized error to it's base error while that specialized value holds an actual value greater than it's base type's capacity will crash the program loud and clear. We know at compile-time how big the set <code>ErrStatement</code> is, for example. It's exactly <code>8</code> values big currently. So, if we would try to cast a value with a <code>value_id &gt;= 8</code> to that type it would just crash. It will be just a simple condition under the hood, but this condition prevents errors bubbling up to the main level (which would crash the program annyway most of times).</p>
 
                     </main>
 

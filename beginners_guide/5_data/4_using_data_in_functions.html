@@ -269,15 +269,6 @@ def main():
 </code></pre>
 </blockquote>
 <h2 id="returning-data-from-functions"><a class="header" href="#returning-data-from-functions">Returning Data from Functions</a></h2>
-<div class="warning">
-<p>Returning the constructed data directly does not work yet.</p>
-<p>When you write</p>
-<pre><code class="language-rs">def create_point(i32 x, i32 y) -&gt; Point:
-    return Point(x, y);
-</code></pre>
-<p>what Flint actually does under the hood will lead to a compilation error, as the code generation phase will fail. This is because a constructor is actually just a group under the hood, and the "element" values of data are stored in the Point variable directly. This means that the function tries to return a <code>(i32, i32)</code> instead of a <code>Point</code>, essentailly. It's not a mistake of Flint's type system or anything similar, it's just how the data declaration works at the moment, which is a bit flawed. That's also the reason why nested data constructors cannot be written directly into the constructor of the data which contains them.</p>
-<p>The below example will work perfectly fine, as we store the <code>Point</code> in a varaible first, before returning it.</p>
-</div>
 <p>You can also return data from functions, for example when creating them inside the function.</p>
 <pre><code class="language-rs">use Core.print
 
@@ -287,8 +278,7 @@ data Point:
     Point(x, y);
 
 def create_point(i32 x, i32 y) -&gt; Point:
-    Point p = Point(x, y);
-    return p;
+    return Point(x, y);
 
 def main():
     Point p = create_point(5, 7);
