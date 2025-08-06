@@ -1,6 +1,6 @@
 # Error Set Refinement
 
-Error set refinement, what a beautiful name for a very simple concept. You have learnt in the last chapter how to create a new error set type using the `error` keyword. Now you will learn another important concept of how Flint's errors work under the hood. A set is a collection of values, both in set theory in mathematics and in Flint that's also true. So, the error set from the last chapter, `error ErrorSet: Value1, Value2;` contains exactly two values: `Value1` and `Value2`.
+Error set refinement, what a beautiful name for a very simple concept. You have learned in the last chapter how to create a new error set type using the `error` keyword. Now you will learn another important concept of how Flint's errors work under the hood. A set is a collection of values, both in set theory in mathematics and in Flint that's also true. So, the error set from the last chapter, `error ErrorSet: Value1, Value2;` contains exactly two values: `Value1` and `Value2`.
 We can define set-relationships in Flint. One Error set could "extend" a base error set, and becomes a more specialized error by doing so. Here is a small example of that:
 
 ```rs
@@ -57,7 +57,7 @@ which prints this line to the console:
 > Error catched
 > ```
 
-we can look at the function `crash` and look at the type of the returned error. In our case, the type of the returned error is `anyerror?`, it is `none` if there was no error. If there was an error, however, we directly unwrap it and put the error accessible into the `err` variable. So, in this above case the `err` variable is of type `anyerror`. The type anyerror however is, like said before, not really "nothing", it still contains the thrown error, but this error just could be *any* error, hence the name.
+we can look at the function `crash` and look at the type of the returned error. In our case, the type of the returned error is `anyerror?`, it is `none` if there was no error. If there was an error, however, we directly unwrap it and put the error accessible into the `err` variable. So, in this above case the `err` variable is of type `anyerror`. The type anyerror however is, like said before, not really "nothing", it still contains the thrown error, but this error just could be _any_ error, hence the name.
 Also, what was not told until now is that even the `ErrBase` extends a set, the `anyerror` null-set! So, the error definition from above actually looks more like that:
 
 ```rs

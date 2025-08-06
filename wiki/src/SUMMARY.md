@@ -113,9 +113,9 @@
     - [Switching on Variants](./intermediates_guide/2_variants/2_variant_switch.md)
     - [Tagged Variants](./intermediates_guide/2_variants/3_tagged.md)
     - [Inline Variants](./intermediates_guide/2_variants/4_inline_variants.md)
-    - [Variant Comparison]()
-    - [Unwrapping Variants]()
-    - [Variant Extraction]()
+    - [Variant Comparison](./intermediates_guide/2_variants/5_comparison.md)
+    - [Unwrapping Variants](./intermediates_guide/2_variants/6_unwrapping.md)
+    - [Variant Extraction](./intermediates_guide/2_variants/7_extraction.md)
     - [Optional Variants]()
 
   - [Error Sets](./intermediates_guide/3_error_sets.md)
