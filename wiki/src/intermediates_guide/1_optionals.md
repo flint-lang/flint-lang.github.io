@@ -23,3 +23,5 @@ In this chapter, we will cover the following topics:
 - Providing default values through the null coalescence operator
 - Switching on optional values
 - Building optional chains through the optional chaining operator
+- Using optionals for references
+- Building linked lists through optionals

@@ -104,7 +104,8 @@
     - [Null Coalescing Operator](./intermediates_guide/1_optionals/4_null_coalescing.md)
     - [Switching on Optionals](./intermediates_guide/1_optionals/5_optional_switch.md)
     - [Optional Chaining](./intermediates_guide/1_optionals/6_optional_chaining.md)
-    - [List Example]()
+    - [Optionals as References](./intermediates_guide/1_optionals/7_references.md)
+    - [List Example](./intermediates_guide/1_optionals/8_list.md)
 
   - [Variants](./intermediates_guide/2_variants.md)
 
