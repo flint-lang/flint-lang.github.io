@@ -128,7 +128,8 @@
     - [Throwing Anonymous Errors](./intermediates_guide/3_error_sets/6_anonymous.md)
     - [Internals](./intermediates_guide/3_error_sets/7_internals.md)
     - [Best Practices](./intermediates_guide/3_error_sets/8_best_practices.md)
-    - [Error Switch Inlining]()
+    - [Error Switch Inlining](./intermediates_guide/3_error_sets/9_inlining.md)
+    - [Inferring the Error Variant](./intermediates_guide/3_error_sets/10_inferring.md)
     - [Linearization]()
 
   - [Callables & Variable Persistence]()
