@@ -40,18 +40,25 @@ def main():
 	print("Normal execution continues\n");
 ```
 
-This program will print this line to the console:
+This program will print these lines to the console:
 
 > ```
-> ERROR: Program exited with exit code '-286738258'
+> ERROR: main function returned error
+>  - type_id: 4008229038
+>  - value_id: 0
+>  - message: ""
 > ```
-
 
 <div class="warning">
 
-This error message will change in the future, currently it just prints the type id
+This error message will change in the future
 
-In the future the message should look more like `ERROR: Program exited due to thrown error: ErrorSet.Value1` but it will take more time and developement effort until this message can actually be printed.
+In the future the message should look more like
+> ```
+> ERROR: main function returned error
+>  - ErrorSet.Value1: ""
+> ```
+but it will take more time and developement effort until this message can actually be printed. It will take a while until we can print the error set names and values because we first need a way to create hash-tables to map the type ids to the type names. So, this will be implemented *eventually*.
 
 </div>
 
