@@ -15,9 +15,9 @@ def main():
 	if var == i32:
 		print($"holds i32 value: {var!(i32)}\n");
 	else if var == f32:
-		print($"holds f32 value: {var!{f32}\n");
+		print($"holds f32 value: {var!(f32)}\n");
 	else if var == bool:
-		print($"holds bool value: {var!{bool}\n");
+		print($"holds bool value: {var!(bool)}\n");
 ```
 
 This program will print this line to the console:

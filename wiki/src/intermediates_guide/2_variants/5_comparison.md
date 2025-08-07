@@ -159,13 +159,6 @@ def main():
 		print("hold the same type\n");
 	else:
 		print("hold different types\n");
-
-	var_1 = 5;
-	var_2 = 5;
-	if var_1 == var_2:
-		print("are equal\n");
-	else:
-		print("differ\n");
 ```
 
 This program will print these lines to the console:
