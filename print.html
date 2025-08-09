@@ -1090,6 +1090,29 @@ container.(a, b, c) = (-71, 164.37999, 6222)
 container.(a, b, c) = (-11, 23.823187, 1037)
 </code></pre>
 </blockquote>
+<h2 id="casting-enums-to-strings"><a class="header" href="#casting-enums-to-strings">Casting Enums to Strings</a></h2>
+<p>You can effortlessly cast any enum value to a string. The string value then will directly be the enum tag. It's really quite simple. Here is an example of it:</p>
+<pre><code class="language-rs">use Core.print
+
+enum MyEnum:
+	VAL1, VAL2, VAL3;
+
+def main():
+	MyEnum e = MyEnum.VAL1;
+	print($"e = {e}, id = {i32(e)}\n");
+	e = MyEnum.VAL2;
+	print($"e = {e}, id = {i32(e)}\n");
+	e = MyEnum.VAL3;
+	print($"e = {e}, id = {i32(e)}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>e = VAL1, id = 0
+e = VAL2, id = 1
+e = VAL3, id = 2
+</code></pre>
+</blockquote>
+<p>As you can see, casting enums to strings works quite effortlessly in Flint, just like casting them to integers.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="switch"><a class="header" href="#switch">Switch</a></h1>
 <h2 id="switch-statements"><a class="header" href="#switch-statements">Switch Statements</a></h2>
 <p>Switch statements are actually pretty easy to understand once you grasped if chains. <code>switch</code> statements are primarily used for pattern-matching purposes or for cases where you have a limited selection of possible values, like with enums, where you only have the possibilities of each tag.</p>
@@ -3290,6 +3313,8 @@ vendor
 <li>Providing default values through the null coalescence operator</li>
 <li>Switching on optional values</li>
 <li>Building optional chains through the optional chaining operator</li>
+<li>Using optionals for references</li>
+<li>Building linked lists through optionals</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="introduction-1"><a class="header" href="#introduction-1">Introduction</a></h1>
 <p>In Flint, we need to explicitely define which values possibly have no value. There is no implicit nullability like in other languages, nullability is very explicit in Flint, and that's a good thing. This means that we do not check everywhere if our object maybe is null, because when it's not an optional type it is <strong>required</strong> to be initialized, as there <em>is no uninitialized state in Flint</em>.</p>
@@ -3609,6 +3634,78 @@ def main():
 </blockquote>
 <p>As you can see, optional chains allow you to access fields deep inside optional chains. And now we can also talk about what type an optional chain has. The whole chain does <strong>always</strong> have the type of the rightmost operation wrapped in an optional. An operation could be a call, an access, or anything else, realistically. But it's important to know that <strong>the whole chain has either the value as it's end or it had a <code>none</code> value somewhere in between thus resulting in <code>none</code> itself</strong>.</p>
 <p>You can also mix and match optional chains with optional force-unwrapping. In the above example, we can for example write <code>nm!.v2m?.x</code> and have a force-unwrap on the nested but a optional chain on the vec itself. This style also <strong>clearly communicates intent</strong>. From this small snippet you can directly see the assertions of the programmer: The programmer asserts that <code>nm</code> will <em>always</em> have a value, whereas <code>v2m</code> within <code>nm</code> could <em>potentially</em> be <code>none</code>, so you need to handle that <em>potential</em> case of the value's absence. It's not only a nicee QOL improvement, but it also very clearly communicates intent, without a single comment written. Also, the <code>!</code> and <code>?</code> are unique to optionals, so whenever you find one of those operators you can be <em>sure</em> that there is an optional in play. Well, that operator exists in a different form for variants as well, namely the <code>!(T)</code> and <code>?(T)</code> operator, but you will learn about variants in the next chapter.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="optionals-as-references"><a class="header" href="#optionals-as-references">Optionals as References</a></h1>
+<p>Flint does not have pointer or reference types, as you know. But optionals <strong>are</strong> implicitely this missing reference-type piece. For all complex data types, which are stored in DIMA slots, optionals become reference types to other data. You will learn why this is like it is much much later when we actually talk about DIMA, but for now just remember that optional complex data types are references. Let's look at a small example to showcase this:</p>
+<pre><code class="language-rs">use Core.print
+
+data MyData:
+	i32 x;
+	f32 y;
+	str v;
+	MyData(x, y, v);
+
+def main():
+	MyData md = MyData(-5, 3.14, "Hello There");
+	MyData? ref = md;
+
+	ref!.(x, y) = (7, 6.28);
+
+	print($"md.(x, y, v) = ({md.x}, {md.y}, \"{md.v}\")\n");
+</code></pre>
+<p>This example will print this line to the console:</p>
+<blockquote>
+<pre><code>md.(x, y, v) = (7, 6.28, "Hello There")
+</code></pre>
+</blockquote>
+<p>As you can see, we do not modify <code>md</code> directly. We only modify the optional <code>ref</code>, but the optional <code>ref</code> internally is a reference to the data of <code>md</code>.</p>
+<div class="warning">
+<p>Because DIMA does not exist yet, be cautious with references.</p>
+<p>DIMA will include ARC and will handle the case when the "owner" of the data (in our case <code>md</code>) goes out of scope but the optional does not. Because DIMA is not implemented yet, this code:</p>
+<pre><code class="language-rs">MyData? ref = none;
+if true:
+	MyData val = MyData(10, 3.14, "segfault");
+	ref = val;
+print($"ref.x = {ref!.x}\n");
+</code></pre>
+<p>will cause a segmentation fault of the program. You <em>need</em> to be aware of this current limitation when using optionals.</p>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="list-example"><a class="header" href="#list-example">List Example</a></h1>
+<p>Now that we have optionals at our disposal and we know that optionals are references to actual values, we can build our first liked list in Flint! If you want to learn more about what a linked list actually is, i recommend you to look <a href="https://www.w3schools.com/dsa/dsa_theory_linkedlists.php">here</a>. Let's look at how a linked list looks in Flint:</p>
+<pre><code class="language-rs">use Core.print
+
+data IntList:
+	i32 value;
+	IntList? next;
+	IntList(value, next);
+
+def append(mut IntList list, i32 value):
+	if list.next == none:
+		list.next = IntList(value, none);
+	else:
+		append(list.next!, value);
+
+def print_list(IntList list):
+	print($"{list.value}");
+	if list.next != none:
+		print(" -&gt; ");
+		print_list(list.next!);
+	else:
+		print("\n");
+
+def main():
+	IntList list = IntList(10, none);
+	print_list(list);
+	append(list, 20);
+	print_list(list);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>10
+10 -&gt; 20
+</code></pre>
+</blockquote>
+<p>The program might seem intimidating at first, but let's unpack it bit by bit. First, we defined our <code>IntList</code> data type with a body representing it's value and an optional next element in the list. We have gone through the fact that optionals which hold complex data types actually hold references to data internally. So, we use the <code>IntList?</code> typed field for the next element in the linked list. We could put anything and any field inside our <code>IntList</code> definition. This also is the absolute most basic form of a linked list there is. When entities work eventually, we will learn quite a lot of more complex list examples.</p>
+<p>You can try around a bit. Write a <code>prepend</code> function, or write a function which prints the list in reverse order. Try around a bit in the list example. If you can fully create, understand and extend the list example you will get a feeling for optionals in Flint quicker than you might think.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="variants"><a class="header" href="#variants">Variants</a></h1>
 <p>Welcome to the second chapter of the intermediates guide. In this chapter we look at the variant type and what you can do with it. The <code>variant</code> type is used to define a type that could be <strong>one of</strong> a given collection of other types. Where optionalls allowed us to define <strong>emptiness</strong>, the <code>variant</code> type allows us to define <em>variation</em> in types.</p>
 <h2 id="what-are-variants"><a class="header" href="#what-are-variants">What are Variants?</a></h2>
@@ -3950,6 +4047,270 @@ def main():
 i = -10
 </code></pre>
 </blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="variant-comparison"><a class="header" href="#variant-comparison">Variant Comparison</a></h1>
+<p>We can compare variants with quite a few of different things. <em>Comparing</em> means the equals and not-equals operations <code>==</code> and <code>!=</code>, nothing else. We cannot see if one variant is bigger than another variant, for example, but we can definitely see if they are equal to one another. We can also compare variants to types to see if they contain a value of that type. But, let's look at all different cases in isolation.</p>
+<h2 id="comparing-types"><a class="header" href="#comparing-types">Comparing Types</a></h2>
+<p>We can compare a variant to a type to do a quick "does it hold that value" check:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVar:
+	i32, f32, bool;
+
+def main():
+	MyVar var = 3.14;
+
+	if var == i32:
+		print("holds i32 value\n");
+	else if var == f32:
+		print("holds f32 value\n");
+	else if var == bool:
+		print("holds bool value\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>holds f32 value
+</code></pre>
+</blockquote>
+<p>The <code>== T</code> check actually is semantically more of a <em>Does it hold a value of type <code>T</code>?</em> check. If you look closely, you can see the similarity of the above code with a switch statement:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVar:
+	i32, f32, bool;
+
+def main():
+	MyVar var = 3.14;
+
+	switch var:
+		i32(v):  print("holds i32 value\n");
+		f32(v):  print("holds f32 value\n");
+		bool(v): print("holds bool value\n");
+</code></pre>
+<p>with the same output as the other program. But in a switch we direclty gain an additional reference to the inner value of the variant we are working with. But, if we only want to do an action on only one type of the variant and do <em>nothing</em> on all other types, we can't really express this through a switch statement. Because how do we define doing "nothing" in a switches branch? That simply isn't possible in Flint.</p>
+<p>So, for that reason we can compare variants to types to see if it holds a value of that type. Note that <code>T</code> must be a valid type of the variant. If <code>T</code> is not a valid type of the variant, you will get a compile error stating that the type you try to compare the variant with is not a part of the variant's possible types.</p>
+<h2 id="comparing-tags"><a class="header" href="#comparing-tags">Comparing Tags</a></h2>
+<p>Just like we can compare a variant to it's type, we can compare a variant to it's tag to see if it holds a value of that type. As described in the chapter abour tagged variants, a variation with a tag <strong>must</strong> be accessed and checked through this tag.</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVar:
+	Int(i32), Float(f32), bool;
+
+def main():
+	MyVar var = -7;
+
+	if var == MyVar.Int:
+		print("holds Int value\n");
+	else if var == MyVar.Float:
+		print("holds Float value\n");
+	else if var == bool:
+		print("holds bool value\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>holds Int value
+</code></pre>
+</blockquote>
+<p>Just like in the last example, the similarity to the switch statement is pretty easy to spot:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVar:
+	Int(i32), Float(f32), bool;
+
+def main():
+	MyVar var = 3.14;
+
+	switch var:
+		MyVar.Int(v):   print("holds Int value\n");
+		MyVar.Float(v): print("holds Float value\n");
+		bool(v):        print("holds bool value\n");
+</code></pre>
+<p>which will have the same output once again. So, as you can see we can compare a variant value with one of it's possible tags in addition to comparing it with it's possible types. But, just like described in the chapter about tagged variants, we cannot do <code>var == i32</code>, even though <code>i32</code> is a valid type of the variant. We <strong>must</strong> check against it's tag when comparing and are not allowed to compare it to the underlying type directly if a tag is provided.</p>
+<h2 id="comparing-variants"><a class="header" href="#comparing-variants">Comparing Variants</a></h2>
+<p>Comparing two variants is pretty straight forward. Two variant's are considered to be equal if both their types as well as their values match up. You already know that the underlying structure of a variant is a <code>{ u8, byte[N] }</code>. Given this information you could quickly see that we cannot just compare the whole structure of a variant to another structure and if they are equal the variants are considered equal. It is a bit more nuanced than that. Let's say that we have the variant <code>variant&lt;i32, f32, i64&gt;</code>. In that case the variant has space for <code>8</code> bytes. So, if we have two variables and store <code>-1</code> and <code>1</code> as an <code>i64</code> in both of them all 8 bytes of the variant structure will be set. But if we then store the <code>i32</code> value of <code>7</code> in both of them, only the fist 4 bytes are overwritten and the last 4 bytes stay the same as they were before.
+This means that comparing variants through their whole structure would not only compare what <strong>is</strong> stored in the variants but also what <strong>was</strong> stored in them, and this is semantically very incorrect. When we compare both variants and both hold an <code>i32</code> value and that <code>i32</code> value matches, they should be considered equal. Relying on the whole structure would actually be undefined behaviour, and we don't want that. So, that's why we only compare the first <code>N</code> bytes depending on the active type of the variant. That's more work internally, but it results in deterministic and defined behaviour.</p>
+<p>So, here is a small example of comparing variants to one another:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVar:
+	i32, i64, i32x3;
+
+def main():
+	MyVar var_1 = i64(-5);
+	MyVar var_2 = i64(6);
+
+	if var_1 == var_2:
+		print("are equal\n");
+	else:
+		print("differ\n");
+
+	var_1 = 5;
+	var_2 = 5;
+	if var_1 == var_2:
+		print("are equal\n");
+	else:
+		print("differ\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>differ
+are equal
+</code></pre>
+</blockquote>
+<p>This output is expected. When we store different <code>i64</code> values in the variant they obviously do not match and then we store two equal <code>i32</code> values in the variant, so the variants should equal each other. If we would compare the whole structures of the variant to one another the second comparison of the two <code>i32</code> values would yield <code>false</code> which would be extremely counter-intuitive.</p>
+<h2 id="the-active_type-field"><a class="header" href="#the-active_type-field">The <code>active_type</code> field</a></h2>
+<p>Next we look at accessing the <code>active_type</code> field of the variant. You know the strucutre of the variant is <code>{ u8, byte[N] }</code> and the <code>active_type</code> field of a variant is the first field of that struct. We can access this value (readonly) by just doing <code>var.active_type</code> on an variant. This will return a <code>u8</code> value. And because we can compare <code>u8</code> values we can actually check whether two variant variables hold <strong>the same type</strong>. This is especially useful for situations where we just want to know whether two variants hold the same type, independent from <em>which</em> type that is.</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVar:
+	i32, i64, i32x3;
+
+def main():
+	MyVar var_1 = i64(-5);
+	MyVar var_2 = i64(6);
+
+	if var_1.active_type == var_2.active_type:
+		print("hold the same type\n");
+	else:
+		print("hold different types\n");
+
+	var_1 = 5;
+	if var_1.active_type == var_2.active_type:
+		print("hold the same type\n");
+	else:
+		print("hold different types\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>hold the same type
+hold different types
+are equal
+</code></pre>
+</blockquote>
+<p>You will see in the next big chapter about <a href="intermediates_guide/2_variants//intermediates_guide/3_error_sets.html">Error Sets</a> and you actually have seen it before for getting the <a href="intermediates_guide/2_variants//beginners_guide/6_arrays/3_strings.html#getting-a-strings-length">length of strings</a> that you can access fields of primitive types or builtin types, fields which you normally do not see.</p>
+<p>Note that the <code>active_type</code> indices start at <code>1</code>. This means that <code>i32</code> has the value <code>1</code>, <code>i64</code> the value <code>2</code> and <code>i32x3</code> the value <code>3</code>. Why the value <code>0</code> is not used here and why we have a one-based indexing in this case will be explained in a <a href="intermediates_guide/2_variants//intermediates_guide/2_variants/8_optional_variants.html">later</a> chapter, stay tuned for that!</p>
+<h2 id="comparing-values"><a class="header" href="#comparing-values">Comparing Values</a></h2>
+<div class="warning">
+<p>It is not yet entirely clear whether this feature will be implemented at all</p>
+<p>While useful, this feature would make comparing variants ambiguous. When comparing a variant to a type or another variant of the same type it can be clearly seen what's actually happening. But in the example below, doing <code>var == ten</code> brings a bit of ambiguity with it, as now <code>ten</code> could be of type <code>MyVar</code>, <code>i32</code>, <code>i64</code> or <code>i32x3</code>. All types are entirely possible. For the parser this is no problem whatsoever, but for the person actually <em>reading</em> the Flint code this leads to additional cognitive load, whereas when <em>not</em> having this feature you can be sure that when you see <code>var == ten</code> that <code>ten</code> is definitely of type <code>MyVar</code> and can't be of any other type.
+So, it is still thought about whether to actually implement this feature. It is not implemented for now, as it's just syntactic sugar and doing that comparison coould be done through other ways as well. We will reconsider adding this feature at a later point in time, when time has shown that we actually want and need it. But it is most likely for this feature to stay pretty uncommon.</p>
+</div>
+<p>Lastly, we can also compare variants to variables and literals of a given type directly. Just like we can do <code>var == i32</code> we can also do <code>var == 5</code> and this will do two checks for us: Is <code>var</code> of type <code>i32</code>? If yes, does it's value match the value we compare it to? It's the same as if we would write <code>var?(i32) != none and var!(i32) == 5</code> but we look at that syntax in the next chapter. Just be assured: It would be pretty hard to check if the variant matches a given value if this feature would not exist. This feature is something we would call syntactic sugar. It is not necessarily <em>required</em> to be implemented, but it makes our lives quite a lot easier.</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVar:
+	i32, i64, i32x3;
+
+def main():
+	MyVar var = i64(-5);
+
+	if var == i64(-5):
+		print("equals i64(-5)\n");
+
+	i32 ten = 10;
+	var = 10;
+	if var == 7:
+		print("equals 7\n");
+	else if var == ten:
+		print("equals ten\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>equals i64(-5)
+equals ten
+</code></pre>
+</blockquote>
+<p>As you can see it makes our lives quite a lot easier.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="unwrapping-variants"><a class="header" href="#unwrapping-variants">Unwrapping Variants</a></h1>
+<p>Okay now let's move on to variant unwrapping. In the last chapter you have learned how to check if a variant holds a given type and much more about comparing variants. But, in those if branches, when we <em>know</em> the variant holds the given type we actually want to get that value from the variant somehow. If you think back about optionals we had the <code>!</code> operator for forceful unwrapping and the <code>?</code> operator for optional chaining. For variants, this actually is quite similar. To unwrap a variant we use the <code>!(T)</code> syntax. In between the parenthesis we write which type we want to force-unwrap from the variant. Similar to how the force-unwrap operator <code>!</code> worked for optionals, this will print a small error message and crash the program if the variant does not hold the requested type.
+Let's actually look at a modified version of one of the last chapter's examples:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVar:
+	i32, f32, bool;
+
+def main():
+	MyVar var = 3.14;
+
+	if var == i32:
+		print($"holds i32 value: {var!(i32)}\n");
+	else if var == f32:
+		print($"holds f32 value: {var!(f32)}\n");
+	else if var == bool:
+		print($"holds bool value: {var!(bool)}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>holds f32 value: 3.14
+</code></pre>
+</blockquote>
+<p>It actually is semantically quite similar to the force-unwrap operator for optionals, and this is intended. Whenever you see the <code>!</code> symbol you should know that <em>"Okay the programmer asserted that this will always have a value (of that type)."</em>. This forms confidence over time. The more you see the same symbols used in the same context and same semantics the more you familiarize with them, just like how the <code>_</code> default expression works.</p>
+<p>The above example is not really useful, though, as in this case the switch statement would be a much better fit. But the variant unwrapping operator is a very powerful tool for handling variants.</p>
+<p>Also, we can of course provide a tag instead of the type <code>T</code> for variant unwrapping too, as always. So, if <code>i32</code> had a tag <code>Int</code> we must write <code>var!(MyVar.Int)</code> as usual, but that should be clear by now.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="variant-extraction"><a class="header" href="#variant-extraction">Variant Extraction</a></h1>
+<p>Similar to how the variant unwrapping operator <code>!(T)</code> had similarities to the optional force-unwrap operator <code>!</code>, the variant extraction operator <code>?(T)</code> has equally as much similarities to the optional chaining operator <code>?</code>. As a quick reminder, the optional chaining operator was used to, well, form chained expressions from optionals like <code>maybe?.field_maybe?.field</code> where the result of the whole chain always was <code>T?</code>, either the chain succeeded or it failed.</p>
+<p>The variant extraction operator <code>?(T)</code> slots right into that same machinery and it pretty much works identiacally to the optional chaining operator. Where for optional chaining you either <em>have</em> a value or you <em>don't</em>, for variants it's more nuanced as you could have one of many types. But you either <em>have</em> a value of a given type or you <em>don't</em>. So, we van use the variant extraction operator <code>?(T)</code> <em>within</em> optional chains and mix and match them as we wish, and the result of that optional chain has the type <code>T?</code>, because either all parts of the chain succeeded or <em>any</em> part of the chain returned <code>none</code> as result.</p>
+<p>Let's look at a more simple case for the extraction operator before moving on to the more complicated chaining approach.</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVar:
+	i32, f32, str;
+
+def main():
+	MyVar var = -5;
+
+	i32? i = var?(i32);
+	f32? f = var?(f32);
+
+	if i != none:
+		print($"i == {i!}\n");
+	else:
+		print("i == none\n");
+
+	if f != none:
+		print($"f == {f!}\n");
+	else:
+		print("f == none\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>i == -5
+f == none
+</code></pre>
+</blockquote>
+<p>As you can see, the variant extraction operator <code>?(T)</code> has quite a few similarities to the optional chaining operator <code>?</code>, so much that it can be used within optional chains too. Let's look at the more complicated example now:</p>
+<div class="warning">
+<p>This example does not work yet</p>
+<p>Flint does not yet support stacking variant extractions with optional chains. It will be supported eventually, but the compiler is currently unable to compile the program below.</p>
+</div>
+<pre><code class="language-rs">use Core.print
+use Core.assert
+
+data MyData:
+	i32 x;
+	f32 y;
+	MyData? next;
+	MyData(x, y, next);
+
+variant MyVar:
+	i32, Data(MyData?), str;
+
+def main():
+	MyData? md = MyData(10, 20, MyData(30, 40, none));
+	MyVar var = md;
+
+	i32? x = var?(MyVar.Data).x;
+	assert(x != none);
+	i32? x2 = var?(MyVar.Data).next?.x;
+	assert(x2 != none):
+	print($"x = {x!}\n");
+	print($"x2 = {x2!}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>x = 10
+x2 = 30
+</code></pre>
+</blockquote>
+<p>You can see quite a lot of information packed into that little program above, actually. First of all we must extract the tagged variation through it's tag again. Also, <code>MyData</code> is a linked list in this example containing an optional next field. This example was chosen to showcase the ability to mix and match variant extractions with optional chains. Because the variant extraction essentially works exactly the same as the optional chaining operator we will not go i depth here, it should be clear how it works by now.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="error-sets-5"><a class="header" href="#error-sets-5">Error Sets</a></h1>
 <p>Welcome to the third chapter of the intermediates guide. In this chapter we look at the error set type and what you can do with it. The <code>error</code> type is used to define error sets which we can use in Flint's error handling system through the <code>throw</code> and <code>catch</code> keywords respectively.</p>
 <h2 id="what-are-error-sets"><a class="header" href="#what-are-error-sets">What are Error Sets?</a></h2>
@@ -4008,14 +4369,23 @@ def main():
 	fail();
 	print("Normal execution continues\n");
 </code></pre>
-<p>This program will print this line to the console:</p>
+<p>This program will print these lines to the console:</p>
 <blockquote>
-<pre><code>ERROR: Program exited with exit code '-286738258'
+<pre><code>ERROR: main function returned error
+ - type_id: 4008229038
+ - value_id: 0
+ - message: ""
 </code></pre>
 </blockquote>
 <div class="warning">
-<p>This error message will change in the future, currently it just prints the type id</p>
-<p>In the future the message should look more like <code>ERROR: Program exited due to thrown error: ErrorSet.Value1</code> but it will take more time and developement effort until this message can actually be printed.</p>
+<p>This error message will change in the future</p>
+<p>In the future the message should look more like</p>
+<blockquote>
+<pre><code>ERROR: main function returned error
+ - ErrorSet.Value1: ""
+</code></pre>
+</blockquote>
+<p>but it will take more time and developement effort until this message can actually be printed. It will take a while until we can print the error set names and values because we first need a way to create hash-tables to map the type ids to the type names. So, this will be implemented <em>eventually</em>.</p>
 </div>
 <h2 id="catching-errors"><a class="header" href="#catching-errors">Catching errors</a></h2>
 <p>But what would an error be used for if we would not have a way to catch it? Here is how we catch errors in Flint:</p>
@@ -4040,7 +4410,7 @@ Normal execution continues
 </blockquote>
 <p>The program now does no longer print the <code>ERROR: ...</code> message, as no error was thrown from the main function. This is a core concept of Flint: When an error is catched and it is handled it is consiered that the error is "no longer a problem" and execution will continue as if there was no error at all. But there is still a lot more to cover before we are able to completely understand what errors really are and how to effectively use them.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="error-set-refinement"><a class="header" href="#error-set-refinement">Error Set Refinement</a></h1>
-<p>Error set refinement, what a beautiful name for a very simple concept. You have learnt in the last chapter how to create a new error set type using the <code>error</code> keyword. Now you will learn another important concept of how Flint's errors work under the hood. A set is a collection of values, both in set theory in mathematics and in Flint that's also true. So, the error set from the last chapter, <code>error ErrorSet: Value1, Value2;</code> contains exactly two values: <code>Value1</code> and <code>Value2</code>.
+<p>Error set refinement, what a beautiful name for a very simple concept. You have learned in the last chapter how to create a new error set type using the <code>error</code> keyword. Now you will learn another important concept of how Flint's errors work under the hood. A set is a collection of values, both in set theory in mathematics and in Flint that's also true. So, the error set from the last chapter, <code>error ErrorSet: Value1, Value2;</code> contains exactly two values: <code>Value1</code> and <code>Value2</code>.
 We can define set-relationships in Flint. One Error set could "extend" a base error set, and becomes a more specialized error by doing so. Here is a small example of that:</p>
 <pre><code class="language-rs">error ErrBase:
 	B1, B2;
@@ -4051,14 +4421,23 @@ error ErrSpecial(ErrBase):
 def main():
 	throw ErrSpecial.B1;
 </code></pre>
-<p>This program will print this line to the console:</p>
+<p>This program will print these lines to the console:</p>
 <blockquote>
-<pre><code>ERROR: Program exited with exit code '803109534'
+<pre><code>ERROR: main function returned error
+ - type_id: 803109534
+ - value_id: 0
+ - message: ""
 </code></pre>
 </blockquote>
 <div class="warning">
-<p>This error message will change in the future, currently it just prints the type id</p>
-<p>In the future the message should look more like <code>ERROR: Program exited due to thrown error: ErrSpecial.B1</code> but it will take more time and developement effort until this message can actually be printed.</p>
+<p>This error message will change in the future</p>
+<p>In the future the message should look more like</p>
+<blockquote>
+<pre><code>ERROR: main function returned error
+ - ErrSpecial.B1: ""
+</code></pre>
+</blockquote>
+<p>but it will take more time and developement effort until this message can actually be printed. It will take a while until we can print the error set names and values because we first need a way to create hash-tables to map the type ids to the type names. So, this will be implemented <em>eventually</em>.</p>
 </div>
 <p>The error set <code>ErrSpecial</code> is an extension of the error set <code>ErrBase</code>, thus contains all values of it's base set. The error set <code>ErrBase</code> contains the values <code>[B1, B2]</code> and the error set <code>ErrSpecial</code> contains the values <code>[B1, B2, S1, S2]</code>. This is a very important concept in Flint. The more "special" an erro becomes the <strong>bigger</strong> does it's set become. This might seem counter-intuitive but when looked at it from the mathematical standpoint this is just how it works.</p>
 <h2 id="the-null-set"><a class="header" href="#the-null-set">The null-set</a></h2>
@@ -4090,7 +4469,7 @@ Also, what was not told until now is that even the <code>ErrBase</code> extends 
 </code></pre>
 <p>But the <code>anyerror</code> set contains no values, so the <code>ErrBase</code> set still only contains the values <code>[B1, B2]</code> but now it formally extends from the error set of <code>anyerror</code> and thus is "castable" to that set.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-signatures"><a class="header" href="#function-signatures">Function Signatures</a></h1>
-<p>So far we have learnt how we can define errors, extend from other errors to form bigger and more specialized sets and how to throw and catch errors, but on the catching side we have not yet done anything with the catched <code>err</code> variable. This will change in this chapter, as we dive deeper into how to specify the possible errors a function could throw directly in it's signature. Let's look at a very simple example for this at first:</p>
+<p>So far we have learned how we can define errors, extend from other errors to form bigger and more specialized sets and how to throw and catch errors, but on the catching side we have not yet done anything with the catched <code>err</code> variable. This will change in this chapter, as we dive deeper into how to specify the possible errors a function could throw directly in it's signature. Let's look at a very simple example for this at first:</p>
 <pre><code class="language-rs">use Core.print
 
 error ErrArithmetic:
@@ -4438,6 +4817,135 @@ def main():
 </code></pre>
 <p>This is what I would consider a true "separation of concerns". Through the error set extension system we not only are able to specialize our errors but also keep the actual handling of those errors to higher levels while only focusing on the lower levels for the specialized sets. This is still a quite simple example. Just imagine having a dozen error set types where the most special error would have a hundred possible values it could be. Imagine writing a 100-branch switch in the specialized function, a 80 branch switch in the one above etc. That would be insane... this is why I would consider it best practice to keep only handling the "added" special errors in the error set at the deepest level, and just re-throwing the error as the more general value if it is not any of the specialized ones, because in that case it is <em>guaranteed</em> to be a value from the base sets instead.</p>
 <p>There does not exist a way to make this all safe, though. Because if you would now add a new error to the error set <code>ErrExpression</code> for example you would not get a compiler error that you have not checked for that value in the switch, and the branch where you try to cast the error value to the base set type would be executed. As "workaroun" (or actual solution, we will see), casting a specialized error to it's base error while that specialized value holds an actual value greater than it's base type's capacity will crash the program loud and clear. We know at compile-time how big the set <code>ErrStatement</code> is, for example. It's exactly <code>8</code> values big currently. So, if we would try to cast a value with a <code>value_id &gt;= 8</code> to that type it would just crash. It will be just a simple condition under the hood, but this condition prevents errors bubbling up to the main level (which would crash the program annyway most of times).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="error-switch-inlining"><a class="header" href="#error-switch-inlining">Error Switch Inlining</a></h1>
+<p>In Flint, the pattern to write</p>
+<pre><code class="language-rs">call() catch err:
+	switch err:
+		...
+</code></pre>
+<p>is very very common. And you may notice that the indentation level of the actual switch is 2 in our case. But because this pattern is so common, and because we actually do not further access <code>err</code> at all outside of the <code>switch</code> and we most likely do not write anything else in the catch scope other than the <code>switch</code>, we have developed a special case syntax for this case:</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrInline:
+	Throwing;
+
+def will_throw() {ErrInline}:
+	throw ErrInline.Throwing("Wahu");
+
+def main():
+	will_throw() catch:
+		ErrInline(b): print("is inline thrown\n");
+		anyerror(a): print("is anyerror\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>is inline thrown
+</code></pre>
+</blockquote>
+<p>As you notice, we implicitely switch on the error value, which means that the whole <code>catch:</code> body becomes the body of the <code>switch</code>. The main reason to why we added this is to reduce the nesting level of the code when catching errors. Catching errors is already verbose enough, so reducing the visual clutter to keep you focused on the actual errors you want to catch is important for readability.</p>
+<p>Because we switch on the possible error set types (the returned variant) we are actually only able to inline-switch on a function which returns at least one known error type. If the function would only return an <code>anyerror</code> as it's error return, then we would not be able to switch on it. Inline-switching is explicitely meant for switching on the <code>variant&lt;anyerror, ErrInline, ...&gt;</code> error variant.</p>
+<p>So, this code:</p>
+<pre><code class="language-rs">use Core.print
+
+error ErrInline:
+	Throwing;
+
+def will_throw():
+	throw ErrInline.Throwing("Wahu");
+
+def main():
+	will_throw() catch:
+		ErrInline(b): print("is inline thrown\n");
+		anyerror(a): print("is anyerror\n");
+</code></pre>
+<p>will not compile, at all. Because now we switch on the error which is of type <code>anyerror</code>, and we <strong>cannot</strong> switch on the <code>anyerror</code> type. So, inline-switching is only possible on functions which explicitely name their potential errors they might throw.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="inferring-the-error-variant"><a class="header" href="#inferring-the-error-variant">Inferring the Error Variant</a></h1>
+<div class="warning">
+<p>Inferring the error variant return type is not yet implemented.</p>
+<p>This feature, while <em>defintely</em> planned, is not implemented yet. This feature becomes <em>extremely</em> useful in the context of function composition and blueprints, so it's considered a "must-have" feature for Flint.</p>
+</div>
+<p>You have already seen how we explicitely define which possible error sets a function might throw using the <code>{..}</code> syntax. To this already known syntax now comes a small inferring-tool. When we write a function it always implicitely returns an <code>anyerror</code> if we define nothing else. But, what if we could add a small set of symbols to tell the compiler "put all possible throwing error sets in the return type of the function"? Thats exactly why this chapter exists.</p>
+<p>We tell a function to infer all possible error set types through the <code>{_}</code> syntax. The <code>_</code>, as you already know does <strong>always</strong> mean <em>default</em>, <em>infer</em> or <em>unused</em>, and it <strong>never</strong> means anything else in Flint. So, it is only logical to use it to infer the possible error set types of a function. Here is a small example showcasing it:</p>
+<pre><code class="language-rs">use Core.print
+use Core.assert
+
+error ErrBase:
+	Base1, Base2;
+
+error ErrSpecial(ErrBase):
+	Special1, Special2;
+
+def do_base(i32 x) {_}:
+	if x &gt; 7:
+		throw ErrBase.Base2;
+
+def do_something(i32 x) {_}:
+	assert(x &gt; 0);
+	for i32 i = 0; i &lt; x; i++:
+		do_base(i);
+		if i &gt; 10:
+			throw ErrSpecial.Special1;
+
+def main():
+	do_something(13) catch:
+		ErrAssert(e):
+			print("assertion error thrown\n");
+		ErrBase(e):
+			print("base error thrown\n");
+		ErrSpecial(e):
+			print("special error thrown\n");
+		anyerror(e):
+			print("anyerror thrown\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>special error thrown
+</code></pre>
+</blockquote>
+<p>Well the example isn't as small as i said. Let's go through all functions bit by bit. First, let's talk about the <code>do_base</code> function. It only throws the <code>ErrBase</code> error set, so it's possible error set types are <code>{ErrBase}</code>, nothing more.</p>
+<p>The <code>do_something</code> function is a bit more complicated. When we look at the function we first come across the <code>assert</code> call. The <code>Core.assert</code> module provides the <code>ErrAssert</code> error set, which will be thrown by the <code>assert</code> function. So, the <code>do_something</code> function contains at least the <code>{ErrAssert, ...}</code> sets. But let's continue reading through the <code>do_something</code> function. The next call we can see is <code>do_base</code> without any catch on it. The <code>do_base</code> function can throw the <code>{ErrBase}</code> error set. So, the <code>do_something</code> function will inherit this possible error too, so it now has the possible error sets of <code>{ErrAssert, ErrBase, ...}</code>.
+When we continue reading through the <code>do_something</code> function we can also find the <code>throw ErrSpecial...</code> line. So, the <code>do_something</code> function also may throw the <code>ErrSpecail</code> error set, and we have reached the end of the function now. This means that the <code>do_something</code> function has the possible error set definition of <code>{ErrAssert, ErrBase, ErrSpecial}</code>. These are the three possible errors the function could throw. So, when we inline-switch the error of the function we switch on the error variable which is of type <code>variant&lt;anyerror, ErrAssert, ErrBase, ErrSpecial&gt;</code>.</p>
+<p>When inferring the error set types there is a general rule of thumb: Every <strong>non-catched</strong> call will directly add it's possible errors to the error set of the function, just like every <code>throw</code> statement will, of course. If you would catch an error the possible errors of that call will no longer be part of the error set type. Here is a example of that:</p>
+<pre><code class="language-rs">use Core.print
+use Core.assert
+
+error ErrBase:
+	Base1, Base2;
+
+error ErrSpecial(ErrBase):
+	Special1, Special2;
+
+def do_base(i32 x) {_}:
+	if x &gt; 7:
+		throw ErrBase.Base2;
+
+def do_something(i32 x) {_}:
+	assert(x &gt; 0);
+	for i32 i = 0; i &lt; x; i++:
+		do_base(i) catch err:
+			print("doing nothing\n");
+		if i &gt; 10:
+			throw ErrSpecial.Special1;
+
+def main():
+	do_something(13) catch:
+		ErrAssert(e):
+			print("assertion error thrown\n");
+		ErrSpecial(e):
+			print("special error thrown\n");
+		anyerror(e):
+			print("anyerror thrown\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>doing nothing
+doing nothing
+doing nothing
+doing nothing
+special error thrown
+</code></pre>
+</blockquote>
+<p>As you can see, the <code>ErrBase</code> from the <code>do_base</code> function call is no longer part of the possible error sets of the <code>do_something</code> function. This feature of inferring the error set types is very powerful, but use it with caution. You should not add it to <em>every</em> function of your codebase and "call it a day". You will learn how to effectively use this feature in later chapters, especially when we take a closer look at Flint's Blueprint system later.</p>
 
                     </main>
 

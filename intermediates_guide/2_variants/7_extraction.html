@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Variants - The Flint Wiki</title>
+        <title>Variant Extraction - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -12,34 +12,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "../";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex.js";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -106,7 +106,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -141,7 +141,7 @@
                     <h1 class="menu-title">The Flint Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -175,37 +175,82 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="variants"><a class="header" href="#variants">Variants</a></h1>
-<p>Welcome to the second chapter of the intermediates guide. In this chapter we look at the variant type and what you can do with it. The <code>variant</code> type is used to define a type that could be <strong>one of</strong> a given collection of other types. Where optionalls allowed us to define <strong>emptiness</strong>, the <code>variant</code> type allows us to define <em>variation</em> in types.</p>
-<h2 id="what-are-variants"><a class="header" href="#what-are-variants">What are Variants?</a></h2>
-<p>A variant is, once again, essentially just a struct under the hood. It is composed of a 1 Byte flag value to determine which type it holds followed by the actual type of the variant. This "type" as the second value is just <strong>N</strong> bytes of storage, where <code>N</code> is the number of bytes needed to store the <strong>biggest</strong> of all possible types.</p>
-<h2 id="why-are-variants-important"><a class="header" href="#why-are-variants-important">Why are Variants Important?</a></h2>
-<p>Variants are an essential part of Flint because they allow you to:</p>
-<ul>
-<li>Describe the possibility that a value might be one of a given kind</li>
-<li>Store multiple different "data" in a very small space, as the variant does not occupy space for <em>each</em> value it could be</li>
-</ul>
-<h2 id="what-to-expect"><a class="header" href="#what-to-expect">What to Expect</a></h2>
-<p>In this chapter, we will cover the following topics:</p>
-<ul>
-<li>Declaring and using variant types</li>
-<li>Tagging variants</li>
-<li>Variant Comparison</li>
-<li>Force-unwrapping a variant variable</li>
-<li>Switching on variant values</li>
-<li>Building optional chains through the variant extraction operator</li>
-<li>Making variants optional and how variants interact with optionals</li>
-</ul>
+                        <h1 id="variant-extraction"><a class="header" href="#variant-extraction">Variant Extraction</a></h1>
+<p>Similar to how the variant unwrapping operator <code>!(T)</code> had similarities to the optional force-unwrap operator <code>!</code>, the variant extraction operator <code>?(T)</code> has equally as much similarities to the optional chaining operator <code>?</code>. As a quick reminder, the optional chaining operator was used to, well, form chained expressions from optionals like <code>maybe?.field_maybe?.field</code> where the result of the whole chain always was <code>T?</code>, either the chain succeeded or it failed.</p>
+<p>The variant extraction operator <code>?(T)</code> slots right into that same machinery and it pretty much works identiacally to the optional chaining operator. Where for optional chaining you either <em>have</em> a value or you <em>don't</em>, for variants it's more nuanced as you could have one of many types. But you either <em>have</em> a value of a given type or you <em>don't</em>. So, we van use the variant extraction operator <code>?(T)</code> <em>within</em> optional chains and mix and match them as we wish, and the result of that optional chain has the type <code>T?</code>, because either all parts of the chain succeeded or <em>any</em> part of the chain returned <code>none</code> as result.</p>
+<p>Let's look at a more simple case for the extraction operator before moving on to the more complicated chaining approach.</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVar:
+	i32, f32, str;
+
+def main():
+	MyVar var = -5;
+
+	i32? i = var?(i32);
+	f32? f = var?(f32);
+
+	if i != none:
+		print($"i == {i!}\n");
+	else:
+		print("i == none\n");
+
+	if f != none:
+		print($"f == {f!}\n");
+	else:
+		print("f == none\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>i == -5
+f == none
+</code></pre>
+</blockquote>
+<p>As you can see, the variant extraction operator <code>?(T)</code> has quite a few similarities to the optional chaining operator <code>?</code>, so much that it can be used within optional chains too. Let's look at the more complicated example now:</p>
+<div class="warning">
+<p>This example does not work yet</p>
+<p>Flint does not yet support stacking variant extractions with optional chains. It will be supported eventually, but the compiler is currently unable to compile the program below.</p>
+</div>
+<pre><code class="language-rs">use Core.print
+use Core.assert
+
+data MyData:
+	i32 x;
+	f32 y;
+	MyData? next;
+	MyData(x, y, next);
+
+variant MyVar:
+	i32, Data(MyData?), str;
+
+def main():
+	MyData? md = MyData(10, 20, MyData(30, 40, none));
+	MyVar var = md;
+
+	i32? x = var?(MyVar.Data).x;
+	assert(x != none);
+	i32? x2 = var?(MyVar.Data).next?.x;
+	assert(x2 != none):
+	print($"x = {x!}\n");
+	print($"x2 = {x2!}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>x = 10
+x2 = 30
+</code></pre>
+</blockquote>
+<p>You can see quite a lot of information packed into that little program above, actually. First of all we must extract the tagged variation through it's tag again. Also, <code>MyData</code> is a linked list in this example containing an optional next field. This example was chosen to showcase the ability to mix and match variant extractions with optional chains. Because the variant extraction essentially works exactly the same as the optional chaining operator we will not go i depth here, it should be clear how it works by now.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../intermediates_guide/1_optionals/8_list.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../intermediates_guide/2_variants/6_unwrapping.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../intermediates_guide/2_variants/1_introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../intermediates_guide/3_error_sets.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -215,11 +260,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../intermediates_guide/1_optionals/8_list.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../intermediates_guide/2_variants/6_unwrapping.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../intermediates_guide/2_variants/1_introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../intermediates_guide/3_error_sets.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -234,13 +279,13 @@
         </script>
 
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 

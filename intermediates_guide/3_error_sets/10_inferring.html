@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Variants - The Flint Wiki</title>
+        <title>Inferring the Error Variant - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -12,34 +12,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "../";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex.js";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -106,7 +106,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -141,7 +141,7 @@
                     <h1 class="menu-title">The Flint Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -175,39 +175,102 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="variants"><a class="header" href="#variants">Variants</a></h1>
-<p>Welcome to the second chapter of the intermediates guide. In this chapter we look at the variant type and what you can do with it. The <code>variant</code> type is used to define a type that could be <strong>one of</strong> a given collection of other types. Where optionalls allowed us to define <strong>emptiness</strong>, the <code>variant</code> type allows us to define <em>variation</em> in types.</p>
-<h2 id="what-are-variants"><a class="header" href="#what-are-variants">What are Variants?</a></h2>
-<p>A variant is, once again, essentially just a struct under the hood. It is composed of a 1 Byte flag value to determine which type it holds followed by the actual type of the variant. This "type" as the second value is just <strong>N</strong> bytes of storage, where <code>N</code> is the number of bytes needed to store the <strong>biggest</strong> of all possible types.</p>
-<h2 id="why-are-variants-important"><a class="header" href="#why-are-variants-important">Why are Variants Important?</a></h2>
-<p>Variants are an essential part of Flint because they allow you to:</p>
-<ul>
-<li>Describe the possibility that a value might be one of a given kind</li>
-<li>Store multiple different "data" in a very small space, as the variant does not occupy space for <em>each</em> value it could be</li>
-</ul>
-<h2 id="what-to-expect"><a class="header" href="#what-to-expect">What to Expect</a></h2>
-<p>In this chapter, we will cover the following topics:</p>
-<ul>
-<li>Declaring and using variant types</li>
-<li>Tagging variants</li>
-<li>Variant Comparison</li>
-<li>Force-unwrapping a variant variable</li>
-<li>Switching on variant values</li>
-<li>Building optional chains through the variant extraction operator</li>
-<li>Making variants optional and how variants interact with optionals</li>
-</ul>
+                        <h1 id="inferring-the-error-variant"><a class="header" href="#inferring-the-error-variant">Inferring the Error Variant</a></h1>
+<div class="warning">
+<p>Inferring the error variant return type is not yet implemented.</p>
+<p>This feature, while <em>defintely</em> planned, is not implemented yet. This feature becomes <em>extremely</em> useful in the context of function composition and blueprints, so it's considered a "must-have" feature for Flint.</p>
+</div>
+<p>You have already seen how we explicitely define which possible error sets a function might throw using the <code>{..}</code> syntax. To this already known syntax now comes a small inferring-tool. When we write a function it always implicitely returns an <code>anyerror</code> if we define nothing else. But, what if we could add a small set of symbols to tell the compiler "put all possible throwing error sets in the return type of the function"? Thats exactly why this chapter exists.</p>
+<p>We tell a function to infer all possible error set types through the <code>{_}</code> syntax. The <code>_</code>, as you already know does <strong>always</strong> mean <em>default</em>, <em>infer</em> or <em>unused</em>, and it <strong>never</strong> means anything else in Flint. So, it is only logical to use it to infer the possible error set types of a function. Here is a small example showcasing it:</p>
+<pre><code class="language-rs">use Core.print
+use Core.assert
+
+error ErrBase:
+	Base1, Base2;
+
+error ErrSpecial(ErrBase):
+	Special1, Special2;
+
+def do_base(i32 x) {_}:
+	if x &gt; 7:
+		throw ErrBase.Base2;
+
+def do_something(i32 x) {_}:
+	assert(x &gt; 0);
+	for i32 i = 0; i &lt; x; i++:
+		do_base(i);
+		if i &gt; 10:
+			throw ErrSpecial.Special1;
+
+def main():
+	do_something(13) catch:
+		ErrAssert(e):
+			print("assertion error thrown\n");
+		ErrBase(e):
+			print("base error thrown\n");
+		ErrSpecial(e):
+			print("special error thrown\n");
+		anyerror(e):
+			print("anyerror thrown\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>special error thrown
+</code></pre>
+</blockquote>
+<p>Well the example isn't as small as i said. Let's go through all functions bit by bit. First, let's talk about the <code>do_base</code> function. It only throws the <code>ErrBase</code> error set, so it's possible error set types are <code>{ErrBase}</code>, nothing more.</p>
+<p>The <code>do_something</code> function is a bit more complicated. When we look at the function we first come across the <code>assert</code> call. The <code>Core.assert</code> module provides the <code>ErrAssert</code> error set, which will be thrown by the <code>assert</code> function. So, the <code>do_something</code> function contains at least the <code>{ErrAssert, ...}</code> sets. But let's continue reading through the <code>do_something</code> function. The next call we can see is <code>do_base</code> without any catch on it. The <code>do_base</code> function can throw the <code>{ErrBase}</code> error set. So, the <code>do_something</code> function will inherit this possible error too, so it now has the possible error sets of <code>{ErrAssert, ErrBase, ...}</code>.
+When we continue reading through the <code>do_something</code> function we can also find the <code>throw ErrSpecial...</code> line. So, the <code>do_something</code> function also may throw the <code>ErrSpecail</code> error set, and we have reached the end of the function now. This means that the <code>do_something</code> function has the possible error set definition of <code>{ErrAssert, ErrBase, ErrSpecial}</code>. These are the three possible errors the function could throw. So, when we inline-switch the error of the function we switch on the error variable which is of type <code>variant&lt;anyerror, ErrAssert, ErrBase, ErrSpecial&gt;</code>.</p>
+<p>When inferring the error set types there is a general rule of thumb: Every <strong>non-catched</strong> call will directly add it's possible errors to the error set of the function, just like every <code>throw</code> statement will, of course. If you would catch an error the possible errors of that call will no longer be part of the error set type. Here is a example of that:</p>
+<pre><code class="language-rs">use Core.print
+use Core.assert
+
+error ErrBase:
+	Base1, Base2;
+
+error ErrSpecial(ErrBase):
+	Special1, Special2;
+
+def do_base(i32 x) {_}:
+	if x &gt; 7:
+		throw ErrBase.Base2;
+
+def do_something(i32 x) {_}:
+	assert(x &gt; 0);
+	for i32 i = 0; i &lt; x; i++:
+		do_base(i) catch err:
+			print("doing nothing\n");
+		if i &gt; 10:
+			throw ErrSpecial.Special1;
+
+def main():
+	do_something(13) catch:
+		ErrAssert(e):
+			print("assertion error thrown\n");
+		ErrSpecial(e):
+			print("special error thrown\n");
+		anyerror(e):
+			print("anyerror thrown\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>doing nothing
+doing nothing
+doing nothing
+doing nothing
+special error thrown
+</code></pre>
+</blockquote>
+<p>As you can see, the <code>ErrBase</code> from the <code>do_base</code> function call is no longer part of the possible error sets of the <code>do_something</code> function. This feature of inferring the error set types is very powerful, but use it with caution. You should not add it to <em>every</em> function of your codebase and "call it a day". You will learn how to effectively use this feature in later chapters, especially when we take a closer look at Flint's Blueprint system later.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../intermediates_guide/1_optionals/8_list.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../intermediates_guide/3_error_sets/9_inlining.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../intermediates_guide/2_variants/1_introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -215,13 +278,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../intermediates_guide/1_optionals/8_list.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../intermediates_guide/3_error_sets/9_inlining.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../intermediates_guide/2_variants/1_introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>
@@ -234,13 +294,13 @@
         </script>
 
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Variants - The Flint Wiki</title>
+        <title>List Example - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -12,34 +12,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "../";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex.js";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -106,7 +106,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -141,7 +141,7 @@
                     <h1 class="menu-title">The Flint Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -175,37 +175,53 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="variants"><a class="header" href="#variants">Variants</a></h1>
-<p>Welcome to the second chapter of the intermediates guide. In this chapter we look at the variant type and what you can do with it. The <code>variant</code> type is used to define a type that could be <strong>one of</strong> a given collection of other types. Where optionalls allowed us to define <strong>emptiness</strong>, the <code>variant</code> type allows us to define <em>variation</em> in types.</p>
-<h2 id="what-are-variants"><a class="header" href="#what-are-variants">What are Variants?</a></h2>
-<p>A variant is, once again, essentially just a struct under the hood. It is composed of a 1 Byte flag value to determine which type it holds followed by the actual type of the variant. This "type" as the second value is just <strong>N</strong> bytes of storage, where <code>N</code> is the number of bytes needed to store the <strong>biggest</strong> of all possible types.</p>
-<h2 id="why-are-variants-important"><a class="header" href="#why-are-variants-important">Why are Variants Important?</a></h2>
-<p>Variants are an essential part of Flint because they allow you to:</p>
-<ul>
-<li>Describe the possibility that a value might be one of a given kind</li>
-<li>Store multiple different "data" in a very small space, as the variant does not occupy space for <em>each</em> value it could be</li>
-</ul>
-<h2 id="what-to-expect"><a class="header" href="#what-to-expect">What to Expect</a></h2>
-<p>In this chapter, we will cover the following topics:</p>
-<ul>
-<li>Declaring and using variant types</li>
-<li>Tagging variants</li>
-<li>Variant Comparison</li>
-<li>Force-unwrapping a variant variable</li>
-<li>Switching on variant values</li>
-<li>Building optional chains through the variant extraction operator</li>
-<li>Making variants optional and how variants interact with optionals</li>
-</ul>
+                        <h1 id="list-example"><a class="header" href="#list-example">List Example</a></h1>
+<p>Now that we have optionals at our disposal and we know that optionals are references to actual values, we can build our first liked list in Flint! If you want to learn more about what a linked list actually is, i recommend you to look <a href="https://www.w3schools.com/dsa/dsa_theory_linkedlists.php">here</a>. Let's look at how a linked list looks in Flint:</p>
+<pre><code class="language-rs">use Core.print
+
+data IntList:
+	i32 value;
+	IntList? next;
+	IntList(value, next);
+
+def append(mut IntList list, i32 value):
+	if list.next == none:
+		list.next = IntList(value, none);
+	else:
+		append(list.next!, value);
+
+def print_list(IntList list):
+	print($"{list.value}");
+	if list.next != none:
+		print(" -&gt; ");
+		print_list(list.next!);
+	else:
+		print("\n");
+
+def main():
+	IntList list = IntList(10, none);
+	print_list(list);
+	append(list, 20);
+	print_list(list);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>10
+10 -&gt; 20
+</code></pre>
+</blockquote>
+<p>The program might seem intimidating at first, but let's unpack it bit by bit. First, we defined our <code>IntList</code> data type with a body representing it's value and an optional next element in the list. We have gone through the fact that optionals which hold complex data types actually hold references to data internally. So, we use the <code>IntList?</code> typed field for the next element in the linked list. We could put anything and any field inside our <code>IntList</code> definition. This also is the absolute most basic form of a linked list there is. When entities work eventually, we will learn quite a lot of more complex list examples.</p>
+<p>You can try around a bit. Write a <code>prepend</code> function, or write a function which prints the list in reverse order. Try around a bit in the list example. If you can fully create, understand and extend the list example you will get a feeling for optionals in Flint quicker than you might think.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../intermediates_guide/1_optionals/8_list.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../intermediates_guide/1_optionals/7_references.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../intermediates_guide/2_variants/1_introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../intermediates_guide/2_variants.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -215,11 +231,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../intermediates_guide/1_optionals/8_list.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../intermediates_guide/1_optionals/7_references.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../intermediates_guide/2_variants/1_introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../intermediates_guide/2_variants.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -234,13 +250,13 @@
         </script>
 
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 

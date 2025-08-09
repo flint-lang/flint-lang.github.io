@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Variants - The Flint Wiki</title>
+        <title>Unwrapping Variants - The Flint Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -12,34 +12,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "../";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex.js";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -106,7 +106,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -141,7 +141,7 @@
                     <h1 class="menu-title">The Flint Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -175,37 +175,42 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="variants"><a class="header" href="#variants">Variants</a></h1>
-<p>Welcome to the second chapter of the intermediates guide. In this chapter we look at the variant type and what you can do with it. The <code>variant</code> type is used to define a type that could be <strong>one of</strong> a given collection of other types. Where optionalls allowed us to define <strong>emptiness</strong>, the <code>variant</code> type allows us to define <em>variation</em> in types.</p>
-<h2 id="what-are-variants"><a class="header" href="#what-are-variants">What are Variants?</a></h2>
-<p>A variant is, once again, essentially just a struct under the hood. It is composed of a 1 Byte flag value to determine which type it holds followed by the actual type of the variant. This "type" as the second value is just <strong>N</strong> bytes of storage, where <code>N</code> is the number of bytes needed to store the <strong>biggest</strong> of all possible types.</p>
-<h2 id="why-are-variants-important"><a class="header" href="#why-are-variants-important">Why are Variants Important?</a></h2>
-<p>Variants are an essential part of Flint because they allow you to:</p>
-<ul>
-<li>Describe the possibility that a value might be one of a given kind</li>
-<li>Store multiple different "data" in a very small space, as the variant does not occupy space for <em>each</em> value it could be</li>
-</ul>
-<h2 id="what-to-expect"><a class="header" href="#what-to-expect">What to Expect</a></h2>
-<p>In this chapter, we will cover the following topics:</p>
-<ul>
-<li>Declaring and using variant types</li>
-<li>Tagging variants</li>
-<li>Variant Comparison</li>
-<li>Force-unwrapping a variant variable</li>
-<li>Switching on variant values</li>
-<li>Building optional chains through the variant extraction operator</li>
-<li>Making variants optional and how variants interact with optionals</li>
-</ul>
+                        <h1 id="unwrapping-variants"><a class="header" href="#unwrapping-variants">Unwrapping Variants</a></h1>
+<p>Okay now let's move on to variant unwrapping. In the last chapter you have learned how to check if a variant holds a given type and much more about comparing variants. But, in those if branches, when we <em>know</em> the variant holds the given type we actually want to get that value from the variant somehow. If you think back about optionals we had the <code>!</code> operator for forceful unwrapping and the <code>?</code> operator for optional chaining. For variants, this actually is quite similar. To unwrap a variant we use the <code>!(T)</code> syntax. In between the parenthesis we write which type we want to force-unwrap from the variant. Similar to how the force-unwrap operator <code>!</code> worked for optionals, this will print a small error message and crash the program if the variant does not hold the requested type.
+Let's actually look at a modified version of one of the last chapter's examples:</p>
+<pre><code class="language-rs">use Core.print
+
+variant MyVar:
+	i32, f32, bool;
+
+def main():
+	MyVar var = 3.14;
+
+	if var == i32:
+		print($"holds i32 value: {var!(i32)}\n");
+	else if var == f32:
+		print($"holds f32 value: {var!(f32)}\n");
+	else if var == bool:
+		print($"holds bool value: {var!(bool)}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>holds f32 value: 3.14
+</code></pre>
+</blockquote>
+<p>It actually is semantically quite similar to the force-unwrap operator for optionals, and this is intended. Whenever you see the <code>!</code> symbol you should know that <em>"Okay the programmer asserted that this will always have a value (of that type)."</em>. This forms confidence over time. The more you see the same symbols used in the same context and same semantics the more you familiarize with them, just like how the <code>_</code> default expression works.</p>
+<p>The above example is not really useful, though, as in this case the switch statement would be a much better fit. But the variant unwrapping operator is a very powerful tool for handling variants.</p>
+<p>Also, we can of course provide a tag instead of the type <code>T</code> for variant unwrapping too, as always. So, if <code>i32</code> had a tag <code>Int</code> we must write <code>var!(MyVar.Int)</code> as usual, but that should be clear by now.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../intermediates_guide/1_optionals/8_list.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../intermediates_guide/2_variants/5_comparison.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../intermediates_guide/2_variants/1_introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../intermediates_guide/2_variants/7_extraction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -215,11 +220,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../intermediates_guide/1_optionals/8_list.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../intermediates_guide/2_variants/5_comparison.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../intermediates_guide/2_variants/1_introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../intermediates_guide/2_variants/7_extraction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -234,13 +239,13 @@
         </script>
 
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 

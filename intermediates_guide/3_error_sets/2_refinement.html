@@ -176,7 +176,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="error-set-refinement"><a class="header" href="#error-set-refinement">Error Set Refinement</a></h1>
-<p>Error set refinement, what a beautiful name for a very simple concept. You have learnt in the last chapter how to create a new error set type using the <code>error</code> keyword. Now you will learn another important concept of how Flint's errors work under the hood. A set is a collection of values, both in set theory in mathematics and in Flint that's also true. So, the error set from the last chapter, <code>error ErrorSet: Value1, Value2;</code> contains exactly two values: <code>Value1</code> and <code>Value2</code>.
+<p>Error set refinement, what a beautiful name for a very simple concept. You have learned in the last chapter how to create a new error set type using the <code>error</code> keyword. Now you will learn another important concept of how Flint's errors work under the hood. A set is a collection of values, both in set theory in mathematics and in Flint that's also true. So, the error set from the last chapter, <code>error ErrorSet: Value1, Value2;</code> contains exactly two values: <code>Value1</code> and <code>Value2</code>.
 We can define set-relationships in Flint. One Error set could "extend" a base error set, and becomes a more specialized error by doing so. Here is a small example of that:</p>
 <pre><code class="language-rs">error ErrBase:
 	B1, B2;
@@ -187,14 +187,23 @@ error ErrSpecial(ErrBase):
 def main():
 	throw ErrSpecial.B1;
 </code></pre>
-<p>This program will print this line to the console:</p>
+<p>This program will print these lines to the console:</p>
 <blockquote>
-<pre><code>ERROR: Program exited with exit code '803109534'
+<pre><code>ERROR: main function returned error
+ - type_id: 803109534
+ - value_id: 0
+ - message: ""
 </code></pre>
 </blockquote>
 <div class="warning">
-<p>This error message will change in the future, currently it just prints the type id</p>
-<p>In the future the message should look more like <code>ERROR: Program exited due to thrown error: ErrSpecial.B1</code> but it will take more time and developement effort until this message can actually be printed.</p>
+<p>This error message will change in the future</p>
+<p>In the future the message should look more like</p>
+<blockquote>
+<pre><code>ERROR: main function returned error
+ - ErrSpecial.B1: ""
+</code></pre>
+</blockquote>
+<p>but it will take more time and developement effort until this message can actually be printed. It will take a while until we can print the error set names and values because we first need a way to create hash-tables to map the type ids to the type names. So, this will be implemented <em>eventually</em>.</p>
 </div>
 <p>The error set <code>ErrSpecial</code> is an extension of the error set <code>ErrBase</code>, thus contains all values of it's base set. The error set <code>ErrBase</code> contains the values <code>[B1, B2]</code> and the error set <code>ErrSpecial</code> contains the values <code>[B1, B2, S1, S2]</code>. This is a very important concept in Flint. The more "special" an erro becomes the <strong>bigger</strong> does it's set become. This might seem counter-intuitive but when looked at it from the mathematical standpoint this is just how it works.</p>
 <h2 id="the-null-set"><a class="header" href="#the-null-set">The null-set</a></h2>
