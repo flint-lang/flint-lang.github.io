@@ -166,3 +166,32 @@ This program will print these lines to the console:
 > container.(a, b, c) = (-71, 164.37999, 6222)
 > container.(a, b, c) = (-11, 23.823187, 1037)
 > ```
+
+## Casting Enums to Strings
+
+You can effortlessly cast any enum value to a string. The string value then will directly be the enum tag. It's really quite simple. Here is an example of it:
+
+```rs
+use Core.print
+
+enum MyEnum:
+	VAL1, VAL2, VAL3;
+
+def main():
+	MyEnum e = MyEnum.VAL1;
+	print($"e = {e}, id = {i32(e)}\n");
+	e = MyEnum.VAL2;
+	print($"e = {e}, id = {i32(e)}\n");
+	e = MyEnum.VAL3;
+	print($"e = {e}, id = {i32(e)}\n");
+```
+
+This program will print these lines to the console:
+
+> ```
+> e = VAL1, id = 0
+> e = VAL2, id = 1
+> e = VAL3, id = 2
+> ```
+
+As you can see, casting enums to strings works quite effortlessly in Flint, just like casting them to integers.

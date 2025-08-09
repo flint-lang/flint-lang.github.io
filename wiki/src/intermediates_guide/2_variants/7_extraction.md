@@ -38,6 +38,14 @@ This program will print these lines to the console:
 
 As you can see, the variant extraction operator `?(T)` has quite a few similarities to the optional chaining operator `?`, so much that it can be used within optional chains too. Let's look at the more complicated example now:
 
+<div class="warning">
+
+This example does not work yet
+
+Flint does not yet support stacking variant extractions with optional chains. It will be supported eventually, but the compiler is currently unable to compile the program below.
+
+</div>
+
 ```rs
 use Core.print
 use Core.assert
