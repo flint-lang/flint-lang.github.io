@@ -170,7 +170,18 @@ def main():
     print($"tuple.($0, $1, $2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
 ```
 
-will produce a compile error telling you to use a group of type `(i32, f32, str)` instead as the return type of the function. Because you can do this:
+will produce this compile error telling you to use a group of type `(i32, f32, str)` instead as the return type of the function.
+
+> ```
+> Parse Error at test_files/test_minimal.ft:3:39
+> └─┬┤E0000│
+> 3 │ def get_tuple(i32 a, f32 b, str c) -> data<i32, f32, str>:
+> ┌─┴───────────────────────────────────────┘
+> ├─ Functions cannot return a tuple type directly.
+> └─ If you want to return multiple values, change the return type to '(i32, f32, str)'
+> ```
+
+So, instead of trying to return a tuple, you need to return a group instead:
 
 ```rs
 use Core.print
