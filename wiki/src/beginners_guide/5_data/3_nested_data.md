@@ -83,9 +83,9 @@ This program will print these lines to the console:
 
 <div class="warning">
 
-The below example actually compiles, but its impossible to run.
+The below example actually compiles, but its impossible to run usefully.
 
-Data is actually allowed to contain itself, but its impossible to initialize, as Flint has noo concept of **nullpointers** or **null** like other languages have. Flint has its optionals `T?` instead, but they are not implemented yet. Its amusing how the below example actually compiles fine.
+Data is actually allowed to contain itself, but its impossible to initialize, as Flint has noo concept of **nullpointers** or **null** like other languages have. Flint has its optionals `T?` instead, but you will learn about them in a much later chapter. For now, just be aware that it *is* possible to create circular data, but you cannot initialize it.
 
 </div>
 
@@ -96,6 +96,9 @@ data Node:
     i32 value;
     Node next;
     Node(value, next);
+
+def main():
+    return;
 ```
 
 While this may seem restrictive, it is pretty easy explained why this does not work: If you try to initialize a new variable of type `Node` you need to provide both its fields for the initializer. The `value` is fine, you can just pass in a literal, but what about the second field, `next`? To create a new variable of type `Node` you need an already existent variable of the same type to pass into, and thats impossible.

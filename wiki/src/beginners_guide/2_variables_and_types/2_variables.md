@@ -33,8 +33,12 @@ def main():
 You can try to compile this program yourself and see what you get. But to make things a bit easier i show you. You will get this error:
 
 > ```
-> Parse Error at main.ft:3:9
->  -- Variable 'x' already exists
+> Parse Error at test_files/test_minimal.ft:3:9
+> └─┬┤E0000│
+> 1 │ def main():
+> 3 │ »   i32 x = 8;
+> ┌─┴─────────┘
+> └─ Variable 'x' already exists
 > ```
 
 As you can see, Flint only allows one single variable with the identifier `x` to exist within the main function, even if its type differs:

@@ -58,7 +58,11 @@ If yout try to compile this program you will see a compilation error:
 
 > ```
 > Parse Error at main.ft:10:26
->  -- Use of undeclared variable 'somevalue'
+> └──┬┤E0000│
+> 3  │ def main():
+> 10 │ »   print($"somevalue = {somevalue}\n");
+> ┌──┴──────────────────────────┘
+> └─ Use of undeclared variable 'somevalue'
 > ```
 
 But why is that? We did define the variable `somevalue` in the if statement's scope, right? Yes, we defined the variable in the if statement's scope, but here comes one of the mentioned rules of scopes into play: Visibility.

@@ -49,7 +49,11 @@ If you try to compile this program you will actually get a compile error:
 
 > ```
 > Parse Error at main.ft:9:5
->  -- Variable 'p' is marked as 'const' and cannot be modified!
+> └─┬┤E0000│
+> 8 │ def increment_by(Point p, i32 value):
+> 9 │ »   p.(x, y) += (value, value);
+> ┌─┴─────┘
+> └─ Variable 'p' is marked as 'const' and cannot be modified!
 > ```
 
 But why is that? For this to explain we actually need to talk about **mutability** for a bit. Mutability is the ability to mutate (change) variables. Up until now this has not been a problem yet, because Flint actually has clear mutability rules:
@@ -107,7 +111,11 @@ will not compile again. Because now we have declared `p` to be immutable, but we
 
 > ```
 > Parse Error at main.ft:13:18
->  -- Variable 'p' is marked as 'const' and cannot be modified!
+> └──┬┤E0000│
+> 11 │ def main():
+> 13 │ »   increment_by(p, 3);
+> ┌──┴──────────────────┘
+> └─ Variable 'p' is marked as 'const' and cannot be modified!
 > ```
 
 ## Returning Data from Functions

@@ -68,22 +68,20 @@ As you can clearly see, we access the elements of the tuple with the `.$N` synta
 ```rs
 def main():
     data<i32, f32, str> tuple = (3, 2.2, "hello!");
-    i32 = tuple.$3;
+    i32 x = tuple.$3;
 ```
 
-<div class="warning">
+This program will produce this compile error:
 
-The error message for this error has not been added yet.
-
-Currently the error is:
 > ```
-> Parse Error at main.ft:3:5
-> -- Failed to parse statement: i32 = tuple . $ 3;
+> Parse Error at main.ft:3:19
+> └─┬┤E0000│
+> 1 │ def main():
+> 3 │ »   i32 x = tuple.$3;
+> ┌─┴───────────────────┘
+> ├─ Out of bounds access on tuple type 'data<i32, f32, str>'
+> └─ The tuples last element is '$2'
 > ```
-
-Which is just a generic message stating something went wrong with the statement, but not stating that the `$3` is the wrong part, as it's larger than the size of the tuple.
-
-</div>
 
 ## Tuple Assignment
 

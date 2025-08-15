@@ -60,25 +60,15 @@ This program will print this error to the console:
 
 > ```
 > Parse Error at main.ft:12:8
->  -- Type mismatch of expression e1 == Enum2.TAG1
->  -- Expected Enum1 but got Enum2
+> └──┬┤E0000│
+> 9  │ def main():
+> 12 │ »   if e1 == Enum2.TAG1:
+> ┌──┴────────┘
+> ├─ Type mismatch in binary expression. Cannot apply operation == on types:
+> │   ├─ LHS type: Enum1
+> │   └─ RHS type: Enum2
+> └─ Have you considered using explicit casting of types?
 > ```
-
-<div class="warning">
-
-The error message differs in the current version of the compiler.
-
-The above error message is the message that _should_ be displayed. But in its current form the compiler will produce this error message instead:
-
-> ```
-> Parse Error at main.ft:1:1
->  -- Type mismatch of expression EOF
->  -- Expected Enum1 but got Enum2
-> ```
-
-There is no information contained _where_ the mismatch happened or _what_ the expression the error happened in was. This will be fixed eventually, but requires some changes in unrelated areas of the compiler, so it might take a while for it to be fixed.
-
-</div>
 
 ## Enums with functions
 

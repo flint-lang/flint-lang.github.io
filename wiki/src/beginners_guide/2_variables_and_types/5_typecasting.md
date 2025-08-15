@@ -12,9 +12,14 @@ def main():
 The compiler will throw an error like:
 
 > ```
-> Parse Error at main.ft:2:15
->  -- Type mismatch of expression 3.3;
->  -- Expected i32 but got f32
+> Parse Error at test_files/test_minimal.ft:2:15
+> └─┬┤E0000│
+> 1 │ def main():
+> 2 │ »   i32 val = 3.3;
+> ┌─┴───────────────┘
+> └─ Type mismatch of expression
+>     ├─ Expected: i32
+>     └─ But got:  f32
 > ```
 
 and it will tell you exactly what went wrong. The type of `i32` was expected, beause we want to store something of type `i32` in the variable `val`, but we provided a floating point number, which defaults to `f32`. So, we need to convert the type of `f32` to `i32` in this case.
