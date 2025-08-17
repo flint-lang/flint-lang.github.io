@@ -2,9 +2,11 @@
 
 What are groups? Groups are a new concept of Flint which allow us to do operations on multiple variables at the same time. You will see the potential and the integration of groups into other systems of Flint in later chapters, but even now groups are very powerful.
 
-You have already seen groups in action when returning multiple values from a function, but that was just the beginning. Lets kick things off with a very simple example: variable swaps.
+You have already seen groups in action when returning multiple values from a function, but that was just the beginning.
 
-Lets define a simple small program which prints the values of two `i32` variables:
+## Variable Swaps
+
+Lets kick things off with a very simple example: variable swaps. For that we define a simple small program which prints the values of two `i32` variables:
 
 ```ft
 use Core.print
@@ -67,9 +69,11 @@ This program will print these lines to the console:
 > x = 5, y = 1
 > ```
 
-Okay, lets unpack what this group even says. We know that the right hand side of any assignment is always executed before assigning the value. So, we create a group and load the values of `y` and `x` into it. Note that a group does not create any temporary values or "store" the values anywhere. When we load `y` and `x` in the group `(y, x)` these values exist only in the cache of the CPU, they are not really stored annywhere else.
+Lets unpack what this group even says. We know that the right hand side of any assignment is always executed before assigning the value. So, we create a group and load the values of `y` and `x` into it. Note that a group does not create any temporary values or "store" the values anywhere. When we load `y` and `x` in the group `(y, x)` these values exist only in the cache of the CPU, they are not really stored annywhere else.
 
 So then, when we assign `(y, x)` which holds the values `(5, 1)` to the group of `(x, y)` this is called a **grouped assignment** as we assign multiple values of multiple variables at the same time. So, we store the values of `(5, 1)` on the group `(x, y)` which means that we store `5` in `x` and `1` in `y`, swapping the values of the variables.
+
+## Swapping Multiple Variables
 
 It is very important to note that groups have **no** runtime footprint, they exist in order for us to be able to "tell" the compiler that we want stuff to happen at the same time. But groups are not limited to only 2 values, we can have as many values in a group as we would like. Here an example:
 

@@ -57,6 +57,7 @@
     - [Using Data in Functions](./beginners_guide/5_data/4_using_data_in_functions.md)
     - [Tuples](./beginners_guide/5_data/5_tuples.md)
     - [Multi-Types](./beginners_guide/5_data/6_multi_types.md)
+    - [Groups 2](./beginners_guide/5_data/7_groups_2.md)
 
   - [Arrays & Ranges](./beginners_guide/6_arrays.md)
 
