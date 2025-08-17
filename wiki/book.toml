@@ -7,7 +7,22 @@ title = "The Flint Wiki"
 
 [preprocessor.toc]
 collapsible = true
-#command = "mdbook-toc"
-#renderer = ["html"]
+command = "mdbook-toc"
+renderer = ["html"]
 
 [preprocessor.katex]
+
+[output.html.fold]
+enable = true
+level = 0
+
+[output.html]
+additional-css = ["theme/flint.css", "theme/flint-highlight.css", "version_select.css"]
+additional-js = ["version_select.js"]
+default-theme = "flint"
+preferred-dark-theme = "flint"
+theme = "theme"
+
+# [output.html.theme]
+# Make your theme selectable
+# themes = ["light", "rust", "coal", "navy", "ayu", "flint"]

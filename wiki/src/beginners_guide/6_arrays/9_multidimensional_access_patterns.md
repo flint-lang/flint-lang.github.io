@@ -5,15 +5,20 @@ Flint allows using ranges in **multidimensional arrays**, letting you extract sl
 ## Examples:
 
 1. **Extracting a Row**:
-```rs
+
+```ft
 int[] row = arr[2, ..]; // All elements in row 2
 ```
+
 2. **Extracting a Column**:
-```rs
+
+```ft
 int[] column = arr[.., 3]; // All elements in column 3
 ```
+
 3. **Extracting a Plane**:
-```rs
+
+```ft
 int[,] plane = cube[.., 2, ..]; // A 2D plane from a 3D array
 // This returns a 2d array of all x and z values on index 2
 ```
@@ -22,13 +27,14 @@ int[,] plane = cube[.., 2, ..]; // A 2D plane from a 3D array
 
 1. Fixing one dimension reduces the result by 1 dimension.
 2. Fixing all dimensions results in a **single value**:
-```rs
+
+```ft
 int value = cube[1, 2, 3]; // Single value at [1, 2, 3]
 ```
 
 ## Practical Example: Transposing a Matrix
 
-```rs
+```ft
 // Transposing using range accessing
 def transpose(int[,] matrix) -> int[,]:
     new_matrix := int[matrix[0, ..].length, matrix.length];
@@ -55,7 +61,7 @@ The slicing operation is not only cleaner for arrays, but it is more performant 
 
 Using ranges and slices in loops is incredibly powerful:
 
-```rs
+```ft
 for i, elem in arr[2..4]:
     print($"Index: {i}, Value: {elem}");
 ```

@@ -4,7 +4,7 @@ Flint enforces **strict indentation rules** to ensure clean and readable code. A
 
 Lets look at it in action:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -14,7 +14,7 @@ print("This is not indented correctly.\n");
 When you run the above code, you’ll see an error message:
 
 > ```
-> Parse Error at test_files/test_minimal.ft:4:1
+> Parse Error at main.ft:4:1
 > └─┬┤E0000│
 > 4 │ print("This is not indented correctly.\n");
 > ┌─┴─┘
@@ -23,7 +23,7 @@ When you run the above code, you’ll see an error message:
 
 This happens because Flint expects all code inside main to be indented. Here’s the correct way to write it:
 
-```rs
+```ft
 use Core.print
 
 def main():

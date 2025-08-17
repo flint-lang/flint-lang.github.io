@@ -8,7 +8,7 @@ The number of commas between the brackets of the array type directly indicates t
 
 When declaring a multi-dimensional array we use the same syntax as for "normal" arrays, with the same default-value that gets put into all elements of the array as usual:
 
-```rs
+```ft
 def main():
     // 2D array
     i32[,] plane = i32[10, 10](0);
@@ -22,7 +22,7 @@ Here, we defined the `plane` array to be of size `10 × 10`, which means there c
 
 To access and assign elements at a given index we need to specify the index of each dimensionality explicitely. For our plane, this would mean that we need to specify the "row" and the "column" of the plane, or the "x" and the "y" coordinates (if the plane is seen as a coordinate plane).
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -44,7 +44,7 @@ In the last chapter we talked about how we can access the length of strings and 
 
 Instead, when accessing the `.length` field of an array we _actually_ get a group of size `N`, where `N` is the dimensionality of the array. So, if we access the `.length` field of an one-dimensional array we get a group of size 1, so we get one `u64` value. If we access the `.length` field on the `plane` array we will get a `(u64, u64)` group as a return, and if we access the length of a 3D array like our `cube` we will get a `(u64, u64, u64)` group as the lengths value, one value for each dimension:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -91,7 +91,7 @@ Note that the numbers that have been chosen do not matter at all, they are just 
 
 You see, when we iterate over an array we can choose between those two methods:
 
-```rs
+```ft
 use Core.print
 
 def main():

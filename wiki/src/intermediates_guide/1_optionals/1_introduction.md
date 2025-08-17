@@ -1,19 +1,19 @@
 # Introduction
 
-In Flint, we need to explicitely define which values possibly have no value. There is no implicit nullability like in other languages, nullability is very explicit in Flint, and that's a good thing. This means that we do not check everywhere if our object maybe is null, because when it's not an optional type it is **required** to be initialized, as there *is no uninitialized state in Flint*.
+In Flint, we need to explicitely define which values possibly have no value. There is no implicit nullability like in other languages, nullability is very explicit in Flint, and that's a good thing. This means that we do not check everywhere if our object maybe is null, because when it's not an optional type it is **required** to be initialized, as there _is no uninitialized state in Flint_.
 
 We do this through the optional type. Optional values can either have a value or they can be "empty". This "empty" state is achieved through the `none` literal. If an optional variable is set to `none` it effectively has no longer any value stored on it. But let's look at optionals in an example, they are best understood through examples:
 
-```rs
+```ft
 def main():
     i32? maybe = none;
 ```
 
 This program will not print anything to the console, but we can see quite some things already. As you can see, an optional type is defined directly inline by just slapping a question mark at the end of the type. This makes the whole type optional, which means it now can be "nothing". You can see this through us assigning `none` to the `maybe` variable.
 
-Let's discuss what actually happens here under the hood within the compiler and within Flint itself. You already know what a `struct` is in other languages, and in Flint thats either an anonymous tuple or `data`. So, an optional is essentially nothing else than a small struct containing of a `bool` value together with the *actual* value of the optional. In the case of our optional, this means that `maybe` is essentially the same as if we would write:
+Let's discuss what actually happens here under the hood within the compiler and within Flint itself. You already know what a `struct` is in other languages, and in Flint thats either an anonymous tuple or `data`. So, an optional is essentially nothing else than a small struct containing of a `bool` value together with the _actual_ value of the optional. In the case of our optional, this means that `maybe` is essentially the same as if we would write:
 
-```rs
+```ft
 def main():
     data<bool, i32> maybe = (false, 0);
 ```

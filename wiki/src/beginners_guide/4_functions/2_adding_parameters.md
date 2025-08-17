@@ -2,7 +2,7 @@
 
 Parameters are "variables" of functions which you can change when calling the function, enabling the function to operate on different data, making them far more versatile and useful. Lets start with an example where we add a single parameter to a function:
 
-```rs
+```ft
 use Core.print
 
 def greet(str name):
@@ -24,7 +24,7 @@ Its a pretty simple example, but you can clearly see that we insert the paramter
 
 Functions can have multiple parameters. To declare multiple parameters, we separate them by commas, like this:
 
-```rs
+```ft
 use Core.print
 
 def add_two_numbers(i32 a, i32 b):

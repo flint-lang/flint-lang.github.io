@@ -4,7 +4,7 @@ To define a new `data` module in Flint, we use the `data` keyword. A `data` modu
 
 ## Basic Syntax:
 
-```rs
+```ft
 data Vector2:
     i32 x;
     i32 y;
@@ -15,7 +15,7 @@ As you can see, we start with the `data` keyword, followed with the name of our 
 
 The important thing to note is that we now have a new type at our disposal: `Vector2`. Defining data modules creates new types, so you now can create variables of type `Vector2`, just like we did before with `i32`. Here is a small example:
 
-```rs
+```ft
 data Vector2:
     i32 x;
     i32 y;
@@ -31,7 +31,7 @@ As you can see, the variable `v2` now is of type `Vector2` and we create it by c
 
 When we want to access a field of our data variable, for example the `x` field of our `v2` varaible we need to do so through a **field access**. There exists a symbol for this very use case: The `.` (dot). It's best if you just look at the example for yourself:
 
-```rs
+```ft
 use Core.print
 
 data Vector2:
@@ -56,7 +56,7 @@ As you can see, the variable of type `Vector2` now contains two fields of type `
 
 In the next example we will store a new value only on the `x` field of data:
 
-```rs
+```ft
 use Core.print
 
 data Vector2:
@@ -84,7 +84,7 @@ As you can see, we can only modify a single field of data without touching the o
 
 You already know what a group is, but groups can also be extremely powerful for data manipulation. Grouped field accesses are a new concept of Flint, together with groups. The idea is simple: Access and modify multiple fields of data at the same time. Here is a small example showcasing it:
 
-```rs
+```ft
 use Core.print
 
 data Vector3:
@@ -111,7 +111,7 @@ The syntax is pretty easy, actually. First, we say the variable we want to acces
 
 Just like we can access mutliple fields of data at once, we can also assign multiple values of it at the same time. Here is an example of that:
 
-```rs
+```ft
 use Core.print
 
 data Vector3:
@@ -138,7 +138,7 @@ As you can see, we did the same thing as we did for variable swaps, but now on d
 
 But swaps are not all we can do, we can for example calculate multiple values at once, for example incrementing all fields of the vector `v3` by one:
 
-```rs
+```ft
 use Core.print
 
 data Vector3:

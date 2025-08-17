@@ -2,7 +2,7 @@
 
 Multi-Types are essentially vectorized variants of _some_ primitive types to increase both readability, performance (SIMD) and ease of use for vectorized math operations and much more. Here is an example of how multi-types work:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -45,7 +45,7 @@ All multi-types with less than width 4 can be accessed via the field names direc
 
 But let's move on to functions, because multi-types can be returned from functions too, unlike tuples. So, we can very well define a function like this:
 
-```rs
+```ft
 use Core.print
 
 def get_vec_2(i32 x, i32 y) -> i32x2:
@@ -68,7 +68,7 @@ As you can see, interoperability between mutli-types and groups _just works_. **
 
 Multi-types are **primitive types** in Flint, which means that they have first-class arithmetic support. The mutli-type variant of any type supports the same arithmetic operations as its underlying type. Here is one example of this:
 
-```rs
+```ft
 use Core.print
 
 def main():

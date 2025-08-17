@@ -4,7 +4,7 @@ First of all, what is typecasting? We know what a `type` is, but what is `castin
 
 As you can see, just storing the bits of one number into the bits of another number is not enough. This is the reason to why we need to convert, or **cast** types. Try to compile this program and see what the compiler tells you:
 
-```rs
+```ft
 def main():
     i32 val = 3.3;
 ```
@@ -12,7 +12,7 @@ def main():
 The compiler will throw an error like:
 
 > ```
-> Parse Error at test_files/test_minimal.ft:2:15
+> Parse Error at main.ft:2:15
 > └─┬┤E0000│
 > 1 │ def main():
 > 2 │ »   i32 val = 3.3;
@@ -28,7 +28,7 @@ and it will tell you exactly what went wrong. The type of `i32` was expected, be
 
 Types can be explicitely cast like this:
 
-```rs
+```ft
 def main():
     i32 val = i32(3.3);
 ```
@@ -37,7 +37,7 @@ We just write the type we want to have like `i32` in this case followed by an op
 
 Also, every type can be cast to an `str` type! Try to run this program and see what happens:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -58,7 +58,7 @@ printed to the console.
 
 Okay, and now a bit more complicated example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -90,7 +90,7 @@ but here comes some very important information about type casting: When casting 
 
 Everything we have discussed up until now was regarding the act of **explicitely casting** values. But, some values can be cast **implicitely** by the compiler. There exists one rule of thumb in Flint: You can cast types implicitely if you _won't_ loose any information through that cast. So, you can happily implicitely cast `i32` to `f32` but you _cannot_ implicitely cast `f32` to `i32`. Also, pretty much _any_ type can be implicitely cast to a `str` type too! Here's how this looks in action:
 
-```rs
+```ft
 use Core.print
 
 def main():

@@ -10,7 +10,7 @@ Let's start with naming and with how Flint names it's errors internally. All Err
 
 With great power comes great responsibility. With the power of extending error sets also come unique challenges not found in other languages. Here is an example of a 4-deep error set extension chain:
 
-```rs
+```ft
 error ErrBase:
 	Critical, Abortion;
 
@@ -64,10 +64,10 @@ def parse_file() {ErrParsing}:
 
 def main():
 	parse_file() catch err:
-		// Now we can handle the parsing and check for all potential 
+		// Now we can handle the parsing and check for all potential
 		// general parsing errors.
 ```
 
-This is what I would consider a true "separation of concerns". Through the error set extension system we not only are able to specialize our errors but also keep the actual handling of those errors to higher levels while only focusing on the lower levels for the specialized sets. This is still a quite simple example. Just imagine having a dozen error set types where the most special error would have a hundred possible values it could be. Imagine writing a 100-branch switch in the specialized function, a 80 branch switch in the one above etc. That would be insane... this is why I would consider it best practice to keep only handling the "added" special errors in the error set at the deepest level, and just re-throwing the error as the more general value if it is not any of the specialized ones, because in that case it is *guaranteed* to be a value from the base sets instead.
+This is what I would consider a true "separation of concerns". Through the error set extension system we not only are able to specialize our errors but also keep the actual handling of those errors to higher levels while only focusing on the lower levels for the specialized sets. This is still a quite simple example. Just imagine having a dozen error set types where the most special error would have a hundred possible values it could be. Imagine writing a 100-branch switch in the specialized function, a 80 branch switch in the one above etc. That would be insane... this is why I would consider it best practice to keep only handling the "added" special errors in the error set at the deepest level, and just re-throwing the error as the more general value if it is not any of the specialized ones, because in that case it is _guaranteed_ to be a value from the base sets instead.
 
 There does not exist a way to make this all safe, though. Because if you would now add a new error to the error set `ErrExpression` for example you would not get a compiler error that you have not checked for that value in the switch, and the branch where you try to cast the error value to the base set type would be executed. As "workaroun" (or actual solution, we will see), casting a specialized error to it's base error while that specialized value holds an actual value greater than it's base type's capacity will crash the program loud and clear. We know at compile-time how big the set `ErrStatement` is, for example. It's exactly `8` values big currently. So, if we would try to cast a value with a `value_id >= 8` to that type it would just crash. It will be just a simple condition under the hood, but this condition prevents errors bubbling up to the main level (which would crash the program annyway most of times).

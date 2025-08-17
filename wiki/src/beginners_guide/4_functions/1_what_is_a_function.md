@@ -4,7 +4,7 @@ A function is a reusable block of code designed to perform a specific task. We h
 
 Okay, lets start very simple first. We define a function with the `def` keyword (define). Following by the `def` keyword we put the name of the function and parenthesis `()`. Note that the names `main`, `_main` and all names starting with `__flint_` are disallowed by the compiler. Without these few exceptions, you can name your functions how you like.
 
-```rs
+```ft
 use Core.print
 
 def say_hello():
@@ -22,7 +22,7 @@ This program will print this line to the console:
 
 There is a **_very_** important note to make here. The ordering of definition does not matter in Flint. So, you can define a function like `say_hello` _after_ the `main` function and still be able to use it within the main function:
 
-```rs
+```ft
 use Core.print
 
 def main():

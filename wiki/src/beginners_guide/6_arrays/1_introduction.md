@@ -11,7 +11,7 @@ An **array** is a data structure that stores a collection of elements sequential
 
 To declare a one-dimensional array, we write brackets after the array type, for example `i32[]` for an array of `i32` values:
 
-```rs
+```ft
 def main():
     i32[] arr = i32[10](0);
 ```
@@ -22,7 +22,7 @@ This program does not print anything to the console, but we need to talk about i
 
 To access an element of an array we need to use a new syntax, different from when we accessed elements of the tuple via `.$N`. Now, for arrays, we need to access it using `[N]`, where `N` is the index we want to access. Here is a small example of that:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -39,7 +39,7 @@ This program will print this line to the console:
 
 Okay, the array is of size `10` and we start counting at `0`, so the last index we are allowed to access is `9`...what happens if we access index `10`? In most languages this would yield into a hard crash of the program, but in Flint we have extra safety-guards in place for out-of-bounds checks. But try it for yourself, try to compile and run this program:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -71,7 +71,7 @@ Try compiling the above code with the different array options set and see for yo
 
 To assign new values to elements of the array we use the same accessing-syntax as before:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -99,7 +99,7 @@ Currently, this feature does not yet work in the current version of the compiler
 
 Just like with tuples, mutli-types, data or basically any type in Flint, arrays have some form of interoperability with groups too. The syntax looks a bit different, though. Here is the same example as above, but using a grouped assignment:
 
-```rs
+```ft
 use Core.print
 
 def main():

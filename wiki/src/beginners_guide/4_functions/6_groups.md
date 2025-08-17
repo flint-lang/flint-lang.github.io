@@ -6,7 +6,7 @@ You have already seen groups in action when returning multiple values from a fun
 
 Lets define a simple small program which prints the values of two `i32` variables:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -23,7 +23,7 @@ This program will print this line to the console:
 
 Okay, now lets say that we want to swap the values of `x` and `y`. With most languages, better said with almost every language, you would need to create a temporary value to swap values:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -48,7 +48,7 @@ The temp variable exists because once we store the value of `y` into `x`, everyt
 
 Okay, but now do groups help us with that? Have a look at the same example, but this time utilizing groups:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -73,7 +73,7 @@ So then, when we assign `(y, x)` which holds the values `(5, 1)` to the group of
 
 It is very important to note that groups have **no** runtime footprint, they exist in order for us to be able to "tell" the compiler that we want stuff to happen at the same time. But groups are not limited to only 2 values, we can have as many values in a group as we would like. Here an example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -96,7 +96,7 @@ This program will print these lines to the console:
 
 So, we assigned `c` to `a`, `d` to `b`, `a` to `c` and `b` to `d`. Try around a bit, you can also assign all values to `a` in the same group:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -119,7 +119,7 @@ This program will print these lines to the console:
 
 Funny thing is, you can also assign to the same variable twice inside a single group, because the order of operation is strictly defined. So, you can write this without a problem:
 
-```rs
+```ft
 use Core.print
 
 def main():

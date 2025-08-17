@@ -2,7 +2,7 @@
 
 Imagine you want a function to calculate the area of a rectangle. It’s not enough to just print the result – you may need to use the value elsewhere in your program. This is where returning values is essential to any program. Here is a small and easy example of a function which returns a value:
 
-```rs
+```ft
 def get_greeting() -> str:
     return "Hello, Flint!\n";
 ```
@@ -11,7 +11,7 @@ As you can see, you need to declare a return type after the `->` symbol in the f
 
 So, here is the full example:
 
-```rs
+```ft
 use Core.print
 
 def get_greeting() -> str:
@@ -32,7 +32,7 @@ This program will print this line to the console:
 
 Now let’s combine function parameters with a return value:
 
-```rs
+```ft
 use Core.print
 
 def add_two_numbers(i32 a, i32 b) -> i32:

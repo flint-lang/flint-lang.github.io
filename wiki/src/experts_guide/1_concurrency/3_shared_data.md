@@ -8,7 +8,7 @@ Shared data is a special type of data module designed to be accessed by multiple
 
 ## Syntax:
 
-```rs
+```ft
 shared data SharedCounter:
     int value = 1;
 ```
@@ -22,12 +22,13 @@ Shared data houses mutex-checks by default, meaning that only a single thread ca
 ## Accessing Shared Data
 
 ## When to Use Shared Data
+
 - **Global State:** For variables that must be shared across multiple entities or functions.
 - **Coordination:** When threads need to communicate through shared variables.
 
 ## Example:
 
-```rs
+```ft
 shared data PlayerScore:
     int highscore = 0;
 

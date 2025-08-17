@@ -1,18 +1,20 @@
 # Circular Dependencies
 
-You may have asked yourself already *"What will happen if file `A` imports file `B` and file `B` imports file `A` again?"*. This is called a circular dependency. It's called circular, because the dependency graph forms a circle, where the "line of imports" ends up at its starting point. If you try to write import statements in C where every file imports another file you will get a compilation error, as circular dependencies are not allowed and cannot be resolved.
+You may have asked yourself already _"What will happen if file `A` imports file `B` and file `B` imports file `A` again?"_. This is called a circular dependency. It's called circular, because the dependency graph forms a circle, where the "line of imports" ends up at its starting point. If you try to write import statements in C where every file imports another file you will get a compilation error, as circular dependencies are not allowed and cannot be resolved.
 
 But Flint's `use` clausels work quite different from the `#import` from C-style languages. Whereas these literally just copy and paste the code from the other file, the `use` clausel in Flint is a lot...smarter. The `use` clausel only imports files at a depth of `1`, but what does this mean? Well, here is a small example to showcase what i mean with that:
 
 The `helper.ft` file:
-```rs
+
+```ft
 def substract_and_mult(i32 x, i32 y) -> i32:
     i32 diff = x - y;
     return diff * 2;
 ```
 
 The `utils.ft` file:
-```rs
+
+```ft
 use "helper.ft"
 
 def some_operation(i32 x, i32 y) -> i32:
@@ -21,7 +23,8 @@ def some_operation(i32 x, i32 y) -> i32:
 ```
 
 The `main.ft` file:
-```rs
+
+```ft
 use "utils.ft"
 use Core.print
 
@@ -36,12 +39,13 @@ When compiling this program, you will see this line printed to the console:
 > res = -55
 > ```
 
-In this example you can see how Flint has an importing depth of `1`, unlike many other languages. So, when you include `utils.ft` in the `main.ft` file you *only* gain access to the `some_operation` function, but *not* to the `substract_and_mult` function from the `helper.ft` file. There is no recursive resolution of imports happening, meaning that **every** import in Flint is "shallow". If you would need the `substract_and_mult` function within your `main.ft` file you would need to write an explicit `use "helper.ft"` clausel. This is absolutely intentional, because having *only* shallow inclusions we get something even better: ***circular inclusion support***.
+In this example you can see how Flint has an importing depth of `1`, unlike many other languages. So, when you include `utils.ft` in the `main.ft` file you _only_ gain access to the `some_operation` function, but _not_ to the `substract_and_mult` function from the `helper.ft` file. There is no recursive resolution of imports happening, meaning that **every** import in Flint is "shallow". If you would need the `substract_and_mult` function within your `main.ft` file you would need to write an explicit `use "helper.ft"` clausel. This is absolutely intentional, because having _only_ shallow inclusions we get something even better: **_circular inclusion support_**.
 
 Circular dependencies are **not** considered a fault in Flint, at all. Often times you want to separate code on meaning, but the single files still need access to one another. In C-style languages you would solve this with forward-declarations, header files etc. But in Flint you just include any file you like, and it simply does not matter if a circle emerges or not, the Flint compiler will handle it all! Here is an example showcasing circular dependencies with a recursive function:
 
 The `utils.ft` file:
-```rs
+
+```ft
 use "main.ft"
 use Core.print
 
@@ -54,7 +58,8 @@ def recursive_count_utils(i32 x):
 ```
 
 The `main.ft` file:
-```rs
+
+```ft
 use "utils.ft"
 use Core.print
 

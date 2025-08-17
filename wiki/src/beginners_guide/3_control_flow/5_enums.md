@@ -2,7 +2,7 @@
 
 What is an enum? An enum essentially is just a number under the hood, but one with very interesting properties. It can be thought of as a **tag** which can only have one of a selected number of tags. Here is an example:
 
-```rs
+```ft
 use Core.print
 
 enum MyEnum:
@@ -29,7 +29,7 @@ As you can see, defining our own `enum` is very simple. We write the `enum` keyw
 
 If you dont like the horizontal layout, you can also define an enum like so:
 
-```rs
+```ft
 enum MyEnum:
     TAG1, // Some description of TAG1
     TAG2, // Some description of TAG2
@@ -40,7 +40,7 @@ enum MyEnum:
 
 Enums are considered equal if their type _and_ their tag match. Here is an example of what this means:
 
-```rs
+```ft
 use Core.print
 
 enum Enum1:
@@ -74,7 +74,7 @@ This program will print this error to the console:
 
 Enums are considered to be non-complex data types in Flint, even though they are user-defined. So, we can easily pass in enums to a function and return them from it:
 
-```rs
+```ft
 use Core.print
 
 enum ComparisonResult:
@@ -108,7 +108,7 @@ This program will print this line to the console:
 
 The above program is very useless, though, as it would be much more efficient to remove the enum entirely and just use the comparisons directly. But these examples are not always meant to be absolutely useful, they are there to get a point across. So, we can not only return enums from a function but also pass them to a function. Lets dive into a bit bigger example now.
 
-```rs
+```ft
 use Core.print
 
 enum Operation:
@@ -161,7 +161,7 @@ This program will print these lines to the console:
 
 You can effortlessly cast any enum value to a string. The string value then will directly be the enum tag. It's really quite simple. Here is an example of it:
 
-```rs
+```ft
 use Core.print
 
 enum MyEnum:

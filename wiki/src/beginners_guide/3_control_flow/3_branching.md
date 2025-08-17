@@ -2,7 +2,7 @@
 
 Branching is the act of executing different "blocks" of code depending on conditions (booleans). But, before we can talk about branching we need to talk about what this _block_ really is. Take the main function, for example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -19,7 +19,7 @@ Scopes are a really important concept in programming, because there exist severa
 
 The if statement lets your program execute code only when a condition evaluates to true. Here's how it works:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -39,7 +39,7 @@ Try changing the `age` to `17` and watch what happens.
 
 If the condition evaluates to false, the program skips the block of code inside the `if` statement. We say that the `print` call here is **inside the if statement's scope**. But what does scope really mean? Have a look at this example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -69,7 +69,7 @@ But why is that? We did define the variable `somevalue` in the if statement's sc
 
 But what's visibility? Visibility describes the visibility of variables within scopes and their parent or child scopes. The if statement's scope, for example, is a `child scope` of the `main` function's scope. Because its a child scope it can "see" all variables of its parent scope. **But** it can only see variables that have been defined up until the child scope. To illustrate what this means, look at this example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -83,7 +83,7 @@ what i described above means nothing else than the simple fact that `val1` is **
 
 Parent scopes **do not** inherit **any** variable definitions of their child scopes. This program, for example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -103,7 +103,7 @@ This behaviour of visibility given down to children but never up to parents is t
 
 Now that you know scopes and visibility, the else statement should actually be pretty easy to understand. An else statement is used whenever you want to do something if another condition failed. It is explained best through an example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -127,7 +127,7 @@ Try changing the `age` variable to, lets say 20, and see what happens.
 
 Sometimes, you need multiple conditions. Instead of stacking multiple if statements, you can use else if to create a chain of conditions. The important thing to remember here is that **only one** of the branches will be executed, not multiple ones.
 
-```rs
+```ft
 use Core.print
 
 def main():

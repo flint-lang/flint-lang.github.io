@@ -2,7 +2,7 @@
 
 In Flint, the `bool` type represents truth values: `true` or `false`. Boolean values are fundamental in programming, as they enable decision-making and control flow. Boolean values are equal both in programming and in mathematics, they actually dont really differ. Here is a small example of how to declare a boolean variable and how to print its value to the console:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -21,7 +21,7 @@ This program prints this line to the console:
 
 You can check if a boolean type is equal to another boolean type. The result of the `==` and `!=` operators is _always_ a `bool` type, because either they are equal or not. So, if you look if two `i32` values are equal, the result of this check will be of type `bool`.
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -40,7 +40,7 @@ This program prints this line to the console:
 
 But now lets compare two boolean values with one another:
 
-```rs
+```ft
 use Core.print
 
 def main():

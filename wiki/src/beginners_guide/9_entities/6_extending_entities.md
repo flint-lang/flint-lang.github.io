@@ -4,7 +4,7 @@ The `extends` keyword allows you to create new entities that build upon existing
 
 ## Syntax Recap:
 
-```rs
+```ft
 entity Movement:
     data:
         int x_pos = 0;
@@ -41,6 +41,6 @@ def main():
 
 Entities are Flint’s way of organizing and structuring both data and behavior. From **monolithic entities** to modular data and func modules, extending entities, and linking behavior, Flint entities provide the **flexibility** and **power** needed for modern, scalable applications.
 
-Extending entities simplifies code reuse while keeping functionality **modular**. Together with the ability to link functions, a structure similar to "classic" OOP emerges, but the data is strictly separated, just like functions. Allthough links are very powerful, they can introduce headaches in concurrent environments. Use them with caution! As long as you use them in a **readonly** way (making a *dummy* function in the current func and linking it to the function in the *func* module which has access to the data, and only making it **read** the data, but never **write** it), you should see minimal to no problem with concurrency, which is talked about in the next chapter.
+Extending entities simplifies code reuse while keeping functionality **modular**. Together with the ability to link functions, a structure similar to "classic" OOP emerges, but the data is strictly separated, just like functions. Allthough links are very powerful, they can introduce headaches in concurrent environments. Use them with caution! As long as you use them in a **readonly** way (making a _dummy_ function in the current func and linking it to the function in the _func_ module which has access to the data, and only making it **read** the data, but never **write** it), you should see minimal to no problem with concurrency, which is talked about in the next chapter.
 
 Up next: **Concurrency**, where we explore Flint’s capabilities for high-performance, parallel computing!

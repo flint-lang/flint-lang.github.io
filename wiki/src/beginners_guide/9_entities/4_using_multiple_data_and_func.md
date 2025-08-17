@@ -4,7 +4,7 @@ Entities can incorporate multiple **data modules** and **func modules**, making 
 
 ## Example:
 
-```rs
+```ft
 data Position:
     int x;
     int y;
@@ -29,6 +29,7 @@ entity MovingObject:
 ```
 
 ## Key Points:
+
 1. **Combining Data:** Entities can hold multiple data modules, each serving a specific purpose.
 2. **Behavior Composition:** Multiple func modules can act on the same data or different data modules within the entity.
 

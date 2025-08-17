@@ -4,7 +4,7 @@
 
 Ranges are not yet implemented in the Flint compiler
 
-Ranges do not work, at all, in the compiler. But they *will* work in the future.
+Ranges do not work, at all, in the compiler. But they _will_ work in the future.
 
 </div>
 
@@ -12,7 +12,7 @@ Ranges do not work, at all, in the compiler. But they *will* work in the future.
 
 A range represents a sequence of numbers. Use it in loops to iterate over specific values.
 
-```rs
+```ft
 for i, elem in 5..10:
     print($"Index {i}, Value {elem}");
 ```
@@ -32,7 +32,7 @@ for i, elem in 5..10:
 
 Use `_` to ignore either the index or the element:
 
-```rs
+```ft
 for _, elem in 1..5:
     print($"Value {elem}"); // Ignores the index
 

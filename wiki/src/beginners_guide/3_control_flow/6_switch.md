@@ -6,7 +6,7 @@ Switch statements are actually pretty easy to understand once you grasped if cha
 
 Let's actually re-write the same example from the previous example, but without the if chain we now use a switch statement:
 
-```rs
+```ft
 use Core.print
 
 enum ComparisonResult:
@@ -108,8 +108,7 @@ The below example will not compile, as Flint does not support annotations yet. S
 
 </div>
 
-
-```rs
+```ft
 use Core.print
 
 enum MyEnum:
@@ -140,7 +139,7 @@ It actually is not clear yet if there will exist an explicit keyword for the fal
 
 A switch, however, can not only exist as a statement but as an expression too. Instead of executing an arbitrary block of code, each switch branch needs to be an explicit expression now, marked with the arrow `->` syntax. Have a look:
 
-```rs
+```ft
 use Core.print
 
 enum MyEnum:

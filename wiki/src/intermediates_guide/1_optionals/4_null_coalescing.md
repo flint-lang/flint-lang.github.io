@@ -4,7 +4,7 @@ The Null Coalescing Operator `??` is a pretty interesting operator in the sense 
 
 If we take a varaible `x` and it is of type `i32?`, then a binary operator expression using the `??` operator would return a value of type `i32`. But let's look at an example maybe, then everything should be more clear:
 
-```rs
+```ft
 use Core.print
 
 def main():

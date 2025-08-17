@@ -1,12 +1,12 @@
 # Introduction
 
-Flint's error system is quite unique. **Every** function can fail. Absolutely every single function a user defines in his code *can* fail. Because *every* function can fail, Flint can deeply integrate error handling into the language. A function returning a `str` value, for example, actually returns a `(err, str)` value. The first *implicit* return type of **any** Flint function is the error value of said function. This error value, however, is completely hidden from the user outside of Flint's error handling syntax.
+Flint's error system is quite unique. **Every** function can fail. Absolutely every single function a user defines in his code _can_ fail. Because _every_ function can fail, Flint can deeply integrate error handling into the language. A function returning a `str` value, for example, actually returns a `(err, str)` value. The first _implicit_ return type of **any** Flint function is the error value of said function. This error value, however, is completely hidden from the user outside of Flint's error handling syntax.
 
 Flint has two keywords for error handling: `throw` and `catch`. But, unlike Java or C++, where the error handling happens outside the normal execution path ("happy path" / "unhappy path") which completely breaks execution consistency and results in lots of context switching for the CPU, Flint has it's error handling system built directly into the calling / returning code of every function, which makes it much faster than traditional exception-based error handling.
 
 Flint's error handling system, however, is based around the idea of `Error Sets`. An error set is basically just a type, a set type, consisting of every possible value the error could have. Here is a small example of that:
 
-```rs
+```ft
 use Core.print
 
 error ErrorSet:
@@ -26,7 +26,7 @@ This program will just print this line to the console:
 
 But here you can directly see how to define a new error set. We use the `error` keyword for that. And an error set looks pretty similar to an `enum` defiition, actually, but they are vastly different from one another. Let's look into how to throw an eror next.
 
-```rs
+```ft
 use Core.print
 
 error ErrorSet:
@@ -54,11 +54,13 @@ This program will print these lines to the console:
 This error message will change in the future
 
 In the future the message should look more like
+
 > ```
 > ERROR: main function returned error
 >  - ErrorSet.Value1: ""
 > ```
-but it will take more time and developement effort until this message can actually be printed. It will take a while until we can print the error set names and values because we first need a way to create hash-tables to map the type ids to the type names. So, this will be implemented *eventually*.
+>
+> but it will take more time and developement effort until this message can actually be printed. It will take a while until we can print the error set names and values because we first need a way to create hash-tables to map the type ids to the type names. So, this will be implemented _eventually_.
 
 </div>
 
@@ -66,7 +68,7 @@ but it will take more time and developement effort until this message can actual
 
 But what would an error be used for if we would not have a way to catch it? Here is how we catch errors in Flint:
 
-```rs
+```ft
 use Core.print
 
 error ErrorSet:

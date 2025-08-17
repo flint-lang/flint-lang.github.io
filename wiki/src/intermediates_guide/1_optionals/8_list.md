@@ -2,7 +2,7 @@
 
 Now that we have optionals at our disposal and we know that optionals are references to actual values, we can build our first liked list in Flint! If you want to learn more about what a linked list actually is, i recommend you to look [here](https://www.w3schools.com/dsa/dsa_theory_linkedlists.php). Let's look at how a linked list looks in Flint:
 
-```rs
+```ft
 use Core.print
 
 data IntList:

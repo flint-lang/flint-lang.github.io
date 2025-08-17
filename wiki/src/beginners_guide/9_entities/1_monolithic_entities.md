@@ -4,7 +4,7 @@ The simplest form of an entity in Flint is a **monolithic entity**, where data a
 
 ## Example:
 
-```rs
+```ft
 entity Counter:
     data:
         int value;
@@ -30,7 +30,7 @@ entity Counter:
 
 ## Usage Example:
 
-```rs
+```ft
 def main():
     Counter counter = Counter(0);
     counter.increment(5);

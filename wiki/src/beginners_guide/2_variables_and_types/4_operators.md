@@ -10,7 +10,7 @@ Lets start with the most obvious example first: integer types and lets go throug
 
 The `+` operator is very easy, it is used to add two numbers together. But there is a catch... do you remember the [Bit-Width](./1_primitive_types.md#bit-width) table from [this](./1_primitive_types.md) chapter? This now becomes important, more specifically the **Min** and **Max** value columns. For example, if you add two `u32` typed variables together, like so:
 
-```rs
+```ft
 def main():
     u32 n1 = 4_294_967_290;
     u32 n2 = 10;
@@ -33,7 +33,7 @@ In Flint, however, the `u32` value is just capped to the maximum value of `u32`.
 
 The same as above applies here. The minimum value for `u32` values is `0`, so if we try to run this program:
 
-```rs
+```ft
 def main():
     u32 ten = 10;
     u32 twenty = 20;
@@ -52,7 +52,7 @@ A `underflow` is the same as an `overflow` but for the minimum value instead of 
 
 Because integer types (`i32`, `u32`, ...) don't have a fractional part like floating point types (`f32`, ...) they cannot preserve their fractional information when dividing. This means that in this function here:
 
-```rs
+```ft
 def main():
     i32 n1 = 100;
     i32 n2 = 30;
@@ -78,7 +78,7 @@ Floating Point Arithmetic can be pretty tricky at times. Flint's floating points
 
 But, in a nutshell, any floating point number comes with a specific level of **inprecision**. You dont need to worry about what this means for now, just remember that a number might not be **exactly** the number you specified, because some numbers (like `1 / 3`) cannot be stored in a number on the computer, because its result is `0.333...` and it cannot be stored and compared reliably. Also, some numbers just cannot be stored fully in floating point numbers. Here is a small example showing floating point arithmetic inprecision in action:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -104,7 +104,7 @@ But, as you can see the condition is `false`, thats because `val` is not **exact
 
 Strings (`str` type) do not support the `-`, `*` or `/` operators. _But_ you can use the `+` operator to add (concatenate) two strings:
 
-```rs
+```ft
 use Core.print
 
 def main():

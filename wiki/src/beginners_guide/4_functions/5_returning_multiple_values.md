@@ -6,7 +6,7 @@ Sometimes, a single return value isn’t enough. For instance, a function might 
 
 To return multiple values we use parentheses `()` to group multiple values in the return statement and also use parentheses for declaring the return types:
 
-```rs
+```ft
 def calculate_rectangle(i32 length, i32 width) -> (i32, i32):
     i32 area = length * width;
     i32 perimeter = 2 * (length + width);
@@ -19,7 +19,7 @@ As you can see, this function now returns a `group`. Groups are a special concep
 
 To recieve the values from a function which returns multiple values we also need to use a group to assign them.
 
-```rs
+```ft
 use Core.print
 
 def calculate_rectangle(i32 length, i32 width) -> (i32, i32):

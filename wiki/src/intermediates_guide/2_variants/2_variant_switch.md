@@ -1,8 +1,8 @@
 # Switching on Variants
 
-In the last chapter we have looked at how to define variant types, but now we come to the fun part of variants, actually using them. You see, because a variant *can* be one of our defined types we also need to check which one it actually *is* before we can safely access the data that's stored within that variant. The easiest apporach to extract a variant's value is through a switch statement. Here is a small example of that:
+In the last chapter we have looked at how to define variant types, but now we come to the fun part of variants, actually using them. You see, because a variant _can_ be one of our defined types we also need to check which one it actually _is_ before we can safely access the data that's stored within that variant. The easiest apporach to extract a variant's value is through a switch statement. Here is a small example of that:
 
-```rs
+```ft
 use Core.print
 
 variant MyVariant:
@@ -33,9 +33,9 @@ This program will print these lines to the console:
 > holds u64 value of 55
 > ```
 
-There is quite a lot to unpack here. First, we pass the variant to the function. Variants are considere complex data types in Flint, this means they are passed by **reference**, *not* by **value**. This also means that changes to the variant within a function would result in these changes taking effect over at the callside of the function as well. You can see this behaviour in this example here:
+There is quite a lot to unpack here. First, we pass the variant to the function. Variants are considere complex data types in Flint, this means they are passed by **reference**, _not_ by **value**. This also means that changes to the variant within a function would result in these changes taking effect over at the callside of the function as well. You can see this behaviour in this example here:
 
-```rs
+```ft
 use Core.print
 
 variant MyVariant:
@@ -78,7 +78,7 @@ This program will print these lines to the console:
 
 But we need to discuss one more thing here and now: naming. You see that the accessor-variables of the variant have been named `i`, `f` and `u`. You actually do not need to give them separate accessing-names, because these "variables" will only be accessible within their respective switch branch:
 
-```rs
+```ft
 use Core.print
 
 variant MyVariant:
@@ -100,7 +100,7 @@ This program will print this line to the console:
 
 As you can see, you can name your value references however you like and their names will not collide. Again, just like with the value reference for optionals, you can mess up everything by setting the variant value you are switching on while you are still on one branch. This will be resolved eventually, but it also works at this point in time for variants:
 
-```rs
+```ft
 use Core.print
 
 variant MyVariant:
@@ -125,11 +125,11 @@ This program will print these lines to the console:
 > holds bool8 value of 00101111
 > ```
 
-This is actually a bit more dangerous than the same behaviour with optionals. In optionals, the value is just set to `0` through and thgough, leading to nullpointers etc. But here we could have a variant that can hold both an `u64` and a `str`, but the `str` is a pointer under the hood. This means that we can store a `u64` value in the variant inside the `str` branch and then we could point to *any* memory address and possibly read strings from it. So, while this problem seemed to be only a small one for optionals, it's actually quite a large problem for variants, so this definitely needs to be fixed at some point.
+This is actually a bit more dangerous than the same behaviour with optionals. In optionals, the value is just set to `0` through and thgough, leading to nullpointers etc. But here we could have a variant that can hold both an `u64` and a `str`, but the `str` is a pointer under the hood. This means that we can store a `u64` value in the variant inside the `str` branch and then we could point to _any_ memory address and possibly read strings from it. So, while this problem seemed to be only a small one for optionals, it's actually quite a large problem for variants, so this definitely needs to be fixed at some point.
 
 I need to pre-empt this here, but currently through this we are also allowed to do some shenanigans, like native bitmasking for example. But for the following example i pre-empt tagged variants a bit, just bare with me for a second, you will understand what's going on down here by the next chapter!
 
-```rs
+```ft
 use Core.print
 
 variant BitMask:
@@ -156,7 +156,7 @@ This program prints these lines to the console:
 
 And as you can see, the above mentioned problem can also be a feature. It's quite a lot more nuanced than just saying it's just bad, because now we can do bitmasking with it, without any temporaries, as the accessors are references to the same value. So, if the bitmask and the actual value have the same width, like in our case, both are `4` bytes in size, we can do pretty cool stuff with variants, as we can directly modify the memory in the `value` field and interpret it as a whole number or a mask where we can access each individual element.
 
-So, whether this is a bug or a feature is open to debate, but in my opinion it could be a feature *if* **none** of the possible types are complex and thus are pointers under the hood. If all values are *real* values and not pointers under the hood i can't see why this should not be allowed for variants, as it's a pretty exploitable system for sure. And if no pointer can be stored in the variant, nothing can be accessed or written to at an arbitrary point in memory, which means the program will definitely not crash, it could only happen that you will get the wrong or unexpected values if you do exploit this. I think there should be a warning that mutating the variable inside the branch could lead to problems, but there should only be a compile-error if one of the variant's types is complex.
+So, whether this is a bug or a feature is open to debate, but in my opinion it could be a feature _if_ **none** of the possible types are complex and thus are pointers under the hood. If all values are _real_ values and not pointers under the hood i can't see why this should not be allowed for variants, as it's a pretty exploitable system for sure. And if no pointer can be stored in the variant, nothing can be accessed or written to at an arbitrary point in memory, which means the program will definitely not crash, it could only happen that you will get the wrong or unexpected values if you do exploit this. I think there should be a warning that mutating the variable inside the branch could lead to problems, but there should only be a compile-error if one of the variant's types is complex.
 
 I cannot really think of a practical use case of this implication, honestly, especially since Flint will support shift operators `<<`, `>>` and bitwise operators like `|`, `&` and `!` as well in the future, so bitmasking for example is not really needed and useful when we have access to direct bit-manipulation as well.
 

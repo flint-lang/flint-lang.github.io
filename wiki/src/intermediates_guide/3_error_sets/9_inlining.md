@@ -2,7 +2,7 @@
 
 In Flint, the pattern to write
 
-```rs
+```ft
 call() catch err:
 	switch err:
 		...
@@ -10,7 +10,7 @@ call() catch err:
 
 is very very common. And you may notice that the indentation level of the actual switch is 2 in our case. But because this pattern is so common, and because we actually do not further access `err` at all outside of the `switch` and we most likely do not write anything else in the catch scope other than the `switch`, we have developed a special case syntax for this case:
 
-```rs
+```ft
 use Core.print
 
 error ErrInline:
@@ -37,7 +37,7 @@ Because we switch on the possible error set types (the returned variant) we are 
 
 So, this code:
 
-```rs
+```ft
 use Core.print
 
 error ErrInline:

@@ -3,7 +3,8 @@
 A **monolithic entity** can be split into **data** and **func modules**, improving modularity and reusability.
 
 ## Example:
-```rs
+
+```ft
 data CounterData:
     int value;
     CounterData(value);
@@ -39,7 +40,7 @@ This separation shines when working with **complex entities**.
 
 When creating and using monolithic entities, the compiler inherently creates `data` and `func` modules for that entity. It keeps modular. The `Counter` example from chapter 8.1:
 
-```rs
+````ft
 entity Counter:
     data:
         int value;
@@ -56,7 +57,7 @@ entity Counter:
 
 will be converted by the compiler to this structure:
 
-```rs
+```ft
 data DCounter:
     int value;
     DCounter(value);
@@ -74,7 +75,7 @@ entity Counter:
     func:
         FCounter;
     Counter(DCounter);
-```
+````
 
 This means that monolithic entites are being modularized internally. So there is no difference performance-wise when using very small monolithic or modular entities. However, as the entity becomes bigger and bigger, the performance gains from using modular entites become increasingly bigger.
 

@@ -2,7 +2,7 @@
 
 Flint does not have pointer or reference types, as you know. But optionals **are** implicitely this missing reference-type piece. For all complex data types, which are stored in DIMA slots, optionals become reference types to other data. You will learn why this is like it is much much later when we actually talk about DIMA, but for now just remember that optional complex data types are references. Let's look at a small example to showcase this:
 
-```rs
+```ft
 use Core.print
 
 data MyData:
@@ -34,13 +34,14 @@ Because DIMA does not exist yet, be cautious with references.
 
 DIMA will include ARC and will handle the case when the "owner" of the data (in our case `md`) goes out of scope but the optional does not. Because DIMA is not implemented yet, this code:
 
-```rs
+```ft
 MyData? ref = none;
 if true:
 	MyData val = MyData(10, 3.14, "segfault");
 	ref = val;
 print($"ref.x = {ref!.x}\n");
 ```
-will cause a segmentation fault of the program. You *need* to be aware of this current limitation when using optionals.
+
+will cause a segmentation fault of the program. You _need_ to be aware of this current limitation when using optionals.
 
 </div>

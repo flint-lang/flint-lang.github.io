@@ -2,7 +2,7 @@
 
 Data modules can include other data modules as fields. This allows you to create nested structures, which are common in real-world programming. Here is an example of this concept in action:
 
-```rs
+```ft
 use Core.print
 
 data Point:
@@ -32,7 +32,7 @@ This program will print these lines to the console:
 
 Note that storing the `Point` variables in the `rect` variable through its constructor creates _copies_ of the points. In other languages this would need to be done manually, but in Flint its automatic. So, when changing `p1` and `p2` after the creation of `rect`, the `top_left` and `bottom_right` fields will not be changed:
 
-```rs
+```ft
 use Core.print
 
 data Point:
@@ -85,13 +85,13 @@ This program will print these lines to the console:
 
 The below example actually compiles, but its impossible to run usefully.
 
-Data is actually allowed to contain itself, but its impossible to initialize, as Flint has noo concept of **nullpointers** or **null** like other languages have. Flint has its optionals `T?` instead, but you will learn about them in a much later chapter. For now, just be aware that it *is* possible to create circular data, but you cannot initialize it.
+Data is actually allowed to contain itself, but its impossible to initialize, as Flint has noo concept of **nullpointers** or **null** like other languages have. Flint has its optionals `T?` instead, but you will learn about them in a much later chapter. For now, just be aware that it _is_ possible to create circular data, but you cannot initialize it.
 
 </div>
 
 Flint does not allow a data module to reference itself directly or indirectly like showcased below:
 
-```rs
+```ft
 data Node:
     i32 value;
     Node next;

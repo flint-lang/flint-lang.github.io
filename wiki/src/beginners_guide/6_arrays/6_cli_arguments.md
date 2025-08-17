@@ -4,7 +4,7 @@ CLI Arguments stands for **C**ommand **L**ine **I**nterface Arguments. CLI argum
 
 Here is an example of CLI arguments in action:
 
-```rs
+```ft
 use Core.print
 
 def main(str[] args):

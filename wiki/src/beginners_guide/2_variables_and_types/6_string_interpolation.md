@@ -2,7 +2,7 @@
 
 Until now you have seen quite often that we do something like this:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -17,7 +17,7 @@ We create the `message` variable and then write `+=` over and over again to fill
 
 The syntax of string interpolation is quite simple. You write a normal string, like `"Hello Flint"`. Then you put a dollar sign in front of the string: `$"Hello, Flint"`. And thats (almost) it. Now, everything thats written in between curly braces `{}` is handled as an **expression**. Expressions are everything that you would write on the right side of the equals sign, for example. So, here an easy example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -36,7 +36,7 @@ And now you see why its important that almost any type can be implicitely cast t
 
 You can actually interpolate any variable or expression into a string:
 
-```rs
+```ft
 use Core.print
 
 def main():

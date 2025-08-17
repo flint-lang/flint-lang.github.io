@@ -2,7 +2,7 @@
 
 A single line comment can easily be made with the `//` operator.
 
-```rs
+```ft
 // This is a comment
 ```
 
@@ -10,7 +10,7 @@ A single line comment can easily be made with the `//` operator.
 
 A multi-line comment can easily be started with the `/*` operator and ended with the `*/` operator.
 
-```rs
+```ft
 /* Multi-line
 comment
 
@@ -21,7 +21,7 @@ comment
 
 To document you code, e.g. what a method is doing, you can use a YAML inspired structure to do so.
 
-```rs
+```ft
 /**
 Adds two numbers together
 

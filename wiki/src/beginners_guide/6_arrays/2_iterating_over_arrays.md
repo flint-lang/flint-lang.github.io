@@ -2,7 +2,7 @@
 
 Often, you will want to process each element of an array inside of a loop. For this, you can easily use a `for` loop, like so:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -25,7 +25,7 @@ This program will print these lines to the console:
 
 With loops, we can better demonstrate the OOB-behaviour mentioned in the last chapter. Here is an example to better demonstrate this behaviour:
 
-```rs
+```ft
 use Core.print
 
 def main():

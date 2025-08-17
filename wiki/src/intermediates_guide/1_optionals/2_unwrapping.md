@@ -4,7 +4,7 @@ Unwrapping is the act of recieving / reading the value of an optional variable. 
 
 Because of this very reason Flint decides that accessing the value of an `none` optional is an error, and the program will crash with a simple message to the console stating that we tried to access the value of an empty optional. But enough talk, here is a small example showcasing exactly that:
 
-```rs
+```ft
 use Core.print
 
 def main():

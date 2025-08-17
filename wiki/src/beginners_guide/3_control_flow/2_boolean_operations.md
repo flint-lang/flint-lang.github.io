@@ -6,7 +6,7 @@ Boolean operators, such as `and`, `or` and `not` combine or modify `bool` values
 
 The `and` operator combines two conditions and evaluates to `true` only if **both** conditions are `true`.
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -25,7 +25,7 @@ This program will print this line to the console:
 
 The `or` operator combines two conditions and evaluates to `true` if **at least** one condition is `true`.
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -44,7 +44,7 @@ This program will print this line to the console:
 
 The `not` operator inverts the value of a boolean, so it makes `false` to `true` and vice versa.
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -62,7 +62,7 @@ This program will print this line to the console:
 
 The precedence (default order of execution) of `and` is higher than the one of `or`, similar to how `*` has a higher precedence than `+` in arithmetics. This means that the `and` operation will always be evaluated _before_ the `or` operation:
 
-```rs
+```ft
 use Core.print
 
 def main():

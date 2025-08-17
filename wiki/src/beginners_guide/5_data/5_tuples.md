@@ -3,7 +3,7 @@
 Tuples are a really nice concept in general and they exist in pretty much every language. But first, lets talk about what tuples even are and maybe take a closer look at `data` in general.
 In Flint, `data` is essentially just a `struct` from C, if you have seen that one before. So when we write
 
-```rs
+```ft
 data Vector2:
     i32 x;
     i32 y;
@@ -25,7 +25,7 @@ Under the hood, both Flint's `data` module and C's `struct` are exactly the same
 
 Because tuples are anonymous they are not defined like data modules are. They are rather defined inline, like a variable, for example. So here is the basic syntax to define a tuple in Flint:
 
-```rs
+```ft
 def main():
     data<i32, f32, str> tuple = (3, 2.2, "hello!");
 ```
@@ -40,7 +40,7 @@ But what about assigning and accessing the specific fields of a tuple? With `dat
 
 In Flint, we access the fields of a tuple by its "index". The first field of the tuple above is of type `i32`, the second of type `f32` and the third of type `str`, so we can use the fixed ordering as our accessing syntax right away. But we cannot do `tuple.0`, `tuple.1` etc directly because that would look pretty weird to have an integer literal directly. Here is an example of how to access the single values of a tuple in Flint:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -65,7 +65,7 @@ This program will print these lines to the console:
 
 As you can clearly see, we access the elements of the tuple with the `.$N` syntax, where `N` is the index of the element we want to access. Like always for indices, we start at 0 as Flint has zero-based indexing. If we would try to access an element which is out of bounds, like `.$3` in our case we would actually get a compile error:
 
-```rs
+```ft
 def main():
     data<i32, f32, str> tuple = (3, 2.2, "hello!");
     i32 x = tuple.$3;
@@ -87,7 +87,7 @@ This program will produce this compile error:
 
 Just like we can access elements from a tuple, we can also assign new values to the elements of a tuple. Here is a simple example of this in action:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -114,7 +114,7 @@ This program prints these lines to the console:
 
 Just like with "normal" data you can do grouped field accesses and assignments with tuples too. Instead of the field names you need to write the field ids again:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -135,7 +135,7 @@ This program prints this line to the console:
 
 Tuples are not allowed to be defined as a type that can be represented with a mutli-type instead. So, this example for example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -144,21 +144,22 @@ def main():
     print($"tuple.($0, $1, $2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
 ```
 
-will throw a compilation error and tell you to use a `i32x3` type instead of the `data<i32, i32, i32>` type.
+will throw a this compilation error:
 
-<div class="warning">
-
-The error message for this error has not been added yet.
-
-Currently the error is `Custom Error: 2` without giving _any_ information what error it is.
-
-</div>
+> ```
+> Parse Error at main.ft:4:5
+> └─┬┤E0000│
+> 3 │ def main():
+> 4 │ »   data<i32, i32, i32> tuple = (1, 1, 1);
+> ┌─┴─────┘
+> └─ Cannot create a tuple type which overlaps with a multi-type
+> ```
 
 ### Returning Tuples
 
 It is not allowed to return a tuple from a function if its the only return type of said function. You need to return a group instead and this is compile-time enforced. The exact reason to why this is required will be clarified in the chapter aboout Flint's error handling. So, this code:
 
-```rs
+```ft
 use Core.print
 
 def get_tuple(i32 a, f32 b, str c) -> data<i32, f32, str>:
@@ -173,7 +174,7 @@ def main():
 will produce this compile error telling you to use a group of type `(i32, f32, str)` instead as the return type of the function.
 
 > ```
-> Parse Error at test_files/test_minimal.ft:3:39
+> Parse Error at main.ft:3:39
 > └─┬┤E0000│
 > 3 │ def get_tuple(i32 a, f32 b, str c) -> data<i32, f32, str>:
 > ┌─┴───────────────────────────────────────┘
@@ -183,7 +184,7 @@ will produce this compile error telling you to use a group of type `(i32, f32, s
 
 So, instead of trying to return a tuple, you need to return a group instead:
 
-```rs
+```ft
 use Core.print
 
 def get_tuple(i32 a, f32 b, str c) -> (i32, f32, str):
@@ -204,7 +205,7 @@ annyway. This program will print this line to the console:
 
 Tuples can also be passed to functions as any value can:
 
-```rs
+```ft
 use Core.print
 
 def print_tuple(data<i32, f32, str> tuple):
@@ -223,7 +224,7 @@ This program will print this message to the console:
 
 Also, like "normal" data, tuples can be passed to functions as mutable references:
 
-```rs
+```ft
 use Core.print
 
 def change_tuple(mut data<i32, f32, str> tuple):

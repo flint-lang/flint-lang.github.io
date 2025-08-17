@@ -18,7 +18,7 @@ When an entity type is provided for the **FUNC_OR_ENTITY_TYPE**, the function gi
 
 ## Example:
 
-```rs
+```ft
 entity SomeEntity:
     data:
         int value;
@@ -46,12 +46,15 @@ Something important: A **function reference** is made via the `::` symbols (doub
 Flint provides additional concurrency functions, including:
 
 - **`map_on_all(FUNC_OR_ENTITY_TYPE, FUNCTION_REFERENCE, [COLLECTION]) -> List<ResultType>`:** Similar to the `map` function in other languages, `map_on_all` would run a specified function across **all** or **some** entities, depending if the collection argument is passed in or not. It collects all the results of the function in a new `List`. Here an example:
-```rs
+
+```ft
 // Assuming that 'increase_value' returns the new value as an 'int'
 List<int> results = map_on_all(SomeEntity, SomeEntity::increase_value(5));
 ```
+
 - **`filter_on_all(FUNC_OR_ENTITY_TYPE, FUNCTION_REFERENCE, [COLLECTION]) -> List<EntityType>`:** Similar to the `filter` function in other languages, `filter_on_all` executes a given predicate function and returns a list of all entities or funcs, where the predicate function resolved to true. Here an example:
-```rs
+
+```ft
 // Assuming that the 'is_value_above' function exists and returns a 'bool'
 List<SomeEntity> filtered = filter_on_all(SomeEntity, SomeEntity::is_value_above(5));
 // This filtered list then can be used in other concurrent functions as well
@@ -62,7 +65,8 @@ run_on_all(SomeEntity, SomeEntity::decrease_value(5), filtered);
 There exist several more concurrent functions, such as `reduce_on_all`, `reduce_on_pairs` or `partition_on_all`. Now that you understand how they work and how to use them, explore them by yourself!
 
 <!-->
+
 - **`run_in_parallel(func1, func2, ...)`:** Runs multiple independent functions concurrently.
 - **`run_with_limit(func, collection, limit)`:** Similar to `run_on_all`, but limits the number of concurrent tasks.
 - **`run_once(func)`:** Ensures a function runs exactly once, even in concurrent contexts.
-<-->
+  <-->

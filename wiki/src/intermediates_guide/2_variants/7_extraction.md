@@ -2,11 +2,11 @@
 
 Similar to how the variant unwrapping operator `!(T)` had similarities to the optional force-unwrap operator `!`, the variant extraction operator `?(T)` has equally as much similarities to the optional chaining operator `?`. As a quick reminder, the optional chaining operator was used to, well, form chained expressions from optionals like `maybe?.field_maybe?.field` where the result of the whole chain always was `T?`, either the chain succeeded or it failed.
 
-The variant extraction operator `?(T)` slots right into that same machinery and it pretty much works identiacally to the optional chaining operator. Where for optional chaining you either *have* a value or you *don't*, for variants it's more nuanced as you could have one of many types. But you either *have* a value of a given type or you *don't*. So, we van use the variant extraction operator `?(T)` *within* optional chains and mix and match them as we wish, and the result of that optional chain has the type `T?`, because either all parts of the chain succeeded or *any* part of the chain returned `none` as result.
+The variant extraction operator `?(T)` slots right into that same machinery and it pretty much works identiacally to the optional chaining operator. Where for optional chaining you either _have_ a value or you _don't_, for variants it's more nuanced as you could have one of many types. But you either _have_ a value of a given type or you _don't_. So, we van use the variant extraction operator `?(T)` _within_ optional chains and mix and match them as we wish, and the result of that optional chain has the type `T?`, because either all parts of the chain succeeded or _any_ part of the chain returned `none` as result.
 
 Let's look at a more simple case for the extraction operator before moving on to the more complicated chaining approach.
 
-```rs
+```ft
 use Core.print
 
 variant MyVar:
@@ -46,7 +46,7 @@ Flint does not yet support stacking variant extractions with optional chains. It
 
 </div>
 
-```rs
+```ft
 use Core.print
 use Core.assert
 

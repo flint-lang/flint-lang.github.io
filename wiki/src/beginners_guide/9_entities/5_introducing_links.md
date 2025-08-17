@@ -4,7 +4,7 @@ Links allow you to **connect func modules**, enabling communication and coordina
 
 ## Syntax Recap:
 
-```rs
+```ft
 // POSITION MODULES
 data Position:
     int x;
@@ -24,7 +24,7 @@ func PositionUtils requires(Position p):
     def get_velocity() -> (int, int);
 ```
 
-```rs
+```ft
 // VELOCITY MODULES
 data Velocity:
     int dx;
@@ -37,7 +37,7 @@ func VelocityUtils requires(Veclocity v):
         return (v.dx, v.dy);
 ```
 
-```rs
+```ft
 // MAIN ENTITY
 entity MovingObject:
     data:
@@ -55,8 +55,8 @@ def main():
     print(obj.get_position()); // prints '(8, 9)'
 ```
 
-
 ## Key Points:
+
 1. **Linked Functions:** Functions marked with `#linked` must be linked in the `link:` section of the entity.
 2. **Compilation Behavior:** If multiple functions are linked, only the **end-point** function is included in the compiled program.
 3. **Forced Override:** When multiple functions with the same name and the same signature coexist in multiple func modules, they have to be linked together. The function at the end of the linking chain will be executed.

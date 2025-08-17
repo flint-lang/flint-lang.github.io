@@ -6,7 +6,7 @@ The entry point of every Flint program is the `main` function. This function is 
 
 But, lets create the example first and then explain what actually happens afterwards:
 
-```rs
+```ft
 use Core.print
 
 def main():

@@ -1,6 +1,6 @@
 # The Error Structure
 
- **Every** error is represented the exact same way in memory:
+**Every** error is represented the exact same way in memory:
 
 ```c
 struct {
@@ -10,9 +10,9 @@ struct {
 }
 ```
 
-The `type_id` is a unique id of the error set type. It is the result of a hashing function, where the name of the error set type is being hashed. This means that the same error set will *always* result in the same type id. The `value_id` is the index of the actual thrown value. Given these error sets:
+The `type_id` is a unique id of the error set type. It is the result of a hashing function, where the name of the error set type is being hashed. This means that the same error set will _always_ result in the same type id. The `value_id` is the index of the actual thrown value. Given these error sets:
 
-```rs
+```ft
 error ErrBase:
 	B1, // value 0
 	B2; // Value 1
@@ -34,7 +34,7 @@ you can cleary see in the example how the values directly correlate to which err
 
 When we have a variable which is a error set type, we can directly access those fields through their names through `type_id`, `value_id` and `message`. Here is a small example showcasing this:
 
-```rs
+```ft
 use Core.print
 
 error ErrArithmetic:
@@ -68,7 +68,7 @@ This program will print these lines to the console:
 > ```
 > type_id = 1484029712
 > value_id = 0
-> message = 
+> message =
 > Is NullDivision
 > res = 0
 > ```

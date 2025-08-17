@@ -2,7 +2,7 @@
 
 Data modules can be passed to and returned from functions, enabling you to manipulate them easily.
 
-```rs
+```ft
 use Core.print
 
 data Point:
@@ -28,7 +28,7 @@ This program will print this line to the console:
 
 Okay, but what if we want to modify the point in a function? Lets look at an example:
 
-```rs
+```ft
 use Core.print
 
 data Point:
@@ -65,7 +65,7 @@ Flint has two keywords for this very reason: `mut` and `const`. You can use `con
 
 So, to fix our little compile error we need to change the signature of our function a bit:
 
-```rs
+```ft
 use Core.print
 
 data Point:
@@ -90,7 +90,7 @@ This program will print this line to the console:
 
 As you can see, the functions signature of the `increment_by` function now explicitely states that its parameter is a mutable one. This means that we can only pass in mutable `Point` variables to it when calling it. So, this example:
 
-```rs
+```ft
 use Core.print
 
 data Point:
@@ -122,7 +122,7 @@ will not compile again. Because now we have declared `p` to be immutable, but we
 
 You can also return data from functions, for example when creating them inside the function.
 
-```rs
+```ft
 use Core.print
 
 data Point:

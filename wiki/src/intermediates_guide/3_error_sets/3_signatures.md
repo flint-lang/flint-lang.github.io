@@ -2,7 +2,7 @@
 
 So far we have learned how we can define errors, extend from other errors to form bigger and more specialized sets and how to throw and catch errors, but on the catching side we have not yet done anything with the catched `err` variable. This will change in this chapter, as we dive deeper into how to specify the possible errors a function could throw directly in it's signature. Let's look at a very simple example for this at first:
 
-```rs
+```ft
 use Core.print
 
 error ErrArithmetic:
@@ -33,7 +33,7 @@ There is quite a lot going on here, so let's unpack it bit by bit. First, as you
 
 And this is the secret of how to tell which error actually was returned from a function, because now we can simply switch on the `err` variable and handle the error depending on which error it was.
 
-```rs
+```ft
 use Core.print
 
 error ErrArithmetic:
@@ -66,7 +66,7 @@ This program will print these lines to the console:
 
 Okay and next up we look at switching on the error set directly. It works just like when switching on enums:
 
-```rs
+```ft
 use Core.print
 
 error ErrArithmetic:

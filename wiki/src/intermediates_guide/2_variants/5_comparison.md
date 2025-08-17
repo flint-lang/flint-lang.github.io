@@ -1,12 +1,12 @@
 # Variant Comparison
 
-We can compare variants with quite a few of different things. *Comparing* means the equals and not-equals operations `==` and `!=`, nothing else. We cannot see if one variant is bigger than another variant, for example, but we can definitely see if they are equal to one another. We can also compare variants to types to see if they contain a value of that type. But, let's look at all different cases in isolation.
+We can compare variants with quite a few of different things. _Comparing_ means the equals and not-equals operations `==` and `!=`, nothing else. We cannot see if one variant is bigger than another variant, for example, but we can definitely see if they are equal to one another. We can also compare variants to types to see if they contain a value of that type. But, let's look at all different cases in isolation.
 
 ## Comparing Types
 
 We can compare a variant to a type to do a quick "does it hold that value" check:
 
-```rs
+```ft
 use Core.print
 
 variant MyVar:
@@ -29,9 +29,9 @@ This program will print this line to the console:
 > holds f32 value
 > ```
 
-The `== T` check actually is semantically more of a *Does it hold a value of type `T`?* check. If you look closely, you can see the similarity of the above code with a switch statement:
+The `== T` check actually is semantically more of a _Does it hold a value of type `T`?_ check. If you look closely, you can see the similarity of the above code with a switch statement:
 
-```rs
+```ft
 use Core.print
 
 variant MyVar:
@@ -46,7 +46,7 @@ def main():
 		bool(v): print("holds bool value\n");
 ```
 
-with the same output as the other program. But in a switch we direclty gain an additional reference to the inner value of the variant we are working with. But, if we only want to do an action on only one type of the variant and do *nothing* on all other types, we can't really express this through a switch statement. Because how do we define doing "nothing" in a switches branch? That simply isn't possible in Flint.
+with the same output as the other program. But in a switch we direclty gain an additional reference to the inner value of the variant we are working with. But, if we only want to do an action on only one type of the variant and do _nothing_ on all other types, we can't really express this through a switch statement. Because how do we define doing "nothing" in a switches branch? That simply isn't possible in Flint.
 
 So, for that reason we can compare variants to types to see if it holds a value of that type. Note that `T` must be a valid type of the variant. If `T` is not a valid type of the variant, you will get a compile error stating that the type you try to compare the variant with is not a part of the variant's possible types.
 
@@ -54,7 +54,7 @@ So, for that reason we can compare variants to types to see if it holds a value 
 
 Just like we can compare a variant to it's type, we can compare a variant to it's tag to see if it holds a value of that type. As described in the chapter abour tagged variants, a variation with a tag **must** be accessed and checked through this tag.
 
-```rs
+```ft
 use Core.print
 
 variant MyVar:
@@ -79,7 +79,7 @@ This program will print this line to the console:
 
 Just like in the last example, the similarity to the switch statement is pretty easy to spot:
 
-```rs
+```ft
 use Core.print
 
 variant MyVar:
@@ -103,7 +103,7 @@ This means that comparing variants through their whole structure would not only 
 
 So, here is a small example of comparing variants to one another:
 
-```rs
+```ft
 use Core.print
 
 variant MyVar:
@@ -137,9 +137,9 @@ This output is expected. When we store different `i64` values in the variant the
 
 ## The `active_type` field
 
-Next we look at accessing the `active_type` field of the variant. You know the strucutre of the variant is `{ u8, byte[N] }` and the `active_type` field of a variant is the first field of that struct. We can access this value (readonly) by just doing `var.active_type` on an variant. This will return a `u8` value. And because we can compare `u8` values we can actually check whether two variant variables hold **the same type**. This is especially useful for situations where we just want to know whether two variants hold the same type, independent from *which* type that is.
+Next we look at accessing the `active_type` field of the variant. You know the strucutre of the variant is `{ u8, byte[N] }` and the `active_type` field of a variant is the first field of that struct. We can access this value (readonly) by just doing `var.active_type` on an variant. This will return a `u8` value. And because we can compare `u8` values we can actually check whether two variant variables hold **the same type**. This is especially useful for situations where we just want to know whether two variants hold the same type, independent from _which_ type that is.
 
-```rs
+```ft
 use Core.print
 
 variant MyVar:
@@ -179,14 +179,14 @@ Note that the `active_type` indices start at `1`. This means that `i32` has the 
 
 It is not yet entirely clear whether this feature will be implemented at all
 
-While useful, this feature would make comparing variants ambiguous. When comparing a variant to a type or another variant of the same type it can be clearly seen what's actually happening. But in the example below, doing `var == ten` brings a bit of ambiguity with it, as now `ten` could be of type `MyVar`, `i32`, `i64` or `i32x3`. All types are entirely possible. For the parser this is no problem whatsoever, but for the person actually *reading* the Flint code this leads to additional cognitive load, whereas when *not* having this feature you can be sure that when you see `var == ten` that `ten` is definitely of type `MyVar` and can't be of any other type.
+While useful, this feature would make comparing variants ambiguous. When comparing a variant to a type or another variant of the same type it can be clearly seen what's actually happening. But in the example below, doing `var == ten` brings a bit of ambiguity with it, as now `ten` could be of type `MyVar`, `i32`, `i64` or `i32x3`. All types are entirely possible. For the parser this is no problem whatsoever, but for the person actually _reading_ the Flint code this leads to additional cognitive load, whereas when _not_ having this feature you can be sure that when you see `var == ten` that `ten` is definitely of type `MyVar` and can't be of any other type.
 So, it is still thought about whether to actually implement this feature. It is not implemented for now, as it's just syntactic sugar and doing that comparison coould be done through other ways as well. We will reconsider adding this feature at a later point in time, when time has shown that we actually want and need it. But it is most likely for this feature to stay pretty uncommon.
 
 </div>
 
-Lastly, we can also compare variants to variables and literals of a given type directly. Just like we can do `var == i32` we can also do `var == 5` and this will do two checks for us: Is `var` of type `i32`? If yes, does it's value match the value we compare it to? It's the same as if we would write `var?(i32) != none and var!(i32) == 5` but we look at that syntax in the next chapter. Just be assured: It would be pretty hard to check if the variant matches a given value if this feature would not exist. This feature is something we would call syntactic sugar. It is not necessarily *required* to be implemented, but it makes our lives quite a lot easier.
+Lastly, we can also compare variants to variables and literals of a given type directly. Just like we can do `var == i32` we can also do `var == 5` and this will do two checks for us: Is `var` of type `i32`? If yes, does it's value match the value we compare it to? It's the same as if we would write `var?(i32) != none and var!(i32) == 5` but we look at that syntax in the next chapter. Just be assured: It would be pretty hard to check if the variant matches a given value if this feature would not exist. This feature is something we would call syntactic sugar. It is not necessarily _required_ to be implemented, but it makes our lives quite a lot easier.
 
-```rs
+```ft
 use Core.print
 
 variant MyVar:

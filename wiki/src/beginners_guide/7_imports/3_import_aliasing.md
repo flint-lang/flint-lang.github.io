@@ -11,7 +11,8 @@ Use Import aliasing with caution, its pretty messed up at the moment, so it woul
 Import aliasing is pretty useful if you have a lot of files in your project and if you have colliding definition names between your files, or imported libraries. For this very reason you can use import-aliasing, to make definitions from different files unambigue. Here is a small example of this:
 
 The `utils.ft` file:
-```rs
+
+```ft
 use Core.print as p
 
 def print(str msg):
@@ -19,7 +20,8 @@ def print(str msg):
 ```
 
 The `main.ft` file:
-```rs
+
+```ft
 use "utils.ft"
 
 def main():
@@ -33,4 +35,3 @@ This program will print this line to the console:
 > ```
 
 As you can see, **any** `use` clausel can be aliased. The identifier after the `as` keyword is the aliasing name, which you need to specify when you call the function. If you would remove the `p.` in the `utils.ft` file you would get a compile error.
-

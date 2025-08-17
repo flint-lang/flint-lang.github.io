@@ -4,7 +4,7 @@ Variants can not only be defined explicitely but also, like `data`, inline too. 
 
 Here is a small example of just that:
 
-```rs
+```ft
 use Core.print
 
 def print_var(variant<i32, f32, str> var):
@@ -19,7 +19,7 @@ def main():
 
 	var = 3.14;
 	print_var(var);
-	
+
 	var = str("Hello There");
 	print_var(var);
 ```
@@ -45,7 +45,7 @@ And secondly, some other things regarding how the variants are defined in data i
 
 </div>
 
-```rs
+```ft
 use Core.print
 
 data MyData:

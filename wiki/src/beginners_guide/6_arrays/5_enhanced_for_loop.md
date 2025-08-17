@@ -1,10 +1,10 @@
 # Enhanced for Loops
 
-Enhanced for loops are for loops without explicitely declaring a range, but instead they directly operate on a so-called **iterable**. They are extremely useful for iterating through arrays, as enhanced for loops will **always** iterate through a multidimensional array *sequentially*.
+Enhanced for loops are for loops without explicitely declaring a range, but instead they directly operate on a so-called **iterable**. They are extremely useful for iterating through arrays, as enhanced for loops will **always** iterate through a multidimensional array _sequentially_.
 
 Here is a small example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -28,11 +28,11 @@ This program will print these lines to the console:
 > Index 4, Value 8
 > ```
 
-Okay, lets go through everything about the enhanced for loops one by one. You surely wonder what this `(idx, elem)` is, and why it looks like a group, right? Well, because it is! When iterating through an iterable we *always* get the index as the first value of the iteration context (the group) and the element at that index as the second value of the iteration context.
+Okay, lets go through everything about the enhanced for loops one by one. You surely wonder what this `(idx, elem)` is, and why it looks like a group, right? Well, because it is! When iterating through an iterable we _always_ get the index as the first value of the iteration context (the group) and the element at that index as the second value of the iteration context.
 
 Note that `elem` is a **mutable reference** to the array element. So, writing `elem = ...` is the same as if you would write `arr[..] = `. Here is an example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -56,13 +56,13 @@ This program will print these lines to the console:
 > Index 4, Value 8
 > ```
 
-As you can see, modifying `elem` directly modifies the array at the current index inplace. This is *extremely* powerful for mutli-dimensional arrays, because yes, multidimensional arrays are considered iterables too!
+As you can see, modifying `elem` directly modifies the array at the current index inplace. This is _extremely_ powerful for mutli-dimensional arrays, because yes, multidimensional arrays are considered iterables too!
 
 ## Not using index or elem
 
 We can opt out of using the `index` or `elem` variables for enhanced for loops entirely through the `_` operator. Again, it is used in the context of `unused` here. Here is a small example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -99,7 +99,7 @@ This program will print these lines to the console:
 
 As multidimensional arrays are also considered **iterables** we can use the enhanced for loop on multi-dimensional arrays just like we did with the nested for loops:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -135,7 +135,7 @@ It was said earlier that the group with the index and the element is called the 
 
 The `index` of the iteration context is always a `const` variable, while the `elem` of it is always a `mut` "variable" (its a reference). The iteration context as a tuple itself is `const`, and the `elem` field of it (the second field of the tuple) is not a mutable reference anymore, but its an immutable copy (for primitives) or an immutable reference (for complex data types) instead. This means that when using a tuple as the iteration context, we can no longer change the iterable directly through the `elem` reference. Here is an example:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -162,7 +162,7 @@ This program will print these lines to the console:
 
 You can also iterate over a string using the enhanced for loop, just like you can for arrays. Here is an example of this in action:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -181,4 +181,3 @@ This program will print this line to the console:
 > ```
 > my_string = 'soMeThing useful'
 > ```
-

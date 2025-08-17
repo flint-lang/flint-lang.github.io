@@ -2,7 +2,7 @@
 
 First of all, what even is recursion? Recursion is the act of calling a function from within itself forming a "chain" of calls. Lets start with the most simple example of a recursive function, calculating a fibonacci number:
 
-```rs
+```ft
 use Core.print
 
 def fib(i32 n) -> i32:

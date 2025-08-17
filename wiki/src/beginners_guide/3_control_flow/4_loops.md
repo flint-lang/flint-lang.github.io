@@ -6,7 +6,7 @@ Programming often involves repeating tasks. For example, imagine printing every 
 
 The while loop is actually the more simple loop you can have. The body of the loop (its scope) is executed as long as the condition of the while loop evaluates to `true`. But be cautious, you can create **infinite loops** relatively easily with a `while` loop. Here is a simple example of a while loop in action:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -44,7 +44,7 @@ Do while loops do not work at the moment, as they just have not been implemented
 
 The `do while` loop is actually very similar to the `while` loop. The expression of the `while` loop gets evaluated _before_ the body of the loop is executed. It executes the body if the condition is true, and then jumps back to the condition and checks again and so on. In `do while` loops this is different. Here, the body is executed first and _then_ the condition is checked. Similar to `while` loops, `do while` loops run as long as the condition evaluates to true. Here is a small example of a `do while` loop:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -69,7 +69,7 @@ A `for` loop is very interesting, and probably the loop type you will end up wri
 
 But it is best shown how this will look:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -89,7 +89,7 @@ This program will print these lines to the console:
 
 If you look closely, its actually pretty much the same as with our while loop. Both `for` and `while` loops are actually interchangable from one another, meaning that one loop type can easily be converted to the other type. In our case, the `while` loop implementation of this very same loop would look like this:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -101,7 +101,7 @@ def main():
 
 But there exists one rather big difference between `for` and `while` loops. While in the `while` loop, the variable `i` is now part of the main function's scope, for the `for` loop, this is not the case. The `i` variable is only contained _inside_ the `for` loops scope. This is very important, because it is most common to use `i` for the **i**ncrementing variable of a loop:
 
-```rs
+```ft
 use Core.print
 
 def main():
