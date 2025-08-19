@@ -1,0 +1,299 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Best Practices - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h1>
+<p>Let's discuss best practices regarding error handling in Flint next.</p>
+<h2 id="naming"><a class="header" href="#naming">Naming</a></h2>
+<p>Let's start with naming and with how Flint names it's errors internally. All Errors inside Flint start with <code>Err...</code> followed by the actual are of error, like <code>ErrNetwork</code>, <code>ErrSystem</code>, <code>ErrAssert</code>, <code>ErrEnv</code>, <code>ErrFS</code> and so on. Then, unlike enums where the values are prefered to be written in <code>SCREAMING_SNAKE_CASE</code>, the error values are written in <code>PascalCase</code>, just like errors. Also, error values may not start with the <code>Error</code> prefix, as this is handled by the <code>Err</code> prefix on the error set type. So you would end up writing <code>ErrName.ValueName</code> instead of <code>Something.ErrorName</code>. This recommendation exists to prevent collisions with other definitions, as there exist quite a few of definitions in Flint: <code>data</code>, <code>enum</code>, <code>variant</code>, <code>func</code>, <code>entity</code> and <code>error</code>. So, having clear naming for all of them keeps your code visually pleasing and easy to follow.</p>
+<h2 id="throwing-errors-and-signatures"><a class="header" href="#throwing-errors-and-signatures">Throwing Errors and Signatures</a></h2>
+<p>With great power comes great responsibility. With the power of extending error sets also come unique challenges not found in other languages. Here is an example of a 4-deep error set extension chain:</p>
+<pre><code class="language-rs">error ErrBase:
+	Critical, Abortion;
+
+error ErrParsing(ErrBase):
+	UnexpectedToken, MissingToken, DuplicateDefinition;
+
+error ErrStatement(ErrParsing):
+	MissingSemicolon, EmptyScope, TypeMismatch;
+
+error ErrExpression(ErrStatement):
+	MissingOperator, UnknownType;
+
+
+def parse_expression() {ErrExpression}:
+	// Do some work and possibly throw an ErrExpression
+	// This means it could be *any* from the above errors
+	// because they all end up in the 'ErrExpression' set
+
+def parse_statement() {ErrStatement}:
+	parse_expression() catch err:
+		ErrExpression(e):
+			// Handle all expression-specific errors
+			switch e:
+				MissingOperator: // handle case
+				UnknownType:     // handle case
+				else:
+					// The rest are all errors from base error sets
+					// This means that we simply "recast" the error
+					// and return it as a statement error
+					ErrStatement es = e;
+					throw es;
+		// Just rethrow any other errors
+		anyerror(e): throw e;
+
+def parse_file() {ErrParsing}:
+	parse_expression() catch err:
+		ErrStatement(e):
+			// Handle all statement-specific errors
+			switch e:
+				MissingSemicolon: // handle case
+				EmptyScope:       // handle case
+				TypeMismatch:     // handle case
+				else:
+					// The rest are all errors from base error sets
+					// This means that we simply "recast" the error
+					// and return it as a parsing error
+					ErrParsing ep = e;
+					throw ep;
+		// Just rethrow any other errors
+		anyerror(e): throw e;
+
+def main():
+	parse_file() catch err:
+		// Now we can handle the parsing and check for all potential 
+		// general parsing errors.
+</code></pre>
+<p>This is what I would consider a true "separation of concerns". Through the error set extension system we not only are able to specialize our errors but also keep the actual handling of those errors to higher levels while only focusing on the lower levels for the specialized sets. This is still a quite simple example. Just imagine having a dozen error set types where the most special error would have a hundred possible values it could be. Imagine writing a 100-branch switch in the specialized function, a 80 branch switch in the one above etc. That would be insane... this is why I would consider it best practice to keep only handling the "added" special errors in the error set at the deepest level, and just re-throwing the error as the more general value if it is not any of the specialized ones, because in that case it is <em>guaranteed</em> to be a value from the base sets instead.</p>
+<p>There does not exist a way to make this all safe, though. Because if you would now add a new error to the error set <code>ErrExpression</code> for example you would not get a compiler error that you have not checked for that value in the switch, and the branch where you try to cast the error value to the base set type would be executed. As "workaroun" (or actual solution, we will see), casting a specialized error to it's base error while that specialized value holds an actual value greater than it's base type's capacity will crash the program loud and clear. We know at compile-time how big the set <code>ErrStatement</code> is, for example. It's exactly <code>8</code> values big currently. So, if we would try to cast a value with a <code>value_id &gt;= 8</code> to that type it would just crash. It will be just a simple condition under the hood, but this condition prevents errors bubbling up to the main level (which would crash the program annyway most of times).</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../intermediates_guide/3_error_sets/7_internals.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../intermediates_guide/3_error_sets/9_inlining.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../intermediates_guide/3_error_sets/7_internals.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../intermediates_guide/3_error_sets/9_inlining.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

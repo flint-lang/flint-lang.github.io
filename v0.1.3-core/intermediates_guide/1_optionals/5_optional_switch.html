@@ -1,0 +1,331 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Switching on Optionals - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="switching-on-optionals"><a class="header" href="#switching-on-optionals">Switching on Optionals</a></h1>
+<p>We can also switch on optional values to gain access to their stored value as well. The syntax for switching on optionals is a bit different than the syntax on switching on enums. The <code>switch</code> statement and expression have different syntax based on the type they switch on, it is the only statement in Flint where this is true (except for the pipe operator <code>|&gt;</code>). But let's have a look at a simple example:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+	i32? maybe = none;
+	
+	switch maybe:
+		none: print("none\n");
+		v: print($"value = {v}\n");
+	
+	maybe = 69;
+	switch maybe:
+		none: print("none\n");
+		v: print($"value = {v}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>none
+value = 69
+</code></pre>
+</blockquote>
+<p>As you can see, we have one switch branch for the <code>none</code> case, where there isn't anything stored in the optional value at all, and we have one case for the value case. But what is that <code>v</code> there? <code>v</code> is like a "variable declaration" here, it's just a name we give to access the value field of the optional directly. Note that the type of the <code>v</code> "variable" is <code>i32</code> here, so we can not set the variable <code>maybe</code> to be <code>none</code> through the <code>v</code> variable.</p>
+<p>But what we can do is do a little "trick". You see, the variable <code>v</code> gives us a direct mutable reference to the value field of <code>maybe</code>, it's not simply a <em>copy</em> of the value field, it's a <em>reference</em> to it, as seen in the next code example:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32? maybe = 30;
+    print($"value = {maybe!}\n");
+
+    switch maybe:
+        none: print("none\n");
+        v: v = 10;
+    print($"value = {maybe!}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>value = 30
+value = 10
+</code></pre>
+</blockquote>
+<p>So, this mutability actually allows us to circumvent Flint's safety mechanisms around accessing the value field of an empty optional variable, which is rather interesting:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+	i32? maybe = 30;
+	
+	switch maybe:
+		none: print("none\n");
+		v:
+			print($"v = {v}\n");
+			maybe = none;
+			print($"v = {v}\n");
+</code></pre>
+<p>This code will print these lines to the console:</p>
+<blockquote>
+<pre><code>v = 30
+v = 0
+</code></pre>
+</blockquote>
+<p>So, you are not allowed to access the value when there is nothing stored on it but if there <em>was</em> something stored on it and you <em>still</em> have the reference to the value field you can actually still modify it. Maybe we will add a system to detect and prevent this behaviour, but it's very funny in my opinion that you can do it at all.
+Also, this is a great example to showcase the behaviour of the <code>none</code> assignment we have talked about earlier, that the <code>none</code> literal is literally a zeroinitializer of the given type it is meant to be stored at. In our <code>i32?</code> example that's not a big deal, the value is just set to 0, but think about what happens if that would have been a <code>str?</code>. Strings are not "stack"-allocated in Flint, so they are pointers under the hood. And all values set to 0 interpreted as a pointer is a <code>nullptr</code>, so accessing the value would crash our program, but with a mysterious <code>Segmentation Fault</code> instead.</p>
+<p>So, keep your eyes open for this "bug" (or "feature" if you will) as it could be not what you would want. In this simple example it is clear that we should not do <code>maybe = none</code>, but what if that would be a function call instead and somewhere down the line the optional is set to <code>none</code> and then we try to use the value <code>v</code> after the call? That's where the problems start to happen. So, as a general rule of thumb: Try avoiding the variable which is switched on within the value block of the switch entirely, you should <em>only</em> access the value field directly, not the switched-on variable. (Maybe we could make this into a compiler-rule, as this then would not be a runtime-check but a compile-time check to see if the variable that's switched on is accessed in the value-block).</p>
+<p>We can also put the switch statement in a separate function entirely and pass the optional value to said function. The optional value will be passed by reference, not by value, so this means that any modifications to the optional will be visible at the callers side as well:</p>
+<div class="warning">
+<p>Optionals are passed by value at this moment in time</p>
+<p>Alltough optionals <em>should</em> be passed by reference, they are actually passed by value, so the below program will not show the expected output. Keep this in mind when using optionals at this moment in time. Okay, but this also means that the point i made earlier about <em>"passing the variable which is switched on to a function causes problems"</em> is actually not that big of a problem at all, as the switched-on variable cannot be set to <code>none</code> by the function this way, and setting the switched-on variable to <code>none</code> within the value block is a very easy to spot mistake... so, maybe passing optionals as copies has it's upsides as well. This definitely needs some more time (and testing) to find out what design fits Flint the best.</p>
+</div>
+<pre><code class="language-rs">use Core.print
+
+def print_opt(i32? value):
+	switch value:
+		none: print("none\n");
+		v: print($"value = {v}\n");
+
+def set_value(mut i32? opt, i32 value):
+	if opt == none:
+		opt = value;
+
+def main():
+	i32? maybe = none;
+	print_opt(maybe);
+
+	maybe = 69;
+	print_opt(maybe);
+
+	set_value(maybe, 20);
+	print_opt(maybe);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>none
+value = 69
+value = 20
+</code></pre>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../intermediates_guide/1_optionals/4_null_coalescing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../intermediates_guide/3_error_sets.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../intermediates_guide/1_optionals/4_null_coalescing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../intermediates_guide/3_error_sets.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

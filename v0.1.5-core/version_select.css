@@ -1,0 +1,17 @@
+select {
+    font-family: monospace;
+    align: left;
+    padding: 2px 2px 2px 4px;
+    color: var(--sidebar-fg);
+    background-color: #262631;
+    border: 1px solid;
+    border-color: var(--sidebar-active);
+    border-radius: 6px;
+}
+
+#version_separator {
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid var(--sidebar-active);
+    opacity: 0.6;
+}

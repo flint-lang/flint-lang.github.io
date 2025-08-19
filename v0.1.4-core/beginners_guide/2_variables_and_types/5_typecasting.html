@@ -1,0 +1,316 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Type Casting - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="typecasting"><a class="header" href="#typecasting">Typecasting</a></h1>
+<p>First of all, what is typecasting? We know what a <code>type</code> is, but what is <code>casting</code>? Casting is the act of <em>converting</em> one type into another. Different types are incompatible with one another, even <code>i32</code> and <code>u32</code> are incompatible, even though both of them have the same bit width. For example, the <code>i32</code> value of <code>-233235653</code> would actually be <code>4061731643</code> when the bits would be interpreted as an <code>u32</code> instead. And if the 32 bits of the <code>i32</code> value would be interpreted as an <code>f32</code> value, we would end up with the number <code>-3.032584e30</code>. (The bit pattern of this example is <code>1111 0010 0001 1001 0001 1011 0011 1011</code>)</p>
+<p>As you can see, just storing the bits of one number into the bits of another number is not enough. This is the reason to why we need to convert, or <strong>cast</strong> types. Try to compile this program and see what the compiler tells you:</p>
+<pre><code class="language-rs">def main():
+    i32 val = 3.3;
+</code></pre>
+<p>The compiler will throw an error like:</p>
+<blockquote>
+<pre><code>Parse Error at main.ft:2:15
+ -- Type mismatch of expression 3.3;
+ -- Expected i32 but got f32
+</code></pre>
+</blockquote>
+<p>and it will tell you exactly what went wrong. The type of <code>i32</code> was expected, beause we want to store something of type <code>i32</code> in the variable <code>val</code>, but we provided a floating point number, which defaults to <code>f32</code>. So, we need to convert the type of <code>f32</code> to <code>i32</code> in this case.</p>
+<h2 id="explicit-typecasting"><a class="header" href="#explicit-typecasting">Explicit Typecasting</a></h2>
+<p>Types can be explicitely cast like this:</p>
+<pre><code class="language-rs">def main():
+    i32 val = i32(3.3);
+</code></pre>
+<p>We just write the type we want to have like <code>i32</code> in this case followed by an open paren <code>(</code> and then the <strong>expression</strong> which has a different type and then the closing paren <code>)</code>.</p>
+<p>Also, every type can be cast to an <code>str</code> type! Try to run this program and see what happens:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    f32 fval = 3.3;
+    str message = "fval = ";
+    message += str(fval);
+    message += "\n";
+    print(message);
+</code></pre>
+<p>You will see the message</p>
+<blockquote>
+<pre><code>fval = 3.3
+</code></pre>
+</blockquote>
+<p>printed to the console.</p>
+<p>Okay, and now a bit more complicated example:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    f32 fval = 3.7;
+    i32 ival = i32(fval);
+    str message = "fval = ";
+    message += str(fval);
+    message += ", ival = ";
+    message += str(ival);
+    message += "\n";
+    print(message);
+</code></pre>
+<p>This small program prints this message to the console:</p>
+<blockquote>
+<pre><code>fval = 3.7, ival = 3
+</code></pre>
+</blockquote>
+<p>You maybe expected a result like</p>
+<blockquote>
+<pre><code>fval = 3.7, ival = 4
+</code></pre>
+</blockquote>
+<p>but here comes some very important information about type casting: When casting floating point types to integer types the fractional part is simply <strong>cut off</strong>. Its never rounded, only cut. But that definitely can be a good thing, if used correctly. Just remember, that when casting floating point values to integer values you will simply loose the fractional information.</p>
+<h2 id="implicit-typecasting"><a class="header" href="#implicit-typecasting">Implicit Typecasting</a></h2>
+<p>Everything we have discussed up until now was regarding the act of <strong>explicitely casting</strong> values. But, some values can be cast <strong>implicitely</strong> by the compiler. There exists one rule of thumb in Flint: You can cast types implicitely if you <em>won't</em> loose any information through that cast. So, you can happily implicitely cast <code>i32</code> to <code>f32</code> but you <em>cannot</em> implicitely cast <code>f32</code> to <code>i32</code>. Also, pretty much <em>any</em> type can be implicitely cast to a <code>str</code> type too! Here's how this looks in action:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    f32 fval = 3;
+    str message = "fval = ";
+    message += fval;
+    message += "\n";
+    print(message);
+</code></pre>
+<p>Notice how we did not write <em>any</em> explicit casting whatsoever? This program prints this message to the console:</p>
+<blockquote>
+<pre><code>fval = 3.0
+</code></pre>
+</blockquote>
+<p>Note that the floating point to string conversion happened implicitely?</p>
+<div class="warning">
+<p>This behaves differntly in the current release of Flint</p>
+<p>Currently, you won't see <code>fval = 3.0</code> printed to the console, but rather <code>fval = 3</code>. This is not a big deal, it only happens when the fractional part of the floating point value is zero, but this behaviour is a bit misleading, as you now could think that the value used to print <code>3</code> is an integer type, not a floating point type. Printing <code>3.0</code> makes this unambiguous and is considered the correct way to do it.</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/2_variables_and_types/4_operators.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../beginners_guide/2_variables_and_types/6_string_interpolation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/2_variables_and_types/4_operators.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../beginners_guide/2_variables_and_types/6_string_interpolation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

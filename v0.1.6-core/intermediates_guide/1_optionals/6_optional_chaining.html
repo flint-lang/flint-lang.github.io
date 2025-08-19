@@ -1,0 +1,350 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Optional Chaining - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="optional-chaining"><a class="header" href="#optional-chaining">Optional Chaining</a></h1>
+<p>Optional chaining is quite interesting in Flint. You already have seen the <code>!</code> operator. You have been told until now that this operator is an <em>unary</em> operator, but that was not quite correct, actually. It's one of Flint's few "in-between operators" (There is no industry standard name for them, actually). One "in-between operator" is the dot <code>.</code>, actually. When you do a <code>var.field</code> the <code>.</code> is an operator itself. This operator has no clear name either, as it is used quite often in quite a lot of places. But, similar to how you can write the dot <code>.</code> "in-between" two identifiers to <strong>form</strong> an expression, the optional chaining operators <code>!</code> and <code>?</code> are used to <strong>form</strong> an expression too.</p>
+<h2 id="foce-unwrapping-operator"><a class="header" href="#foce-unwrapping-operator">Foce-Unwrapping Operator</a></h2>
+<p>Let's look at a very simple example with the unwrapping-operator, as you already know that one:</p>
+<pre><code class="language-rs">use Core.print
+
+data Vec2:
+	i32 x;
+	i32 y,
+	Vec2(x, y);
+
+def main():
+	Vec2 v2 = Vec2(10, 20);
+	Vec2? v2m = v2;
+	
+	i32 x = v2m!.x;
+	print($"x = {x}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>x = 10
+</code></pre>
+</blockquote>
+<p>As you can see, the optional force-unwrap operator <code>!</code> can not only be used as an unary operator (at the end of an expression) but as an "in-between operator" (i will call them <em>innies</em> from now on) as well. The above code showcases exactly what that operator does. It, again, force-unwraps the lhs and allows us to access it as if it was no optional. But, it will still hard-crash if there is no value stored in the unwrapped optional. We can also unwrap multiple fields of the vector at once:</p>
+<pre><code class="language-rs">use Core.print
+
+data Vec2:
+	i32 x;
+	i32 y,
+	Vec2(x, y);
+
+def main():
+	Vec2 v2 = Vec2(10, 20);
+	Vec2? v2m = v2;
+	
+	(x, y) := v2m!.(x, y);
+	print($"(x, y) = ({x}, {y})\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>(x, y) = (10, 20)
+</code></pre>
+</blockquote>
+<p>And we can do array-accesses as well:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+	i32[]? arr = i32[10](9);
+	print($"arr[4] = {arr![4]}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>arr[4] = 9
+</code></pre>
+</blockquote>
+<p>In general, the optional force-unwrap operator can be used <strong>exactly</strong> the same way as if the variable would not be an optional at all. A normal array access would be <code>arr[4]</code>, optional it's <code>arr![4]</code>, so it's only the single operator added in between the "normal" operation on the variable.</p>
+<h2 id="optional-chaining-operator"><a class="header" href="#optional-chaining-operator">Optional Chaining Operator</a></h2>
+<p>The Optional Chaining Operator <code>?</code>, however, is quite a bit more complex to use and understand, but you will get the hang of it pretty quickly for sure. It is used <em>exactly</em> like the optional force-unwrapping operator <code>!</code> but it has a bit different semantics. When you force-unwrap an optional of type <code>T?</code> the result will be of type <code>T</code>. But, the optional chaining operator works a bit different. Here is an example:</p>
+<pre><code class="language-rs">use Core.print
+
+data Vec2:
+	i32 x;
+	i32 y,
+	Vec2(x, y);
+
+def main():
+	Vec2 v2 = Vec2(10, 20);
+	Vec2? v2m = v2;
+	
+	i32? x = v2m?.x;
+	if x == none:
+		print("has no value!\n");
+	else:
+		print($"x! = {x!}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>x! = 10
+</code></pre>
+</blockquote>
+<p>As you can see, the optional chaining operator does <em>not</em> "remove" the optionality entirely, as now the variable <code>v2m</code> still <em>could</em> be <code>none</code>. If the "base expression" of an optional chain is <code>none</code> the whole optional chain will resolve to <code>none</code>, no matter how long that chain may be. The above example is not quite useful, as we could just check for the presence of a value in <code>v2m</code> directly here, but think about nested optionals and you want to access a field deep inside the structure, you then could stack optional chains together and get <em>one</em> value in <em>one</em> expression. Here is a small example of that:</p>
+<div class="warning">
+<p>Nested optional chains do not work properly yet</p>
+<p>I am working on getting them up and running, but they do not work yet. The semantics and syntax of them is already fixed, though, so what you see below will not change much in the future.</p>
+</div>
+<pre><code class="language-rs">use Core.print
+
+data Vec2:
+	i32 x;
+	i32 y,
+	Vec2(x, y);
+
+data Nested:
+	Vec2? v2m;
+	Nested(v2m);
+
+def main():
+	Vec2 v2 = Vec2(10, 20);
+	Vec2? v2m = v2;
+	Nested n = Nested(v2m);
+	Nested? nm = n;
+	
+	i32? x = nm?.v2m?.x;
+	if x == none:
+		print("one value in the chain has has no value!\n");
+	else:
+		print($"x! = {x!}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>x! = 10
+</code></pre>
+</blockquote>
+<p>As you can see, optional chains allow you to access fields deep inside optional chains. And now we can also talk about what type an optional chain has. The whole chain does <strong>always</strong> have the type of the rightmost operation wrapped in an optional. An operation could be a call, an access, or anything else, realistically. But it's important to know that <strong>the whole chain has either the value as it's end or it had a <code>none</code> value somewhere in between thus resulting in <code>none</code> itself</strong>.</p>
+<p>You can also mix and match optional chains with optional force-unwrapping. In the above example, we can for example write <code>nm!.v2m?.x</code> and have a force-unwrap on the nested but a optional chain on the vec itself. This style also <strong>clearly communicates intent</strong>. From this small snippet you can directly see the assertions of the programmer: The programmer asserts that <code>nm</code> will <em>always</em> have a value, whereas <code>v2m</code> within <code>nm</code> could <em>potentially</em> be <code>none</code>, so you need to handle that <em>potential</em> case of the value's absence. It's not only a nicee QOL improvement, but it also very clearly communicates intent, without a single comment written. Also, the <code>!</code> and <code>?</code> are unique to optionals, so whenever you find one of those operators you can be <em>sure</em> that there is an optional in play. Well, that operator exists in a different form for variants as well, namely the <code>!(T)</code> and <code>?(T)</code> operator, but you will learn about variants in the next chapter.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../intermediates_guide/1_optionals/5_optional_switch.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../intermediates_guide/1_optionals/7_references.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../intermediates_guide/1_optionals/5_optional_switch.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../intermediates_guide/1_optionals/7_references.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Error Sets - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/flint.css">
+        <link rel="stylesheet" href="../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="error-sets"><a class="header" href="#error-sets">Error Sets</a></h1>
+<div class="warning">
+<p>Everything regarding error handling <strong>will</strong> definitely change for later releases.</p>
+<p>The current implementation of everything error-handling related is not final for Flint, and it will change quite a lot. This segment of the guide will be updated when the new system works and is in place. For the time being, the description of how it <em>currently</em> works in FLint is written here. So, expect substantial re-writes of this chapter for future releases.</p>
+</div>
+<p>Flint's error system is quite unique. <strong>Every</strong> function can fail. Absolutely every single function a user defines in his code <em>can</em> fail. Because <em>every</em> function can fail, Flint can deeply integrate error handling into the language. A function returning a <code>str</code> value, for example, actually returns a <code>(i32, str)</code> value. The first <em>implicit</em> return type of <strong>any</strong> Flint function is the error value of said function. This error value, however, is completely hidden from the user outside of Flint's error handling syntax.</p>
+<p>Flint has two keywords for error handling: <code>throw</code> and <code>catch</code>. But, unlike Java or C++, where the error handling happens outside the normal execution path ("happy path" / "unhappy path") which completely breaks execution consistency and results in lots of context switching for the CPU, Flint has it's error handling system built directly into the calling / returning code of every function, which makes it much faster than traditional exception-based error handling.</p>
+<h2 id="throwing-an-error"><a class="header" href="#throwing-an-error">Throwing an error</a></h2>
+<p>Throwing an error is actually really simple. Here is a small examlpe:</p>
+<pre><code class="language-rs">use Core.print
+
+def throw_if_bigger_than(i32 x, i32 y):
+    if x &gt; y:
+        // We can only throw i32 values at the moment
+        throw 69;
+
+def main():
+    throw_if_bigger_than(10, 5);
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>ERROR: Program exited with exit code '69'
+</code></pre>
+</blockquote>
+<p>You have already seen this <code>ERROR: </code> message before, actually, at the <code>assert</code> core module. Even the <code>main</code> function returns an implicit <code>i32</code> error value. And if the main function returns an error value, the error value gets printed to the console like seen above. Because <em>every</em> function can throw an error, <em>every</em> function automatically propagates its returned error up the stack, if we dont handle the error. This is the reason why the call <code>throw_if_bigger_than</code> let the error bubble up to the main function.</p>
+<h2 id="catching-an-error"><a class="header" href="#catching-an-error">Catching an error</a></h2>
+<p>Catching an error is a bit more complicated.</p>
+<pre><code class="language-rs">use Core.print
+
+def err_div(i32 x, i32 y) -&gt; i32:
+    if y == 0:
+        throw 69;
+    return x / y;
+
+def main():
+    i32 result = err_div(10, 0) catch err:
+        print($"err = {err}\n");
+    print($"result = {result}\n");
+</code></pre>
+<p>This program will print these linese to the console:</p>
+<blockquote>
+<pre><code>err = 69
+result = 0
+</code></pre>
+</blockquote>
+<p>As you can see, if we <code>catch</code> an error explicitely, the first implicit return value of the function is stored inside the <code>err</code> variable. It is now up to us to handle the error. Because the error is just an <code>i32</code> value, the <code>err</code> variable is also of type <code>i32</code> here. We can just compare it to values, and for some values we can set the <code>result</code> value, or for another value we could manually re-throw the error with a <code>throw</code> statement.</p>
+<p>Because there does not exist such thing as "uninitialized state" in Flint, the <code>result</code> variable is set to its default value in the case of an error. For the type <code>i32</code> this default value is <code>0</code>. For the <code>str</code> type the default value would be an empty string, a string of size 0, <code>""</code>.</p>
+<p>We can also change the <code>result</code> variable within the catch block:</p>
+<pre><code class="language-rs">use Core.print
+
+def err_div(i32 x, i32 y) -&gt; i32:
+    if y == 0:
+        throw 69;
+    return x / y;
+
+def main():
+    i32 result = err_div(10, 0) catch err:
+        print($"err = {err}\n");
+        result = 3;
+    print($"result = {result}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>err = 69
+result = 3
+</code></pre>
+</blockquote>
+<p>But that's basically it. That's all you need to know about Flint's current error handling features!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../intermediates_guide/2_variants/3_tagged.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../intermediates_guide/2_variants/3_tagged.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../version_select.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

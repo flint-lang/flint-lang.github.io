@@ -1,0 +1,321 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Introduction to Arrays - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="introduction-to-arrays"><a class="header" href="#introduction-to-arrays">Introduction to Arrays</a></h1>
+<p>An <strong>array</strong> is a data structure that stores a collection of elements sequentially in memory. Arrays are useful for storing multiple values of the same type, such as numbers, strings, or even custom data modules. In Flint, arrays are <strong>immutable by default</strong> in terms of references — assigning one array to another always creates a <strong>copy</strong>, not a reference.</p>
+<ul>
+<li>Arrays are always <strong>stored sequentially</strong> in memory, making access to their elements efficient.</li>
+<li>Arrays are <strong>value types</strong> in Flint. This means copying an array creates a <strong>new, independent copy</strong> of its data.</li>
+<li>If you modify an array inside a data object, you should <strong>access it directly</strong> using data.array instead of copying it out, as changes made to the copy won’t automatically reflect back in the original array.</li>
+<li>They are considered complex data types, so passing them to functions passes them as a reference, not a copy.</li>
+</ul>
+<h2 id="creating-arrays"><a class="header" href="#creating-arrays">Creating Arrays</a></h2>
+<p>To declare a one-dimensional array, we write brackets after the array type, for example <code>i32[]</code> for an array of <code>i32</code> values:</p>
+<pre><code class="language-rs">def main():
+    i32[] arr = i32[10](0);
+</code></pre>
+<p>This program does not print anything to the console, but we need to talk about it nonetheless and talk about whats happening here. So, we create an array of type <code>i32[]</code> and store it on the variable <code>arr</code>. We <strong>initialize</strong> the array quite similar to how we would initialize <code>data</code>. For <code>data</code>, we wrote the <strong>name</strong> of the data type, followed by parenthesis in which we wrote the initializer arguments. For arrays, this works a bit differently. First of all, we need to provide a <strong>size</strong> in between the squared brackets, in the above example the size will be set to <code>10</code>, which means that the array <code>arr</code> will contain <code>10</code> values of type <code>i32</code>. And lastly, the <code>(0)</code>. For arrays, we need to define a "default-value" with which all array elements are filled. In our case, this is the <code>i32</code> value of <code>0</code>, which means that every single one of the 10 elements in the array has the value <code>0</code> stored in it after the arrays creation.</p>
+<h2 id="accessing-elements"><a class="header" href="#accessing-elements">Accessing Elements</a></h2>
+<p>To access an element of an array we need to use a new syntax, different from when we accessed elements of the tuple via <code>.$N</code>. Now, for arrays, we need to access it using <code>[N]</code>, where <code>N</code> is the index we want to access. Here is a small example of that:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32[] arr = i32[10](0);
+    i32 elem_3 = arr[3];
+    print($"elem_3 = {elem_3}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>elem_3 = 0
+</code></pre>
+</blockquote>
+<p>Okay, the array is of size <code>10</code> and we start counting at <code>0</code>, so the last index we are allowed to access is <code>9</code>...what happens if we access index <code>10</code>? In most languages this would yield into a hard crash of the program, but in Flint we have extra safety-guards in place for out-of-bounds checks. But try it for yourself, try to compile and run this program:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32[] arr = i32[10](0);
+    i32 elem_10 = arr[10];
+    print($"elem_10 = {elem_10}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>Out Of Bounds access occured: Arr Len: 10, Index: 10
+elem_10 = 0
+</code></pre>
+</blockquote>
+<p>As you can see, Flint just continues with execution. When you try to access an value thats outside the bounds of the array, Flint will just clamp the index to the last element of the array instead, and printing a message that an Out Of Bounds access has occured. You can actually change Flint's behaviour for OOB-handling with the <strong>Array Options</strong>. Here is a small cutout of the help message of the compiler:</p>
+<blockquote>
+<pre><code>Array Options:
+  --array-print               [Default] Prints a small message to the console whenever accessing an array OOB
+  --array-silent              Disables the debug printing when OOB access happens
+  --array-crash               Hard crashes when an OOB access happens
+  --array-unsafe              Disables all bounds checks for array accesses
+</code></pre>
+</blockquote>
+<p>Try compiling the above code with the different array options set and see for yourself how the Flint program behaves. Flint aims to be as safe and as verbose (in its output) as possible and we try to make safety the default and let you opt-out of safety (for example through the --array-unsafe flag) if you are 100% sure that OOB accesses are impossible for your program.</p>
+<h2 id="assigning-values"><a class="header" href="#assigning-values">Assigning Values</a></h2>
+<p>To assign new values to elements of the array we use the same accessing-syntax as before:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32[] arr = i32[10](0);
+    arr[3] = 8;
+    arr[4] = 4;
+    print($"arr[3] + arr[4] = {arr[3] + arr[4]}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>arr[3] + arr[4] = 12
+</code></pre>
+</blockquote>
+<h2 id="grouped-access-and-assignment"><a class="header" href="#grouped-access-and-assignment">Grouped Access and Assignment</a></h2>
+<div class="warning">
+<p>This feature is not yet implemented in the compiler</p>
+<p>Currently, this feature does not yet work in the current version of the compiler, but it is <strong>definitely</strong> planned to be implemented in a later version.</p>
+</div>
+<p>Just like with tuples, mutli-types, data or basically any type in Flint, arrays have some form of interoperability with groups too. The syntax looks a bit different, though. Here is the same example as above, but using a grouped assignment:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32[] arr = i32[10](0);
+    arr.[3, 4] = (8, 4);
+    print($"arr[3] + arr[4] = {arr[3] + arr[4]}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>arr[3] + arr[4] = 12
+</code></pre>
+</blockquote>
+<p>As you can see, instead of doing <code>.(x, y)</code> (for example for <code>i32x2</code>) we write <code>.[idx1, idx2]</code>. We definitely need the <code>.</code> in front of the <code>[</code> symbol to differentiate a grouped array access from a multi-dimensional array access, but you will learn about multi-dimensional arrays soon.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/6_arrays.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../beginners_guide/6_arrays/2_iterating_over_arrays.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/6_arrays.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../beginners_guide/6_arrays/2_iterating_over_arrays.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

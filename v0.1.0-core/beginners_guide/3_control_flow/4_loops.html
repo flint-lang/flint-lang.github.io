@@ -1,0 +1,336 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Loops - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="loops"><a class="header" href="#loops">Loops</a></h1>
+<p>Programming often involves repeating tasks. For example, imagine printing every number from <code>1</code> to <code>10</code>. It’s tedious to write print 10 times! Loops automate such repetition. But what even <em>is</em> a loop? Lets start with the most simple form of a loop, the <code>while</code> loop.</p>
+<h2 id="the-while-loop"><a class="header" href="#the-while-loop">The <code>while</code> Loop</a></h2>
+<p>The while loop is actually the more simple loop you can have. The body of the loop (its scope) is executed as long as the condition of the while loop evaluates to <code>true</code>. But be cautious, you can create <strong>infinite loops</strong> relatively easily with a <code>while</code> loop. Here is a simple example of a while loop in action:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32 num = 0;
+    while num &lt; 5:
+        print($"num = {num}\n");
+        num++;
+</code></pre>
+<p>But wait! Whats this <code>num++</code>? The <code>++</code> is called an <strong>increment operator</strong> it literally just increments <code>num</code> by 1. So, <code>num++</code> is just a neat way to say <code>num += 1</code>, which is a neat way to say <code>num = num + 1</code>. The increment operator exists because its just so common to write incrementations in loops (and it looks nicer too).</p>
+<p>The above program will print these lines to the console:</p>
+<blockquote>
+<pre><code>num = 0
+num = 1
+num = 2
+num = 3
+num = 4
+</code></pre>
+</blockquote>
+<p>As you can see, the body of the while loop got executed <code>5</code> times. If you, for example, would forget the <code>num++</code> line, this while loop would turn into an infinite loop. Can you see why?</p>
+<p>Its because the condition <code>num &lt; 5</code> will always stay <code>true</code> because <code>0 &lt; 5</code>. But the while loop is only one of the looping statements which exist in Flint, there are more.</p>
+<h2 id="the-do-while-loop"><a class="header" href="#the-do-while-loop">The <code>do while</code> Loop</a></h2>
+<div class="warning">
+<p>The do while loop does not yet work in the compiler.</p>
+<p>Do while loops do not work at the moment, as they just have not been implemented in the compiler yet. But they will work in future releases eventually.</p>
+</div>
+<p>The <code>do while</code> loop is actually very similar to the <code>while</code> loop. The expression of the <code>while</code> loop gets evaluated <em>before</em> the body of the loop is executed. It executes the body if the condition is true, and then jumps back to the condition and checks again and so on. In <code>do while</code> loops this is different. Here, the body is executed first and <em>then</em> the condition is checked. Similar to <code>while</code> loops, <code>do while</code> loops run as long as the condition evaluates to true. Here is a small example of a <code>do while</code> loop:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32 num = 0;
+    do:
+        print($"num = {num}\n");
+        num++;
+    while num &lt; 5;
+</code></pre>
+<p>This loop will have the same output as the <code>while</code> loop above. But try changing the initial value of <code>num</code> to something bigger or equal to <code>5</code>, for example setting it to <code>10</code>. Do you recognize a difference between the two loop types?</p>
+<p>The <code>do while</code> loop actually always executes <strong>at least once</strong> while the <code>while</code> loop can actually skip its body entirely. Ensuring that a loop runs at least once is not as common as the "normal" while loop, but when you need it you will be greatful that it is supported, as emulating the same behaviour with "normal" while loops is pretty hard.</p>
+<h2 id="the-for-loop"><a class="header" href="#the-for-loop">The <code>for</code> Loop</a></h2>
+<p>A <code>for</code> loop is very interesting, and probably the loop type you will end up writing the most common in Flint. The important part of the <code>for</code> loop is, that it is composed of three main parts:</p>
+<ul>
+<li>The variable declaration statement</li>
+<li>A condition (exactly how <code>while</code>'s condition works this condition is evaluated <em>before</em> the body runs)</li>
+<li>A statement that will be executed at the end of each iteration</li>
+</ul>
+<p>But it is best shown how this will look:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    for i32 i = 0; i &lt; 5; i++:
+        print($"Iteration {i}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+</code></pre>
+</blockquote>
+<p>If you look closely, its actually pretty much the same as with our while loop. Both <code>for</code> and <code>while</code> loops are actually interchangable from one another, meaning that one loop type can easily be converted to the other type. In our case, the <code>while</code> loop implementation of this very same loop would look like this:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    i32 i = 0;
+    while i &lt; 5:
+        print($"Iteration {i}\n");
+        i++;
+</code></pre>
+<p>But there exists one rather big difference between <code>for</code> and <code>while</code> loops. While in the <code>while</code> loop, the variable <code>i</code> is now part of the main function's scope, for the <code>for</code> loop, this is not the case. The <code>i</code> variable is only contained <em>inside</em> the <code>for</code> loops scope. This is very important, because it is most common to use <code>i</code> for the <strong>i</strong>ncrementing variable of a loop:</p>
+<pre><code class="language-rs">use Core.print
+
+def main():
+    for i32 i = 0; i &lt; 5; i++:
+        print($"Loop 1, iteration: {i}\n");
+    // 'i' cannot be used after the for loop
+
+    // 'i' can be re-declared here, because 'i' was
+    // never declared inside the main functions scope
+    for u32 i = 0; i &lt; 4; i++:
+        print($"Loop 2, iteration: {i}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>Loop 1, iteration: 0
+Loop 1, iteration: 1
+Loop 1, iteration: 2
+Loop 1, iteration: 3
+Loop 1, iteration: 4
+Loop 2, iteration: 0
+Loop 2, iteration: 1
+Loop 2, iteration: 2
+Loop 2, iteration: 3
+</code></pre>
+</blockquote>
+<h2 id="remember"><a class="header" href="#remember">Remember</a></h2>
+<p>The general rule of thumb is to use <code>for</code> loops when you know the bounds of your iteration (from number <code>X</code> to number <code>Y</code>, or <code>run 10 times</code>) and use <code>while</code> loops when the number of iterations of the loop is unknown to you. If you follow this rule of thumb you whould have very vew problems with loops.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/3_control_flow/3_branching.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../beginners_guide/3_control_flow/5_enums.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/3_control_flow/3_branching.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../beginners_guide/3_control_flow/5_enums.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
