@@ -57,6 +57,15 @@ build_latest() {
 	cp "$WIKI/version_select.js" "$WIKI/build/latest"
 }
 
+# First ensure that we are at the latest version
+cd "$WIKI/tmp"
+git checkout main
+git clean -fd
+git reset
+git fetch
+git pull
+cd ..
+
 while IFS=',' read -r -a fields
 do
 	echo
