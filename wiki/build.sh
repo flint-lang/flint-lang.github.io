@@ -66,6 +66,9 @@ git fetch
 git pull
 cd ..
 
+# Copy the index.html into the build directory
+cp "$WIKI/../index.html" "$WIKI/build/index.html"
+
 while IFS=',' read -r -a fields
 do
 	echo
