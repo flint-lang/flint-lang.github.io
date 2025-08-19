@@ -17,9 +17,6 @@ build_book() {
 	echo "-- Adding newest book.toml file..."
 	cp "$WIKI/book.toml" "$WIKI/tmp/wiki/book.toml"
 
-	echo "-- Adding the Flint syntax highlighter..."
-	cat "flint_highlight.js" >> "$WIKI/tmp/wiki/highlight.js"
-
 	echo "-- Adding the Flint theme..."
 	mkdir -p "$WIKI/tmp/wiki/theme"
 	cp "$WIKI/theme/flint.css" "$WIKI/tmp/wiki/theme"
@@ -36,6 +33,9 @@ build_book() {
 	echo "-- Source dir: $WIKI/tmp/wiki"
 	echo "-- Output dir: $WIKI/build/$1"
 	mdbook build -d "$WIKI/build/$1" "$WIKI/tmp/wiki"
+
+	echo "-- Adding the Flint syntax highlighter..."
+	cat "flint_highlight.js" >> "$WIKI/build/$1/highlight.js"
 }
 
 build_latest() {
