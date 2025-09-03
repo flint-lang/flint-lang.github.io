@@ -7,8 +7,8 @@ use Core.system
 The `system` module provides functions to interact with the system, for example to execute system commands.
 
 |    Function Name | Parameter Types | Return Types | Possible Errors |
-| ---------------: | :-------------- | :----------: | :-------------: |
-| `system_command` | `str`           | `i32`, `str` |   `ErrSystem`   |
+| ---------------: | :-------------: | :----------: | :-------------: |
+| `system_command` |      `str`      | `i32`, `str` |   `ErrSystem`   |
 
 ## error sets
 

@@ -7,14 +7,14 @@ use Core.read
 The `read` module provides several functions to read input from the command line and to read input from the user, like numbers or text edited by the user.
 
 | Function Name | Parameter Types | Return Types | Possible Errors |
-| ------------: | :-------------- | :----------: | :-------------: |
-|    `read_str` | No              |    `str`     |       No        |
-|    `read_i32` | No              |    `i32`     |     ErrRead     |
-|    `read_i64` | No              |    `i64`     |     ErrRead     |
-|    `read_u32` | No              |    `u32`     |     ErrRead     |
-|    `read_u64` | No              |    `u64`     |     ErrRead     |
-|    `read_f32` | No              |    `f32`     |     ErrRead     |
-|    `read_f64` | No              |    `f64`     |     ErrRead     |
+| ------------: | :-------------: | :----------: | :-------------: |
+|    `read_str` |       No        |    `str`     |       No        |
+|    `read_i32` |       No        |    `i32`     |     ErrRead     |
+|    `read_i64` |       No        |    `i64`     |     ErrRead     |
+|    `read_u32` |       No        |    `u32`     |     ErrRead     |
+|    `read_u64` |       No        |    `u64`     |     ErrRead     |
+|    `read_f32` |       No        |    `f32`     |     ErrRead     |
+|    `read_f64` |       No        |    `f64`     |     ErrRead     |
 
 ## error sets
 

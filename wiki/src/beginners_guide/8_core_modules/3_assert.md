@@ -7,8 +7,8 @@ use Core.assert
 The `assert` module provides a single `assert` function, which returns an error if the given condition evaluates to false. It is used for code-assertions and to fail loud and clear.
 
 | Function Name | Parameter Types | Return Types | Possible Errors |
-| ------------: | :-------------- | :----------: | :-------------: |
-|      `assert` | `bool`          |      No      |   `ErrAssert`   |
+| ------------: | :-------------: | :----------: | :-------------: |
+|      `assert` |      `bool`     |      No      |   `ErrAssert`   |
 
 ## error sets
 

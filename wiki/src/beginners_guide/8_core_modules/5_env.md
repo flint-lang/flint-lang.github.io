@@ -6,9 +6,9 @@ use Core.env
 
 The `env` module provides several functions to read from and write to environment variables.
 
-| Function Name | Parameter Types      | Return Types | Possible Errors |
-| ------------: | :------------------- | :----------: | :-------------: |
-|     `get_env` | `str`                |    `str`     |    `ErrEnv`     |
+| Function Name |    Parameter Types   | Return Types | Possible Errors |
+| ------------: | :------------------: | :----------: | :-------------: |
+|     `get_env` |         `str`        |    `str`     |    `ErrEnv`     |
 |     `set_env` | `str`, `str`, `bool` |    `bool`    |    `ErrEnv`     |
 
 ## error sets
