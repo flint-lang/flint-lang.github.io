@@ -72,10 +72,10 @@ def main():
 
 And when we then try to compile this program we get yet another error:
 
-```
-[Master]:  The function 'add' could not be resolved
-Error: Failed to parse file "main.ft"
-```
+> ```
+> [Master]:  The function 'add' could not be resolved
+> Error: Failed to parse file "main.ft"
+> ```
 
 <div class="warning">
 
