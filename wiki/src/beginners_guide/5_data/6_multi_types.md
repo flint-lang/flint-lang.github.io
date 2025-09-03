@@ -27,20 +27,25 @@ As you can see, the 3-width i32 multi-type has the "fields" of x, y and z, each 
 | `u8x3`  |    `u8`      |      3      |
 | `u8x4`  |    `u8`      |      4      |
 | `u8x8`  |    `u8`      |      8      |
+|  <hr>   |              |             |
 | `i32x2` |    `i32`     |      2      |
 | `i32x3` |    `i32`     |      3      |
 | `i32x4` |    `i32`     |      4      |
 | `i32x8` |    `i32`     |      8      |
+|  <hr>   |              |             |
 | `i64x2` |    `i64`     |      2      |
 | `i64x3` |    `i64`     |      3      |
 | `i64x4` |    `i64`     |      4      |
+|  <hr>   |              |             |
 | `f32x2` |    `f32`     |      2      |
 | `f32x3` |    `f32`     |      3      |
 | `f32x4` |    `f32`     |      4      |
 | `f32x8` |    `f32`     |      8      |
+|  <hr>   |              |             |
 | `f64x2` |    `f64`     |      2      |
 | `f64x3` |    `f64`     |      3      |
 | `f64x4` |    `f64`     |      4      |
+|  <hr>   |              |             |
 | `bool8` |    `bool`    |      8      |
 
 All multi-types with less than width 4 can be accessed via the field names directly, while all multi-types which are bigger, like `i32x8` can only be accessed with the same index-based accesser like tuples through the `.$N` syntax. This is also the reason why tuples needed to be explained before multi-types. There actually exist several aliases for each component, each being unambiguous. Below is a table describing which "field" names exist for each component:
@@ -48,19 +53,19 @@ All multi-types with less than width 4 can be accessed via the field names direc
 | Width | Field 0 | Field 1 | Field 2 | Field 3 |
 | :---: | :-----: | :-----: | :-----: | :-----: |
 |   2   |   `u`   |   `v`   |         |         |
-|       |         |         |         |         |
+|  <hr> |         |         |         |         |
 |   2   |   `i`   |   `j`   |         |         |
 |   3   |   `i`   |   `j`   |   `k`   |         |
 |   4   |   `i`   |   `j`   |   `k`   |   `l`   |
-|       |         |         |         |         |
+|  <hr> |         |         |         |         |
 |   2   |   `x`   |   `y`   |         |         |
 |   3   |   `x`   |   `y`   |   `z`   |         |
 |   4   |   `x`   |   `y`   |   `z`   |   `w`   |
-|       |         |         |         |         |
+|  <hr> |         |         |         |         |
 |   2   |   `s`   |   `t`   |         |         |
 |   3   |   `s`   |   `t`   |   `p`   |         |
 |   4   |   `s`   |   `t`   |   `p`   |   `q`   |
-|       |         |         |         |         |
+|  <hr> |         |         |         |         |
 |   3   |   `r`   |   `g`   |   `b`   |         |
 |   4   |   `r`   |   `g`   |   `b`   |   `a`   |
 

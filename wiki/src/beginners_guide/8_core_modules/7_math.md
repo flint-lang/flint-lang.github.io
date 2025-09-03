@@ -7,29 +7,34 @@ use Core.math
 The `math` module provides math functions which are used very frequently in math-heavy workloads.
 
 | Function Name | Parameter Types | Return Types | Possible Errors |
-| ------------: | :-------------: | :----------: | :-------------: |
-|         `sin` |      `f32`      |    `f32`     |       No        |
-|         `sin` |      `f64`      |    `f64`     |       No        |
-|         `cos` |      `f32`      |    `f32`     |       No        |
-|         `cos` |      `f64`      |    `f64`     |       No        |
-|        `sqrt` |      `f32`      |    `f32`     |       No        |
-|        `sqrt` |      `f64`      |    `f64`     |       No        |
-|         `abs` |      `i32`      |    `i32`     |       No        |
-|         `abs` |      `i64`      |    `i64`     |       No        |
-|         `abs` |      `f32`      |    `f32`     |       No        |
-|         `abs` |      `f64`      |    `f64`     |       No        |
-|         `min` |   `u32`, `u32`  |    `u32`     |       No        |
-|         `min` |   `u64`, `u64`  |    `u64`     |       No        |
-|         `min` |   `i32`, `i32`  |    `i32`     |       No        |
-|         `min` |   `i64`, `i64`  |    `i64`     |       No        |
-|         `min` |   `f32`, `f32`  |    `f32`     |       No        |
-|         `min` |   `f64`, `f64`  |    `f64`     |       No        |
-|         `max` |   `u32`, `u32`  |    `u32`     |       No        |
-|         `max` |   `u64`, `u64`  |    `u64`     |       No        |
-|         `max` |   `i32`, `i32`  |    `i32`     |       No        |
-|         `max` |   `i64`, `i64`  |    `i64`     |       No        |
-|         `max` |   `f32`, `f32`  |    `f32`     |       No        |
-|         `max` |   `f64`, `f64`  |    `f64`     |       No        |
+| :-----------: | :-------------: | :----------: | :-------------: |
+|     `sin`     |      `f32`      |    `f32`     |       No        |
+|     `sin`     |      `f64`      |    `f64`     |       No        |
+|      <hr>     |                 |              |                 |
+|     `cos`     |      `f32`      |    `f32`     |       No        |
+|     `cos`     |      `f64`      |    `f64`     |       No        |
+|      <hr>     |                 |              |                 |
+|    `sqrt`     |      `f32`      |    `f32`     |       No        |
+|    `sqrt`     |      `f64`      |    `f64`     |       No        |
+|      <hr>     |                 |              |                 |
+|     `abs`     |      `i32`      |    `i32`     |       No        |
+|     `abs`     |      `i64`      |    `i64`     |       No        |
+|     `abs`     |      `f32`      |    `f32`     |       No        |
+|     `abs`     |      `f64`      |    `f64`     |       No        |
+|      <hr>     |                 |              |                 |
+|     `min`     |   `u32`, `u32`  |    `u32`     |       No        |
+|     `min`     |   `u64`, `u64`  |    `u64`     |       No        |
+|     `min`     |   `i32`, `i32`  |    `i32`     |       No        |
+|     `min`     |   `i64`, `i64`  |    `i64`     |       No        |
+|     `min`     |   `f32`, `f32`  |    `f32`     |       No        |
+|     `min`     |   `f64`, `f64`  |    `f64`     |       No        |
+|      <hr>     |                 |              |                 |
+|     `max`     |   `u32`, `u32`  |    `u32`     |       No        |
+|     `max`     |   `u64`, `u64`  |    `u64`     |       No        |
+|     `max`     |   `i32`, `i32`  |    `i32`     |       No        |
+|     `max`     |   `i64`, `i64`  |    `i64`     |       No        |
+|     `max`     |   `f32`, `f32`  |    `f32`     |       No        |
+|     `max`     |   `f64`, `f64`  |    `f64`     |       No        |
 
 ## error sets
 
