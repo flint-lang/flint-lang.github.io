@@ -85,15 +85,25 @@
     - [filesystem](./beginners_guide/8_core_modules/4_filesystem.md)
     - [env](./beginners_guide/8_core_modules/5_env.md)
     - [system](./beginners_guide/8_core_modules/6_system.md)
+    - [math](./beginners_guide/8_core_modules/7_math.md)
+    - [random]()
+    - [time]()
+    - [parallel]()
 
-  - [Entities, Func & Links]()
+  - [Entities & Func modules]()
 
     - [Monolithic Entities: The Basics]()
     - [Func Modules: Modularizing Behavior]()
     - [From Monolithic to Modular Entities]()
     - [Using Multiple Data and Func Modules]()
-    - [Introducing Links]()
     - [Extending Entities]()
+
+  - [Links & Hooks]()
+
+  - [Game Example]()
+
+    - [Introduction]()
+    - [Using raylib]()
 
 - [From Intermediate to Expert](./intermediates_guide.md)
 
@@ -135,26 +145,71 @@
 
   - [Callables & Variable Persistence]()
 
+    - [Introduction]()
+    - [The `fn` Type]()
+    - [Argument Binding]()
+    - [Persistence]()
+    - [Callbacks]()
+    - [Event Systems]()
+    - [Higher order Functions]()
+    - [Introduction to the Thread Stack]()
+    - [The 5 Call Steps]()
+    - [Performance Optimization]()
+
   - [Pipes]()
 
-  - [Composing Functions]()
+    - [Introduction]()
+    - [Chaining Operations]()
+    - [Composing Functions]()
+
+  - [Blueprints]()
+
+    - [Introduction]()
+    - [The `bp` Type]()
+    - [Linearization]()
+    - [fn Implications]()
+    - [Higher order Functions]()
+    - [The Eval Function]()
+    - [Performance Implications]()
+
+  - [Compile-Time Evaluation]()
+
+  - [Generics]()
+
+  - [Generic Library Example]()
+
+- [From Expert to Master]()
 
   - [Paralellism]()
 
-- [From Expert to Master]()
+    - [How DOCP makes parallelism trivial]()
+    - [The `parallel` Core module]()
 
   - [Concurrency & shared data]()
 
     - [Understanding Concurrency]()
-    - [Flint's Concurrency Features]()
+    - [Spawning Threads]()
+    - [Syncronizing Threads]()
+    - [Locking Resources]()
+    - [The Thread Stack]()
+    - [Threading Internals]()
     - [Shared Data]()
+    - [Annotations]()
 
-  - [Generics]()
+  - [Async Compute]()
 
-  - [Compile-Time Evaluation]()
+  - [FIP Internals & IM authoring]()
 
-  - [Blueprints]()
+  - [DIMA Internals]()
 
-  - [Interoperability]()
+    - [Slots]()
+    - [Blocks]()
+    - [Heads]()
+    - [Defragmentation]()
+    - [Slot Pinning]()
+    - [Annotations]()
 
-  - [Advanced Memory Concepts (DIMA)]()
+  - [DOCP Internals]()
+
+    - [Compile-Time Dispatch Tables]()
+    - [Entity Call Dispatch]()
