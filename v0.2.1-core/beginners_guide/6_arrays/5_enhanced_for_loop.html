@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Enhanced for Loop - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="enhanced-for-loops"><a class="header" href="#enhanced-for-loops">Enhanced for Loops</a></h1>
+<p>Enhanced for loops are for loops without explicitely declaring a range, but instead they directly operate on a so-called <strong>iterable</strong>. They are extremely useful for iterating through arrays, as enhanced for loops will <strong>always</strong> iterate through a multidimensional array <em>sequentially</em>.</p>
+<p>Here is a small example:</p>
+<pre><code class="language-ft">use Core.print
+
+def main():
+    i32[] arr = i32[5](0);
+    // First, fill the array with meaningful values
+    for i := 0; i &lt; arr.length; i++:
+        arr[i] = i * 2;
+
+    // Iterate through the array element by element
+    for (idx, elem) in arr:
+        print($"Index {idx}, Value {elem}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>Index 0, Value 0
+Index 1, Value 2
+Index 2, Value 4
+Index 3, Value 6
+Index 4, Value 8
+</code></pre>
+</blockquote>
+<p>Okay, lets go through everything about the enhanced for loops one by one. You surely wonder what this <code>(idx, elem)</code> is, and why it looks like a group, right? Well, because it is! When iterating through an iterable we <em>always</em> get the index as the first value of the iteration context (the group) and the element at that index as the second value of the iteration context.</p>
+<p>Note that <code>elem</code> is a <strong>mutable reference</strong> to the array element. So, writing <code>elem = ...</code> is the same as if you would write <code>arr[..] = </code>. Here is an example:</p>
+<pre><code class="language-ft">use Core.print
+
+def main():
+    i32[] arr = i32[5](0);
+    // First, fill the array with meaningful values
+    for (idx, elem) in arr:
+        elem = idx * 2;
+
+    // Iterate through the array element by element
+    for (idx, elem) in arr:
+        print($"Index {idx}, Value {elem}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>Index 0, Value 0
+Index 1, Value 2
+Index 2, Value 4
+Index 3, Value 6
+Index 4, Value 8
+</code></pre>
+</blockquote>
+<p>As you can see, modifying <code>elem</code> directly modifies the array at the current index inplace. This is <em>extremely</em> powerful for mutli-dimensional arrays, because yes, multidimensional arrays are considered iterables too!</p>
+<h2 id="not-using-index-or-elem"><a class="header" href="#not-using-index-or-elem">Not using index or elem</a></h2>
+<p>We can opt out of using the <code>index</code> or <code>elem</code> variables for enhanced for loops entirely through the <code>_</code> operator. Again, it is used in the context of <code>unused</code> here. Here is a small example:</p>
+<pre><code class="language-ft">use Core.print
+
+def main():
+    i32[] arr = i32[5](0);
+    // Just fill the array with stuff
+    for (idx, elem) in arr:
+        elem = idx * 2;
+
+    // Ignoring the index value in the enhanced for loop
+    for (_, elem) in arr:
+        print($"elem is {elem}\n");
+
+    // Ignoring the elem in the enhanced for loop
+    for (idx, _) in arr:
+        print($"Iteration {idx}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>elem is 0
+elem is 2
+elem is 4
+elem is 6
+elem is 8
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+</code></pre>
+</blockquote>
+<h2 id="iterating-through-mutlidimensional-arrays"><a class="header" href="#iterating-through-mutlidimensional-arrays">Iterating through Mutlidimensional Arrays</a></h2>
+<p>As multidimensional arrays are also considered <strong>iterables</strong> we can use the enhanced for loop on multi-dimensional arrays just like we did with the nested for loops:</p>
+<pre><code class="language-ft">use Core.print
+
+def main():
+    i32[,] plane = i32[3, 3](0);
+
+    for (index, elem) in plane:
+        elem = i32(index);
+
+    for y := 0; y &lt; 3; y++:
+        for x := 0; x &lt; 3; x++:
+            print($"plane[{x}, {y}] = {plane[x, y]}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>plane[0, 0] = 0
+plane[1, 0] = 1
+plane[2, 0] = 2
+plane[0, 1] = 3
+plane[1, 1] = 4
+plane[2, 1] = 5
+plane[0, 2] = 6
+plane[1, 2] = 7
+plane[2, 2] = 8
+</code></pre>
+</blockquote>
+<p>As you can see, using the enhanced for loop for multi-dimensional arrays yields both the best performance, as we iterate sequentially through the whole array, we have an easy counter to see in which iteration we are and we can modify each element of the multi-dimensional array one by one. If you ever need to modify each element of the array without necessarily needing the positional information (<code>x</code> and <code>y</code> in our case) enhanced for loops are your friend!</p>
+<h2 id="iteration-context"><a class="header" href="#iteration-context">Iteration Context</a></h2>
+<p>It was said earlier that the group with the index and the element is called the <strong>iteration context</strong> but what does this mean and why does it have a name? Its actually pretty simple: Because this context can be a tuple variable as well!</p>
+<p>The <code>index</code> of the iteration context is always a <code>const</code> variable, while the <code>elem</code> of it is always a <code>mut</code> "variable" (its a reference). The iteration context as a tuple itself is <code>const</code>, and the <code>elem</code> field of it (the second field of the tuple) is not a mutable reference anymore, but its an immutable copy (for primitives) or an immutable reference (for complex data types) instead. This means that when using a tuple as the iteration context, we can no longer change the iterable directly through the <code>elem</code> reference. Here is an example:</p>
+<pre><code class="language-ft">use Core.print
+
+def main():
+    i32[] arr = i32[5](0);
+    // First, initialize the array, as always
+    for (idx, elem) in arr:
+        elem = idx * 2;
+
+    for ctx in arr:
+        print($"{ctx.$0}: {ctx.$1}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>0: 0
+1: 2
+2: 4
+3: 6
+4: 8
+</code></pre>
+</blockquote>
+<h2 id="enhanced-for-loop-for-strings"><a class="header" href="#enhanced-for-loop-for-strings">Enhanced for loop for strings</a></h2>
+<p>You can also iterate over a string using the enhanced for loop, just like you can for arrays. Here is an example of this in action:</p>
+<pre><code class="language-ft">use Core.print
+
+def main():
+    str my_string = "something useful";
+    for (idx, elem) in my_string:
+        if idx == 2 or idx == 4:
+            // The difference between upcase and lowercase is 32
+            u8 tmp_elem = elem;
+            elem = tmp_elem - u8(32);
+
+    print($"my_string = '{my_string}'\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>my_string = 'soMeThing useful'
+</code></pre>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/6_arrays/4_multidimensional_arrays.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../beginners_guide/6_arrays/6_cli_arguments.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/6_arrays/4_multidimensional_arrays.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../beginners_guide/6_arrays/6_cli_arguments.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
