@@ -7,9 +7,6 @@ echo "WIKI: $WIKI"
 # $1 - The version name of the book, e.g. v0.1.6-core
 # $2 - The hash of the book to build
 build_book() {
-	if ! [ -d "tmp" ]; then
-		git clone "https://github.com/flint-lang/flint-lang.github.io.git" "$WIKI/tmp"
-	fi
 	cd "$WIKI/tmp"
 	git checkout -f "$2"
 	cd ..
@@ -35,7 +32,7 @@ build_book() {
 	mdbook build -d "$WIKI/build/$1" "$WIKI/tmp/wiki"
 
 	echo "-- Adding the Flint syntax highlighter..."
-	cat "flint_highlight.js" >> "$WIKI/build/$1/highlight.js"
+	cat "$WIKI/flint_highlight.js" >> "$WIKI/build/$1/highlight.js"
 }
 
 build_latest() {
@@ -44,12 +41,12 @@ build_latest() {
 	mdbook build -d "$WIKI/build/latest" "$WIKI"
 
 	echo "-- Adding the Flint syntax highlighter..."
-	cat "flint_highlight.js" >> "$WIKI/build/latest/highlight.js"
+	cat "$WIKI/flint_highlight.js" >> "$WIKI/build/latest/highlight.js"
 
 	echo "-- Adding the Flint theme..."
 	mkdir -p "$WIKI/build/latest/theme"
-	cp "theme/flint.css" "$WIKI/build/latest/theme"
-	cp "theme/flint-highlight.css" "$WIKI/build/latest/theme"
+	cp "$WIKI/theme/flint.css" "$WIKI/build/latest/theme"
+	cp "$WIKI/theme/flint-highlight.css" "$WIKI/build/latest/theme"
 
 	echo "-- Adding the Version Selector..."
 	cp "$WIKI/version_select.css" "$WIKI/build/latest"
@@ -57,9 +54,14 @@ build_latest() {
 	cp "$WIKI/version_select.js" "$WIKI/build/latest"
 }
 
+# Ensure that the tmp directory exists and that we have cloned the wiki into it
+if ! [ -d "$WIKI/tmp" ]; then
+	git clone "https://github.com/flint-lang/flint-lang.github.io.git" "$WIKI/tmp"
+fi
+
 # First ensure that we are at the latest version
 cd "$WIKI/tmp"
-git checkout main
+git checkout -f main
 git clean -fd
 git reset
 git fetch
