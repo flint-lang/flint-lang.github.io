@@ -4,7 +4,10 @@
 
 # User Guide
 
-- [Installation](./user_guide/installation.md)
+- [Setup](./user_guide/setup.md)
+  - [Installation](./user_guide/setup/installation.md)
+  - [Syntax Highlighting](./user_guide/setup/syntax_highlighting.md)
+  - [Language Server Setup](./user_guide/setup/fls_setup.md)
 
 # Syntax Cheatsheet
 
