@@ -1,28 +1,30 @@
 # Access Patterns
 
-Ranges allow you to **access segments** of an array or extract slices. This is especially powerful for creating subsets of arrays.
-
-## Using Ranges
-
-- **Closed Ranges**: Specify a start and end (both inclusive).
+But ranges can not only be used for string slicing, but for array slicing too. It pretty much works exactly the same as when slicing strings, and it even has the absolute same syntax, since strings are more or less character arrays under the hood too.
 
 ```ft
-int[] slice = arr[2..4]; // Elements from index 2 to 4 (inclusive)
+use Core.print
+
+def main():
+	i32[] arr = i32[10](0);
+	for (idx, elem) in arr:
+		elem = idx + 1;
+
+	i32[] slice = arr[2..8];
+	print($"slice.length = {slice.length}\n");
+	for (idx, elem) in slice:
+		print($"slice[{idx}] = {elem}\n");
 ```
 
-- **One-Sided Ranges**: Leave one side open to indicate "to the start" or "to the end."
+This program will print these lines to the console:
 
-```ft
-int[] slice = arr[3..]; // All elements from index 3 to the end
-int[] slice = arr[..2]; // All elements from the start to index 2
-```
+> ```
+> slice.length = 6
+> slice[0] = 3
+> slice[1] = 4
+> slice[2] = 5
+> slice[3] = 6
+> slice[4] = 7
+> slice[5] = 8
+> ```
 
-- **Open Ranges**: Open on both sides, indicating **all elements**.
-
-```ft
-int[] slice = arr[..]; // Equivalent to copying the whole array
-```
-
-## Extracted Slices are Copies
-
-When using ranges, Flint always creates a **new array** as a copy of the slice.

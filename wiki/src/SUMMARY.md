@@ -67,9 +67,9 @@
     - [Multidimensional Arrays](./beginners_guide/6_arrays/4_multidimensional_arrays.md)
     - [Enhanced for Loop](./beginners_guide/6_arrays/5_enhanced_for_loop.md)
     - [CLI Arguments](./beginners_guide/6_arrays/6_cli_arguments.md)
-    - [The range Type]()
-    - [Access Patterns]()
-    - [Multidimensional Access Patterns]()
+    - [Ranges](./beginners_guide/6_arrays/7_ranges.md)
+    - [Access Patterns](./beginners_guide/6_arrays/8_access_patterns.md)
+    - [Multidimensional Access Patterns](./beginners_guide/6_arrays/9_multidimensional_access_patterns.md)
 
   - [Imports](./beginners_guide/7_imports.md)
 
