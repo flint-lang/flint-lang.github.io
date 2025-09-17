@@ -1,0 +1,343 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Multidimensional Arrays - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="multidimensional-arrays"><a class="header" href="#multidimensional-arrays">Multidimensional Arrays</a></h1>
+<p>Flint supports <strong>multidimensional arrays</strong>. In Flint, these arrays are <strong>always rectangular</strong>, meaning that the length of each dimension is locked, unlike <em>jagged arrays</em>, which behave more like "array of arrays". Multidimensional Arrays are particularly useful for storing grid-like data, such as images or matrices.</p>
+<h2 id="declaring-multidimensional-arrays"><a class="header" href="#declaring-multidimensional-arrays">Declaring Multidimensional Arrays</a></h2>
+<p>The number of commas between the brackets of the array type directly indicates the dimensionality of an array. So, the array <code>i32[]</code> is a one-dimensional array (we have one "line" of values), then <code>i32[,]</code> is a two-dimensional array (we have a "plane" of values), <code>i32[,,]</code> is a three-dimensional array (we have a "cube" of values) and so on. There is no limit to how high the dimensionality of an array can be, really. We start with dimensionality of <code>1</code> because a dimensionality of <code>0</code> is already defined: its a single value, so <code>i32</code> is "an array of 0 dimensionality" if you want to see it like this.</p>
+<p>When declaring a multi-dimensional array we use the same syntax as for "normal" arrays, with the same default-value that gets put into all elements of the array as usual:</p>
+<pre><code class="language-ft">def main():
+    // 2D array
+    i32[,] plane = i32[10, 10](0);
+    // 3D array
+    i32[,,] cube = i32[10, 10, 10](0);
+</code></pre>
+<p>Here, we defined the <code>plane</code> array to be of size <code>10 × 10</code>, which means there can be stored <code>100</code> elements in this two-dimensional array. We also defined the <code>cube</code> array to be of size <code>10 × 10 × 10</code>, which means there can be stored <code>1000</code> elements in this three-dimensional array.</p>
+<h2 id="accessing-multidimensional-arrays"><a class="header" href="#accessing-multidimensional-arrays">Accessing Multidimensional Arrays</a></h2>
+<p>To access and assign elements at a given index we need to specify the index of each dimensionality explicitely. For our plane, this would mean that we need to specify the "row" and the "column" of the plane, or the "x" and the "y" coordinates (if the plane is seen as a coordinate plane).</p>
+<pre><code class="language-ft">use Core.print
+
+def main():
+    i32[,] plane = i32[10, 10](0);
+    // Set the element at row 1, column 2
+    plane[1, 2] = 10;
+    print($"plane[1, 2] = {plane[1, 2]}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>plane[1, 2] = 10
+</code></pre>
+</blockquote>
+<h2 id="getting-the-lengths-of-multi-dimensional-arrays"><a class="header" href="#getting-the-lengths-of-multi-dimensional-arrays">Getting the lengths of multi-dimensional arrays</a></h2>
+<p>In the last chapter we talked about how we can access the length of strings and arrays by the <code>.length</code> field on them. This also is true for multi-dimensional arrays. But we have more than one dimension, so how is it possible to get the lengths in one <code>u64</code> variable? Thats a good question, and the answer is very simple: we don't.</p>
+<p>Instead, when accessing the <code>.length</code> field of an array we <em>actually</em> get a group of size <code>N</code>, where <code>N</code> is the dimensionality of the array. So, if we access the <code>.length</code> field of an one-dimensional array we get a group of size 1, so we get one <code>u64</code> value. If we access the <code>.length</code> field on the <code>plane</code> array we will get a <code>(u64, u64)</code> group as a return, and if we access the length of a 3D array like our <code>cube</code> we will get a <code>(u64, u64, u64)</code> group as the lengths value, one value for each dimension:</p>
+<pre><code class="language-ft">use Core.print
+
+def main():
+    i32[,] plane = i32[10, 20](0);
+    (x, y) := plane.length;
+    print($"plane.length = ({x}, {y})\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>plane.length = (10, 20)
+</code></pre>
+</blockquote>
+<h2 id="iterating-over-multidimensional-arrays"><a class="header" href="#iterating-over-multidimensional-arrays">Iterating over Multidimensional Arrays</a></h2>
+<p>Now that we know how to access the lengths of a multi-dimensional array we also can iterate through the array. And for this very reason we need to discuss <strong>row-major</strong> vs <strong>column-major</strong> formats. In Flint, arrays are <strong>always</strong> stored in row-major format, but what does this mean and why is it important?</p>
+<p>The array format describes how elements are layed out in memory. Multi-dimensional arrays are essentially "fake"... and in this small section you will also learn why the distinction between the <code>str</code> type and the <code>u8[]</code> type is important. Lets get started then...</p>
+<p>Multi-dimensional arrays are "fake" because the values are <em>still</em> stored in <strong>one</strong> contiguous line in memory. Lets look at this easy example here to understand it better: a <code>i32[,]</code> array where each dimensionality has the size of <code>3</code>. Below is a small table in which we give every element a unique ID, from top left to bottom right. We actually start counting at the top left at 0:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center"></th><th style="text-align: center"><code>X0</code></th><th style="text-align: center"><code>X1</code></th><th style="text-align: center"><code>X2</code></th></tr></thead><tbody>
+<tr><td style="text-align: center"><code>Y0</code></td><td style="text-align: center">0</td><td style="text-align: center">1</td><td style="text-align: center">2</td></tr>
+<tr><td style="text-align: center"><code>Y1</code></td><td style="text-align: center">3</td><td style="text-align: center">4</td><td style="text-align: center">5</td></tr>
+<tr><td style="text-align: center"><code>Y2</code></td><td style="text-align: center">6</td><td style="text-align: center">7</td><td style="text-align: center">8</td></tr>
+</tbody></table>
+</div>
+<p>What this table tells us is that <code>arr[0, 2]</code> would be the value of <code>6</code> (x = 0, y = 2). Okay, so the difference between row-major and column-major is this one:</p>
+<p>In <strong>Row-Major</strong> format, the array is stored in memory like this:</p>
+<pre><code>0 1 2 3 4 5 6 7 8
+</code></pre>
+<p>In <strong>Column-Major</strong> format, the array is stored in memory like this:</p>
+<pre><code>0 3 6 1 4 7 2 5 8
+</code></pre>
+<p>Note that the numbers that have been chosen do not matter at all, they are just to showcase how it works under the hood. For you, it actually doesn't really matter if it would be saved in row-major or column-major format, if you access arr[0, 2] you would get the same value (<code>X0</code>, <code>Y2</code>) for both formats, its just a matter of how it's saved to memory. But this very reason, how it is saved to memory, is really important for one and only one reason: <strong><em>performance</em></strong>.</p>
+<p>You see, when we iterate over an array we can choose between those two methods:</p>
+<pre><code class="language-ft">use Core.print
+
+def main():
+    i32[,] mat = i32[3, 3](0);
+    i32 n = 0;
+    // Row-major looping + fills the array
+    for i32 y = 0; y &lt; 3; y++:
+        for i32 x = 0; x &lt; 3; x++:
+            mat[x, y] = n;
+            print($"mat[{x}, {y}] = {mat[x, y]}\n");
+            n++;
+
+    // Print one empty line in between
+    print("\n");
+
+    // Column-major looping
+    for i32 x = 0; x &lt; 3; x++:
+        for i32 y = 0; y &lt; 3; y++:
+            print($"mat[{x}, {y}] = {mat[x, y]}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>mat[0, 0] = 0
+mat[1, 0] = 1
+mat[2, 0] = 2
+mat[0, 1] = 3
+mat[1, 1] = 4
+mat[2, 1] = 5
+mat[0, 2] = 6
+mat[1, 2] = 7
+mat[2, 2] = 8
+
+mat[0, 0] = 0
+mat[0, 1] = 3
+mat[0, 2] = 6
+mat[1, 0] = 1
+mat[1, 1] = 4
+mat[1, 2] = 7
+mat[2, 0] = 2
+mat[2, 1] = 5
+mat[2, 2] = 8
+</code></pre>
+</blockquote>
+<p>As you can see, the two looping techniques directly correlate to the order the elements are stored in memory for the examples i have provided you with above. But what is more performant now? If you access the element at <code>mat[1, 2]</code> you are actually accessing the <code>8th</code> element of the array (when starting to count at <code>1</code> here). Because in row-major format, when accessing the element at the third row (y is the row, x is the column) we first need to go through all elements of the two rows that came before it, which is <code>6</code> elements.</p>
+<p>So, you may be able to see now that the index at which we would read memory from would constantly jump between positions when iterating through an array using column-major looping whereas when we loop through the array using row-major looping we go through all indices of the two-dimensional array one by one. This is called a <strong>sequentail operation</strong> and the other one is called a <strong>random operation</strong> in computer science. The CPU is <strong>much</strong> more performant with sequential operations than it is with random operations, as it is not as prone to <strong>cache-misses</strong> with sequential loads. If you want to read more about this topic, look <a href="https://www.hostinger.com/uk/tutorials/cache-miss">here</a>.</p>
+<p>TLDR: The row-major loop properly utilizes the CPU cache and reduces cache-misses, making the operations <em>much</em> faster in return.</p>
+<p>Before you wonder why i told you all of this, everything i talked about becomes important in the next chapter!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/6_arrays/3_strings.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../beginners_guide/6_arrays/5_enhanced_for_loop.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/6_arrays/3_strings.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../beginners_guide/6_arrays/5_enhanced_for_loop.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
