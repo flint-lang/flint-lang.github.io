@@ -5,9 +5,10 @@
 # User Guide
 
 - [Setup](./user_guide/setup.md)
-  - [Installation](./user_guide/setup/installation.md)
-  - [Syntax Highlighting](./user_guide/setup/syntax_highlighting.md)
-  - [Language Server Setup](./user_guide/setup/fls_setup.md)
+  - [Installation](./user_guide/setup/1_installation.md)
+  - [Syntax Highlighting](./user_guide/setup/2_syntax_highlighting.md)
+  - [Language Server Setup](./user_guide/setup/3_fls_setup.md)
+  - [FIP Setup](./user_guide/setup/4_fip_setup.md)
 
 # Syntax Cheatsheet
 
