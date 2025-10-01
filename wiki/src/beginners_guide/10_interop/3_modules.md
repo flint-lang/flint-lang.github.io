@@ -1,28 +1,16 @@
 # Interop Modules
 
-Interop Modules (IMs) are the small individual pieces which are repsponsible for external languages. For this chapter we will focus on the `fip-c` IM. So, the project from the previous page is still broken and results in a compilation error, and we now want to fix that situation. FIP is based on the idea of IMs, and which IMs are available is entirely project-dependent, not system-dependent. The IMs are generally pretty small, the `fip-c` module, for example, is only `170 KB` in size.
+Interop Modules (IMs) are the small individual pieces which are repsponsible for external languages. For this chapter we will focus on the `fip-c` IM. So, the project from the previous page is still broken and results in a compilation error, and we now want to fix that situation.
 
-Based on the fact that IMs are very small, the decision has been made to make IMs entirely project-dependant. This means that IMs cannot be installed system-wide, but need to be provided in every project that uses them. So, let's go about fixing the problem from the last chapter. You need to crate yet another directory withing the `.fip` directory: `modules`. You then need to go to the fip releases page [here](https://github.com/flint-lang/fip/releases) and download the `fip-c` executable. You need to put that executable into the `modules` directory. You also need to create a `cache` directory, but you can keep it empty. Your folder structure should look like this now:
+If you have not installed the `fip-c` IM yet, please follow the instructions in the [FIP Setup](user_guide/setup/4_fip_setup.md) page and then continue on with this chapter when FIP is installed.
 
-```
-.fip/
- ├─ cache/
- ├─ config/
- │   ├─ fip.toml
- │   └─ fip-c.toml
- └─ modules/
-     └─ fip-c
-hello.h
-main.ft
-```
-
-And now, finally, when running the command
+Now, with the `fip-c` IM installed, we can try to run the command again:
 
 ```sh
 flintc --file main.ft
 ```
 
-yet again. Because compilation now succeeded, you will see absolutely no output, but the `main` executable has been created. When running the compiled program you will see this line printed to the console:
+Because compilation now succeeded, you will see absolutely no output, but the `main` executable has been created. When running the compiled program you will see this line printed to the console:
 
 ```
 Hello from C!
@@ -35,7 +23,7 @@ That was a lot to do just to get interop up and running, I admit that. But this 
 enable = true
 ```
 
-This essentially tells the compiler to search for the `fip-c` module in the `.fip/modules/` directory and to start it when the compiler starts up. It essentially tells the compiler that the module exists and should be used by it. And then we have the `fip-c.toml` file. It only contains three entires, which are all not special at all:
+This essentially tells the compiler to search for the `fip-c` module in the `$HOME/.local/fip/modules/` (or `%LOCALAPPDATA%\fip\modules\` on Windows) directory and to start it when the compiler starts up. It essentially tells the compiler that the module exists and should be used by it. And then we have the `fip-c.toml` file. It only contains three entires, which are all not special at all:
 
 ```toml
 compiler = "gcc"
@@ -43,7 +31,11 @@ sources = ["hello.h"]
 compile_flags = []
 ```
 
-The `compiler` field tells the `fip-c` module which compiler to use to compile the C source file(s), in our case it's `gcc`. And then we have the `sources` field. It's an array of filepaths to all the header or source files we interact with and we want to call into. You may noticed that we have not written any bindings or wrappers for the C functions at all, we just declared a function to be extern and then used it inside of Flint, and FIP figured out the rest for us. Okay, let's edit our header file and add another function to it, this time adding two numbers together:
+The `compiler` field tells the `fip-c` module which compiler to use to compile the C source file(s), in our case it's `gcc`.
+
+If you are on Windows then you would need a C compiler and possibly a Developer PowerShell from the VS setup. So, you need to handle how to compile the extern language, like C, by yourself on Windows. On Linux, `gcc` is just available in the `PATH` variable and no setup is required from Your side.
+
+Next we have the `sources` field. It's an array of filepaths to all the header or source files we interact with and we want to call into. You may noticed that we have not written any bindings or wrappers for the C functions at all, we just declared a function to be extern and then used it inside of Flint, and FIP figured out the rest for us. Okay, let's edit our header file and add another function to it, this time adding two numbers together:
 
 ```
 #include <stdio.h>
@@ -74,7 +66,11 @@ And when we then try to compile this program we get yet another error:
 
 > ```
 > [Master]:  The function 'add' could not be resolved
-> Error: Failed to parse file "main.ft"
+> Parse Error at test_files/test_minimal.ft:4:1
+> └─┬┤E0000│
+> 4 │ extern def add(i32 x, i32 y) -> i32;
+> ┌─┴─┘
+> └─ Extern function could not be found in any FIP module
 > ```
 
 <div class="warning">
@@ -111,7 +107,7 @@ And here you can actually see what the problem is. It's a signature mismatch.
 
 </div>
 
-Remember that all function parameters of Flint are implicitely `const` except marked as `mut` explicitely, and that's exactly the mismatch happening here. The `fip-c` module found the function `int add(int x, int y)` which has the signature `add(mut i32, mut i32) -> i32` in C, and we expected to find a function `add(const i32, const i32) -> i32` defined in Flint. To resolve this problem we either need to edit the C code or edit the signature of our Flint function. Often times you will deal with C libraries you will not be able to change, so changing the Flint function signature would be the "correct" thing to do in such cases, so we now simply change this line:
+Remember that all function parameters of Flint are implicitely `const` except marked as `mut` explicitely, and that's exactly the mismatch happening here. The `fip-c` module found the function `int add(int x, int y)` which has the signature `add(mut i32, mut i32) -> i32` in C, and we expected to find a function `add(const i32, const i32) -> i32` defined in Flint. To resolve this problem we either need to edit the C code or edit the signature of our Flint function. Often times you will deal with C libraries you will not be able to change, so changing the Flint function signature would be your only option in such cases, so we now simply change this line:
 
 ```ft
 extern def add(i32 x, i32 y) -> i32;
