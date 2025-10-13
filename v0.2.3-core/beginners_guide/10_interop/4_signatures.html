@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Signatures - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="signatures"><a class="header" href="#signatures">Signatures</a></h1>
+<p>First, we need to get a basic fact about FIP out of the way. Because C has evolved more or less into an interop standard over the years, nearly all types of all languages are somewhat translatable to C types, and the FIP is definitely based on that. FIP can <em>only</em> express types which are also present in C, which means it <em>could</em> essentially represent <em>every</em> possible type of a language. But for simplicity and other reasons (like memory safety), interoperability of a few types is prohibited. These are the prohibited types, which you <strong>cannot</strong> have contained inside of extern definitions:</p>
+<ul>
+<li><code>entity</code> types</li>
+<li><code>func</code> types</li>
+<li><code>optional</code> types</li>
+<li><code>variant</code> types</li>
+<li><code>fn</code> types</li>
+<li><code>bp</code> types</li>
+</ul>
+<p>These types are prohibited because other languages may define them in a different way, so when you call a function from Rust which has an <code>Option&lt;T&gt;</code> argument type and you set the extern signature in Flint to <code>T?</code> we cannot guarantee that both ends convey to the same type under the hood, as C has no concept of optionals.</p>
+<p>Many of those types will be introduced in later chapters, don't worry about them for now. But let's get into the topic of this chapter now and let's discuss how each Flint type will translate into C types. This is done through tables, it's just the most convenient and efficient this way.</p>
+<h2 id="primitives"><a class="header" href="#primitives">Primitives</a></h2>
+<p>The first and most logical beginning point are primitive types. The only outlier are strings essentially, but let's look at each type.</p>
+<div class="table-wrapper"><table><thead><tr><th>Flint Type</th><th>C Eqivalent</th></tr></thead><tbody>
+<tr><td>bool</td><td>bool</td></tr>
+<tr><td>u8</td><td>unsigned char</td></tr>
+<tr><td>u32</td><td>unsigned int</td></tr>
+<tr><td>u64</td><td>unsigned long</td></tr>
+<tr><td>i32</td><td>int</td></tr>
+<tr><td>i64</td><td>long</td></tr>
+<tr><td>f32</td><td>float</td></tr>
+<tr><td>f64</td><td>double</td></tr>
+<tr><td>str</td><td>char*</td></tr>
+</tbody></table>
+</div>
+<p>Of course, all the types on the left and right do not match in their mutability, as of the last example. To change the C mutability you can simply put <code>const</code> in front, and on Flint you can put <code>mut</code> or <code>const</code> in front.</p>
+<p>Re-sizing and relocating the string inside of C will result in a crash inside of Flint, as the string it pointed to is no longer valid, so be aware that interoping with C could very well break stuff in wonky ways.</p>
+<h2 id="data"><a class="header" href="#data">Data</a></h2>
+<p>Flint's data is essentially a struct annyway, so interop with C is very easy. This following data type:</p>
+<pre><code class="language-ft">use Core.print
+
+data MyData:
+    i32 x;
+    i32 y;
+    f32 speed;
+    bool is_something;
+    MyData(x, y, speed, is_something);
+
+extern def do_something(MyData md) -&gt; MyData;
+
+def main():
+    md := MyData(10, 10, 3.2, false);
+    print($"md.(x, y, s, i) = ({md.x}, {md.y}, {md.speed}, {md.is_something})\n");
+    md = do_something(md);
+    print($"md.(x, y, s, i) = ({md.x}, {md.y}, {md.speed}, {md.is_something})\n");
+</code></pre>
+<p>is directly translatable to this C struct type:</p>
+<pre><code>typedef struct {
+    int x, y;
+    float speed;
+    bool is_something;
+} MyData;
+
+MyData do_something(const MyData md) {
+    MyData result = {0};
+    result.x = md.x + 2;
+    result.y = md.y + 5;
+    result.speed = md.speed / 2;
+    result.is_something = true;
+    return result;
+}
+</code></pre>
+<p>This code will produce this output:</p>
+<blockquote>
+<pre><code>md.(x, y, s, i) = (10, 10, 3.2, false)
+md.(x, y, s, i) = (12, 15, 1.6, true)
+</code></pre>
+</blockquote>
+<p>So, a function expecting a struct as it's parameter in C can be called like above directly. Note that there exists a specific chapter talking about pointer types, so the C function <code>MyData do_something(const MyData *md)</code> will have a different Flint signature, but you will learn about this later.</p>
+<p>FIP handles all the ABI-specifics for you, so you can call into C functions and pass structs to them without ever writing any bindings yourself.</p>
+<p>But there is more to talk about. First of all, FIP absolutely does not care what <em>names</em> you gave your structs. The <code>MyData</code> type will look like this for FIP: <code>{ i32, i32, f32, bool }</code>. The <code>{</code> and <code>}</code> are the structure symbols, all types within these are members of the struct FIP handles. So, this means that you can do something like this without a problem:</p>
+<pre><code class="language-ft">use Core.print
+
+data MyData:
+    i32 x;
+    i32 y;
+    f32 speed;
+    bool is_something;
+    MyData(x, y, speed, is_something);
+
+data SomeData:
+    i32 x;
+    i32 y;
+    f32 z;
+    bool w;
+    SomeData(x, y, z, w);
+
+extern def do_something(MyData md) -&gt; MyData;
+extern def do_something(SomeData md) -&gt; SomeData;
+
+def main():
+    md := MyData(10, 10, 3.2, false);
+    print($"md.(x, y, s, i) = ({md.x}, {md.y}, {md.speed}, {md.is_something})\n");
+    md = do_something(md);
+    print($"md.(x, y, s, i) = ({md.x}, {md.y}, {md.speed}, {md.is_something})\n");
+
+    sd := SomeData(10, 10, 3.2, false);
+    print($"sd.(x, y, s, i) = ({sd.x}, {sd.y}, {sd.z}, {sd.w})\n");
+    sd = do_something(sd);
+    print($"sd.(x, y, s, i) = ({sd.x}, {sd.y}, {sd.z}, {sd.w})\n");
+</code></pre>
+<p>Note that the C header file stayed exactly the same, it did not change. We actually call <strong>the same</strong> C function twice, just with "different" data. They are different data types in Flint, but what FIP is concerned, they are both just <code>{ i32, i32, f32, bool }</code> without any name. Conceptually this should work, but we have decided to not let this code be valid, because the moment you try to reference the same external C function twice through different code paths, the codebase becomes <em>really</em> messy <em>really</em> quick. So, this example should work conceptually, but it will result in this compile error:</p>
+<blockquote>
+<pre><code>Generation Error at main.ft:18:1
+└──┬┤E0000│
+18 │ extern def do_something(SomeData md) -&gt; SomeData;
+┌──┴─┘
+├─ Defined extern function 'do_something' twice
+└─ It was first defined at main.ft:17:1
+</code></pre>
+</blockquote>
+<p>There is no reason to why it could not work, other than compiler internal complexity and resulting code complexity. If you want to call the same underlying external functions from two different types, you have done something wrong when designing your code, so this definitely is not the fault of FIP or the Flint Compiler.</p>
+<h2 id="multi-types"><a class="header" href="#multi-types">Multi-Types</a></h2>
+<p>Flint has builtin vector types, the multi-types, as you know. These types are actually represented as true vector types inside of LLVM IR code, nut just structs, but C does not have true vector types (native to the language, without compiler extensions). So we cannot add vector types to FIP since C does not have them, and FIP has to be C-compatible with it's internal types, as discussed earlier. Which type should multi-types be converted to, then? Well, they are just converted to simple structs before passing them to C. The multi-type <code>f32x3</code> becomes <code>{ f32, f32, f32 }</code> for example, or <code>i64x2</code> becomes <code>{ i64, i64 }</code>. There really is nothing special about it at all, but the complications of this design are very nice.</p>
+<p>You see, A LOT of different libraries, especially those related to math, rendering or something vector-related provide their own types, like raylib's <code>Vector3</code> struct, for example. So, this allows us to write something like the following:</p>
+<pre><code>typedef struct {
+    float x, y, z;
+} Vector3;
+
+Vector3 add(const Vector3 v1, const Vector3 v2) {
+    return Vector3{v1.x + v2.x, v1.y + v2.y, v1.z + v2.z};
+}
+</code></pre>
+<pre><code class="language-ft">use Core.print
+
+extern def add(f32x3 v1, f32x3 v2) -&gt; f32x3;
+
+def main():
+    f32x3 v1 = (1.2, 2.3, 4.5);
+    f32x3 v2 = (12.5, 66.8, 35.98);
+    f32x3 res = add(v1, v2);
+    print($"res = {res}\n");
+</code></pre>
+<p>Which will print this line to the console:</p>
+<blockquote>
+<pre><code>res = (13.7, 69.100006, 40.48)
+</code></pre>
+</blockquote>
+<p>So, what does this mean for Flint? Because multi-types are lowered to structs when calling extern functions, you can absolutely interacti with C functions and directly pass in your multi-type vectors to them or recieve them from the C functions. You could for example do all vector operations within Flint, since all multi-types utilize SIMD instructions under the hood, and then just pass them to the C code for rendering etc.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/10_interop/3_modules.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../intermediates_guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/10_interop/3_modules.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../intermediates_guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
