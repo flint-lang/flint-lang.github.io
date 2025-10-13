@@ -76,7 +76,7 @@ do
 	echo
 	echo "Name: ${fields[0]}, Hash: ${fields[1]}"
 	build_book "${fields[0]}" "${fields[1]}"
-done < <(tail -n +2 versions.csv)
+done < <(cat versions.csv | grep -v "^$")
 
 rm -rf "$WIKI/build/latest"
 echo "$1"
