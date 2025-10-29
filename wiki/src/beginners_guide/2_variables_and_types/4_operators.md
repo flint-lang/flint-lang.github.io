@@ -82,18 +82,18 @@ But, in a nutshell, any floating point number comes with a specific level of **i
 use Core.print
 
 def main():
-    f64 val = 0.05;
-    val += 0.3;
-    print($"0.05 + 0.3 = {val}\n");
-    print($"{val} == 0.35 ? {val == 0.35}\n");
+    f64 val = 0.3;
+    val += 0.6;
+    print($"0.3 + 0.6 = {val}\n");
+    print($"{val} == 0.9 ? {val == 0.9}\n");
 ```
 
 From this small program, you will see the output
 
 > ```
-> 0.05 + 0.3 = 0.350000012665987
+> 0.3 + 0.6 = 0.9
 >
-> 0.350000012665987 == 0.35 ? false
+> 0.9 == 0.9 ? false
 > ```
 
 Don't worry about that `$"{..}"` thing, its called _string interpolation_ and you will learn about it [shortly](./6_string_interpolation.md).

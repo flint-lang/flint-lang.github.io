@@ -9,7 +9,7 @@ variant MyVariant:
 	i32, f32, u64;
 
 def main():
-	MyVariant var = 5;
+	MyVariant var = i32(5);
 ```
 
 This program will compile fine, and will have no output when being run. But before we can go deeper into variants we first need to look how they are _actually_ stored in memory and how they work under the hood.

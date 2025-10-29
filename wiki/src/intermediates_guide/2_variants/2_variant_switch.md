@@ -15,10 +15,10 @@ def print_var(MyVariant var):
 		u64(u): print($"holds u64 value of {u}\n");
 
 def main():
-	MyVariant var = -5;
+	MyVariant var = i32(-5);
 	print_var(var);
 
-	var = 3.4;
+	var = f32(3.4);
 	print_var(var);
 
 	var = u64(55);
@@ -57,7 +57,7 @@ def set_u64(mut MyVariant var, u64 value):
 	var = value;
 
 def main():
-	MyVariant var = -5;
+	MyVariant var = i32(-5);
 	set_i32(var, -10);
 	print_var(var);
 
@@ -85,7 +85,7 @@ variant MyVariant:
 	i32, f32, u64;
 
 def main():
-	MyVariant var = -10;
+	MyVariant var = i32(-10);
 	switch var:
 		i32(v): print($"holds i32 value of {v}\n");
 		f32(v): print($"holds f32 value of {v}\n");
@@ -112,7 +112,7 @@ def main():
 	switch var:
 		bool8(v):
 			print($"holds bool8 value of {v}\n");
-			var = 47;
+			var = i32(47);
 			print($"holds bool8 value of {v}\n");
 		u8(v): print($"holds u8 value of {v}\n");
 		i32(v): print($"holds i32 value of {v}\n");

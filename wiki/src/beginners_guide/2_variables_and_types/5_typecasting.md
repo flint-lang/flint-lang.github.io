@@ -19,10 +19,10 @@ The compiler will throw an error like:
 > ┌─┴───────────────┘
 > └─ Type mismatch of expression
 >     ├─ Expected: i32
->     └─ But got:  f32
+>     └─ But got:  float
 > ```
 
-and it will tell you exactly what went wrong. The type of `i32` was expected, beause we want to store something of type `i32` in the variable `val`, but we provided a floating point number, which defaults to `f32`. So, we need to convert the type of `f32` to `i32` in this case.
+and it will tell you exactly what went wrong. The type of `i32` was expected, beause we want to store something of type `i32` in the variable `val`, but we provided a floating point number literal, which has the compile-time type of `float`. So, we need to convert the type of `float` to `i32` in this case.
 
 ## Explicit Typecasting
 

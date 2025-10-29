@@ -15,10 +15,10 @@ def print_var(MyVariant var):
 		data<i32, f32, bool8>(t): print($"holds tuple value of ({t.$0}, {t.$1}, {t.$2})\n");
 
 def main():
-	MyVariant var = -5;
+	MyVariant var = i32(-5);
 	print_var(var);
 
-	var = 3.4;
+	var = f32(3.4);
 	print_var(var);
 
 	// Flint currently has no way of using a group as the rhs of a variant assignment
@@ -51,10 +51,10 @@ def print_var(MyVariant var):
 		MyVariant.Tuple(t): print($"holds tuple value of ({t.$0}, {t.$1}, {t.$2})\n");
 
 def main():
-	MyVariant var = -5;
+	MyVariant var = i32(-5);
 	print_var(var);
 
-	var = 3.4;
+	var = f32(3.4);
 	print_var(var);
 
 	// Flint currently has no way of using a group as the rhs of a variant assignment
@@ -89,7 +89,7 @@ variant MyVariant:
 	Tuple, Tuple(u64, f64), i32;
 
 def main():
-	MyVariant var = 10;
+	MyVariant var = i32(10);
 	switch var:
 		Tuple(t): print($"Is Tuple: ({t.x}, {t.y}, {t.z})\n");
 		MyVariant.Tuple(t): print($"Is MyVariant.Tuple: ({t.$0}, {t.$1})\n");

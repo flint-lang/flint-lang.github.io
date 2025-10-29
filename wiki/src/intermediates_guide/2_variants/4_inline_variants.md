@@ -14,10 +14,10 @@ def print_var(variant<i32, f32, str> var):
 		str(s): print($"s = {s}\n");
 
 def main():
-	variant<i32, f32, str> var = -55;
+	variant<i32, f32, str> var = i32(-55);
 	print_var(var);
 
-	var = 3.14;
+	var = f32(3.14);
 	print_var(var);
 
 	var = str("Hello There");
@@ -54,7 +54,7 @@ data MyData:
 	MyData(flags, value);
 
 def main():
-	variant<i32, f32> var = -10;
+	variant<i32, f32> var = i32(-10);
 	MyData md = MyData(u8(0), var);
 	print($"flags = {md.flags}\n");
 	switch md.value:

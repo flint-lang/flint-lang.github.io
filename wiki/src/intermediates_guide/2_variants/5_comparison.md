@@ -4,7 +4,7 @@ We can compare variants with quite a few of different things. _Comparing_ means 
 
 ## Comparing Types
 
-We can compare a variant to a type to do a quick "does it hold that value" check:
+We can compare a variant to a type to do a quick "does it hold a value of that type" check:
 
 ```ft
 use Core.print
@@ -13,7 +13,7 @@ variant MyVar:
 	i32, f32, bool;
 
 def main():
-	MyVar var = 3.14;
+	MyVar var = f32(3.14);
 
 	if var == i32:
 		print("holds i32 value\n");
@@ -38,7 +38,7 @@ variant MyVar:
 	i32, f32, bool;
 
 def main():
-	MyVar var = 3.14;
+	MyVar var = f32(3.14);
 
 	switch var:
 		i32(v):  print("holds i32 value\n");
@@ -52,7 +52,7 @@ So, for that reason we can compare variants to types to see if it holds a value 
 
 ## Comparing Tags
 
-Just like we can compare a variant to it's type, we can compare a variant to it's tag to see if it holds a value of that type. As described in the chapter abour tagged variants, a variation with a tag **must** be accessed and checked through this tag.
+Just like we can compare a variant to it's type, we can compare a variant to it's tag to see if it holds a value of that type. As described in the chapter about tagged variants, a variation with a tag **must** be accessed and checked through the very same tag.
 
 ```ft
 use Core.print
@@ -61,7 +61,7 @@ variant MyVar:
 	Int(i32), Float(f32), bool;
 
 def main():
-	MyVar var = -7;
+	MyVar var = i32(-7);
 
 	if var == MyVar.Int:
 		print("holds Int value\n");
@@ -86,7 +86,7 @@ variant MyVar:
 	Int(i32), Float(f32), bool;
 
 def main():
-	MyVar var = 3.14;
+	MyVar var = f32(3.14);
 
 	switch var:
 		MyVar.Int(v):   print("holds Int value\n");
@@ -118,8 +118,8 @@ def main():
 	else:
 		print("differ\n");
 
-	var_1 = 5;
-	var_2 = 5;
+	var_1 = i32(5);
+	var_2 = i32(5);
 	if var_1 == var_2:
 		print("are equal\n");
 	else:
@@ -154,7 +154,7 @@ def main():
 	else:
 		print("hold different types\n");
 
-	var_1 = 5;
+	var_1 = i32(5);
 	if var_1.active_type == var_2.active_type:
 		print("hold the same type\n");
 	else:
@@ -199,8 +199,8 @@ def main():
 		print("equals i64(-5)\n");
 
 	i32 ten = 10;
-	var = 10;
-	if var == 7:
+	var = i32(10);
+	if var == i32(7):
 		print("equals 7\n");
 	else if var == ten:
 		print("equals ten\n");

@@ -10,8 +10,8 @@ use Core.print
 def main():
     i32[] arr = i32[5](0);
     // First, fill the array with meaningful values
-    for i := 0; i < arr.length; i++:
-        arr[i] = i * 2;
+    for u32 i = 0; i < arr.length; i++:
+        arr[i] = i32(i * 2);
 
     // Iterate through the array element by element
     for (idx, elem) in arr:
@@ -39,7 +39,7 @@ def main():
     i32[] arr = i32[5](0);
     // First, fill the array with meaningful values
     for (idx, elem) in arr:
-        elem = idx * 2;
+        elem = i32(idx * 2);
 
     // Iterate through the array element by element
     for (idx, elem) in arr:
@@ -69,7 +69,7 @@ def main():
     i32[] arr = i32[5](0);
     // Just fill the array with stuff
     for (idx, elem) in arr:
-        elem = idx * 2;
+        elem = i32(idx * 2);
 
     // Ignoring the index value in the enhanced for loop
     for (_, elem) in arr:
@@ -108,8 +108,8 @@ def main():
     for (index, elem) in plane:
         elem = i32(index);
 
-    for y := 0; y < 3; y++:
-        for x := 0; x < 3; x++:
+    for u32 y = 0; y < 3; y++:
+        for u32 x = 0; x < 3; x++:
             print($"plane[{x}, {y}] = {plane[x, y]}\n");
 ```
 
@@ -142,7 +142,7 @@ def main():
     i32[] arr = i32[5](0);
     // First, initialize the array, as always
     for (idx, elem) in arr:
-        elem = idx * 2;
+        elem = i32(idx * 2);
 
     for ctx in arr:
         print($"{ctx.$0}: {ctx.$1}\n");
