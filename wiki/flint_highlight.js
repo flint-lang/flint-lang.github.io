@@ -3,7 +3,7 @@ hljs.registerLanguage(
   (function () {
     "use strict";
     return function (e) {
-      var t = "u8 i32 i64 u8 u32 u64 f32 f64 str bool bool8 fn bp i32x2 i32x3 i32x4 i32x8 i64x2 i62x3 i64x4 f32x2 f32x3 f32x4 f64x2 f64x3 f64x4";
+      var t = "u8 i32 i64 u8 u32 u64 f32 f64 str bool bool8 fn bp i32x2 i32x3 i32x4 i32x8 i64x2 i62x3 i64x4 f32x2 f32x3 f32x4 f64x2 f64x3 f64x4 mut const";
       return {
         name: "Flint",
         aliases: ["flint", "ft"],
