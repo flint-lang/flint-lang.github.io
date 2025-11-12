@@ -4,7 +4,7 @@ To installation of any FIP module is very simple, both on Linux and on Windows. 
 
 ## Linux
 
-Once you have downloaded the `fip-c` binary you need to put it into the `$HOME/.local/fip/modules` directory and with that the setup is complete. The binary **needs** to be present in that directory, you cannot put it anywhere else.
+Once you have downloaded the `fip-c` binary you need to put it into the `$HOME/.local/share/fip/modules` directory and with that the setup is complete. The binary **needs** to be present in that directory, you cannot put it anywhere else.
 
 ## Windows
 
