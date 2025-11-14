@@ -110,7 +110,7 @@
     - [Defining External Functions](./beginners_guide/10_interop/2_defining.md)
     - [Interop Modules](./beginners_guide/10_interop/3_modules.md)
     - [Signatures](./beginners_guide/10_interop/4_signatures.md)
-    - [Pointer Types]()
+    - [Pointer Types](./beginners_guide/10_interop/5_pointers.md)
     - [`extern` vs `export`]()
 
   - [Game Example]()
