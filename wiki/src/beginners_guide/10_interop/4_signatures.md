@@ -31,7 +31,7 @@ The first and most logical beginning point are primitive types. The only outlier
 
 Of course, all the types on the left and right do not match in their mutability, as of the last example. To change the C mutability you can simply put `const` in front, and on Flint you can put `mut` or `const` in front.
 
-Re-sizing and relocating the string inside of C will result in a crash inside of Flint, as the string it pointed to is no longer valid, so be aware that interoping with C could very well break stuff in wonky ways.
+Re-sizing and relocating the string inside of C will result in a crash inside of Flint, as the string it pointed to is no longer valid, so be aware that interoping with C could very well break stuff in wonky ways. It is recommended to only pass immutable strings to C for this very reason, so in the extern definition in Flint you should not use `mut` together with `str`, except you know what you are doing of course.
 
 ## Data
 
@@ -59,6 +59,8 @@ def main():
 is directly translatable to this C struct type:
 
 ```
+#include <stdbool.h>
+
 typedef struct {
     int x, y;
     float speed;
@@ -133,6 +135,31 @@ Note that the C header file stayed exactly the same, it did not change. We actua
 
 There is no reason to why it could not work, other than compiler internal complexity and resulting code complexity. If you want to call the same underlying external functions from two different types, you have done something wrong when designing your code, so this definitely is not the fault of FIP or the Flint Compiler.
 
+## Tuples
+
+Similar to how all data automatically collapses to an anonymous struct for what's FIP is concerned, you could also define your external functions using anonymous structs, e.g. tuples, too. The extern code can, again, stay exactly the same, but the Flint program now looks like this:
+
+```ft
+use Core.print
+
+extern def do_something(data<i32, i32, f32, bool> d) -> (i32, i32, f32, bool);
+
+def main():
+    d := (10, 10, 3.2, false);
+    print($"d.($0, $1, $2, $3) = ({d.$0}, {d.$1}, {d.$2}, {d.$3})\n");
+    d = do_something(d);
+    print($"d.($0, $1, $2, $3) = ({d.$0}, {d.$1}, {d.$2}, {d.$3})\n");
+```
+
+This program will print these lines to the console:
+
+> ```
+> d.($0, $1, $2, $3) = (10, 10, 3.2, false)
+> d.($0, $1, $2, $3) = (12, 15, 1.6, true)
+> ```
+
+You may also spot that we specified that the function shall return a group, since the Flint compiler will throw an error at us when we try to return a tuple type from a function and it tells us to use a group return type instead. A group return type is handled as a tuple return type internally by FIP, so what FIP sees is the signature of `do_something(const {i32, i32, f32, bool} d)->{i32, i32, f32, bool}`, both tuples and groups result in anonymous structs.
+
 ## Multi-Types
 
 Flint has builtin vector types, the multi-types, as you know. These types are actually represented as true vector types inside of LLVM IR code, nut just structs, but C does not have true vector types (native to the language, without compiler extensions). So we cannot add vector types to FIP since C does not have them, and FIP has to be C-compatible with it's internal types, as discussed earlier. Which type should multi-types be converted to, then? Well, they are just converted to simple structs before passing them to C. The multi-type `f32x3` becomes `{ f32, f32, f32 }` for example, or `i64x2` becomes `{ i64, i64 }`. There really is nothing special about it at all, but the complications of this design are very nice.
@@ -167,4 +194,4 @@ Which will print this line to the console:
 > res = (13.7, 69.100006, 40.48)
 > ```
 
-So, what does this mean for Flint? Because multi-types are lowered to structs when calling extern functions, you can absolutely interacti with C functions and directly pass in your multi-type vectors to them or recieve them from the C functions. You could for example do all vector operations within Flint, since all multi-types utilize SIMD instructions under the hood, and then just pass them to the C code for rendering etc.
+So, what does this mean for Flint? Because multi-types are lowered to structs when calling extern functions, you can absolutely interact with C functions and directly pass in your multi-type vectors to them or recieve them from the C functions. You could for example do all vector operations within Flint, since all multi-types utilize SIMD instructions under the hood, and then just pass them to the C code for rendering etc. This also means that when using multiple different C libraries, which all provide their own vector implementations, you can still just use Flint's multi-types when calling all those different library functions, so all vectors have a "common ground" in Flint itself.
