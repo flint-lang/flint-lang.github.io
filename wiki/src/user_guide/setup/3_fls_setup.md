@@ -1,20 +1,22 @@
 # Language Server Setup
 
-The `fls` (Flint Language Server) setup is pretty straight forward too.
+## Installation
 
-## Linux
+### Linux
 
 Installation of the `fls` is pretty easy on Linux. It's essenially the same as the `flintc` setup. Download the `fls` binary from the [Releases](https://github.com/flint-lang/flintc/releases) page of the `flintc` repository and put the `fls` binary into the `.local/bin` directory, just like you did for the `flintc` compiler. Make it executable using `chmod +x $HOME/.local/bin/fls` and then you should be up and running.
 
-## Windows
+### Windows
 
-The installation script of the [first](./1_installation.md.md) page already installed the `fls` system wide on Windows, so yoou don't need to change anything for it to work.
+The installation script of the [first](./1_installation.md.md) page already installed the `fls` system wide on Windows, so you don't need to change anything for it to work.
 
-## VSCode
+## Editor Setup
+
+### VSCode
 
 If you have the VSCode extension installed (described in the [previous](./syntax_highlighting.md) page) then you already have everything set up. Everything should just work™.
 
-## NeoVim
+### NeoVim
 
 To enable LSP support for the NeoVim extension you need to edit the `syntax-highlight.nvim` setup in your `init.lua` file. You need to add a few lines to the setup, the complete setup should look like this:
 
