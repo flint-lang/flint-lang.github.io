@@ -8,13 +8,11 @@ Installation of the `fls` is pretty easy on Linux. It's essenially the same as t
 
 ## Windows
 
-Installation of the `fls` is pretty easy on Windows too, alltough it is a bit harder than on Linux. Like Linux, just download thee `fls.exe` file from the [Releases](https://github.com/flint-lang/flintc/releases) page of the `flintc` repository. And then you have two options: Either you ensure that the executable is in your `PATH` variable or you just put it anywhere you want. It is recommended to execute `flintc.cmd --print-bin-path`, it will give you the path where the `flintc.exe` is contained in. It should be something like `%LOCALAPPDATA\Flint\Versions\v0.2.3-core\flintc.exe`. It is recommended to put the `fls.exe` file into the same directory as your `flintc.exe`, to more easily keep track of versions.
+The installation script of the [first](./1_installation.md.md) page already installed the `fls` system wide on Windows, so yoou don't need to change anything for it to work.
 
 ## VSCode
 
-If you have the VSCode extension installed (described in the [previous](./syntax_highlighting.md) page) then you already have everything set up editor-wise.
-
-On Windows you additionaly need to go into the settings page of the extension. You will find a toggle to enable the language server and a path to the binary there. The path has the default value of `fls`. If your `fls.exe` is inside your `PATH` variable then you just need to change it from `fls` to `fls.exe`. If you just copied it to the directory where `flintc.exe` is contained at, then you must write the path to the file in there. If you just copy the path, something like `C:\\Users\zweiler1\AppData\Local\Flint\Versions\v0.2.3-core\fls.exe` then you need to ensure to escape all backslashes of the path, so you would need to change all `\` to `\\`. Also, make sure that the path is not surrounded by `"` characters, they are not needed for the option.
+If you have the VSCode extension installed (described in the [previous](./syntax_highlighting.md) page) then you already have everything set up. Everything should just work™.
 
 ## NeoVim
 
@@ -66,7 +64,5 @@ Make sure 'fls' is in your PATH.
   -- ...
 })
 ```
-
-If you are on Windows, you need to make sure that the `cmd` is set to `fls.exe` or that it's value is the absolute path to the executable, like above in the VSCode setup.
 
 That's it, you now should now have LSP support in your neovim setup. This assumes that you already have `lspconfig` installed in NeoVim. If you have used the [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) repository as a basis for your own configuration (highly recommended) then it should already be installed and ready to be used.
