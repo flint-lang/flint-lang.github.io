@@ -1,0 +1,314 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Circular Dependencies - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="circular-dependencies"><a class="header" href="#circular-dependencies">Circular Dependencies</a></h1>
+<p>You may have asked yourself already <em>"What will happen if file <code>A</code> imports file <code>B</code> and file <code>B</code> imports file <code>A</code> again?"</em>. This is called a circular dependency. It's called circular, because the dependency graph forms a circle, where the "line of imports" ends up at its starting point. If you try to write import statements in C where every file imports another file you will get a compilation error, as circular dependencies are not allowed and cannot be resolved.</p>
+<p>But Flint's <code>use</code> clausels work quite different from the <code>#import</code> from C-style languages. Whereas these literally just copy and paste the code from the other file, the <code>use</code> clausel in Flint is a lot...smarter. The <code>use</code> clausel only imports files at a depth of <code>1</code>, but what does this mean? Well, here is a small example to showcase what i mean with that:</p>
+<p>The <code>helper.ft</code> file:</p>
+<pre><code class="language-ft">def substract_and_mult(i32 x, i32 y) -&gt; i32:
+    i32 diff = x - y;
+    return diff * 2;
+</code></pre>
+<p>The <code>utils.ft</code> file:</p>
+<pre><code class="language-ft">use "helper.ft"
+
+def some_operation(i32 x, i32 y) -&gt; i32:
+    i32 res = substract_and_mult(x, y);
+    return res - (x + y);
+</code></pre>
+<p>The <code>main.ft</code> file:</p>
+<pre><code class="language-ft">use "utils.ft"
+use Core.print
+
+def main():
+    i32 res = some_operation(44, 33);
+    print($"res = {res}\n");
+</code></pre>
+<p>When compiling this program, you will see this line printed to the console:</p>
+<blockquote>
+<pre><code>res = -55
+</code></pre>
+</blockquote>
+<p>In this example you can see how Flint has an importing depth of <code>1</code>, unlike many other languages. So, when you include <code>utils.ft</code> in the <code>main.ft</code> file you <em>only</em> gain access to the <code>some_operation</code> function, but <em>not</em> to the <code>substract_and_mult</code> function from the <code>helper.ft</code> file. There is no recursive resolution of imports happening, meaning that <strong>every</strong> import in Flint is "shallow". If you would need the <code>substract_and_mult</code> function within your <code>main.ft</code> file you would need to write an explicit <code>use "helper.ft"</code> clausel. This is absolutely intentional, because having <em>only</em> shallow inclusions we get something even better: <strong><em>circular inclusion support</em></strong>.</p>
+<p>Circular dependencies are <strong>not</strong> considered a fault in Flint, at all. Often times you want to separate code on meaning, but the single files still need access to one another. In C-style languages you would solve this with forward-declarations, header files etc. But in Flint you just include any file you like, and it simply does not matter if a circle emerges or not, the Flint compiler will handle it all! Here is an example showcasing circular dependencies with a recursive function:</p>
+<p>The <code>utils.ft</code> file:</p>
+<pre><code class="language-ft">use "main.ft"
+use Core.print
+
+def recursive_count_utils(i32 x):
+    if x &gt; 5:
+        print("utils end\n");
+        return;
+    print($"utils: {x}\n");
+    recursive_count_main(x + 1);
+</code></pre>
+<p>The <code>main.ft</code> file:</p>
+<pre><code class="language-ft">use "utils.ft"
+use Core.print
+
+def recursive_count_main(i32 x):
+    if x &gt; 5:
+        print("main end\n");
+        return;
+    print($"main:  {x}\n");
+    recursive_count_utils(x + 1);
+
+def main():
+    recursive_count_main(0);
+    print("\n");
+    recursive_count_utils(0);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>main:  0
+utils: 1
+main:  2
+utils: 3
+main:  4
+utils: 5
+main end
+
+utils: 0
+main:  1
+utils: 2
+main:  3
+utils: 4
+main:  5
+utils end
+</code></pre>
+</blockquote>
+<p>As you can see, circular dependencies are absolutely no problem in Flint, and the only reason they are no problem is the dynamic exploratory nature of the compiler (you only specify one file and the compiler will find all included functions on its own) and the fact that the inclusion depth is only 1, so every use clausel is a shallow include.</p>
+<h2 id="side-note"><a class="header" href="#side-note">Side note</a></h2>
+<p>Because the files <code>main.ft</code> and <code>utils.ft</code> form a circle in the last example, you actually also could compile the program with the command <code>flintc -f utils.ft</code> and it would still work, as it would explore all files until it finds the main function. You can always think of file dependencies as a "tree". If, for example, file <code>main.ft</code> includes file <code>A</code>, which includes file <code>B</code> and you specify file <code>A</code> when compiling, you will get an error that no main function is defined, as the <code>main.ft</code> function was no longer part of the tree. If, however, file <code>A</code> or file <code>B</code> include <code>main.ft</code>, the compiler will be able to find the main file and main function again. Try it out and test a few file dependency trees and see for yourself how the compiler will react to it.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/7_imports/1_the_use_clausel.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../beginners_guide/7_imports/3_import_aliasing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/7_imports/1_the_use_clausel.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../beginners_guide/7_imports/3_import_aliasing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
