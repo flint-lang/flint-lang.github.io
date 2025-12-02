@@ -47,12 +47,12 @@ These types are the foundation of Flint's data handling. As you write more compl
 
 Now lets talk a bit about bit-width. You surely have seen the number after `i`, `u` and `f`. This is the **bit-width**. Computers work with bits, in this case it means that the integer and floating point types are 32 bits long. Here is a full list of all primitive types in Flint and their minimum and maximum values:
 
-| Type  | Description                  |         Min         |         Max         | Precision      |
-| :---: | ---------------------------- | :-----------------: | :-----------------: | -------------- |
-| `u8`  | unsigned 8 bit integer       |         `0`         |        `255`        | Whole numbers  |
-| `u32` | unsigned 32 bit integer      |         `0`         |   `4,294,967,295`   | Whole numbers  |
-| `u64` | unsigned 64 bit integer      |         `0`         |  ≈ `1.844 × 10^19`  | Whole numbers  |
-| `i32` | signed 32 bit integer        |  `-2,147,486,648`   |   `2,147,486,647`   | Whole numbers  |
-| `i64` | signed 64 bit integer        | ≈ `-1.844 × 10^19`  |  ≈ `1.844 × 10^19`  | Whole numbers  |
-| `f32` | 32 bit floating point number | ≈ `±1.175 × 10^-38` | ≈ `±1.701 × 10^38`  | ≈ 6 - 9 digits |
-| `f64` | 64 bit floating point number |  ≈ `±1 × 10^-383`   | ≈ `±9.999 × 10^384` | ≈ 16 digits    |
+| Type  | Description                  |          Min         |         Max         | Precision      |
+| :---: | :--------------------------- | :------------------: | :-----------------: | :------------- |
+| `u8`  | unsigned 8 bit integer       |          `0`         |        `255`        | Whole numbers  |
+| `u32` | unsigned 32 bit integer      |          `0`         |   `4,294,967,295`   | Whole numbers  |
+| `u64` | unsigned 64 bit integer      |          `0`         |  ≈ `1.844 × 10^19`  | Whole numbers  |
+| `i32` | signed 32 bit integer        |   `-2,147,483,648`   |   `2,147,483,647`   | Whole numbers  |
+| `i64` | signed 64 bit integer        |  ≈ `-9.223 × 10^18`  |  ≈ `9.223 × 10^18`  | Whole numbers  |
+| `f32` | 32 bit floating point number |  ≈ `±3.402 × 10^-38` | ≈ `±3.402 × 10^38`  | ≈ 6 - 9 digits |
+| `f64` | 64 bit floating point number | ≈ `±1.798 × 10^-308` | ≈ `±1.798 × 10^308` | ≈ 16 digits    |
