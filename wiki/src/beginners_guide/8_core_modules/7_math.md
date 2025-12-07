@@ -36,11 +36,9 @@ The `math` module provides math functions which are used very frequently in math
 |     `max`     |   `f32`, `f32`  |    `f32`     |       No        |
 |     `max`     |   `f64`, `f64`  |    `f64`     |       No        |
 
-## error sets
+## functions
 
-These are the error sets this Core module provides.
-
-## sin
+### sin
 
 The `sin` function executes the sine function on the given parameter. The parameter is in radians, so you need to convert it from degrees to radians before using it.
 
@@ -60,7 +58,7 @@ This program will print this line to the console:
 > ```
 
 
-## cos
+### cos
 
 The `cos` function executes the cosine function on the given parameter. The parameter is in radians, so you need to convert it from degrees to radians before using it.
 
@@ -79,7 +77,7 @@ This program will print this line to the console:
 > x = 0.5
 > ```
 
-## sqrt
+### sqrt
 
 The `sqrt` function executes the sqare root on the given parameter.
 
@@ -98,7 +96,7 @@ This program will print this line to the console:
 > x = 3
 > ```
 
-## abs
+### abs
 
 The `abs` function returns the absolute value of the given signed value parameter. Note that this function only has overloads for signed integers and floating point types. If the input of the integer overloads of the `abs` function is `I32_MIN` or `I64_MIN` then `I32_MAX` or `I64_MAX` is returned instead (one smaller than the "real" absolute value would be).
 
@@ -117,7 +115,7 @@ This program will print this line to the console:
 > abs(-2147) = 2147
 > ```
 
-## min
+### min
 
 The `min` function simply returns the minimum of two given values.
 
@@ -137,7 +135,7 @@ This program will print this line to the console:
 > min(121, 234) = 121
 > ```
 
-## max
+### max
 
 The `max` function simply returns the maximum of two given values.
 

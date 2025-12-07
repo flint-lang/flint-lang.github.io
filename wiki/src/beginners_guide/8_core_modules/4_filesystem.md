@@ -40,7 +40,11 @@ This error set extens the `ErrIO` error set. These are the possible values this 
 | `TooLarge`    | File is unreasonably large |
 | `InvalidPath` | Path string is malformed   |
 
-## read_file
+## functions
+
+These are the functions this Core module provides.
+
+### read_file
 
 The `read_file` function takes a `str` parameter, which is the path to the file that wants to be read and returns a `str` value, containing the content of the given file. This function throws an error if the file does not exist or is not readable.
 
@@ -77,7 +81,7 @@ When executing this program with the command `./main main.ft` we get this output
 >     print("\n");
 > ```
 
-## read_lines
+### read_lines
 
 The `read_lines` function reads a given file (the `str` path to the file) and returns an array of all read lines (`str[]`). This function is really useful for reading a file and iterating through each line after reading the file. This function throws an error if the file does not exist or is not readable.
 
@@ -114,7 +118,7 @@ When executing this program with the command `./main main.ft` we get this output
 > 11:	|         print($"{idx}:\t| {line}\n");
 > ```
 
-## file_exists
+### file_exists
 
 The `file_exists` function checks whether the given file (`str` path to the file) exists. This function cannot crash, as it checks for a file's existence, so when it does not exist or is not readable, it just returns `false`.
 
@@ -137,7 +141,7 @@ When executing this program with the command `./main main.ft` we get this output
 > Does file 'main.ft' exist? true
 > ```
 
-## write_file
+### write_file
 
 The `write_file` function takes two arguments. The first argument is the path to the file to write to (or create) as a `str` path. The second parameter is the content of the to-be-written file (`str`). This function will create a file at the given path if the file does not exist yet. If the file exists, this function just overwrites it. This function will throw an error if the given file coould not be opened or could not be written to (for example a permission error).
 
@@ -159,7 +163,7 @@ This program will print these lines to the console:
 > This is going to be great!
 > ```
 
-## append_file
+### append_file
 
 The `append_file` function will try to append text to an already existent file. The first parameter of the function is the path to the file the new content is appended (`str` path). The second parameter is the content which will be appended to the file (`str`). This function will throw an error if the given file does not exist or could not be opened with write access.
 
@@ -185,7 +189,7 @@ This program will print these lines to the console:
 > This is written with one space in between!
 > ```
 
-## is_file
+### is_file
 
 The `is_file` function checks whether the file at the given path (`str`) even is a file. It will return `false` in the case that the file / directory does not exist. It will also return false if the given "file" is actually a directory. This function cannot throw any errors.
 

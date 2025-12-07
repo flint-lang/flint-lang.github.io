@@ -31,7 +31,11 @@ This error set does not have a parent error, so it directly and only extends `an
 | `NegativeUint` | Negative input not allowed for unsigned integers |
 | `ParseFloat`   | Could not parse text to floating‑point           |
 
-## read_str
+## functions
+
+These are the functions this Core module provides.
+
+### read_str
 
 The `read_str` function has no parameters and returns a `str` value. It is used to read a whole line from the console. Note that tis function _cannot_ return an error, as there is no input parsing or input validation taking place.
 
@@ -44,7 +48,7 @@ def main():
     print($"entered text: \"{text}\"\n");
 ```
 
-## read_i32
+### read_i32
 
 The `read_i32` function has no parameters and returns a `i32` value. It is used to read `i32` values from the console. It can throw an error if the entered text is not parsable to an signed integer value.
 
@@ -57,7 +61,7 @@ def main():
     print($"entered i32: {num}\n");
 ```
 
-## read_i64
+### read_i64
 
 The `read_i64` function has no parameters and returns a `i64` value. It is used to read `i64` values from the console. It can throw an error if the entered text is not parsable to an signed integer value.
 
@@ -70,7 +74,7 @@ def main():
     print($"entered i64: {num}\n");
 ```
 
-## read_u32
+### read_u32
 
 The `read_u32` function has no parameters and returns a `u32` value. It is used to read `u32` values from the console. It can throw an error if the entered text is not parsable to an unsigned integer value.
 
@@ -83,7 +87,7 @@ def main():
     print($"entered u32: {num}\n");
 ```
 
-## read_u64
+### read_u64
 
 The `read_u64` function has no parameters and returns a `u64` value. It is used to read `u64` values from the console. It can throw an error if the entered text is not parsable to an unsigned integer value.
 
@@ -96,7 +100,7 @@ def main():
     print($"entered u64: {num}\n");
 ```
 
-## read_f32
+### read_f32
 
 The `read_f32` function has no parameters and returns a `f32` value. It is used to read `f32` values from the console. It can throw an error if the entered text is not parsable to an floating point value.
 
@@ -109,7 +113,7 @@ def main():
     print($"entered f32: {num}\n");
 ```
 
-## read_f64
+### read_f64
 
 The `read_f64` function has no parameters and returns a `f64` value. It is used to read `f64` values from the console. It can throw an error if the entered text is not parsable to an floating point value.
 

@@ -22,7 +22,11 @@ This error set does not have a parent error, so it directly and only extends `an
 | :---------------- | :----------------------- |
 | `AssertionFailed` | The assertion has failed |
 
-## assert
+## functions
+
+These are the functions this Core module provides.
+
+### assert
 
 ```ft
 use Core.assert

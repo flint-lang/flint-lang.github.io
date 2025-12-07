@@ -90,6 +90,7 @@
     - [env](./beginners_guide/8_core_modules/5_env.md)
     - [system](./beginners_guide/8_core_modules/6_system.md)
     - [math](./beginners_guide/8_core_modules/7_math.md)
+    - [parse](./beginners_guide/8_core_modules/8_parse.md)
     - [random]()
     - [time]()
     - [parallel]()

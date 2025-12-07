@@ -22,7 +22,11 @@ This error set does not have a parent error, so it directly and only extends `an
 | :------------ | :--------------------------- |
 | `SpawnFailed` | Process could not be created |
 
-## system_command
+## functions
+
+These are the functions this Core module provides.
+
+### system_command
 
 The `system_command` function executes a given command, for example `ls -lah` and returns the exit code of the given command together with the output of the command, stored in a string. The function can throw an error if the process (the command) cannot be created.
 

@@ -25,7 +25,11 @@ This error set does not have a parent error, so it directly and only extends `an
 | `InvalidName`  | Name contains illegal characters         |
 | `InvalidValue` | Value cannot be used (e.g. embedded NUL) |
 
-## get_env
+## functions
+
+These are the functions this Core module provides.
+
+### get_env
 
 The `get_env` function recieves the currently stored value of a given environment variable (`str`). The content of the environment variable is returned as a `str`. This function will throw an error if the requested environment variable does not exist.
 
@@ -43,7 +47,7 @@ This program will print this line to the console:
 > HOME = /home/zweiler1
 > ```
 
-## set_env
+### set_env
 
 The `set_env` function sets a given environment variable (`str`) to a newly specified value (`str`). The third parameter (`bool`) controls whether the given environment variable should be overwritten if it already exists. If the third parameter is `false` an already existent environment variable wont be overwritten. This function will throw an error if the environment variable or the content of the variable contain invalid characters.
 

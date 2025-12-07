@@ -65,7 +65,6 @@ def main():
 And when we then try to compile this program we get yet another error:
 
 > ```
-> [Master]:  The function 'add' could not be resolved
 > Parse Error at test_files/test_minimal.ft:4:1
 > └─┬┤E0000│
 > 4 │ extern def add(i32 x, i32 y) -> i32;
