@@ -10,15 +10,18 @@ You have seen this line a lot of times and you have surely wondered what it mean
 
 A _statement_ is a line of code thats written within a _scope_. Many languages see the empty space in which we define our functions as their _top-level scope_ or _file-level scope_. This means that global variables, imports, function definitions etc are all defined at this global scope. But Flint is a bit different in this regard. We do not call it a _use-statement_ because in Flint **there is no global scope**. You cannot define a variable outside a function and use it inside multiple different functions. **There is no global state in Flint**, and that's a deliberate design choice. This also means that the use-clausel is _not_ a statement, so it cannot be written inside the body of a function itself (unlike C or C++, for example).
 
+The file-level is called a **Namespace** in Flint instead. We will talk about namespaces soon, but for now just remember that every single file is considere to be it's own namespace.
+
 ## Example
 
-But before moving on to any more complex topics, here is a small example of creating two files and compining them together:
+But before moving on to any more complex topics, here is a small example of creating two files and compiling them together:
 
 This is the `main.ft` file:
 
 ```ft
-use "utils.ft"
 use Core.print
+
+use "utils.ft"
 
 def main():
     i32 x = 5;

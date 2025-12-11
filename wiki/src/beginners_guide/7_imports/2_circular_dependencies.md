@@ -1,6 +1,6 @@
 # Circular Dependencies
 
-You may have asked yourself already _"What will happen if file `A` imports file `B` and file `B` imports file `A` again?"_. This is called a circular dependency. It's called circular, because the dependency graph forms a circle, where the "line of imports" ends up at its starting point. If you try to write import statements in C where every file imports another file you will get a compilation error, as circular dependencies are not allowed and cannot be resolved.
+You may have asked yourself already _"What will happen if file `A` imports file `B` and file `B` imports file `A` again?"_. This is called a circular dependency. It's called circular, because the dependency graph forms a circle, where the "line of imports" ends up at its starting point. If you try to write import statements in C where every file imports each other you will get a compilation error, as circular dependencies are not allowed and cannot be resolved.
 
 But Flint's `use` clausels work quite different from the `#import` from C-style languages. Whereas these literally just copy and paste the code from the other file, the `use` clausel in Flint is a lot...smarter. The `use` clausel only imports files at a depth of `1`, but what does this mean? Well, here is a small example to showcase what i mean with that:
 
@@ -25,8 +25,9 @@ def some_operation(i32 x, i32 y) -> i32:
 The `main.ft` file:
 
 ```ft
-use "utils.ft"
 use Core.print
+
+use "utils.ft"
 
 def main():
     i32 res = some_operation(44, 33);
@@ -96,8 +97,8 @@ This program will print these lines to the console:
 > utils end
 > ```
 
-As you can see, circular dependencies are absolutely no problem in Flint, and the only reason they are no problem is the dynamic exploratory nature of the compiler (you only specify one file and the compiler will find all included functions on its own) and the fact that the inclusion depth is only 1, so every use clausel is a shallow include.
+As you can see, circular dependencies are absolutely no problem in Flint, and the only reason they are no problem is the dynamic exploratory nature of the compiler (you only specify one file and the compiler will find all included files on its own) and the fact that the inclusion depth is only 1, so every use clausel is a shallow include.
 
 ## Side note
 
-Because the files `main.ft` and `utils.ft` form a circle in the last example, you actually also could compile the program with the command `flintc -f utils.ft` and it would still work, as it would explore all files until it finds the main function. You can always think of file dependencies as a "tree". If, for example, file `main.ft` includes file `A`, which includes file `B` and you specify file `A` when compiling, you will get an error that no main function is defined, as the `main.ft` function was no longer part of the tree. If, however, file `A` or file `B` include `main.ft`, the compiler will be able to find the main file and main function again. Try it out and test a few file dependency trees and see for yourself how the compiler will react to it.
+Because the files `main.ft` and `utils.ft` form a circle in the last example, you actually also could compile the program with the command `flintc -f utils.ft` and it would still work, as it would explore all files until it finds the main function. You can always think of file dependencies as a "tree". If, for example, file `main.ft` includes file `A`, which includes file `B` and you specify file `A` when compiling, you will get an error that no main function is defined, as the `main.ft` function was no longer part of the tree. If, however, file `A` or file `B` include `main.ft`, the compiler will be able to find the main file and main function again. Try it out and test a few file dependency trees and see for yourself how the compiler reacts to it.

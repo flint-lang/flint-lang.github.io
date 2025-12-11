@@ -80,6 +80,7 @@
     - [The `use` Clausel](./beginners_guide/7_imports/1_the_use_clausel.md)
     - [Circular Dependencies](./beginners_guide/7_imports/2_circular_dependencies.md)
     - [Import Aliasing](./beginners_guide/7_imports/3_import_aliasing.md)
+    - [Namespaces](./beginners_guide/7_imports/4_namespaces.md)
 
   - [Core Modules](./beginners_guide/8_core_modules.md)
 
