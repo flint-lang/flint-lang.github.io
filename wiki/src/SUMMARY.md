@@ -93,8 +93,8 @@
     - [system](./beginners_guide/8_core_modules/6_system.md)
     - [math](./beginners_guide/8_core_modules/7_math.md)
     - [parse](./beginners_guide/8_core_modules/8_parse.md)
+    - [time](./beginners_guide/8_core_modules/9_time.md)
     - [random]()
-    - [time]()
     - [parallel]()
 
   - [Entities & Func modules]()
