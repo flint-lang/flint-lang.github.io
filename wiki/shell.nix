@@ -9,5 +9,6 @@ pkgs.mkShell {
     pkgs.mdbook
     pkgs.mdbook-toc
     pkgs.mdbook-katex
+    pkgs.darkhttpd
   ];
 }
