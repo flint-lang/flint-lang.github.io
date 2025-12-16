@@ -169,7 +169,7 @@ def main():
     TimeStamp end = now();
 
     Duration elapsed = duration(start, end);
-    print($"Slept for {as(elapsed, TimeUnit.MS)} ms\n");
+    print($"Slept for {as_unit(elapsed, TimeUnit.MS)} ms\n");
 ```
 
 This program will print something like this to the console:
@@ -198,7 +198,7 @@ def main():
         TimeStamp current = now();
         Duration elapsed = duration(last_call, current);
 
-        if as(elapsed, TimeUnit.MS) >= 100.0:
+        if as_unit(elapsed, TimeUnit.MS) >= 100.0:
             do_operation();
             last_call = now();
 ```
