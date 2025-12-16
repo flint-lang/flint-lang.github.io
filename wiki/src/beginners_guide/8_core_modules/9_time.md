@@ -186,24 +186,36 @@ The `from` function is used to get a `Duration` *from* a given raw value + a `Ti
 
 ```ft
 use Core.time
+use Core.print
 
-def do_operation():
+def do_operation(Duration d):
+    print($"{as_unit(d, TimeUnit.MS)}ms elapsed!\n");
     return;
 
 def main():
     TimeStamp last_call = now();
 
     // Ensure minimum 100ms between calls
-    while true:
+    u32 counter = 0;
+    while counter < 5:
         TimeStamp current = now();
         Duration elapsed = duration(last_call, current);
 
         if as_unit(elapsed, TimeUnit.MS) >= 100.0:
-            do_operation();
+            do_operation(elapsed);
             last_call = now();
+            counter++;
 ```
 
-This program will not print anything to the console, but it showcases an important concept: Executing things in roughly the fixed rate, in this case executing `do_operation` every 100 ms. This function actually checks the time over and over again in a busy loop. We could also make it waiting. We know that we want to execute it roughly all 100 ms so we *could* just sleep for 100ms after the operation too like so:
+This program will print a line like that:
+
+> ```
+> 100.000033999999999ms elapsed!
+> ```
+
+to the console exactly `5` times. It is limited to 5 times to not have an infinite loop here. But, in a game you could use this very same setup to do your physics rendering all `100ms` (alltough in a game this would likely be `20ms`).
+
+This program showcases an important concept: Executing things in roughly the fixed rate, in this case executing `do_operation` every `100ms`. This function actually checks the time over and over again in a busy loop. We could also make it waiting. We know that we want to execute it roughly all `100ms` so we *could* just sleep for `100ms` after the operation too like so:
 
 ```ft
 use Core.time
