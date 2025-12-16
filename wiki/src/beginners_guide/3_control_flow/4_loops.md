@@ -34,14 +34,6 @@ Its because the condition `num < 5` will always stay `true` because `0 < 5`. But
 
 ## The `do while` Loop
 
-<div class="warning">
-
-The do while loop does not yet work in the compiler.
-
-Do while loops do not work at the moment, as they just have not been implemented in the compiler yet. But they will work in future releases eventually.
-
-</div>
-
 The `do while` loop is actually very similar to the `while` loop. The expression of the `while` loop gets evaluated _before_ the body of the loop is executed. It executes the body if the condition is true, and then jumps back to the condition and checks again and so on. In `do while` loops this is different. Here, the body is executed first and _then_ the condition is checked. Similar to `while` loops, `do while` loops run as long as the condition evaluates to true. Here is a small example of a `do while` loop:
 
 ```ft
