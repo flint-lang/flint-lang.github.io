@@ -10,7 +10,7 @@ The `time` module provides time-related functions and types used for profiling, 
 | :-----------: | :----------------------: | :----------: | :-------------: |
 |     `now`     |            No            |  `TimeStamp` |        No       |
 |   `duration`  | `TimeStamp`, `TimeStamp` |  `Duration`  |        No       |
-|     `as`      |  `Duration`, `TimeUnit`  |    `f64`     |        No       |
+|   `as_unit`   |  `Duration`, `TimeUnit`  |    `f64`     |        No       |
 |    `sleep`    |        `Duration`        |      No      |        No       |
 |    `sleep`    |    `u64`, `TimeUnit`     |      No      |        No       |
 |    `from`     |    `u64`, `TimeUnit`     |  `Duration`  |        No       |
@@ -120,9 +120,9 @@ This program will print something like this to the console:
 > Calculation took 233760 ns
 > ```
 
-### as
+### as_unit
 
-The `as` function is used to "cast" any given `Duration` to a given `TimeUnit`, the result is a 64 bit floating point value. It is meant for displaying time, for example when displaying a duration as milliseconds then this function can be used. As a general rule of thumb: Always use the `as` function to *display* durations but do not use the provided value for further calculations (because of floating point rounding erros and inprecision).
+The `as_unit` function is used to "cast" any given `Duration` to a given `TimeUnit`, the result is a `64 bit` floating point value. It is meant for displaying time, for example when displaying a duration as milliseconds then this function can be used. As a general rule of thumb: Always use the `as_unit` function to *display* durations but do not use the provided value for further calculations (because of floating point rounding erros and inprecision).
 
 ```ft
 use Core.print
@@ -140,13 +140,13 @@ def main():
     TimeStamp end = now();
 
     Duration elapsed = duration(start, end);
-    print($"Calculation took {as(elapsed, TimeUnit.MS)} ms\n");
+    print($"Calculation took {as_unit(elapsed, TimeUnit.MS)} ms\n");
 ```
 
 This program will print something like this to the console:
 
 > ```
-> Calculation took 0.233760 ms
+> Calculation took 4.211604 ms
 > ```
 
 ### sleep
