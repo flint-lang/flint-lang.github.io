@@ -23,27 +23,19 @@ def print_err(bool override):
 	throw_error(override) catch err:
 		switch err:
 			ErrSpecial(e):
-				print($"type_id = {e.type_id}\n");
-				print($"value_id = {e.value_id}\n");
-				print($"message = {e.message}\n");
+				print($"{e}: \"{e.message}\"\n");
 			anyerror(e): print("is anyerror\n");
 
 def main():
 	print_err(false);
-	print("\n");
 	print_err(true);
 ```
 
 This program prints these lines to the console:
 
 > ```
-> type_id = 803109534
-> value_id = 2
-> message = Special Error 1
->
-> type_id = 803109534
-> value_id = 3
-> message = Overwritten message: true
+> ErrSpecial.S1: "Special Error 1"
+> ErrSpecial.S2: "Overwritten message: true"
 > ```
 
 As you can see, the default message from the error set definition is being stored in the returned error by default, but when providing a custom message the provided message is passed within the thrown error structure instead. You may also be able to recognize that **any** expression can be put in between the parenthesis of the throw. So, even calls or variables or string interpolation, it really just does not matter, the result just has to be of type `str`. You can use the `message` field to pass in an error context in the thrown error.

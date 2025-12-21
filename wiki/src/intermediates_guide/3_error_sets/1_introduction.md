@@ -22,9 +22,11 @@ This program will just print this line to the console:
 > Hello, World
 > ```
 
+But here you can directly see how to define a new error set. We use the `error` keyword for that. And an error set looks pretty similar to an `enum` defiition, actually, but they are vastly different from one another.
+
 ## Throwing errors
 
-But here you can directly see how to define a new error set. We use the `error` keyword for that. And an error set looks pretty similar to an `enum` defiition, actually, but they are vastly different from one another. Let's look into how to throw an eror next.
+Let's look into how to throw an eror next.
 
 ```ft
 use Core.print
@@ -43,26 +45,9 @@ def main():
 This program will print these lines to the console:
 
 > ```
-> ERROR: main function returned error
->  - type_id: 4008229038
->  - value_id: 0
->  - message: ""
+> The given error bubbled up to the main function:
+>  └─ ErrorSet.Value1: ""
 > ```
-
-<div class="warning">
-
-This error message will change in the future
-
-In the future the message should look more like
-
-> ```
-> ERROR: main function returned error
->  - ErrorSet.Value1: ""
-> ```
->
-> but it will take more time and developement effort until this message can actually be printed. It will take a while until we can print the error set names and values because we first need a way to create hash-tables to map the type ids to the type names. So, this will be implemented _eventually_.
-
-</div>
 
 ## Catching errors
 
@@ -90,4 +75,4 @@ This program will print these lines to the console:
 > Normal execution continues
 > ```
 
-The program now does no longer print the `ERROR: ...` message, as no error was thrown from the main function. This is a core concept of Flint: When an error is catched and it is handled it is consiered that the error is "no longer a problem" and execution will continue as if there was no error at all. But there is still a lot more to cover before we are able to completely understand what errors really are and how to effectively use them.
+The program now does no longer print the main function's error message, as no error was thrown from the main function. This is a core concept of Flint: When an error is catched and it is handled it is consiered that the error is "no longer a problem" and execution will continue as if there was no error at all. But there is still a lot more to cover before we are able to completely understand what errors really are and how to effectively use them.
