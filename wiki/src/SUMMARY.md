@@ -62,6 +62,7 @@
     - [Tuples](./beginners_guide/5_data/5_tuples.md)
     - [Multi-Types](./beginners_guide/5_data/6_multi_types.md)
     - [Groups 2](./beginners_guide/5_data/7_groups_2.md)
+    - [Type Aliasing](./beginners_guide/5_data/8_type_aliasing.md)
 
   - [Arrays & Ranges](./beginners_guide/6_arrays.md)
 
