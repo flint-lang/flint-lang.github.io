@@ -70,6 +70,8 @@ This program will print this error to the console:
 > └─ Have you considered using explicit casting of types?
 > ```
 
+Two different enum types can *never* be compared with one another. So, there is no way how you can compare `Enum1` to `Enum2`. The suggestion to use casting is only meant in the general case, one enum type cannot be cast to another enum type, they are not the same.
+
 ## Enums with functions
 
 Enums are considered to be non-complex data types in Flint, even though they are user-defined. So, we can easily pass in enums to a function and return them from it:
