@@ -68,10 +68,17 @@ Okay, let's use the exact same files as with the previous example, but this time
 flintc -f main.ft
 ```
 
-We will then get this compilation error:
+We will then get this compilation error (the `VERSION` will be the compiler version in use, like `v0.3.0-core` for example):
 
 > ```
->
+> Parse Error at main.ft:1:5
+> └─┬┤E0000│
+> 1 │ use "../file.ft"
+> ┌─┴─────┘
+> ├─ The import tried to escape the current working directory of the compiler
+> ├─ If you really need to reference a file outside this working directory, move up a directory
+> ├─ Only files within the current working directory are allowed to be accessed by the compiler
+> └─ See https://flint-lang.github.io/VERSION/beginners_guide/7_imports/5_relative_paths.html#exiting-the-cwd-is-considered-an-error for more information
 > ```
 
 And you now might ask... why? The short answer: security. The long answer is still security but a bit more nuanced. When you have a project then you will have all your actual source code most likely located in the `src` subdirectory of your project with other stuff of the project in other directories. The source directory, the directory where the `.git` folder is located at, will then most likely be the directory from where you will execute your compiler. You will, however, be unlikely to execute the compiler in a directory above.
