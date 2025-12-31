@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p>Flint's error system is quite unique. <strong>Every</strong> function can fail. Absolutely every single function a user defines in his code <em>can</em> fail. Because <em>every</em> function can fail, Flint can deeply integrate error handling into the language. A function returning a <code>str</code> value, for example, actually returns a <code>(err, str)</code> value. The first <em>implicit</em> return type of <strong>any</strong> Flint function is the error value of said function. This error value, however, is completely hidden from the user outside of Flint's error handling syntax.</p>
 <p>Flint has two keywords for error handling: <code>throw</code> and <code>catch</code>. But, unlike Java or C++, where the error handling happens outside the normal execution path ("happy path" / "unhappy path") which completely breaks execution consistency and results in lots of context switching for the CPU, Flint has it's error handling system built directly into the calling / returning code of every function, which makes it much faster than traditional exception-based error handling.</p>
 <p>Flint's error handling system, however, is based around the idea of <code>Error Sets</code>. An error set is basically just a type, a set type, consisting of every possible value the error could have. Here is a small example of that:</p>

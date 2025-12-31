@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="typecasting"><a class="header" href="#typecasting">Typecasting</a></h1>
+                        <h1 id="typecasting"><a class="header" href="#typecasting">Typecasting</a></h1>
 <p>First of all, what is typecasting? We know what a <code>type</code> is, but what is <code>casting</code>? Casting is the act of <em>converting</em> one type into another. Different types are incompatible with one another, even <code>i32</code> and <code>u32</code> are incompatible, even though both of them have the same bit width. For example, the <code>i32</code> value of <code>-233235653</code> would actually be <code>4061731643</code> when the bits would be interpreted as an <code>u32</code> instead. And if the 32 bits of the <code>i32</code> value would be interpreted as an <code>f32</code> value, we would end up with the number <code>-3.032584e30</code>. (The bit pattern of this example is <code>1111 0010 0001 1001 0001 1011 0011 1011</code>)</p>
 <p>As you can see, just storing the bits of one number into the bits of another number is not enough. This is the reason to why we need to convert, or <strong>cast</strong> types. Try to compile this program and see what the compiler tells you:</p>
 <pre><code class="language-rs">def main():

@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="optionals"><a class="header" href="#optionals">Optionals</a></h1>
+                        <h1 id="optionals"><a class="header" href="#optionals">Optionals</a></h1>
 <p>Welcome to the first chapter of the intermediates guide. In this first chapter we look at the optional type and what you can do with it. Other languages don't necessarily "need" an optional type because of other designs like Java's <code>null</code>, C's <code>NULL</code> or C++'s <code>nullptr</code>. In Flint, however, not every varaible or "object" can be "null" or "empty" implicitely.</p>
 <h2 id="what-are-optionals"><a class="header" href="#what-are-optionals">What are Optionals?</a></h2>
 <p>An optional is essentially just a struct under the hood, composed of a boolean value whether the optional has a value followed by the actual data of the optional. So an optional looks like <code>{ i1, T }</code> in memory. Optionals are crucial to be able to build up "possible" values (or possible absence of values) which is the basis of linked lists, for example, and much much more.</p>

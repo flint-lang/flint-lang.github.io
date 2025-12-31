@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="multidimensional-access-patterns"><a class="header" href="#multidimensional-access-patterns">Multidimensional Access Patterns</a></h1>
+                        <h1 id="multidimensional-access-patterns"><a class="header" href="#multidimensional-access-patterns">Multidimensional Access Patterns</a></h1>
 <p>Just like ranges can be used for one-dimensional arrays for slicing, they can be used for multi-dimensional rectangular arrays as well. There are more things to watch out for for multi-dimensional array slicing, though. The most important part is the one about <strong>dimensionality reduction</strong>, but what even is this? Well, when we create a two-dimensional rectangular array of type <code>i32[,]</code> with <code>i32[10, 10](0)</code> the array has, obviously, a dimensionality of 2. If we now access the multi-dimensional array by it's indices like <code>arr[0, 3]</code> we get a single value, a scalar. This is equivalent to a result array of dimensionality <code>0</code>, being a single value. So, what happens if we use a range instead of a single index when accessing multi-dimensional arrays?</p>
 <pre><code class="language-ft">use Core.print
 

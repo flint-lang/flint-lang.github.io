@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="internals"><a class="header" href="#internals">Internals</a></h1>
+                        <h1 id="internals"><a class="header" href="#internals">Internals</a></h1>
 <p>There are still some things to cover, especially around the internals of the error handling system. You have seen the <code>variant&lt;anyerror, ErrSpecial&gt;?</code> type earlier and you surely have wondered how this type looks under the hood. If it would be <em>any</em> other type it would look something like this:</p>
 <pre><code class="language-c">struct {
 	bool has_value;

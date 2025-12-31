@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="error-set-refinement"><a class="header" href="#error-set-refinement">Error Set Refinement</a></h1>
+                        <h1 id="error-set-refinement"><a class="header" href="#error-set-refinement">Error Set Refinement</a></h1>
 <p>Error set refinement, what a beautiful name for a very simple concept. You have learned in the last chapter how to create a new error set type using the <code>error</code> keyword. Now you will learn another important concept of how Flint's errors work under the hood. A set is a collection of values, both in set theory in mathematics and in Flint that's also true. So, the error set from the last chapter, <code>error ErrorSet: Value1, Value2;</code> contains exactly two values: <code>Value1</code> and <code>Value2</code>.
 We can define set-relationships in Flint. One Error set could "extend" a base error set, and becomes a more specialized error by doing so. Here is a small example of that:</p>
 <pre><code class="language-rs">error ErrBase:

@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="strings"><a class="header" href="#strings">Strings</a></h1>
+                        <h1 id="strings"><a class="header" href="#strings">Strings</a></h1>
 <p>As stated earlier, strings and arrays have very much in common, actually. If we would make a deep-dive into how Flint works internally we would see that arrays and strings actually are the same data structure, but thats too low level for now. But, the important thing to note here is the similarity of strings with arrays, as a string is essentially just an array of characters, but what <em>is</em> a character in string really?</p>
 <p>In Flint, a character has the type <code>u8</code>, a type we have not discussed until now. So, if you save the sting <code>hello</code> on a variable its essentially the same as if you would store a <code>u8[]</code> array of length <code>5</code>. There exists a separate <code>str</code> type, however, to make our life with strings a lot easier than it would if we would need to think of strings as arrays of bytes.</p>
 <p>But what does all of this mean? Well, first we can access a given character of a string exactly as we would access any element of an array, here is an example:</p>

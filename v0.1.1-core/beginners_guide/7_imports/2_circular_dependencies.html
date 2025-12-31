@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="circular-dependencies"><a class="header" href="#circular-dependencies">Circular Dependencies</a></h1>
+                        <h1 id="circular-dependencies"><a class="header" href="#circular-dependencies">Circular Dependencies</a></h1>
 <p>You may have asked yourself already <em>"What will happen if file <code>A</code> imports file <code>B</code> and file <code>B</code> imports file <code>A</code> again?"</em>. This is called a circular dependency. It's called circular, because the dependency graph forms a circle, where the "line of imports" ends up at its starting point. If you try to write import statements in C where every file imports another file you will get a compilation error, as circular dependencies are not allowed and cannot be resolved.</p>
 <p>But Flint's <code>use</code> clausels work quite different from the <code>#import</code> from C-style languages. Whereas these literally just copy and paste the code from the other file, the <code>use</code> clausel in Flint is a lot...smarter. The <code>use</code> clausel only imports files at a depth of <code>1</code>, but what does this mean? Well, here is a small example to showcase what i mean with that:</p>
 <p>The <code>helper.ft</code> file:</p>

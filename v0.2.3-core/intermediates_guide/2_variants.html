@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="variants"><a class="header" href="#variants">Variants</a></h1>
+                        <h1 id="variants"><a class="header" href="#variants">Variants</a></h1>
 <p>Welcome to the second chapter of the intermediates guide. In this chapter we look at the variant type and what you can do with it. The <code>variant</code> type is used to define a type that could be <strong>one of</strong> a given collection of other types. Where optionalls allowed us to define <strong>emptiness</strong>, the <code>variant</code> type allows us to define <em>variation</em> in types.</p>
 <h2 id="what-are-variants"><a class="header" href="#what-are-variants">What are Variants?</a></h2>
 <p>A variant is, once again, essentially just a struct under the hood. It is composed of a 1 Byte flag value to determine which type it holds followed by the actual type of the variant. This "type" as the second value is just <strong>N</strong> bytes of storage, where <code>N</code> is the number of bytes needed to store the <strong>biggest</strong> of all possible types.</p>

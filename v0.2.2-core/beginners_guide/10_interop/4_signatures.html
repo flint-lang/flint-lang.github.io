@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="signatures"><a class="header" href="#signatures">Signatures</a></h1>
+                        <h1 id="signatures"><a class="header" href="#signatures">Signatures</a></h1>
 <p>First, we need to get a basic fact about FIP out of the way. Because C has evolved more or less into an interop standard over the years, nearly all types of all languages are somewhat translatable to C types, and the FIP is definitely based on that. FIP can <em>only</em> express types which are also present in C, which means it <em>could</em> essentially represent <em>every</em> possible type of a language. But for simplicity and other reasons (like memory safety), interoperability of a few types is prohibited. These are the prohibited types, which you <strong>cannot</strong> have contained inside of extern definitions:</p>
 <ul>
 <li><code>entity</code> types</li>

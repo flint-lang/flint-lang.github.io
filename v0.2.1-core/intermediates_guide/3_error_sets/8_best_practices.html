@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h1>
+                        <h1 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h1>
 <p>Let's discuss best practices regarding error handling in Flint next.</p>
 <h2 id="naming"><a class="header" href="#naming">Naming</a></h2>
 <p>Let's start with naming and with how Flint names it's errors internally. All Errors inside Flint start with <code>Err...</code> followed by the actual are of error, like <code>ErrNetwork</code>, <code>ErrSystem</code>, <code>ErrAssert</code>, <code>ErrEnv</code>, <code>ErrFS</code> and so on. Then, unlike enums where the values are prefered to be written in <code>SCREAMING_SNAKE_CASE</code>, the error values are written in <code>PascalCase</code>, just like errors. Also, error values may not start with the <code>Error</code> prefix, as this is handled by the <code>Err</code> prefix on the error set type. So you would end up writing <code>ErrName.ValueName</code> instead of <code>Something.ErrorName</code>. This recommendation exists to prevent collisions with other definitions, as there exist quite a few of definitions in Flint: <code>data</code>, <code>enum</code>, <code>variant</code>, <code>func</code>, <code>entity</code> and <code>error</code>. So, having clear naming for all of them keeps your code visually pleasing and easy to follow.</p>

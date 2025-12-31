@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="unwrapping"><a class="header" href="#unwrapping">Unwrapping</a></h1>
+                        <h1 id="unwrapping"><a class="header" href="#unwrapping">Unwrapping</a></h1>
 <p>Unwrapping is the act of recieving / reading the value of an optional variable. When there is nothing stored in the optional, however, it is considered an error to access it's value, as this could lead to wrong and potentially harmful behaviour (like undefined behaviour, nullpointers or many other things that could go wrong).</p>
 <p>Because of this very reason Flint decides that accessing the value of an <code>none</code> optional is an error, and the program will crash with a simple message to the console stating that we tried to access the value of an empty optional. But enough talk, here is a small example showcasing exactly that:</p>
 <pre><code class="language-rs">use Core.print

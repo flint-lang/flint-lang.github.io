@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="interop-modules"><a class="header" href="#interop-modules">Interop Modules</a></h1>
+                        <h1 id="interop-modules"><a class="header" href="#interop-modules">Interop Modules</a></h1>
 <p>Interop Modules (IMs) are the small individual pieces which are repsponsible for external languages. For this chapter we will focus on the <code>fip-c</code> IM. So, the project from the previous page is still broken and results in a compilation error, and we now want to fix that situation. FIP is based on the idea of IMs, and which IMs are available is entirely project-dependent, not system-dependent. The IMs are generally pretty small, the <code>fip-c</code> module, for example, is only <code>170 KB</code> in size.</p>
 <p>Based on the fact that IMs are very small, the decision has been made to make IMs entirely project-dependant. This means that IMs cannot be installed system-wide, but need to be provided in every project that uses them. So, let's go about fixing the problem from the last chapter. You need to crate yet another directory withing the <code>.fip</code> directory: <code>modules</code>. You then need to go to the fip releases page <a href="https://github.com/flint-lang/fip/releases">here</a> and download the <code>fip-c</code> executable. You need to put that executable into the <code>modules</code> directory. You also need to create a <code>cache</code> directory, but you can keep it empty. Your folder structure should look like this now:</p>
 <pre><code>.fip/

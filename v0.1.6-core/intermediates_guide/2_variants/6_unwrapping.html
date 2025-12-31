@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="unwrapping-variants"><a class="header" href="#unwrapping-variants">Unwrapping Variants</a></h1>
+                        <h1 id="unwrapping-variants"><a class="header" href="#unwrapping-variants">Unwrapping Variants</a></h1>
 <p>Okay now let's move on to variant unwrapping. In the last chapter you have learned how to check if a variant holds a given type and much more about comparing variants. But, in those if branches, when we <em>know</em> the variant holds the given type we actually want to get that value from the variant somehow. If you think back about optionals we had the <code>!</code> operator for forceful unwrapping and the <code>?</code> operator for optional chaining. For variants, this actually is quite similar. To unwrap a variant we use the <code>!(T)</code> syntax. In between the parenthesis we write which type we want to force-unwrap from the variant. Similar to how the force-unwrap operator <code>!</code> worked for optionals, this will print a small error message and crash the program if the variant does not hold the requested type.
 Let's actually look at a modified version of one of the last chapter's examples:</p>
 <pre><code class="language-rs">use Core.print

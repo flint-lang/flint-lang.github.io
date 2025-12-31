@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="multidimensional-arrays"><a class="header" href="#multidimensional-arrays">Multidimensional Arrays</a></h1>
+                        <h1 id="multidimensional-arrays"><a class="header" href="#multidimensional-arrays">Multidimensional Arrays</a></h1>
 <p>Flint supports <strong>multidimensional arrays</strong>. In Flint, these arrays are <strong>always rectangular</strong>, meaning that the length of each dimension is locked, unlike <em>jagged arrays</em>, which behave more like "array of arrays". Multidimensional Arrays are particularly useful for storing grid-like data, such as images or matrices.</p>
 <h2 id="declaring-multidimensional-arrays"><a class="header" href="#declaring-multidimensional-arrays">Declaring Multidimensional Arrays</a></h2>
 <p>The number of commas between the brackets of the array type directly indicates the dimensionality of an array. So, the array <code>i32[]</code> is a one-dimensional array (we have one "line" of values), then <code>i32[,]</code> is a two-dimensional array (we have a "plane" of values), <code>i32[,,]</code> is a three-dimensional array (we have a "cube" of values) and so on. There is no limit to how high the dimensionality of an array can be, really. We start with dimensionality of <code>1</code> because a dimensionality of <code>0</code> is already defined: its a single value, so <code>i32</code> is "an array of 0 dimensionality" if you want to see it like this.</p>

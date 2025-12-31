@@ -159,12 +159,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p>This is the Flint Wiki. You will be able to find anything regarding Flint in this Wiki. It's primary focus is the syntax of Flint, how it works and how to use the language effectively. All features of Flint and how to use them are explained in this Wiki. All chapters are structured in a way where later chapters build on the lessions of earlier chapters, so you will naturally have the best experience with Flint if you follow the guide closely from front to end.</p>
 <p>Flint is a high‐level, statically‐typed language designed to deliver maximum power in the most approachable way. Its core philosophy is the Data-Object Convergence Paradigm — an ECS-inspired model where data is separated from behavior and then composed deterministically into class-like entities. Every function in Flint is pure (no side effects), and functions themselves are data that can be passed around or even hot-reloaded — thanks to the Thread Stack, which eliminates the possibility of race conditions by design. Write fast, predictable code without hidden complexity.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
 <p>Installing Flint is really easy. Just download the <code>flintc</code> binary for your given platform from the <a href="https://github.com/flint-lang/flintc/releases">Releases</a> page of the <code>flintc</code> repository.</p>
 <h2 id="linux"><a class="header" href="#linux">Linux</a></h2>
 <p>To make the Flint compiler available from any path in your terminal, and to make it executable through just calling <code>flintc</code> in your terminal, you need to copy the <code>flintc</code> executable into the <code>$HOME/.local/bin/</code> directory and you need to ensure it is marked as executable with this command:</p>
@@ -173,8 +171,7 @@
 <p>You need <code>base-devel</code> (Arch) or <code>build-essential</code> (Ubuntu) in order for the Flint compiler to be able to compile any program. It needs the <code>crt1.o</code>, <code>crti.o</code> and <code>crtn.o</code> files available to it.</p>
 <h2 id="windows"><a class="header" href="#windows">Windows</a></h2>
 <p>It is actively worked on an installer (<code>.msi</code> file) which will download the compiler for you and will set the <code>PATH</code> variable accordingly. Until then, the path to the executable (<code>flintc.exe</code>) needs to be specified manually when compiling a Flint program.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="from-beginner-to-intermediate"><a class="header" href="#from-beginner-to-intermediate">From Beginner To Intermediate</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="from-beginner-to-intermediate"><a class="header" href="#from-beginner-to-intermediate">From Beginner To Intermediate</a></h1>
 <p>In this guide, you will learn all the basics of Flint. For easier chapter management, the whole journey of "From Beginner to Master" is split into three parts:</p>
 <ul>
 <li>"From Beginner to Intermediate" which handles all basics of Flint</li>
@@ -185,13 +182,11 @@
 <p>Flint is meant to be a language framework, which aims to be as easy as possible while being as powerful as possible. We aim to provide you with a box full of little LEGOs. At the end of this guide series, you will know every LEGO block that exists.</p>
 <p>Flint is sometimes limited on purpose. It has no manual memory management capabilities, for example, but these limitations all serve a singular purpose: Making Flint easier and quicker to work with, but not letting it feel like magic. Every design choise of Flint has a purpose. At the end of this full guide, you will understand every single design decision we took and why it was made.</p>
 <p>But enough talking, lets jump right into it, lets turn you into a Flint master, shall we?</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="basics"><a class="header" href="#basics">Basics</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="basics"><a class="header" href="#basics">Basics</a></h1>
 <p>In this chapter you will learn the absolute basics of Flint. These basics are very important and you need to keep then in mind from now on.</p>
 <p>The basics of every simple program is <code>printing</code>. Any program needs to display information to the user of the program in one form or another. It does not matter if its a GUI (Graphical User Interface) or a CLI (Command Line Interface), the user of a program will almost certainly always need information to reed when executing a program.</p>
 <p>So, printing to the console is, in a sense, the most minimal thing a program should do. So lets start the basics with exactly that, and lets print to the console!</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="the-hello-world-program"><a class="header" href="#the-hello-world-program">The Hello World Program</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-hello-world-program"><a class="header" href="#the-hello-world-program">The Hello World Program</a></h1>
 <p>Lets create a simple <code>Hello World!</code> program which just prints the text <code>Hello, World!</code> to the CLI. But before we can do that we need to create an entry point for our Flint program.</p>
 <p>The entry point of every Flint program is the <code>main</code> function. This function is reserved for the programs entry point, so no other function is allowed to be called <code>main</code>. The entry point of any program is the point where the program starts its execution. Any program works from top to bottom, and everything within the <code>main</code> function is executed first. You dont need to worry about <code>functions</code> yet, they are explained in a later chapter.</p>
 <p>But, lets create the example first and then explain what actually happens afterwards:</p>
@@ -209,8 +204,7 @@ def main():
 </blockquote>
 <p>Try to remove the <code>\n</code> character and see what it does for yourself!</p>
 <p>Always remember: The best way to learn is to try new things. Your computer won't explode if you make mistakes in a program, so just try out a few things and see for yourself what works and what doesn't!</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="compiling-the-program"><a class="header" href="#compiling-the-program">Compiling the Program</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="compiling-the-program"><a class="header" href="#compiling-the-program">Compiling the Program</a></h1>
 <p>Save the code from the previous chapter into a file named <code>hello.ft</code>. <code>ft</code> is the file extension for <code>Flint</code> source files. They only contain code in written form. Its then the resposibility of the Flint compiler to take a file containing its source code and creating an executable from it.</p>
 <p>To compile the <code>.ft</code> file to an executable file, we call</p>
 <pre><code class="language-sh">flintc --file hello.ft --out hello
@@ -219,8 +213,7 @@ def main():
 <pre><code class="language-sh">./hello
 </code></pre>
 <p>And now you should see the output of the previous chapter in the console!</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="comments-in-flint"><a class="header" href="#comments-in-flint">Comments in Flint</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="comments-in-flint"><a class="header" href="#comments-in-flint">Comments in Flint</a></h1>
 <p>In Flint, comments are used to explain code or temporarily disable parts of it during debugging. Flint supports two types of comments:</p>
 <ol>
 <li><strong>Single-line comments</strong>: Start with // and continue until the end of the line.</li>
@@ -242,8 +235,7 @@ def main():
 </code></pre>
 <p>Comments are essential for writing clear, understandable, and maintainable code. Use them to explain your logic to others (or to yourself when revisiting code later).</p>
 <p>Try to copy the code above into your <code>hello.ft</code> file and try to compile and run it.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="indentation-in-flint"><a class="header" href="#indentation-in-flint">Indentation in Flint</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="indentation-in-flint"><a class="header" href="#indentation-in-flint">Indentation in Flint</a></h1>
 <p>Flint enforces <strong>strict indentation rules</strong> to ensure clean and readable code. Also, indentation is needed for <em>scoping</em>. Everything writen within the <code>main</code> functions is "inside" that function. If you don't indent instructions that are meant to be placed within the main function, for example, Flint will try to see if the line you wrote is a function or something else, like the <code>use Core.print</code> line.</p>
 <p>Lets look at it in action:</p>
 <pre><code class="language-rs">use Core.print
@@ -265,8 +257,7 @@ def main():
 	print("This is correctly indented.\n"); // Properly indented
 </code></pre>
 <p>Proper indentation is not just a stylistic choice in Flint – it’s a fundamental part of the syntax. You do not need to indent using hard tabs (<code>\t</code>), <strong>4 spaces</strong> are interpreted as tabs by the Flint compiler.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="variables-and-types"><a class="header" href="#variables-and-types">Variables and Types</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="variables-and-types"><a class="header" href="#variables-and-types">Variables and Types</a></h1>
 <p>In the previous chapter, we learned the basics of printing to the console in Flint. Now that we have a way to display information, let's talk about how to store and manipulate that information. In this chapter, we will explore the fundamental concepts of variables and types in Flint.</p>
 <h2 id="what-are-variables"><a class="header" href="#what-are-variables">What are Variables?</a></h2>
 <p>A variable is a named storage location that holds a value. Think of it as a labeled box where you can store a value. You can then use the variable name to refer to the value stored in the box.</p>
@@ -289,8 +280,7 @@ def main():
 <li>Best practices for working with variables and types</li>
 </ul>
 <p>By the end of this chapter, you will have a solid understanding of variables and types in Flint, and you will be able to use them to write more effective and efficient programs. Let's get started!</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="primitive-types"><a class="header" href="#primitive-types">Primitive Types</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="primitive-types"><a class="header" href="#primitive-types">Primitive Types</a></h1>
 <p>Primitive types are Flint's fundamental building blocks for representing data. They are the simplest forms of values you can use in your programs. Flint has the following primitive types:</p>
 <ol>
 <li><code>i32</code>
@@ -339,8 +329,7 @@ Represents a sequence of characters or text, as already described in the printin
 <tr><td style="text-align: center"><code>f32</code></td><td>32 bit floating point number</td><td style="text-align: center">≈ <code>±1.175 × 10^-38</code></td><td style="text-align: center">≈ <code>±1.701 × 10^38</code></td><td>≈ 6 - 9 digits</td></tr>
 <tr><td style="text-align: center"><code>f64</code></td><td>64 bit floating point number</td><td style="text-align: center">≈ <code>±1 × 10^-383</code></td><td style="text-align: center">≈ <code>±9.999 × 10^384</code></td><td>≈ 16 digits</td></tr>
 </tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="variables"><a class="header" href="#variables">Variables</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="variables"><a class="header" href="#variables">Variables</a></h1>
 <p>Let's talk about variables and what they really are. A <em>variable</em> is an element of data that can be modified during the execution of a program, this can be an integer value, for example, or a string value. Variables are one of, if not even <em>the</em> most important part of a program.</p>
 <p>Every variable needs to have a fixed <em>type</em> assigned to it. There are much more types than only the primitive types of the last chapter, but everything in this chapter will apply to other types as well. First, we need to define a variable. This is done like this:</p>
 <pre><code class="language-rs">def main():
@@ -372,8 +361,7 @@ Now lets look at how to assign new values to the variable:</p>
 </code></pre>
 <p>This fails with the same error. Some languages support that a variable is "redefined" with another type, and from this new declaration onwards the variable has a different type. This is called <em>shadowing</em>, and Flint does not support this intentionally. Every variable can only exist once within a scope (we talk about scopes later on).</p>
 <p>So, remember: The same identifier can only used once for variables!</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="inferred-typing"><a class="header" href="#inferred-typing">Inferred Typing</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="inferred-typing"><a class="header" href="#inferred-typing">Inferred Typing</a></h1>
 <p>Flint allows for inferred typing, meaning you don't always need to explicitly state the type of a variable. The compiler can infer the type based on the assigned value.</p>
 <h2 id="how-it-works"><a class="header" href="#how-it-works">How it works</a></h2>
 <pre><code class="language-rs">def main():
@@ -388,8 +376,7 @@ Now lets look at how to assign new values to the variable:</p>
     str greeting = "Hello, Flint!"; // Explicitly declare greeting as a str
 </code></pre>
 <p>Use inferred typing for shorter, simpler programs and explicit typing when clarity is crucial. It's also important to note that <em>only</em> varaibles are allowed to have inferred typing, nothing else.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="operators"><a class="header" href="#operators">Operators</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="operators"><a class="header" href="#operators">Operators</a></h1>
 <p>Flint has quite a few operators in its disposal. The most common and most simple ones, however, are <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code>. The <code>+</code> and <code>-</code> operators dont need much explaination, really.</p>
 <h2 id="integer-arithmetic"><a class="header" href="#integer-arithmetic">Integer Arithmetic</a></h2>
 <p>Lets start with the most obvious example first: integer types and lets go through all operations one by one:</p>
@@ -470,8 +457,7 @@ def main():
 <pre><code>Hello, World!
 </code></pre>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="typecasting"><a class="header" href="#typecasting">Typecasting</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="typecasting"><a class="header" href="#typecasting">Typecasting</a></h1>
 <p>First of all, what is typecasting? We know what a <code>type</code> is, but what is <code>casting</code>? Casting is the act of <em>converting</em> one type into another. Different types are incompatible with one another, even <code>i32</code> and <code>u32</code> are incompatible, even though both of them have the same bit width. For example, the <code>i32</code> value of <code>-233235653</code> would actually be <code>4061731643</code> when the bits would be interpreted as an <code>u32</code> instead. And if the 32 bits of the <code>i32</code> value would be interpreted as an <code>f32</code> value, we would end up with the number <code>-3.032584e30</code>. (The bit pattern of this example is <code>1111 0010 0001 1001 0001 1011 0011 1011</code>)</p>
 <p>As you can see, just storing the bits of one number into the bits of another number is not enough. This is the reason to why we need to convert, or <strong>cast</strong> types. Try to compile this program and see what the compiler tells you:</p>
 <pre><code class="language-rs">def main():
@@ -552,8 +538,7 @@ def main():
 <p>This behaves differntly in the current release of Flint</p>
 <p>Currently, you won't see <code>fval = 3.0</code> printed to the console, but rather <code>fval = 3</code>. This is not a big deal, it only happens when the fractional part of the floating point value is zero, but this behaviour is a bit misleading, as you now could think that the value used to print <code>3</code> is an integer type, not a floating point type. Printing <code>3.0</code> makes this unambiguous and is considered the correct way to do it.</p>
 </div>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="string-interpolation"><a class="header" href="#string-interpolation">String Interpolation</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="string-interpolation"><a class="header" href="#string-interpolation">String Interpolation</a></h1>
 <p>Until now you have seen quite often that we do something like this:</p>
 <pre><code class="language-rs">use Core.print
 
@@ -595,8 +580,7 @@ def main():
 2 + 2 equals 4
 </code></pre>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="control-flow"><a class="header" href="#control-flow">Control Flow</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="control-flow"><a class="header" href="#control-flow">Control Flow</a></h1>
 <p>In the previous chapters, we learned the basics of printing to the console and working with variables and types in Flint. Now that we have a way to display information and store data, let's talk about how to control the flow of our program's execution. In this chapter, we will explore the fundamental concepts of control flow in Flint.</p>
 <h2 id="what-is-control-flow"><a class="header" href="#what-is-control-flow">What is Control Flow?</a></h2>
 <p>Control flow refers to the order in which a program's statements are executed. In other words, it's the way a program decides what to do next. Control flow is essential in programming because it allows you to write programs that can make decisions, repeat tasks, and handle different situations.</p>
@@ -616,8 +600,7 @@ def main():
 <li>Best practices for working with control flow statements</li>
 </ul>
 <p>By the end of this chapter, you will have a solid understanding of control flow in Flint, and you will be able to use it to write more sophisticated and efficient programs. Let's get started!</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="the-bool-type"><a class="header" href="#the-bool-type">The <code>bool</code> Type</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-bool-type"><a class="header" href="#the-bool-type">The <code>bool</code> Type</a></h1>
 <p>In Flint, the <code>bool</code> type represents truth values: <code>true</code> or <code>false</code>. Boolean values are fundamental in programming, as they enable decision-making and control flow. Boolean values are equal both in programming and in mathematics, they actually dont really differ. Here is a small example of how to declare a boolean variable and how to print its value to the console:</p>
 <pre><code class="language-rs">use Core.print
 
@@ -677,8 +660,7 @@ f_eq_f = true
 f_neq_f = false
 </code></pre>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="boolean-operations"><a class="header" href="#boolean-operations">Boolean Operations</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="boolean-operations"><a class="header" href="#boolean-operations">Boolean Operations</a></h1>
 <p>Boolean operators, such as <code>and</code>, <code>or</code> and <code>not</code> combine or modify <code>bool</code> values. They’re useful for creating more complex conditions. In this chapter, you will learn how each operator works.</p>
 <h2 id="and-operator"><a class="header" href="#and-operator"><code>and</code> Operator</a></h2>
 <p>The <code>and</code> operator combines two conditions and evaluates to <code>true</code> only if <strong>both</strong> conditions are <code>true</code>.</p>
@@ -740,8 +722,7 @@ def main():
 clarified = false
 </code></pre>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="branching"><a class="header" href="#branching">Branching</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="branching"><a class="header" href="#branching">Branching</a></h1>
 <p>Branching is the act of executing different "blocks" of code depending on conditions (booleans). But, before we can talk about branching we need to talk about what this <em>block</em> really is. Take the main function, for example:</p>
 <pre><code class="language-rs">use Core.print
 
@@ -849,8 +830,7 @@ def main():
 </code></pre>
 </blockquote>
 <p>Play around a bit. Change the value of <code>age</code> and see what happens. Try to write your own conditions and branches.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="loops"><a class="header" href="#loops">Loops</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="loops"><a class="header" href="#loops">Loops</a></h1>
 <p>Programming often involves repeating tasks. For example, imagine printing every number from <code>1</code> to <code>10</code>. It’s tedious to write print 10 times! Loops automate such repetition. But what even <em>is</em> a loop? Lets start with the most simple form of a loop, the <code>while</code> loop.</p>
 <h2 id="the-while-loop"><a class="header" href="#the-while-loop">The <code>while</code> Loop</a></h2>
 <p>The while loop is actually the more simple loop you can have. The body of the loop (its scope) is executed as long as the condition of the while loop evaluates to <code>true</code>. But be cautious, you can create <strong>infinite loops</strong> relatively easily with a <code>while</code> loop. Here is a simple example of a while loop in action:</p>
@@ -951,8 +931,7 @@ Loop 2, iteration: 3
 </blockquote>
 <h2 id="remember"><a class="header" href="#remember">Remember</a></h2>
 <p>The general rule of thumb is to use <code>for</code> loops when you know the bounds of your iteration (from number <code>X</code> to number <code>Y</code>, or <code>run 10 times</code>) and use <code>while</code> loops when the number of iterations of the loop is unknown to you. If you follow this rule of thumb you whould have very vew problems with loops.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="enums"><a class="header" href="#enums">Enums</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="enums"><a class="header" href="#enums">Enums</a></h1>
 <p>What is an enum? An enum essentially is just a number under the hood, but one with very interesting properties. It can be thought of as a <strong>tag</strong> which can only have one of a selected number of tags. Here is an example:</p>
 <pre><code class="language-rs">use Core.print
 
@@ -1094,8 +1073,7 @@ container.(a, b, c) = (-71, 164.37999, 6222)
 container.(a, b, c) = (-11, 23.823187, 1037)
 </code></pre>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="switch"><a class="header" href="#switch">Switch</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="switch"><a class="header" href="#switch">Switch</a></h1>
 <h2 id="switch-statements"><a class="header" href="#switch-statements">Switch Statements</a></h2>
 <p>Switch statements are actually pretty easy to understand once you grasped if chains. <code>switch</code> statements are primarily used for pattern-matching purposes or for cases where you have a limited selection of possible values, like with enums, where you only have the possibilities of each tag.</p>
 <p>Let's actually re-write the same example from the previous example, but without the if chain we now use a switch statement:</p>
@@ -1227,8 +1205,7 @@ def main():
 </code></pre>
 </blockquote>
 <p>For switch expressions, there does not exist such thing as a fallthrough, because there are no code blocks executed but only single expressions. Yes, a literal like <code>1</code> is an expression too, but you could write function calls or even another nested switch expression on the place of that literal.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
 <p>In the previous chapter, we learned the control flow to control the flow of our program's execution in Flint through conditions, if statements and loops. Now that we have a solid foundation in the basics, let's talk about how to organize and reuse code in our programs. In this chapter, we will explore the fundamental concepts of functions in Flint.</p>
 <h2 id="what-are-functions"><a class="header" href="#what-are-functions">What are Functions?</a></h2>
 <p>A function is a reusable block of code that performs a specific task. Functions make programs easier to read, debug, and maintain by encapsulating logic into manageable pieces. Think of a function like a recipe. You can reuse it to "cook" something multiple times without rewriting the steps every single time. Similar to how loops have made our life simpler for repetition, functions make our life easier when we want to do a similar operation at multiple places in our code.</p>
@@ -1250,8 +1227,7 @@ def main():
 <li>Best practices for working with functions</li>
 </ul>
 <p>By the end of this chapter, you will have a solid understanding of functions in Flint, and you will be able to use them to write more organized and reusable code. Let's get started!</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="what-is-a-function"><a class="header" href="#what-is-a-function">What is a Function?</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="what-is-a-function"><a class="header" href="#what-is-a-function">What is a Function?</a></h1>
 <p>A function is a reusable block of code designed to perform a specific task. We have been working this entire time with a function, actually, the <code>main</code> function. No, actually we have worked with multiple functions, because we also have called the <code>print</code> function <em>a lot</em> throughout the last few chapters. Now is the time you are going to understand what a function really is and how to define your own ones!</p>
 <p>Okay, lets start very simple first. We define a function with the <code>def</code> keyword (define). Following by the <code>def</code> keyword we put the name of the function and parenthesis <code>()</code>. Note that the names <code>main</code>, <code>_main</code> and all names starting with <code>__flint_</code> are disallowed by the compiler. Without these few exceptions, you can name your functions how you like.</p>
 <pre><code class="language-rs">use Core.print
@@ -1278,8 +1254,7 @@ def say_hello():
 </code></pre>
 <p>This is an important part of how Flint works. The reasons to why this works like this are a bit more technical, but just note that ordering of definition does not matter in Flint, which will make your life a lot easier in the future, trust me.</p>
 <p>While this function is cool, its not very useful yet because it will always only print the same message to the console. To make functions more useful we will need to add ways to pass data into and recieve data from functions. So, lets jump to the next chapter and discuss arguments.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="adding-parameters"><a class="header" href="#adding-parameters">Adding Parameters</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="adding-parameters"><a class="header" href="#adding-parameters">Adding Parameters</a></h1>
 <p>Parameters are "variables" of functions which you can change when calling the function, enabling the function to operate on different data, making them far more versatile and useful. Lets start with an example where we add a single parameter to a function:</p>
 <pre><code class="language-rs">use Core.print
 
@@ -1318,8 +1293,7 @@ def main():
 </ol>
 <p>There is an important difference between <code>parameters</code> and <code>arguments</code>, alltough this difference is only conceptual. When we define a function the "variables" that are defined, like <code>a</code> and <code>b</code> in our <code>add_two_numbers</code> function are called <strong>parameters</strong> of the function.</p>
 <p>When we call a function and pass in values, like the values <code>5</code> and <code>7</code> for the call <code>add_two_numbers(5, 7)</code>, they are called <strong>arguments</strong> of the function call. This difference is important in later chapters, as they are not interchangably used by this wiki. So, if we talk about arguments we talk about <em>calls</em> and if we talk about parameters we talk about function <em>definitions</em>.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="returning-values"><a class="header" href="#returning-values">Returning Values</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="returning-values"><a class="header" href="#returning-values">Returning Values</a></h1>
 <p>Imagine you want a function to calculate the area of a rectangle. It’s not enough to just print the result – you may need to use the value elsewhere in your program. This is where returning values is essential to any program. Here is a small and easy example of a function which returns a value:</p>
 <pre><code class="language-rs">def get_greeting() -&gt; str:
     return "Hello, Flint!\n";
@@ -1357,8 +1331,7 @@ def main():
 </code></pre>
 </blockquote>
 <p>Okay, now that you know how to pass in arguments to a function and return values from the function lets move to the next chapter, <em>recursion</em>.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="recursion"><a class="header" href="#recursion">Recursion</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="recursion"><a class="header" href="#recursion">Recursion</a></h1>
 <p>First of all, what even is recursion? Recursion is the act of calling a function from within itself forming a "chain" of calls. Lets start with the most simple example of a recursive function, calculating a fibonacci number:</p>
 <pre><code class="language-rs">use Core.print
 
@@ -1389,8 +1362,7 @@ fib(9) = 34
 </blockquote>
 <p>If you don't know what the fibonacci sequence is, you really should look into it, its beautiful. But, back to the recursive function, as there is a <em>lot</em> to unpack here. The loop itself is <strong>not</strong> part of the recursive function, only the content of the <code>fib</code> function make it recursive, because the function calls itself through the calls <code>fib(n - 1)</code> and <code>fib(n - 2)</code>.</p>
 <p>To understand the function you must first understand the fibonacci sequence itself. Basically, every number is the sum of the last two numbers that came before it with the exceptions of <code>1</code> and <code>0</code> as they are just the number itself. This exception is handled in the recursive function through the <code>if</code> branch. So, <code>fib(2)</code> is the sum of the last two numbers, <code>0</code> and <code>1</code>, so its result is <code>1</code> and so on and so forth.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="returning-multiple-values"><a class="header" href="#returning-multiple-values">Returning Multiple Values</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="returning-multiple-values"><a class="header" href="#returning-multiple-values">Returning Multiple Values</a></h1>
 <p>Sometimes, a single return value isn’t enough. For instance, a function might need to calculate both the area and perimeter of a rectangle. Flint allows functions to return multiple values at once, without limiting the number of maximum returned values.</p>
 <h2 id="how-to-return-multiple-values"><a class="header" href="#how-to-return-multiple-values">How to Return Multiple Values</a></h2>
 <p>To return multiple values we use parentheses <code>()</code> to group multiple values in the return statement and also use parentheses for declaring the return types:</p>
@@ -1421,8 +1393,7 @@ def main():
 <p>As you can see, we can declare two variables at once using inferred typing (<code>:=</code>) from the call <code>calculate_rectangle</code>. Both <code>area</code> and <code>perimeter</code> are of type <code>i32</code> now and then we can print their values.</p>
 <h2 id="important-note"><a class="header" href="#important-note">Important Note</a></h2>
 <p>The types and order of the group must match the function’s return type.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="groups"><a class="header" href="#groups">Groups</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="groups"><a class="header" href="#groups">Groups</a></h1>
 <p>What are groups? Groups are a new concept of Flint which allow us to do operations on multiple variables at the same time. You will see the potential and the integration of groups into other systems of Flint in later chapters, but even now groups are very powerful.</p>
 <p>You have already seen groups in action when returning multiple values from a function, but that was just the beginning. Lets kick things off with a very simple example: variable swaps.</p>
 <p>Lets define a simple small program which prints the values of two <code>i32</code> variables:</p>
@@ -1533,13 +1504,11 @@ a = 6
 </blockquote>
 <p>As you can see, this does not yield to an error...why? Because there is no reason why it should. The compiler should, however, print a warning describing the behaviour in this case. The right hand side of the grouped assignment is executed before any values are stored on the left, so first the group is evalueated to be <code>(4, 5, 6)</code> and then it is assigned to the group of <code>(a, a, a)</code>. Grouped assignments work from left to right, so we first assign <code>a</code> to be <code>4</code>, then to be <code>5</code> and finally to be <code>6</code>. The evaluation of a group is completely separate from the assignment of it, so this is a well-defined situation, and <code>a</code> will have its rightmost value from the group assigned to it.</p>
 <p>But groups will become very important later on, and they will become more and more powerful regarding <code>data</code> and <code>SIMD</code>. If you know what this means, great. If not, don't worry, as all of these concepts will be explained in later chapters and <code>data</code> is actually the next chapter to follow!</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="data"><a class="header" href="#data">Data</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="data"><a class="header" href="#data">Data</a></h1>
 <p>Flint brings along a completely new paradigm called <strong>Data-Object Convergence Paradigm (DOCP)</strong>. What this paradigm means and what it brings to the table will be discussed thoroughly in later chapters, but <code>data</code> is very important for it. Unlike other paradigms like OOP (Object-Oriented Programming) you cannot attach functions to data. In Flint, data is exactly just that: data. Nothing more, nothing less.</p>
 <p>Data is used to "pack" values together and to make them reusable, just like functions made instructions and operations reusable, <code>data</code> modules make working with similar data much simpler.</p>
 <p>But lets not focus on the theory so much but dive into declaring and using data right away.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="declaring-data-modules"><a class="header" href="#declaring-data-modules">Declaring Data Modules</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="declaring-data-modules"><a class="header" href="#declaring-data-modules">Declaring Data Modules</a></h1>
 <p>To define a new <code>data</code> module in Flint, we use the <code>data</code> keyword. A <code>data</code> module consists of <strong>fields</strong> (the pieces of information it holds) and a constructor (in which order to initialize those fields).</p>
 <h2 id="basic-syntax"><a class="header" href="#basic-syntax">Basic Syntax:</a></h2>
 <pre><code class="language-rs">data Vector2:
@@ -1666,8 +1635,7 @@ v3.(x, y, z) = (2, 3, 4)
 </code></pre>
 </blockquote>
 <p>As you can clearly see, all fields of the variable <code>v3</code> have been incremented by one. By combining data with groups you can create very powerful and still compact code.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="default-values"><a class="header" href="#default-values">Default Values</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="default-values"><a class="header" href="#default-values">Default Values</a></h1>
 <div class="warning">
 <p>Default values do not work yet.</p>
 <p>While default values are able to be parsed in the data definition itself, the constructor of data cannot be called with the <code>_</code> operator to create a default instance of the type.</p>
@@ -1716,8 +1684,7 @@ def main():
 <li>Default values simplify initialization but are optional.</li>
 <li>If a field doesn’t have a default value, using <code>_</code> will result in a <strong>compiler error</strong></li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="nested-data"><a class="header" href="#nested-data">Nested Data</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nested-data"><a class="header" href="#nested-data">Nested Data</a></h1>
 <p>Data modules can include other data modules as fields. This allows you to create nested structures, which are common in real-world programming. Here is an example of this concept in action:</p>
 <pre><code class="language-rs">use Core.print
 
@@ -1803,8 +1770,7 @@ rect.bottom_right.(x, y) = (10, 10)
 <p>While this may seem restrictive, it is pretty easy explained why this does not work: If you try to initialize a new variable of type <code>Node</code> you need to provide both its fields for the initializer. The <code>value</code> is fine, you can just pass in a literal, but what about the second field, <code>next</code>? To create a new variable of type <code>Node</code> you need an already existent variable of the same type to pass into, and thats impossible.</p>
 <h2 id="hint"><a class="header" href="#hint">Hint:</a></h2>
 <p>Flint can handle circular references with the help of the <strong>optional type (<code>?</code>)</strong>. These convert a reference to a wek reference in circular context's, thus enabling the use of data in of itself, for example for <strong>linked lists</strong>.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="using-data-in-functions"><a class="header" href="#using-data-in-functions">Using Data in Functions</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="using-data-in-functions"><a class="header" href="#using-data-in-functions">Using Data in Functions</a></h1>
 <p>Data modules can be passed to and returned from functions, enabling you to manipulate them easily.</p>
 <pre><code class="language-rs">use Core.print
 
@@ -1929,8 +1895,7 @@ def main():
 </code></pre>
 </blockquote>
 <p>By using functions with data, you can create and manipulate complex structures easily.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="tuples"><a class="header" href="#tuples">Tuples</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tuples"><a class="header" href="#tuples">Tuples</a></h1>
 <p>Tuples are a really nice concept in general and they exist in pretty much every language. But first, lets talk about what tuples even are and maybe take a closer look at <code>data</code> in general.
 In Flint, <code>data</code> is essentially just a <code>struct</code> from C, if you have seen that one before. So when we write</p>
 <pre><code class="language-rs">data Vector2:
@@ -1975,7 +1940,7 @@ second = 2.2
 third = "hello!"
 </code></pre>
 </blockquote>
-<p>As you can clearly see, we access the elements of the tuple with the <code>.&lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.10903em;"&gt;N&lt;/span&gt;&lt;span class="mord"&gt;‘&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.03588em;"&gt;sy&lt;/span&gt;&lt;span class="mord mathnormal"&gt;n&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;a&lt;/span&gt;&lt;span class="mord mathnormal"&gt;x&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02691em;"&gt;w&lt;/span&gt;&lt;span class="mord mathnormal"&gt;h&lt;/span&gt;&lt;span class="mord mathnormal"&gt;ere&lt;/span&gt;&lt;span class="mord"&gt;‘&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.10903em;"&gt;N&lt;/span&gt;&lt;span class="mord"&gt;‘&lt;/span&gt;&lt;span class="mord mathnormal"&gt;i&lt;/span&gt;&lt;span class="mord mathnormal"&gt;s&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;h&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord mathnormal"&gt;in&lt;/span&gt;&lt;span class="mord mathnormal"&gt;d&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord mathnormal"&gt;x&lt;/span&gt;&lt;span class="mord mathnormal"&gt;o&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.10764em;"&gt;f&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;h&lt;/span&gt;&lt;span class="mord mathnormal"&gt;ee&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.01968em;"&gt;l&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord mathnormal"&gt;m&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord mathnormal"&gt;n&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02691em;"&gt;tw&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02691em;"&gt;w&lt;/span&gt;&lt;span class="mord mathnormal"&gt;an&lt;/span&gt;&lt;span class="mord mathnormal"&gt;tt&lt;/span&gt;&lt;span class="mord mathnormal"&gt;o&lt;/span&gt;&lt;span class="mord mathnormal"&gt;a&lt;/span&gt;&lt;span class="mord mathnormal"&gt;ccess&lt;/span&gt;&lt;span class="mord"&gt;.&lt;/span&gt;&lt;span class="mord mathnormal"&gt;L&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.03148em;"&gt;ik&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord mathnormal"&gt;a&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02691em;"&gt;lw&lt;/span&gt;&lt;span class="mord mathnormal"&gt;a&lt;/span&gt;&lt;span class="mord mathnormal"&gt;ys&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.10764em;"&gt;f&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02778em;"&gt;or&lt;/span&gt;&lt;span class="mord mathnormal"&gt;in&lt;/span&gt;&lt;span class="mord mathnormal"&gt;d&lt;/span&gt;&lt;span class="mord mathnormal"&gt;i&lt;/span&gt;&lt;span class="mord mathnormal"&gt;ces&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02691em;"&gt;w&lt;/span&gt;&lt;span class="mord mathnormal"&gt;es&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;a&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02778em;"&gt;r&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;a&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord"&gt;0&lt;/span&gt;&lt;span class="mord mathnormal"&gt;a&lt;/span&gt;&lt;span class="mord mathnormal"&gt;s&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.01968em;"&gt;Fl&lt;/span&gt;&lt;span class="mord mathnormal"&gt;in&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;ha&lt;/span&gt;&lt;span class="mord mathnormal"&gt;szero&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2222em;"&gt;&lt;/span&gt;&lt;span class="mbin"&gt;−&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2222em;"&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;ba&lt;/span&gt;&lt;span class="mord mathnormal"&gt;se&lt;/span&gt;&lt;span class="mord mathnormal"&gt;d&lt;/span&gt;&lt;span class="mord mathnormal"&gt;in&lt;/span&gt;&lt;span class="mord mathnormal"&gt;d&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord mathnormal"&gt;x&lt;/span&gt;&lt;span class="mord mathnormal"&gt;in&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.03588em;"&gt;g&lt;/span&gt;&lt;span class="mord"&gt;.&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.07847em;"&gt;I&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.10764em;"&gt;f&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02691em;"&gt;w&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02691em;"&gt;w&lt;/span&gt;&lt;span class="mord mathnormal"&gt;o&lt;/span&gt;&lt;span class="mord mathnormal"&gt;u&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.01968em;"&gt;l&lt;/span&gt;&lt;span class="mord mathnormal"&gt;d&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.03588em;"&gt;ry&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;o&lt;/span&gt;&lt;span class="mord mathnormal"&gt;a&lt;/span&gt;&lt;span class="mord mathnormal"&gt;ccess&lt;/span&gt;&lt;span class="mord mathnormal"&gt;an&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.01968em;"&gt;l&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord mathnormal"&gt;m&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord mathnormal"&gt;n&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02691em;"&gt;tw&lt;/span&gt;&lt;span class="mord mathnormal"&gt;hi&lt;/span&gt;&lt;span class="mord mathnormal"&gt;c&lt;/span&gt;&lt;span class="mord mathnormal"&gt;hi&lt;/span&gt;&lt;span class="mord mathnormal"&gt;so&lt;/span&gt;&lt;span class="mord mathnormal"&gt;u&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;o&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.10764em;"&gt;f&lt;/span&gt;&lt;span class="mord mathnormal"&gt;b&lt;/span&gt;&lt;span class="mord mathnormal"&gt;o&lt;/span&gt;&lt;span class="mord mathnormal"&gt;u&lt;/span&gt;&lt;span class="mord mathnormal"&gt;n&lt;/span&gt;&lt;span class="mord mathnormal"&gt;d&lt;/span&gt;&lt;span class="mord mathnormal"&gt;s&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.01968em;"&gt;l&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.03148em;"&gt;ik&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord"&gt;‘.&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;3</code> in our case we would actually get a compile error:</p>
+<p>As you can clearly see, we access the elements of the tuple with the <code>.$N</code> syntax, where <code>N</code> is the index of the element we want to access. Like always for indices, we start at 0 as Flint has zero-based indexing. If we would try to access an element which is out of bounds, like <code>.$3</code> in our case we would actually get a compile error:</p>
 <pre><code class="language-rs">def main():
     data&lt;i32, f32, str&gt; tuple = (3, 2.2, "hello!");
     i32 = tuple.$3;
@@ -1998,7 +1963,8 @@ def main():
     data&lt;i32, f32, str&gt; tuple = (3, 2.2, "hello!");
 
     tuple.$0 = 7;
-    tuple.&lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.6444em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;1&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;span class="mrel"&gt;=&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;4.7&lt;/span&gt;&lt;span class="mpunct"&gt;;&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;u&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.01968em;"&gt;pl&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord"&gt;.&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;2 = "yes";
+    tuple.$1 = 4.7;
+    tuple.$2 = "yes";
 
     print($"first = {tuple.$0}\n");
     print($"second = {tuple.$1}\n");
@@ -2017,11 +1983,12 @@ third = "yes"
 
 def main():
     data&lt;i32, f32, str&gt; tuple = (3, 2.2, "hello!");
-    tuple.(&lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;0&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;1, &lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:1em;vertical-align:-0.25em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;2&lt;/span&gt;&lt;span class="mclose"&gt;)&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;span class="mrel"&gt;=&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:1em;vertical-align:-0.25em;"&gt;&lt;/span&gt;&lt;span class="mopen"&gt;(&lt;/span&gt;&lt;span class="mord"&gt;7&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;4.7&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;&amp;quot;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;yes&lt;/span&gt;&lt;span class="mord"&gt;&amp;quot;&lt;/span&gt;&lt;span class="mclose"&gt;)&lt;/span&gt;&lt;span class="mpunct"&gt;;&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;p&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02778em;"&gt;r&lt;/span&gt;&lt;span class="mord mathnormal"&gt;in&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mopen"&gt;(&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;"tuple.(&lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;0&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;1, $2) = ({tuple.$0}, {tuple.$1}, \"{tuple.$2}\")\n");
+    tuple.($0, $1, $2) = (7, 4.7, "yes");
+    print($"tuple.($0, $1, $2) = ({tuple.$0}, {tuple.$1}, \"{tuple.$2}\")\n");
 </code></pre>
 <p>This program prints this line to the console:</p>
 <blockquote>
-<pre><code>tuple.(&lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;0&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;1, $2) = (7, 4.7, "yes")
+<pre><code>tuple.($0, $1, $2) = (7, 4.7, "yes")
 </code></pre>
 </blockquote>
 <h2 id="addition-information"><a class="header" href="#addition-information">Addition Information</a></h2>
@@ -2031,8 +1998,8 @@ def main():
 
 def main():
     data&lt;i32, i32, i32&gt; tuple = (1, 1, 1);
-    tuple.($0, &lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;1&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;2) = (2, 3, 4);
-    print(&lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:1em;vertical-align:-0.25em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;&amp;quot;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;u&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.01968em;"&gt;pl&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord"&gt;.&lt;/span&gt;&lt;span class="mopen"&gt;(&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;0, &lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;1&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
+    tuple.($0, $1, $2) = (2, 3, 4);
+    print($"tuple.($0, $1, $2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
 </code></pre>
 <p>will throw a compilation error and tell you to use a <code>i32x3</code> type instead of the <code>data&lt;i32, i32, i32&gt;</code> type.</p>
 <div class="warning">
@@ -2049,7 +2016,7 @@ def get_tuple(i32 a, f32 b, str c) -&gt; data&lt;i32, f32, str&gt;:
 
 def main():
     data&lt;i32, f32, str&gt; tuple = get_tuple(1, 4.7, "hello");
-    print($"tuple.(&lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;0&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;1, $2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
+    print($"tuple.($0, $1, $2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
 </code></pre>
 <p>will produce a compile error telling you to use a group of type <code>(i32, f32, str)</code> instead as the return type of the function. Because you can do this:</p>
 <pre><code class="language-rs">use Core.print
@@ -2059,11 +2026,11 @@ def get_tuple(i32 a, f32 b, str c) -&gt; (i32, f32, str):
 
 def main():
     data&lt;i32, f32, str&gt; tuple = get_tuple(1, 4.7, "hello");
-    print(&lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:1em;vertical-align:-0.25em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;&amp;quot;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;u&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.01968em;"&gt;pl&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord"&gt;.&lt;/span&gt;&lt;span class="mopen"&gt;(&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;0, &lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;1&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
+    print($"tuple.($0, $1, $2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
 </code></pre>
 <p>annyway. This program will print this line to the console:</p>
 <blockquote>
-<pre><code>tuple.($0, &lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;1&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;2) = (1, 4.7, hello)
+<pre><code>tuple.($0, $1, $2) = (1, 4.7, hello)
 </code></pre>
 </blockquote>
 <h3 id="passing-tuples-to-functions"><a class="header" href="#passing-tuples-to-functions">Passing Tuples to functions</a></h3>
@@ -2086,7 +2053,11 @@ def main():
 <pre><code class="language-rs">use Core.print
 
 def change_tuple(mut data&lt;i32, f32, str&gt; tuple):
-    tuple.(&lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;0&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;1, &lt;span class="katex"&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:1em;vertical-align:-0.25em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;2&lt;/span&gt;&lt;span class="mclose"&gt;)&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;span class="mrel"&gt;=&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:1em;vertical-align:-0.25em;"&gt;&lt;/span&gt;&lt;span class="mopen"&gt;(&lt;/span&gt;&lt;span class="mord"&gt;2&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;3.3&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;&amp;quot;&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.10764em;"&gt;f&lt;/span&gt;&lt;span class="mord mathnormal"&gt;o&lt;/span&gt;&lt;span class="mord mathnormal"&gt;u&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02778em;"&gt;r&lt;/span&gt;&lt;span class="mord"&gt;&amp;quot;&lt;/span&gt;&lt;span class="mclose"&gt;)&lt;/span&gt;&lt;span class="mpunct"&gt;;&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;d&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.10764em;"&gt;f&lt;/span&gt;&lt;span class="mord mathnormal"&gt;main&lt;/span&gt;&lt;span class="mopen"&gt;(&lt;/span&gt;&lt;span class="mclose"&gt;)&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;span class="mrel"&gt;:&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.7335em;vertical-align:-0.0391em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;d&lt;/span&gt;&lt;span class="mord mathnormal"&gt;a&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;a&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;span class="mrel"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;i&lt;/span&gt;&lt;span class="mord"&gt;32&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.10764em;"&gt;f&lt;/span&gt;&lt;span class="mord"&gt;32&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;s&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02778em;"&gt;r&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;span class="mrel"&gt;&amp;gt;&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;u&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.01968em;"&gt;pl&lt;/span&gt;&lt;span class="mord mathnormal"&gt;e&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;span class="mrel"&gt;=&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.2778em;"&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:1em;vertical-align:-0.25em;"&gt;&lt;/span&gt;&lt;span class="mopen"&gt;(&lt;/span&gt;&lt;span class="mord"&gt;1&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;2.2&lt;/span&gt;&lt;span class="mpunct"&gt;,&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;&amp;quot;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mord mathnormal"&gt;h&lt;/span&gt;&lt;span class="mord mathnormal"&gt;ree&lt;/span&gt;&lt;span class="mord"&gt;&amp;quot;&lt;/span&gt;&lt;span class="mclose"&gt;)&lt;/span&gt;&lt;span class="mpunct"&gt;;&lt;/span&gt;&lt;span class="mspace" style="margin-right:0.1667em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;p&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.02778em;"&gt;r&lt;/span&gt;&lt;span class="mord mathnormal"&gt;in&lt;/span&gt;&lt;span class="mord mathnormal"&gt;t&lt;/span&gt;&lt;span class="mopen"&gt;(&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;"tuple.(i32, f32, str) = ({tuple.$0}, {tuple.$1}, \"{tuple.$2}\")\n");
+    tuple.($0, $1, $2) = (2, 3.3, "four");
+
+def main():
+    data&lt;i32, f32, str&gt; tuple = (1, 2.2, "three");
+    print($"tuple.(i32, f32, str) = ({tuple.$0}, {tuple.$1}, \"{tuple.$2}\")\n");
 
     change_tuple(tuple);
     print($"tuple.(i32, f32, str) = ({tuple.$0}, {tuple.$1}, \"{tuple.$2}\")\n");
@@ -2097,8 +2068,7 @@ def change_tuple(mut data&lt;i32, f32, str&gt; tuple):
 tuple.(i32, f32, str) = (2, 3.3, "four")
 </code></pre>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="multi-types"><a class="header" href="#multi-types">Multi-Types</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="multi-types"><a class="header" href="#multi-types">Multi-Types</a></h1>
 <p>Multi-Types are essentially vectorized variants of <em>some</em> primitive types to increase both readability, performance (SIMD) and ease of use for vectorized math operations and much more. Here is an example of how multi-types work:</p>
 <pre><code class="language-rs">use Core.print
 
@@ -2168,8 +2138,7 @@ def main():
 </blockquote>
 <h2 id="important-note-1"><a class="header" href="#important-note-1">Important Note</a></h2>
 <p>When using Multi-Types you gain free access to SIMD instructions. SIMD means <strong>S</strong>ingle <strong>I</strong>nstruction, <strong>M</strong>ultiple <strong>D</strong>ata and its a very optimized way of doing operations, such as additions. For example, adding two <code>i32x4</code> variables is just as fast as adding a single <code>i32</code> variable. This makes Flint's multi-types both extremely fast and extremely easy to use.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="arrays"><a class="header" href="#arrays">Arrays</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="arrays"><a class="header" href="#arrays">Arrays</a></h1>
 <p>In the previous chapter we learned the importance of <code>data</code>, groups, mutli-types, tuples and how to use all of them in functions. With all these concepts we now developed a good understanding of Flint's type-system. So, its now time to move to more complex types than those of the last chapter – arrays.</p>
 <h2 id="what-are-arrays"><a class="header" href="#what-are-arrays">What are Arrays?</a></h2>
 <p>An array is a collection of the same data type which can be resized and filled with values. While mutli-types and tuples are great for storing a small amount of values, what if we want to store a hundred of them? Using a tuple to store 100 elements would not only be extremely tedious but also extremely verbose. Just imagine writing <code>i32, </code> a hundred times inside the <code>data&lt;..&gt;</code> definition.</p>
@@ -2193,8 +2162,7 @@ def main():
 <li>Multi-dimensional arrays and access patterns</li>
 <li>Best practices for working with arrays</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="introduction-to-arrays"><a class="header" href="#introduction-to-arrays">Introduction to Arrays</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction-to-arrays"><a class="header" href="#introduction-to-arrays">Introduction to Arrays</a></h1>
 <p>An <strong>array</strong> is a data structure that stores a collection of elements sequentially in memory. Arrays are useful for storing multiple values of the same type, such as numbers, strings, or even custom data modules. In Flint, arrays are <strong>immutable by default</strong> in terms of references — assigning one array to another always creates a <strong>copy</strong>, not a reference.</p>
 <ul>
 <li>Arrays are always <strong>stored sequentially</strong> in memory, making access to their elements efficient.</li>
@@ -2280,8 +2248,7 @@ def main():
 </code></pre>
 </blockquote>
 <p>As you can see, instead of doing <code>.(x, y)</code> (for example for <code>i32x2</code>) we write <code>.[idx1, idx2]</code>. We definitely need the <code>.</code> in front of the <code>[</code> symbol to differentiate a grouped array access from a multi-dimensional array access, but you will learn about multi-dimensional arrays soon.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="iterating-over-arrays"><a class="header" href="#iterating-over-arrays">Iterating Over Arrays</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="iterating-over-arrays"><a class="header" href="#iterating-over-arrays">Iterating Over Arrays</a></h1>
 <p>Often, you will want to process each element of an array inside of a loop. For this, you can easily use a <code>for</code> loop, like so:</p>
 <pre><code class="language-rs">use Core.print
 
@@ -2345,8 +2312,7 @@ Index: 4, Value: 18
 </code></pre>
 </blockquote>
 <p>You can spot two out of bounds accesses here. The first one happens when we want to assign <code>i * 2</code> to the array at <code>i</code> and the second one is in the printing when trying to print <code>arr[i]</code> in the string interpolation. And then, at the end we print the current values of the array and you can clearly see that the last element at index 4 holds the value 18, which is double the last index of the last loop. As you can see, OOB accesses are considered "safe" in Flint, because it is well-defined what will happen when an OOB access occurs.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="strings-1"><a class="header" href="#strings-1">Strings</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="strings-1"><a class="header" href="#strings-1">Strings</a></h1>
 <p>As stated earlier, strings and arrays have very much in common, actually. If we would make a deep-dive into how Flint works internally we would see that arrays and strings actually are the same data structure, but thats too low level for now. But, the important thing to note here is the similarity of strings with arrays, as a string is essentially just an array of characters, but what <em>is</em> a character in string really?</p>
 <p>In Flint, a character has the type <code>u8</code>, a type we have not discussed until now. So, if you save the sting <code>hello</code> on a variable its essentially the same as if you would store a <code>u8[]</code> array of length <code>5</code>. There exists a separate <code>str</code> type, however, to make our life with strings a lot easier than it would if we would need to think of strings as arrays of bytes.</p>
 <p>But what does all of this mean? Well, first we can access a given character of a string exactly as we would access any element of an array, here is an example:</p>
@@ -2436,8 +2402,7 @@ def main():
 '
 </code></pre>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="multidimensional-arrays"><a class="header" href="#multidimensional-arrays">Multidimensional Arrays</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="multidimensional-arrays"><a class="header" href="#multidimensional-arrays">Multidimensional Arrays</a></h1>
 <p>Flint supports <strong>multidimensional arrays</strong>. In Flint, these arrays are <strong>always rectangular</strong>, meaning that the length of each dimension is locked, unlike <em>jagged arrays</em>, which behave more like "array of arrays". Multidimensional Arrays are particularly useful for storing grid-like data, such as images or matrices.</p>
 <h2 id="declaring-multidimensional-arrays"><a class="header" href="#declaring-multidimensional-arrays">Declaring Multidimensional Arrays</a></h2>
 <p>The number of commas between the brackets of the array type directly indicates the dimensionality of an array. So, the array <code>i32[]</code> is a one-dimensional array (we have one "line" of values), then <code>i32[,]</code> is a two-dimensional array (we have a "plane" of values), <code>i32[,,]</code> is a three-dimensional array (we have a "cube" of values) and so on. There is no limit to how high the dimensionality of an array can be, really. We start with dimensionality of <code>1</code> because a dimensionality of <code>0</code> is already defined: its a single value, so <code>i32</code> is "an array of 0 dimensionality" if you want to see it like this.</p>
@@ -2545,8 +2510,7 @@ mat[2, 2] = 8
 <p>So, you may be able to see now that the index at which we would read memory from would constantly jump between positions when iterating through an array using column-major looping whereas when we loop through the array using row-major looping we go through all indices of the two-dimensional array one by one. This is called a <strong>sequentail operation</strong> and the other one is called a <strong>random operation</strong> in computer science. The CPU is <strong>much</strong> more performant with sequential operations than it is with random operations, as it is not as prone to <strong>cache-misses</strong> with sequential loads. If you want to read more about this topic, look <a href="https://www.hostinger.com/uk/tutorials/cache-miss">here</a>.</p>
 <p>TLDR: The row-major loop properly utilizes the CPU cache and reduces cache-misses, making the operations <em>much</em> faster in return.</p>
 <p>Before you wonder why i told you all of this, everything i talked about becomes important in the next chapter!</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="enhanced-for-loops"><a class="header" href="#enhanced-for-loops">Enhanced for Loops</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="enhanced-for-loops"><a class="header" href="#enhanced-for-loops">Enhanced for Loops</a></h1>
 <p>Enhanced for loops are for loops without explicitely declaring a range, but instead they directly operate on a so-called <strong>iterable</strong>. They are extremely useful for iterating through arrays, as enhanced for loops will <strong>always</strong> iterate through a multidimensional array <em>sequentially</em>.</p>
 <p>Here is a small example:</p>
 <pre><code class="language-rs">use Core.print
@@ -2696,8 +2660,7 @@ def main():
 <pre><code>my_string = 'soMeThing useful'
 </code></pre>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="cli-arguments"><a class="header" href="#cli-arguments">CLI Arguments</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cli-arguments"><a class="header" href="#cli-arguments">CLI Arguments</a></h1>
 <p>CLI Arguments stands for <strong>C</strong>ommand <strong>L</strong>ine <strong>I</strong>nterface Arguments. CLI arguments describe the act of passing in arguments to a program when executing said program, just like executing a function and passing in the arguments to the function. In fact, many programs can be thought of as "functions" in the Linux world, where you pass in data to a function and get something from it in return.</p>
 <p>Here is an example of CLI arguments in action:</p>
 <pre><code class="language-rs">use Core.print
@@ -2735,12 +2698,10 @@ args[3] = third-thing
 </code></pre>
 </blockquote>
 <p>So, if you execute a program with the absolute path to said program, the first CLI argument will contain the command used to execute the program.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="imports"><a class="header" href="#imports">Imports</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="imports"><a class="header" href="#imports">Imports</a></h1>
 <p>Up until now, we have always worked with one single file, and with a small file too. But a project that only contains a sinlge file is extremely limiting in what you can do with it and it quickly becomes very messy and confusing if you only have one very large file in which everything is defined in.</p>
 <p>For this very reason, Flint supports multi-file projects. Unlike languages like C or C++, where you manually need to collect all your translation units when compiling, Flint provides a much clearer experience: You only specify the file which contains your <code>main</code> function and <code>flintc</code> will dynamically discover all included files, build its internal dependency tree and compile your project from this one and single entry point. So, you can compile your programs with the Flint compiler the same way you did until now, support for multi-file projects does not make compilation any harder for you.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="the-use-clausel"><a class="header" href="#the-use-clausel">The <code>use</code> clausel</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-use-clausel"><a class="header" href="#the-use-clausel">The <code>use</code> clausel</a></h1>
 <p>The <code>use</code> clausel is a top-level definition, like a function definition for example, which provides a way to "import" code from other files (or modules). You have seen it quite a lot until now:</p>
 <pre><code class="language-rs">use Core.print
 </code></pre>
@@ -2771,8 +2732,7 @@ def main():
 </code></pre>
 </blockquote>
 <p>As you can see, we have successfully called the function <code>add</code> defined in the file <code>utils.ft</code> from the <code>main</code> function inside the <code>main.ft</code> file, and the Flint compiler discovered the used file dynamically during compilation.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="circular-dependencies"><a class="header" href="#circular-dependencies">Circular Dependencies</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="circular-dependencies"><a class="header" href="#circular-dependencies">Circular Dependencies</a></h1>
 <p>You may have asked yourself already <em>"What will happen if file <code>A</code> imports file <code>B</code> and file <code>B</code> imports file <code>A</code> again?"</em>. This is called a circular dependency. It's called circular, because the dependency graph forms a circle, where the "line of imports" ends up at its starting point. If you try to write import statements in C where every file imports another file you will get a compilation error, as circular dependencies are not allowed and cannot be resolved.</p>
 <p>But Flint's <code>use</code> clausels work quite different from the <code>#import</code> from C-style languages. Whereas these literally just copy and paste the code from the other file, the <code>use</code> clausel in Flint is a lot...smarter. The <code>use</code> clausel only imports files at a depth of <code>1</code>, but what does this mean? Well, here is a small example to showcase what i mean with that:</p>
 <p>The <code>helper.ft</code> file:</p>
@@ -2851,8 +2811,7 @@ utils end
 <p>As you can see, circular dependencies are absolutely no problem in Flint, and the only reason they are no problem is the dynamic exploratory nature of the compiler (you only specify one file and the compiler will find all included functions on its own) and the fact that the inclusion depth is only 1, so every use clausel is a shallow include.</p>
 <h2 id="side-note"><a class="header" href="#side-note">Side note</a></h2>
 <p>Because the files <code>main.ft</code> and <code>utils.ft</code> form a circle in the last example, you actually also could compile the program with the command <code>flintc -f utils.ft</code> and it would still work, as it would explore all files until it finds the main function. You can always think of file dependencies as a "tree". If, for example, file <code>main.ft</code> includes file <code>A</code>, which includes file <code>B</code> and you specify file <code>A</code> when compiling, you will get an error that no main function is defined, as the <code>main.ft</code> function was no longer part of the tree. If, however, file <code>A</code> or file <code>B</code> include <code>main.ft</code>, the compiler will be able to find the main file and main function again. Try it out and test a few file dependency trees and see for yourself how the compiler will react to it.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="import-aliasing"><a class="header" href="#import-aliasing">Import Aliasing</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="import-aliasing"><a class="header" href="#import-aliasing">Import Aliasing</a></h1>
 <div class="warning">
 <p>Import aliasing works, but is messed up.</p>
 <p>Use Import aliasing with caution, its pretty messed up at the moment, so it would be best to avoid it for the current version of Flint.</p>
@@ -2876,12 +2835,10 @@ def main():
 </code></pre>
 </blockquote>
 <p>As you can see, <strong>any</strong> <code>use</code> clausel can be aliased. The identifier after the <code>as</code> keyword is the aliasing name, which you need to specify when you call the function. If you would remove the <code>p.</code> in the <code>utils.ft</code> file you would get a compile error.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="core-modules"><a class="header" href="#core-modules">Core Modules</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="core-modules"><a class="header" href="#core-modules">Core Modules</a></h1>
 <p>Core Modules are essential to Flint, as Flint does not ship with a standard library. Core Modules provide core functionality which just <strong>cannot</strong> be implemented in pure Flint code, as Flint is a high level language. The general rule of thumb is that <strong>everything that can be implemented in pure Flint code will not be part of Core Modules</strong>. In Flint, we aim to provide libraries over on FlintHub and aim to make it as easy as possible to include FlintHub libraries. These libraries are the place where "standard" libraries can be found.</p>
 <p>You have actually seen the core modules in action quite a lot until now: The <code>use Core.print</code> line is a special use clausel which tells the compiler to include the <code>print</code> Core module. There are several more core modules than just the <code>print</code> module, though. In this chapter, you will learn which Core modules there exist, which functions they provide and how to use them.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="print"><a class="header" href="#print">print</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="print"><a class="header" href="#print">print</a></h1>
 <pre><code class="language-rs">use Core.print
 </code></pre>
 <p>The <code>print</code> core module provides several print functions. Here are all the print functions this module provides. There exist <em>a lot</em> of builtin print overloads for the print function.</p>
@@ -2899,8 +2856,7 @@ def main():
 </div>
 <p>Note that none of the print functions prints a new line after the print. This could be important when printing values in a loop, for example, because calling a "native" print function like <code>print(i32)</code> is generally speaking faster than calling the <code>print(str)</code> function with an interpolated string as argument, as string casting + concatenation takes more time than just calling the specialized print functions one after another. So, while string interpolation is <strong>much</strong> more ergonomic for the programmer, its is also a bit slower generally speaking.</p>
 <p>The <code>print(str)</code> function was used throughout this wiki until now. Every string interpolation evaluates to a string value, so this is the function we have called <em>exclusively</em> thus far, to make printing not as overwhelming.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="read"><a class="header" href="#read">read</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="read"><a class="header" href="#read">read</a></h1>
 <pre><code class="language-rs">use Core.read
 </code></pre>
 <p>The <code>read</code> module provides several functions to read input from the command line and to read input from the user, like numbers or text edited by the user.</p>
@@ -2977,8 +2933,7 @@ def main():
     f64 num = read_f64();
     print($"entered f64: {num}\n");
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="assert"><a class="header" href="#assert">assert</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="assert"><a class="header" href="#assert">assert</a></h1>
 <pre><code class="language-rs">use Core.assert
 </code></pre>
 <p>The <code>assert</code> module provides a single <code>assert</code> function, which returns an error if the given condition evaluates to false. It is used for code-assertions and to fail loud and clear.</p>
@@ -3002,8 +2957,7 @@ def main():
 </blockquote>
 <p>but this needs a lot more work still to be finished.</p>
 </div>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="filesystem"><a class="header" href="#filesystem">filesystem</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="filesystem"><a class="header" href="#filesystem">filesystem</a></h1>
 <pre><code class="language-rs">use Core.filesystem
 </code></pre>
 <p>The <code>filesystem</code> module provides several functions to read data from and write data to files.</p>
@@ -3151,8 +3105,7 @@ def main():
 is 'somegarbage' a file? false
 </code></pre>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="env"><a class="header" href="#env">env</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="env"><a class="header" href="#env">env</a></h1>
 <pre><code class="language-rs">use Core.env
 </code></pre>
 <p>The <code>env</code> module provides several functions to read from and write to environment variables.</p>
@@ -3196,8 +3149,7 @@ NEW_ENV_VARIABLE craeted? true
 NEW_ENV_VARIABLE content: some nice value
 </code></pre>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="system"><a class="header" href="#system">system</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="system"><a class="header" href="#system">system</a></h1>
 <pre><code class="language-rs">use Core.system
 </code></pre>
 <p>The <code>system</code> module provides functions to interact with the system, for example to execute system commands.</p>
@@ -3247,13 +3199,11 @@ vendor
 '
 </code></pre>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="from-intermediate-to-expert"><a class="header" href="#from-intermediate-to-expert">From Intermediate to Expert</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="from-intermediate-to-expert"><a class="header" href="#from-intermediate-to-expert">From Intermediate to Expert</a></h1>
 <p>Welcome to the Intermediates guide! In this guide you will learn new and bigger concepts of Flint and also become more familiar with how Flint handles various systems and <em>stuff</em> under the hood. Being great in a language does not necessarily only mean knowing all it's syntax, but clearly understanding <em>what</em> the language does under the hood for you and then choosing the right feature for the job, based on this holistic knowledge of the language. While you will not learn <strong>everything</strong> that's going on under Flint's hood in this guide (Thats more for the expert's guide), you will learn quite a lot of new concepts and features which make your life using Flint much easier.</p>
 <p>The goal of this guide is not only to teach the <em>how</em> but also the <em>why</em>, which is equally as important. Flint is open source, so the more you understand about the language itself the more you essentially understand about it's compiler, as the compiler is just a "mapper" which maps semantic concepts to machine code, and if you know exactly which behaviour it needs to map you essentially understand the compiler as well.</p>
 <p>So, let's get started!</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="optionals"><a class="header" href="#optionals">Optionals</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="optionals"><a class="header" href="#optionals">Optionals</a></h1>
 <p>Welcome to the first chapter of the intermediates guide. In this first chapter we look at the optional type and what you can do with it. Other languages don't necessarily "need" an optional type because of other designs like Java's <code>null</code>, C's <code>NULL</code> or C++'s <code>nullptr</code>. In Flint, however, not every varaible or "object" can be "null" or "empty" implicitely.</p>
 <h2 id="what-are-optionals"><a class="header" href="#what-are-optionals">What are Optionals?</a></h2>
 <p>An optional is essentially just a struct under the hood, composed of a boolean value whether the optional has a value followed by the actual data of the optional. So an optional looks like <code>{ i1, T }</code> in memory. Optionals are crucial to be able to build up "possible" values (or possible absence of values) which is the basis of linked lists, for example, and much much more.</p>
@@ -3273,8 +3223,7 @@ vendor
 <li>Switching on optional values</li>
 <li>Building optional chains through the optional chaining operator</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="introduction-1"><a class="header" href="#introduction-1">Introduction</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction-1"><a class="header" href="#introduction-1">Introduction</a></h1>
 <p>In Flint, we need to explicitely define which values possibly have no value. There is no implicit nullability like in other languages, nullability is very explicit in Flint, and that's a good thing. This means that we do not check everywhere if our object maybe is null, because when it's not an optional type it is <strong>required</strong> to be initialized, as there <em>is no uninitialized state in Flint</em>.</p>
 <p>We do this through the optional type. Optional values can either have a value or they can be "empty". This "empty" state is achieved through the <code>none</code> literal. If an optional variable is set to <code>none</code> it effectively has no longer any value stored on it. But let's look at optionals in an example, they are best understood through examples:</p>
 <pre><code class="language-rs">def main():
@@ -3287,8 +3236,7 @@ vendor
 </code></pre>
 <p>A boolean <code>false</code> is simply <code>0</code> in memory, as you already know. The <code>none</code> literal literally just stores zeroes on the entire optional structure. It's a <code>zeroinitializer</code> if you know this from C, its a <code>{0}</code>. Because the flag is 0 when false we can set all values to zeroes through the <code>none</code> type. This means that the <code>value</code> field of the optional structure will also be set to zeroes when storing a <code>none</code> literal on it. But here, when using the tuple, we need to specify the <code>value</code> we want to store in it, even if we want to store <code>none</code> (<code>(false, 0)</code>) on it.</p>
 <p>Because we store all-zeroes on the optional when storing <code>none</code> on it, you now may be able to see that accessing the value of an optional when there is nothing stored in it can be considered as an error, as it's all just zeroes. But how do we even access the value of an optional variable in the first place? You will learn this in the next chapter!</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="unwrapping"><a class="header" href="#unwrapping">Unwrapping</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="unwrapping"><a class="header" href="#unwrapping">Unwrapping</a></h1>
 <p>Unwrapping is the act of recieving / reading the value of an optional variable. When there is nothing stored in the optional, however, it is considered an error to access it's value, as this could lead to wrong and potentially harmful behaviour (like undefined behaviour, nullpointers or many other things that could go wrong).</p>
 <p>Because of this very reason Flint decides that accessing the value of an <code>none</code> optional is an error, and the program will crash with a simple message to the console stating that we tried to access the value of an empty optional. But enough talk, here is a small example showcasing exactly that:</p>
 <pre><code class="language-rs">use Core.print
@@ -3308,8 +3256,7 @@ Bad optional access occurred
 </code></pre>
 </blockquote>
 <p>Currently, this does not <code>throw</code> an error (like <code>asssert</code> would, for example) but it hard-crashes the program instad. This is open for debate whether it should throw an error and be catchable instead (like an assertion error we then would have a bad optional access error). For now, hard-crashing is fine and works, because accessing an optional which has no value is considered a programmer error, not a user error. But how do we check if the variable has a value, to prevent this crash from happening? You will learn about this in the next chapter.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="comparing-optionals"><a class="header" href="#comparing-optionals">Comparing Optionals</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="comparing-optionals"><a class="header" href="#comparing-optionals">Comparing Optionals</a></h1>
 <p>We now know how to access the value of an optional variable, but how do we check if the variable <em>actually</em> holds a valid value at all? It's pretty simple, actually. <strong>Any</strong> optional value can bo compared with the <code>none</code> literal, so we can compare for equality / inequality extremely easily. Here is an example of that:</p>
 <pre><code class="language-rs">use Core.print
 
@@ -3359,8 +3306,7 @@ are equal, maybe_1 = 69, maybe_2 = 69
 </code></pre>
 </blockquote>
 <p>So, you can see that two variables of type <code>i32?</code> match if either they are both <code>none</code> or their <em>actual</em> values match. If one of them is <code>none</code> but the other one is not, they do not match, and same goes when both have a value but that value differs, then they also do not match. As you can see, we have used quite a bit of unwrapping (<code>!</code>) in this example and the program <em>would</em> definitely crash if we would set both variables to <code>none</code> before the last <code>if</code> statement. So, you still need to use the unwrapping with caution.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="null-coalescing-operator"><a class="header" href="#null-coalescing-operator">Null Coalescing Operator</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="null-coalescing-operator"><a class="header" href="#null-coalescing-operator">Null Coalescing Operator</a></h1>
 <p>The Null Coalescing Operator <code>??</code> is a pretty interesting operator in the sense that it "removes" the need for the optional unwrapping operator (in certain scenarios). It is used to provide a "default" value of an optional for the case that the optional is empty. It is a binary operator, like arithmetic operators, but has a very distinct purpose. It is called like that for historical reasons as it is called like that in every other language that has it, alltough we should rather call it the <code>Optional Coalescing Operator</code> in Flint, but that's besids the point.</p>
 <p>If we take a varaible <code>x</code> and it is of type <code>i32?</code>, then a binary operator expression using the <code>??</code> operator would return a value of type <code>i32</code>. But let's look at an example maybe, then everything should be more clear:</p>
 <pre><code class="language-rs">use Core.print
@@ -3389,8 +3335,7 @@ x = 69
 <li>Else, take the provided default-value from the <code>rhs</code></li>
 </ul>
 <p>So, it is simply impossible to get an hard crash with the null coalescing operator, unlike the unwrap operator which crashes when the optional is empty. But, it is not possible to provide default values in all cases. The null coalescing operator will become extremely important in the area of <code>linearization</code> in a much later chapter when we come around to <code>Blueprints</code> but it's still a long journey until then.</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="switching-on-optionals"><a class="header" href="#switching-on-optionals">Switching on Optionals</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="switching-on-optionals"><a class="header" href="#switching-on-optionals">Switching on Optionals</a></h1>
 <p>We can also switch on optional values to gain access to their stored value as well. The syntax for switching on optionals is a bit different than the syntax on switching on enums. The <code>switch</code> statement and expression have different syntax based on the type they switch on, it is the only statement in Flint where this is true (except for the pipe operator <code>|&gt;</code>). But let's have a look at a simple example:</p>
 <pre><code class="language-rs">use Core.print
 
@@ -3486,8 +3431,7 @@ value = 69
 value = 20
 </code></pre>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="error-sets"><a class="header" href="#error-sets">Error Sets</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="error-sets"><a class="header" href="#error-sets">Error Sets</a></h1>
 <div class="warning">
 <p>Everything regarding error handling <strong>will</strong> definitely change for later releases.</p>
 <p>The current implementation of everything error-handling related is not final for Flint, and it will change quite a lot. This segment of the guide will be updated when the new system works and is in place. For the time being, the description of how it <em>currently</em> works in FLint is written here. So, expect substantial re-writes of this chapter for future releases.</p>

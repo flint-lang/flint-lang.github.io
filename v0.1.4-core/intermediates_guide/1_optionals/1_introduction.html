@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p>In Flint, we need to explicitely define which values possibly have no value. There is no implicit nullability like in other languages, nullability is very explicit in Flint, and that's a good thing. This means that we do not check everywhere if our object maybe is null, because when it's not an optional type it is <strong>required</strong> to be initialized, as there <em>is no uninitialized state in Flint</em>.</p>
 <p>We do this through the optional type. Optional values can either have a value or they can be "empty". This "empty" state is achieved through the <code>none</code> literal. If an optional variable is set to <code>none</code> it effectively has no longer any value stored on it. But let's look at optionals in an example, they are best understood through examples:</p>
 <pre><code class="language-rs">def main():

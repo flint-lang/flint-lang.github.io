@@ -158,8 +158,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p>We still need to cover the basics and a bit of internals of the FIP (Flint Interop Protocol) here, especially <strong>what</strong> it is. The FIP is, as it's name suggests, is a protocol for interoperability. The base idea is very simple: Flint handles <em>all</em> extern code as a black box and communicates with separate Interop Modules over the FIP to find out who provides a given function. It's essentially a communication pipeline, similar to a phone line. But let's start at the beginning actually.</p>
 <p>FIP is a small, extensible IPC protocol between the Flint Compiler (the <strong>master</strong>) and one or more <strong>Interop Modules</strong> (IMs). Each IM is a helper program that understands a specific language (for example <code>fip-c</code> for C). The compiler asks IMs for symbol information, asks them to compile/produce objects, and receives responses back. Treat the IMs as language-specific assistants: Flint does not try to parse or compile every language itself — it asks the IMs to do the language work and then consumes the results.</p>
 <p>Key properties you can rely on:</p>
