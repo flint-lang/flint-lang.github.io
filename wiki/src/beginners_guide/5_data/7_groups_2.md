@@ -1,115 +1,39 @@
 # Groups 2
 
-Until now everything you know about groups is to use them when returning multiple values from a function or when swapping variables. But there is so much more we can do with them. You have learned in the last few chapters that we can define data types, tuples and use multi-types to store multiple values at once. But what if we would want to *modify* multiple values at once? You may have guessed it from the name of this chapter, but we again can use groups for that!
-
-## Grouped Access
-
-Let's start with the most simple form of groups in combination with `data`: The grouped field access. You have already learned that you can write `mydata.field` to access a value stored inside the data variable. To access multiple fields at once, we can use the **grouped access** operator `.()` for that. Here is a small example:
-
-```ft
-use Core.print
-
-data MyData:
-    i32 x;
-    f32 y;
-    u64 z;
-    MyData(x, y, z);
-
-def main():
-    MyData m = MyData(10, 3.5, u64(100));
-    i32 x = 0;
-    f32 y = 0.0;
-    u64 z = 0;
-    (x, y, z) = m.(x, y, z);
-    print($"(x, y, z) = ({x}, {y}, {z})\n");
-```
-
-This program will print this line to the console:
-
-> ```
-> (x, y, z) = (10, 3.5, 100)
-> ```
-
-It's actually quite simple. Normally we would write `m.x` to access a single field and if we would want to create a group of three accesses we would then write `(m.x, m.y, m.z)`. Just like in math, we can see that the `m.` is common in each case so we end up with `m.(x, y, z)`. This is the absolute minimal syntax we could write to access multiple values of the data at once.
-
-## Grouped Assignment
-
-Just like we can access multiple values with the grouped access operator, we can use the same operator for grouped field assignments on data variables. Just like we would write `m.x = 5` we can express it as a group too:
-
-```ft
-use Core.print
-
-data MyData:
-    i32 x;
-    f32 y;
-    u64 z;
-    MyData(x, y, z);
-
-def main():
-    MyData m = MyData(10, 3.5, u64(100));
-    m.(x, y, z) = (3, 3.14, u64(33));
-    print($"m.(x, y, z) = ({m.x}, {m.y}, {m.z})\n");
-```
-
-This program will print this line to the console:
-
-> ```
-> m.(x, y, z) = (3, 3.14, 33)
-> ```
-
-Once you understood the concepts of groups all together, it really becomes second nature writing them. Because normally, without groups, the above code would look like this:
-
-```ft
-use Core.print
-
-data MyData:
-    i32 x;
-    f32 y;
-    u64 z;
-    MyData(x, y, z);
-
-def main():
-    MyData m = MyData(10, 3.5, u64(100));
-    m.x = 3;
-    m.y = 3.14;
-    m.z = u64(33);
-    print($"m.(x, y, z) = ({m.x}, {m.y}, {m.z})\n");
-```
-
-This program will, again, write this line to the console:
-
-> ```
-> m.(x, y, z) = (3, 3.14, 33)
-> ```
-
-Groups make code both more readable and more consise too. But we are far not done yet.
-
-## Grouped Field Value Swaps
-
-Just like with direct variable values, we can swap values inside of fields too with one another. But for this example we will use multi-types instead because, yes, you can use grouped accesses / assignments on multitypes (and tuples) too:
-
-```ft
-use Core.print
-
-def main():
-    i32x4 vec4 = (10, 20, 30, 40);
-    vec4.(r, g, b, a) = vec4.(b, r, a, g);
-    print($"vec4 = {vec4}\n");
-```
-
-This program will print this line to the console:
-
-> ```
-> vec4 = (30, 10, 40, 20)
-> ```
+Until now everything you know about groups is to use them when returning multiple values from a function, when swapping variables and when accessing or assigning multiple values of data and tuples at the same time, but there is still a lot more to learn about them than just this.
 
 ## Vectorization
 
-As you can see, in Flint it is trivial to essentially write vector operations in one line of code. A **vector** operation essentially means that the same operation is applied to multiple different values. Each of those values is called a **scalar**. A sclar operation would be something like `vec4.x += 5` for example, or even a simple addition like `x + y` is considered a scalar operation, because it's an operation applied to two scalar (single) values. Vector operations are pretty common in modern processors, essentially every single processor has support for them. Most modern AMD and Intel CPUs have the capability to perform vector operations up to at least `256 bits`, sometimes even higher.
+In Flint it is trivial to essentially write vector operations in one line of code. Through the use of groups we can easily express that some things, like multiplying all values of a data structure, need to happen at the same time.
+A **vector** operation essentially means that the same operation is applied to multiple different values. Each of those values is called a **scalar**. A sclar operation would be something like `vec4.x += 5` for example, or even a simple addition like `x + y` is considered a scalar operation, because it's an operation applied to two scalar (single) values. Vector operations are pretty common in modern processors, essentially every single processor has support for them. Most modern AMD and Intel CPUs have the capability to perform vector operations up to at least `256 bits`, sometimes even higher.
 
 If you want to know more about this topic you need to wait until the later [SIMD]() chapter. But essentially this means that the CPU has a 256 bit "budget" for vectorized operations, which means it can apply the same operation on 4 `64 bit` values or 8 `32 bit` values at the same time. And these are also the types supported by multi-types: `i64x4` and `i32x8`. So, everything you need to know is that the vectorized code has the potential to run as much as **8x faster** than scalar code. So, if you can, *always* use Flint's multi-types.
 
 But to pull the circle back to grouped operations. Whenever possible, Flint will try to vectorize grouped operations. So, not only are they less to write and easier to read but they also have the potential to be magnitudes faster than scalar operations. Just note that it is *not guaranteed* for a grouped operation to compile down to a vectorized operation, but it *is guaranteed* for multi-types.
+
+## Splatting
+
+Splatting is the act of expanding a **scalar** value to a **homogeneous group of size `N`**. It is pretty simple in action:
+
+```rs
+use Core.print
+
+def main():
+	i32x3 vec3 = (10, 20, 30);
+	print($"vec3 = {vec3}\n");
+	vec3 *= 2;
+	vec3 *= i32(2);
+	print($"vec3 = {vec3}\n");
+```
+
+This program will print these lines to the console:
+
+> ```
+> vec3 = (10, 20, 30)
+> vec3 = (40, 80, 120)
+> ```
+
+Splatting essentially just means that the single value `2` will be "cast" to a group like `(2, 2, 2)` before the operation. Just like any operation on multi-types, this operation is vectorized.
 
 ## Set-Like Comparisons
 
@@ -188,3 +112,5 @@ This program will print these lines to the console:
 > ```
 
 And here you can see the "superpower" of this approach. Because we compare a scalar to a **group**, not a set value, we can use *any* grouped operation in the comparison. The grouped operation `MyEnum.(VAL1, VAL3, VAL5)` looks exaclty like a grouped field access, but for enum values. The resulting group will have the result type of `(MyEnum, MyEnum, MyEnum)`, so it's a homogeneous group and it has the same type as the lhs, namely the type of `MyEnum`. And the length comparison for the grouped and non-grouped comparison will only grow bigger and bigger, the set-like comparison will look simpler the more values it contiains.
+
+You may have seen that the act of comparing a scalar to a group only works because of the splatting rule of the group-scalar interaction in Flint, so without it the above behaviour would not be possible.
