@@ -78,16 +78,11 @@ This program will print these lines to the console:
 > llo there
 > ```
 
-As you can see it has the same output, but it will run **much** slower because of the loop and the string concatenation and calculations. Always use slicing if you can. Actually, let's test how slow it really is real quick.
+As you can see it has the same output, but it will run **much** slower because of the loop and the string concatenation and calculations. Always use slicing if you can.
 
-<div class="warning">
+## Performance difference
 
-This example does not compile yet
-
-Flint does not have the `time` Core module yet, so this code does not work and will not compile. The `time` Core module will be added eventually though.
-
-</div>
-
+Let's test how slow it really is real quick.
 
 ```ft
 use Core.print
@@ -102,26 +97,28 @@ def get_slice(str src, u64 from, u64 to) -> str:
 def main():
 	str string = "Hello there"
 
-	u64 t0 = now();
+	TimeStamp t0 = now();
 	for i := 0; i < 1_000_000; i++:
 		str slice = get_slice(string, u64(2), string.length);
 
-	u64 t1 = now();
+	TimeStamp t1 = now();
 	for i := 0; i < 1_000_000; i++:
 		str slice = string[2..];
 
-	u64 t2 = now();
-	u64 manual_time = (t1 - t0) * 1_000;
-	u64 slice_time = (t2 - t1) * 1_000;
-	print($"manual: {manual_time} ms\n");
-	print($"slice: {slice_time} ms\n");
+	TimeStamp t2 = now();
+	Duration manual_time = duration(t0, t1);
+	u32 manual_time_ms = u32(as_unit(manual_time, TimeUnit.MS));
+	Duration slice_time = duration(t1, t2);
+	u32 slice_time_ms = u32(as_unit(slice_time, TimeUnit.MS));
+	print($"manual: {manual_time_ms} ms\n");
+	print($"slice: {slice_time_ms} ms\n");
 ```
 
 This program will have an output similar to this:
 
 > ```
-> manual_time: 500 ms
-> slice_time: 50 ms
+> manual_time: 300 ms
+> slice_time: 16 ms
 > ```
 
 Note that this is only the performance on My machine, it can be very different to the performance you are getting. As you can see, the performance differs quite a lot between the manual slicing and range-based slicing.
