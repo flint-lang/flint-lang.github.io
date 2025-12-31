@@ -2,8 +2,8 @@
 
 In Flint, comments are used to explain code or temporarily disable parts of it during debugging. Flint supports two types of comments:
 
-1. **Single-line comments**: Start with // and continue until the end of the line.
-2. **Multi-line comments**: Start with /_ and end with _/.
+1. **Single-line comments**: Start with `//` and continue until the end of the line.
+2. **Multi-line comments**: Start with `/*` and end with `*/`.
 
 **Here’s how you use comments:**
 

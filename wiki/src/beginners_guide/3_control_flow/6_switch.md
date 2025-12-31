@@ -102,9 +102,9 @@ And this is the behaviour that Flint has by default. In Flint, falltrough is not
 
 <div class="warning">
 
-Flint does not support annotations (`#...`) yet
+Flint does not support the `#fallthrough` annotation yet
 
-The below example will not compile, as Flint does not support annotations yet. So, at this moment in time it is not possible to have a fallthrough-behaviour in a Flint switch.
+The below example will not compile, as Flint does not support the `#fallthrough` annotation yet. So, at this moment in time it is not possible to have a fallthrough-behaviour in a Flint switch. Annotations themselves are supported, but not in switch statements (yet).
 
 </div>
 

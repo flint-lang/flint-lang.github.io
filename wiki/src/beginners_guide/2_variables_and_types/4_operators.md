@@ -59,7 +59,7 @@ def main():
     i32 n3 = n1 / n2;
 ```
 
-The varaible `n3` will have the value `3` saved in it, even though the value actually would be `3,333..`. This is a characteristic of **integer division**. The fractional part is _always_ cut off. If you program a bit you will actually find out that this behaviour can work to your advantage. So, this also means that the result of `100 / 60` is `1,666..` with the fractional, but for integer divisions its just `1`.
+The varaible `n3` will have the value `3` saved in it, even though the value actually would be `3.333..`. This is a characteristic of **integer division**. The fractional part is _always_ cut off. If you program a bit you will actually find out that this behaviour can work to your advantage. So, this also means that the result of `100 / 60` is `1.666..` with the fractional, but for integer divisions its just `1`.
 
 The `*` Operator is pretty easy to understand, actually. There aren't much things to consider when using it ecept for a possible _integer overflow_ if the result becomes too large and order of operation.
 

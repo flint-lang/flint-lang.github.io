@@ -70,9 +70,9 @@ This program will print these lines to the console:
 
 As you can see, we now skipped the function `add` defined in the `utils.ft` file entirely and called the `add` function from `add.ft` directly! This is a very important characteristic of import aliasing: The aliased import becomes part of the global symbols of the file namespace and can be used in files importing it. But if you remove the `as u` alias in the `main.ft` then you will *not* be able to access the alias `a` at all! You are only allowed to access a file's aliases when accessing the file through an alias itself. You will understand how it all works and why it works like it does shortly.
 
-## Aliased types
+## Types from aliased files
 
-Just like functions can used with an alias, types can too:
+Just like functions can be used with a file alias, types can too:
 
 file `data.ft`
 
