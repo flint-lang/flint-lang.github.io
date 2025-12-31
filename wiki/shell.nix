@@ -8,7 +8,8 @@ pkgs.mkShell {
   buildInputs = [
     pkgs.mdbook
     pkgs.mdbook-toc
-    pkgs.mdbook-katex
+    # Katex breaks things any quote with a `$` in it, like `$"{expr}"` or `.$N` for example
+    # pkgs.mdbook-katex
     pkgs.darkhttpd
   ];
 }
