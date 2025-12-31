@@ -124,3 +124,39 @@ This program will have an output similar to this:
 Note that this is only the performance on My machine, it can be very different to the performance you are getting. As you can see, the performance differs quite a lot between the manual slicing and range-based slicing.
 
 Lastly, let's talk about the other open ranges: `..5` means "from begin to 5" and is the same as if you would write `0..5` and you can also just write `..` without any numbers at all. This range then just means "from begin to end" and it essentially just creates a copy of the whole string, and for that you could just assign the string too, it will be faster this way.
+
+## Iterating over ranges
+
+Ranges also count to the **iterable** types. This means that we can iterate over ranges using enhanced for loops:
+
+```ft
+use Core.print
+
+def main():
+	u64 start = 5;
+	u64 end = 10;
+	for (i, elem) in start..end:
+		print($"{i}: {elem}\n");
+```
+
+This program will print these lines to the console:
+
+> ```
+> 0: 5
+> 1: 6
+> 2: 7
+> 3: 8
+> 4: 9
+> ```
+
+If you just need to iterate from a given value to a given value then ranges + enhanced for loops are a much more elegant solution compared to the c-style for loops:
+
+```ft
+// c-style for loop
+for u64 i = 0; i < 10; i++:
+	// ...
+
+// enhanced for loop + ranges
+for (i, _) in 0..10:
+	// ...
+```
