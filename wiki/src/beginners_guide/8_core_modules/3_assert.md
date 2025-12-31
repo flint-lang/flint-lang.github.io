@@ -39,8 +39,6 @@ def main():
 When executing this program you will see this error message printed to the console:
 
 > ```
-> ERROR: main function returned error
->  - type_id: 2448605372
->  - value_id: 0
->  - message: "The assertion has failed"
+> The given error bubbled up to the main function:
+>  └─ ErrAssert.AssertionFailed: "The assertion has failed"
 > ```
