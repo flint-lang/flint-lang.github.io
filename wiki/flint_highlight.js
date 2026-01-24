@@ -9,7 +9,7 @@ hljs.registerLanguage(
         aliases: ["flint", "ft"],
         keywords: {
           $pattern: e.IDENT_RE + "!?",
-          keyword: "use as extern def data func entity enum error variant requires extends link hook return throw catch if else do while for in continue break spawn sync async",
+          keyword: "use as extern def data func entity enum error variant requires extends link hook return throw catch if else do while for in continue break spawn sync async type",
           literal: "true false none",
           built_in: t,
         },
