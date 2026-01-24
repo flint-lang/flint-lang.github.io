@@ -110,13 +110,13 @@
 
   - [Links & Hooks]()
 
-  - [Interop](./beginners_guide/10_interop.md)
+  - [Interop](./beginners_guide/11_interop.md)
 
-    - [Introduction](./beginners_guide/10_interop/1_introduction.md)
-    - [Defining External Functions](./beginners_guide/10_interop/2_defining.md)
-    - [Interop Modules](./beginners_guide/10_interop/3_modules.md)
-    - [Signatures](./beginners_guide/10_interop/4_signatures.md)
-    - [Pointer Types](./beginners_guide/10_interop/5_pointers.md)
+    - [Introduction](./beginners_guide/11_interop/1_introduction.md)
+    - [Defining External Functions](./beginners_guide/11_interop/2_defining.md)
+    - [Interop Modules](./beginners_guide/11_interop/3_modules.md)
+    - [Signatures](./beginners_guide/11_interop/4_signatures.md)
+    - [Pointer Types](./beginners_guide/11_interop/5_pointers.md)
     - [`extern` vs `export`]()
 
   - [Game Example]()
