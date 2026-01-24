@@ -1,4 +1,4 @@
-# Monolithic Entities: The Basics
+# Monolithic Entities
 
 The simplest form of an entity in Flint is a **monolithic entity**, where data and functionality are defined together in one place.
 

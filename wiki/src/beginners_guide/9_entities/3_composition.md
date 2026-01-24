@@ -1,4 +1,4 @@
-# Using Multiple Data and Func Modules
+# Composition
 
 Entities can incorporate multiple **data modules** and **func modules**, making them powerful abstractions for complex systems.
 

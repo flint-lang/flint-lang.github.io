@@ -100,13 +100,13 @@
     - [random]()
     - [parallel]()
 
-  - [Entities & Func modules]()
+  - [Entities & Func modules](./beginners_guide/9_entities.md)
 
-    - [Monolithic Entities: The Basics]()
-    - [Func Modules: Modularizing Behavior]()
-    - [From Monolithic to Modular Entities]()
-    - [Using Multiple Data and Func Modules]()
+    - [Func Modules](./beginners_guide/9_entities/1_func_modules.md)
+    - [Entities]()
+    - [Composition]()
     - [Extending Entities]()
+    - [Monolithic Entities]()
 
   - [Links & Hooks]()
 

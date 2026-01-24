@@ -1,4 +1,4 @@
-# From Monolithic to Modular Entities
+# Entities
 
 A **monolithic entity** can be split into **data** and **func modules**, improving modularity and reusability.
 
