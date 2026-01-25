@@ -1,0 +1,359 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Func Modules - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="func-modules"><a class="header" href="#func-modules">Func Modules</a></h1>
+<p>The basics of DOCP are <code>func</code> modules. A <code>func</code> module is a collection of functions which operate on the same data. The simplest example is one where we define a func module which does not require any data to operate:</p>
+<pre><code class="language-ft">use Core.print
+
+func MyFunc:
+    def add(i32 x, i32 y) -&gt; i32:
+        return x + y;
+
+    def print(i32 x):
+        print($"x: {x}\n");
+
+def main():
+    i32 thirty = MyFunc.add(10, 20);
+    MyFunc.print(thirty);
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>x: 30
+</code></pre>
+</blockquote>
+<p>First of all, as you can see a func module which does not require any data essentially becomes a namespace for functions. A <code>func</code> module does <strong>not</strong> have a runtime-footprint, the functions inside it, like <code>add</code> resolve to a function like <code>MyFunc.add</code>, that's it. The name of the function is changed at compile-time from <code>add</code> inside of <code>MyFunc</code> to <code>MyFunc.add</code>. There are still only two functions defined, just as if we would have written the functions directly, but with one major difference: There now are no collisions between the <code>MyFunc.print(i32)</code> and the <code>print(i32)</code> function of the <code>Core.print</code> module.</p>
+<h2 id="function-collision"><a class="header" href="#function-collision">Function Collision</a></h2>
+<p>These functions would have collided if we would not have defined them inside the <code>MyFunc</code> func module:</p>
+<pre><code class="language-ft">use Core.print
+
+def add(i32 x, i32 y) -&gt; i32:
+    return x + y;
+
+def print(i32 x):
+    print($"x: {x}\n");
+
+def main():
+    i32 thirty = add(10, 20);
+    print(thirty);
+</code></pre>
+<p>This program shows this compiler error:</p>
+<blockquote>
+<pre><code>Parse Error at main.ft:6:1
+└─┬┤E0000│
+6 │ def print(i32 x):
+┌─┴─┘
+├─ Redefinition of function: print(i32)
+└─ First defined at: Bmm6x3ZN:0:0
+</code></pre>
+</blockquote>
+<p>The <code>First defined at: ...</code> error line here simply means that the function was first defined in the core module, namely <code>Core.print</code>. This error message will change in the future, but it is good enough for now. But as you can see, the <code>print(i32)</code> function already exists, which means we cannot define this function when the <code>print</code> function already exists from the <code>print</code> Core module. But, as shown above, we can define the functions inside a <code>func</code> module and by doing so the functions do no longer collide with the builtin print functions.</p>
+<h2 id="requiring-data"><a class="header" href="#requiring-data">Requiring Data</a></h2>
+<p>But if this would have been the only purpose of <code>func</code> modules they would not be that interesting. The thing which makes func modules interesting is that you can explicitely require data in them. Here a small example:</p>
+<pre><code class="language-ft">use Core.print
+
+data MyData:
+	i32x2 pos;
+	i32x2 size;
+	MyData(pos, size);
+
+func MyFunc requires(MyData d):
+	def move(i32 x, i32 y):
+		d.pos = d.pos + (x, y);
+	
+	def print():
+		print($"pos: {d.pos}, size: {d.size}\n");
+
+def main():
+	d := MyData(i32x2(100, 100), i32x2(100, 100));
+	MyFunc.print(d);
+	MyFunc.move(d, 10, 20);
+	MyFunc.print(d);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>pos: (100, 100), size: (100, 100)
+pos: (110, 120), size: (100, 100)
+</code></pre>
+</blockquote>
+<p>We have quite a lot to talk about here. First of all, note the new <code>requires(...)</code> clausel after the <code>func</code> module definition. It means that this func module, <code>MyFunc</code>, now operates on the data <code>MyData</code>. This becomes more important when we come to entities in the next chapter.</p>
+<p>As told earlier, <code>func</code> modules disappear at compile-time in the form of new functions, the <code>move</code> function becomes <code>MyFunc.move</code> as said earlier. The <code>requires</code> clausel is just one more rule to that, and it's very simple. The data required by the clausel becomes the <strong>implicit first parameter of every function in that <code>func</code> module</strong>. All required data is <em>always</em> a mutable parameter of <em>every</em> function in that <code>func</code> module's body.</p>
+<p>This means that the <code>move</code> function will have the signature <code>MyFunc.move(mut MyData, i32, i32)</code> after compilation and that the <code>print</code> function will have the signature <code>MyFunc.print(mut MyData)</code>. This key property of func modules is very important to understand in order to be able to understand <code>func</code> modules as a whole.</p>
+<p>As you can see, we now are able to call the <code>print</code> and <code>move</code> functions manually but now we need to pass in the first parameter of type <code>MyData</code> to them.</p>
+<h2 id="requiring-the-same-data-twice"><a class="header" href="#requiring-the-same-data-twice">Requiring the same data twice</a></h2>
+<p>Func modules can only require a particular data type once, so it is not allowed to write something like <code>requires(MyData d1, MyData d2)</code> for example:</p>
+<pre><code class="language-ft">use Core.print
+
+data MyData:
+	i32x2 pos;
+	i32x2 size;
+	MyData(pos, size);
+
+func MyFunc requires(MyData d1, MyData d2):
+	def move(i32 x, i32 y):
+		d.pos = d.pos + (x, y);
+	
+	def print():
+		print($"pos: {d.pos}, size: {d.size}\n");
+
+def main():
+	d := MyData(i32x2(100, 100), i32x2(100, 100));
+	MyFunc.print(d);
+	MyFunc.move(d, 10, 20);
+	MyFunc.print(d);
+</code></pre>
+<p>This program will result in this compilation error:</p>
+<blockquote>
+<pre><code>Parse Error at main.ft:8:33
+└─┬┤E0000│
+8 │ func MyFunc requires(MyData d1, MyData d2):
+┌─┴─────────────────────────────────┘
+├─ Requiring the same type twice: MyData
+└─ Each required data type needs to be unique
+</code></pre>
+</blockquote>
+<h2 id="requiring-multiple-data"><a class="header" href="#requiring-multiple-data">Requiring multiple data</a></h2>
+<p>Func modules are not limited at only one data type they can require, you can require as many data types in a func module as you would like to, given that all required data types are unique amongst them. It is <em>only</em> allowed to require <code>data</code> types, no other types are allowed to be required by <code>func</code> modules.</p>
+<p>Here is a small example of using multiple different data types in the <code>requires</code> clausel of <code>func</code> modules:</p>
+<pre><code class="language-ft">use Core.print
+
+data MyData:
+	i32x2 pos;
+	i32x2 size;
+	MyData(pos, size);
+
+data Data2:
+	f32x2 dir;
+	Data2(dir);
+
+func MyFunc requires(MyData d1, Data2 d2):
+	def move(i32 x, i32 y):
+		d1.pos = d1.pos + i32x2(f32(x) * d2.dir.x, f32(y) * d2.dir.y);
+	
+	def print():
+		print($"pos: {d1.pos}, size: {d1.size}, dir: {d2.dir}\n");
+
+def main():
+	d1 := MyData(i32x2(100, 100), i32x2(100, 100));
+	d2 := Data2(f32x2(3.3, 2.2));
+	MyFunc.print(d1, d2);
+	MyFunc.move(d1, d2, 10, 20);
+	MyFunc.print(d1, d2);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>pos: (100, 100), size: (100, 100), dir: (3.3, 2.2)
+pos: (133, 144), size: (100, 100), dir: (3.3, 2.2)
+</code></pre>
+</blockquote>
+<p>As you can see, the signatures of the functions now became <code>MyFunc.move(mut MyData, mut Data2, i32, i32)</code> and <code>MyFunc.print(mut MyData, mut Data2)</code> respectively. The order of implicit parameters stays consistent from the <code>requires</code> clausel to the actual function signature.</p>
+<p>This is as far as we can go with <code>func</code> modules without talking about <code>entities</code>, and only with them <code>func</code> modules will <em>actually</em> become useful. So, let's on to them, shall we?</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/9_entities.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../beginners_guide/9_entities/2_entities.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/9_entities.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../beginners_guide/9_entities/2_entities.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+    </div>
+    </body>
+</html>
