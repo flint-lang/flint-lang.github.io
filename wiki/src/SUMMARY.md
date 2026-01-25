@@ -104,7 +104,7 @@
 
     - [Func Modules](./beginners_guide/9_entities/1_func_modules.md)
     - [Entities](./beginners_guide/9_entities/2_entities.md)
-    - [Composition]()
+    - [Composition](./beginners_guide/9_entities/3_composition.md)
     - [Extending Entities]()
     - [Monolithic Entities]()
 
