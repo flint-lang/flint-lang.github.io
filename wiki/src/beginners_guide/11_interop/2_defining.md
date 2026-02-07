@@ -34,8 +34,9 @@ You should see a output like the following:
 > └─┬┤E0000│
 > 1 │ extern def hello();
 > ┌─┴─┘
-> ├─ Defined 'extern' function without the FIP running and active
-> └─ Check your configs in '.fip/config/' to see if there are any problems with it
+> ├─ No '.fip' directory found
+> ├─ To be able to interop with extern code you need the FIP set up
+> └─ For further information look at 'https://flint-lang.github.io/v0.3.1-core/beginners_guide/11_interop/2_defining.html'
 > ```
 
 This tells us that FIP is not active in the compiler yet, but how comes that? FIP is only active and activated when there exists a `.fip` directory containing a `config` directory containing a `fip.toml` configuration file. If the configuration file is faulty or nonexistent, FIP will not launch, so calling external functions will not work.
