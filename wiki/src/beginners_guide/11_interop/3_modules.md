@@ -23,7 +23,7 @@ That was a lot to do just to get interop up and running, I admit that. But this 
 enable = true
 ```
 
-This essentially tells the compiler to search for the `fip-c` module in the `$HOME/.local/share/fip/modules/` (or `%LOCALAPPDATA%\fip\modules\` on Windows) directory and to start it when the compiler starts up. It essentially tells the compiler that the module exists and should be used by it. And then we have the `fip-c.toml` file. It only contains three entires, which are all not special at all:
+This essentially tells the compiler to search for the `fip-c` executable available through the `PATH` variable and to start it when the compiler starts up. It essentially tells the compiler that the module exists and should be used by it. And then we have the `fip-c.toml` file. It only contains three entires, which are all not special at all:
 
 ```toml
 compiler = "gcc"
