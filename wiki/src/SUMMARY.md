@@ -10,12 +10,7 @@
   - [Language Server Setup](./user_guide/setup/3_fls_setup.md)
   - [FIP Setup](./user_guide/setup/4_fip_setup.md)
 
-# Syntax Cheatsheet
-
-- [Basics]()
-  - [Comments]()
-
-# Guides
+# Learning Flint
 
 - [From Beginner to Intermediate](./beginners_guide.md)
 
