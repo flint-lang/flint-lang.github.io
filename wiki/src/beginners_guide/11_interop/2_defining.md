@@ -1,6 +1,6 @@
 # Defining External Functions
 
-First of all, we need to actually define a function we want to use from the extern code. Let's start with the C code for this example. Create a file named `hello.h` in the root directory of your project, it should contain this code:
+First of all, we need to actually define a function we want to use from the extern code. Let's start with the C code for this example. Create a file named `hello.c` in the root directory of your project, it should contain this code:
 
 ```
 #include <stdio.h>
@@ -47,22 +47,23 @@ To resolve this, you need to create a `.fip` directory in your source directory 
 enable = true
 ```
 
-We also need to create a `fip-c.toml` configuration file to be able to use the extern defined `.h` header file. Create a `fip-c.toml` file in the config directory, it should look like this:
+We also need to create a `fip-c.toml` configuration file to be able to use the extern defined `.c` source file. Create a `fip-c.toml` file in the config directory, it should look like this:
 
 ```toml
-compiler = "gcc"
-sources = ["hello.h"]
-compile_flags = []
+[c]
+headers = ["hello.c"]
+sources = ["hello.c"]
+command = ["gcc", "-c", "__SOURCES__", "-o", "__OUTPUT__"]
 ```
 
-The resulting file structure should look like this:
+Do not worry too much about the content of the `fip-c.toml` file for now, we will talk about it later. The resulting file structure should look like this:
 
 ```
 .fip/
  └─ config/
      ├─ fip.toml
      └─ fip-c.toml
-hello.h
+hello.c
 main.ft
 ```
 

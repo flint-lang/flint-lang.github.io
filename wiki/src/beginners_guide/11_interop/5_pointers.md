@@ -2,7 +2,7 @@
 
 Flint does come with pointer types and a single pointer-related operation. In this chapter we will talk about why it needs them and how to use them. Let's start with a very simple example in C. Let's say you are working with a C library which contains a function like this:
 
-```h
+```c
 void add(int *lhs, int rhs) {
     *lhs = *lhs + rhs;
 }

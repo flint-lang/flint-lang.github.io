@@ -17,17 +17,20 @@ Many of those types will be introduced in later chapters, don't worry about them
 
 The first and most logical beginning point are primitive types. The only outlier are strings essentially, but let's look at each type.
 
-| Flint Type | C Eqivalent   |
-|------------|---------------|
-| bool       | bool          |
-| u8         | unsigned char |
-| u32        | unsigned int  |
-| u64        | unsigned long |
-| i32        | int           |
-| i64        | long          |
-| f32        | float         |
-| f64        | double        |
-| str        | char*         |
+| Flint Type | C Eqivalent    |
+|------------|----------------|
+| bool       | bool (_Bool)   |
+| u8         | unsigned char  |
+| i8         | signed char    |
+| u16        | unsigned short |
+| i16        | signed short   |
+| u32        | unsigned int   |
+| i32        | signed int     |
+| u64        | unsigned long  |
+| i64        | signed long    |
+| f32        | float          |
+| f64        | double         |
+| str        | char*          |
 
 Of course, all the types on the left and right do not match in their mutability, as of the last example. To change the C mutability you can simply put `const` in front, and on Flint you can put `mut` or `const` in front.
 
@@ -35,7 +38,7 @@ Re-sizing and relocating the string inside of C will result in a crash inside of
 
 ## Data
 
-Flint's data is essentially a struct annyway, so interop with C is very easy. This following data type:
+Flint's data is essentially a struct anyway, so interop with C is very easy. This following data type:
 
 ```ft
 use Core.print
@@ -61,7 +64,7 @@ is directly translatable to this C struct type:
 ```
 #include <stdbool.h>
 
-typedef struct {
+typedef struct MyData {
     int x, y;
     float speed;
     bool is_something;
@@ -122,7 +125,7 @@ def main():
     print($"sd.(x, y, s, i) = ({sd.x}, {sd.y}, {sd.z}, {sd.w})\n");
 ```
 
-Note that the C header file stayed exactly the same, it did not change. We actually call **the same** C function twice, just with "different" data. They are different data types in Flint, but what FIP is concerned, they are both just `{ i32, i32, f32, bool }` without any name. Conceptually this should work, but we have decided to not let this code be valid, because the moment you try to reference the same external C function twice through different code paths, the codebase becomes *really* messy *really* quick. So, this example should work conceptually, but it will result in this compile error:
+Note that the C source file stayed exactly the same, it did not change. We actually call **the same** C function twice, just with "different" data. They are different data types in Flint, but what FIP is concerned, they are both just `{ i32, i32, f32, bool }` without any name. Conceptually this should work, but we have decided to not let this code be valid, because the moment you try to reference the same external C function twice through different code paths, the codebase becomes *really* messy *really* quick. So, this example should work conceptually, but it will result in this compile error:
 
 > ```
 > Generation Error at main.ft:18:1
@@ -162,7 +165,7 @@ You may also spot that we specified that the function shall return a group, sinc
 
 ## Multi-Types
 
-Flint has builtin vector types, the multi-types, as you know. These types are actually represented as true vector types inside of LLVM IR code, nut just structs, but C does not have true vector types (native to the language, without compiler extensions). So we cannot add vector types to FIP since C does not have them, and FIP has to be C-compatible with it's internal types, as discussed earlier. Which type should multi-types be converted to, then? Well, they are just converted to simple structs before passing them to C. The multi-type `f32x3` becomes `{ f32, f32, f32 }` for example, or `i64x2` becomes `{ i64, i64 }`. There really is nothing special about it at all, but the complications of this design are very nice.
+Flint has builtin vector types, the multi-types, as you know. These types are actually represented as true vector types inside of LLVM IR code, not just structs, but C does not have true vector types (native to the language, without compiler extensions). So we cannot add vector types to FIP since C does not have them, and FIP has to be C-compatible with it's internal types, as discussed earlier. Which type should multi-types be converted to, then? Well, they are just converted to simple structs before passing them to C. The multi-type `f32x3` becomes `{ f32, f32, f32 }` for example, or `i64x2` becomes `{ i64, i64 }`. There really is nothing special about it at all, but the complications of this design are very nice.
 
 You see, A LOT of different libraries, especially those related to math, rendering or something vector-related provide their own types, like raylib's `Vector3` struct, for example. So, this allows us to write something like the following:
 

@@ -113,6 +113,7 @@
     - [Interop Modules](./beginners_guide/11_interop/3_modules.md)
     - [Signatures](./beginners_guide/11_interop/4_signatures.md)
     - [Pointer Types](./beginners_guide/11_interop/5_pointers.md)
+    - [Tags](./beginners_guide/11_interop/6_tags.md)
     - [`extern` vs `export`]()
 
   - [Game Example]()

@@ -16,26 +16,38 @@ Because compilation now succeeded, you will see absolutely no output, but the `m
 Hello from C!
 ```
 
-That was a lot to do just to get interop up and running, I admit that. But this whole process can (and will) be done using tools too. The `flint` executable (or maybe the `flintc` executable should handle that, I am not sure yet) will contain the capability to set up FIP for us. But, let's talk about all those directories, what they do and why they exist. First, let's talk about the `modules` directory and what the content in the `fip.toml` *actually* means. The `fip.toml` file has a very simple content, it's just these two lines:
+That was a lot to do just to get interop up and running, I admit that. But this whole process can (and will) be done using tools too. The `flint` executable (or maybe the `flintc` executable should handle that, I am not sure yet) will contain the capability to set up FIP for us. But, let's talk about all those directories, what they do and why they exist. First, let's talk about the `config` directory and what the content in the `fip.toml` *actually* means. The `fip.toml` file has a very simple content, it's just these two lines:
 
 ```toml
 [fip-c]
 enable = true
 ```
 
-This essentially tells the compiler to search for the `fip-c` executable available through the `PATH` variable and to start it when the compiler starts up. It essentially tells the compiler that the module exists and should be used by it. And then we have the `fip-c.toml` file. It only contains three entires, which are all not special at all:
+This essentially tells the compiler to search for the `fip-c` executable available through the `PATH` variable and to start it when the compiler encounters the first extern function definition. It essentially tells the compiler that the module exists and should be used by it. And then we have the `fip-c.toml` file. It is very important to understand that the Flint compiler *never* parses or even looks at the `fip-c.toml` configuration file. This configuration is *only* used by the `fip-c` Interop Module.
+This config file is a bit more complex, so let's go through it.
 
 ```toml
-compiler = "gcc"
-sources = ["hello.h"]
-compile_flags = []
+[c]
+headers = ["hello.c"]
+sources = ["hello.c"]
+command = ["gcc", "-c", "__SOURCES__", "-o", "__OUTPUT__"]
 ```
 
-The `compiler` field tells the `fip-c` module which compiler to use to compile the C source file(s), in our case it's `gcc`.
+At the very top is the *module tag*. Don't worry about it just yet, it will be explained in a [later](./6_tags.md) chapter.
+
+- `headers` (mandatory): This field is a simple list of C header files. It is also allowed to put `.c` files in there, this is fine for our simple example but for larger C projects you should only put `.h` files in there, since we do not care for actual implementations for interop. This field tells the `fip-c` module which files to parse. Because the `fip-c` module is built using `libclang` it is able to freely parse and "understand" C code. It parses all the headers and collects all symbols it found, and then is able to tell the `flintc` compiler whether a given symbol like an extern function exists at all.
+- `sources` (optional): This field is a simple list of source files which need to be compiled by the `command`. This should be a list of `.c` files.
+- `command` (optional): This field Describes how to compile our sources to produce a single output `.o` file. It is important that we produce a `.o` file (here the `-c` flag for `gcc`). The `__SOURCES__` value will be expanded to `hello.c`. It will be a list of sources to compile using gcc. The `__OUTPUT__` value will be expanded to a 8-byte long hash.
+
+Each IM produces one or more `.o` files which then need to be linked by the main compiler, that's why it's important that the files have the same length respectively, as it needs to be communicated over FIP *which* `.o` files the specific IMs produced.
 
 If you are on Windows then you would need a C compiler and possibly a Developer PowerShell from the VS setup. So, you need to handle how to compile the extern language, like C, by yourself on Windows. On Linux, `gcc` is just available in the `PATH` variable and no setup is required from Your side.
 
-Next we have the `sources` field. It's an array of filepaths to all the header or source files we interact with and we want to call into. You may noticed that we have not written any bindings or wrappers for the C functions at all, we just declared a function to be extern and then used it inside of Flint, and FIP figured out the rest for us. Okay, let's edit our header file and add another function to it, this time adding two numbers together:
+If you use a library like raylib then the `sources` and `command` fields could also be removed entirely, as then you would need to pass the `--flags="-lraylib"` flag when calling the `flintc` compiler and link with the library this way. So, when using system libraries the `sources` and `command` field can be omitted entirely without any problems.
+
+## New example
+
+You may noticed that we have not written any bindings or wrappers for the C functions at all, we just declared a function to be extern and then used it inside of Flint, and FIP figured out the rest for us. Okay, let's edit our source file and add another function to it, this time adding two numbers together:
 
 ```
 #include <stdio.h>
@@ -126,3 +138,5 @@ And now when we compile and run the program we will get this output:
 > ```
 
 As you can see, it is very important that signatures match exactly when calling extern functions. Matching signatures is the basis of FIP, and we will talk more about which Flint types relate to which C types so that you do not need to wonder what went wrong.
+
+You saw a bit of FIP's power here. We defined an `extern` function and were not able to compile, not from a obscure linker error of undefined symbols or something similar, but thanks to FIP it told us that the function does not exist. The Flint LSP also communicates with all IMs just like the compiler does, as resolving extern functions is done at parse-time, not at code-gen time. This means that you get in-editor lsp errors when you define an extern function which does not exist. This also means that we get an error if you would change a function in extern code, like C, directly in the editor. As soon as the Flint file is saved it evaluates all extern functions again and if it could (no longer) be found we get a proper error.
