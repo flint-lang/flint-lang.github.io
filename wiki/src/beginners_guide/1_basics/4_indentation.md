@@ -14,11 +14,11 @@ print("This is not indented correctly.\n");
 When you run the above code, you’ll see an error message:
 
 > ```
-> Parse Error at main.ft:4:1
+> Parse Error at main.ft:3:11
 > └─┬┤E0000│
-> 4 │ print("This is not indented correctly.\n");
-> ┌─┴─┘
-> └─ Expected a body after the : from the line above
+> 3 │ def main():
+> ┌─┴───────────┘
+> └─ Expected a body after the :
 > ```
 
 This happens because Flint expects all code inside main to be indented. Here’s the correct way to write it:
