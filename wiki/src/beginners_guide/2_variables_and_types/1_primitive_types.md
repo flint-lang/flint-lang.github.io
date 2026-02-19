@@ -50,8 +50,11 @@ Now lets talk a bit about bit-width. You surely have seen the number after `i`, 
 | Type  | Description                  |          Min         |         Max         | Precision      |
 | :---: | :--------------------------- | :------------------: | :-----------------: | :------------- |
 | `u8`  | unsigned 8 bit integer       |          `0`         |        `255`        | Whole numbers  |
+| `u16` | unsigned 16 bit integer      |          `0`         |       `65536`       | Whole numbers  |
 | `u32` | unsigned 32 bit integer      |          `0`         |   `4,294,967,295`   | Whole numbers  |
 | `u64` | unsigned 64 bit integer      |          `0`         |  ≈ `1.844 × 10^19`  | Whole numbers  |
+| `i8`  | signed 8 bit integer         |        `-128`        |        `127`        | Whole numbers  |
+| `i16` | signed 16 bit integer        |       `-32768`       |       `32767`       | Whole numbers  |
 | `i32` | signed 32 bit integer        |   `-2,147,483,648`   |   `2,147,483,647`   | Whole numbers  |
 | `i64` | signed 64 bit integer        |  ≈ `-9.223 × 10^18`  |  ≈ `9.223 × 10^18`  | Whole numbers  |
 | `f32` | 32 bit floating point number |  ≈ `±3.402 × 10^-38` | ≈ `±3.402 × 10^38`  | ≈ 6 - 9 digits |
