@@ -3,7 +3,7 @@ hljs.registerLanguage(
   (function () {
     "use strict";
     return function (e) {
-      var t = "int float u8 i32 i64 u8 u32 u64 f32 f64 str bool bool8 fn bp i32x2 i32x3 i32x4 i32x8 i64x2 i62x3 i64x4 f32x2 f32x3 f32x4 f64x2 f64x3 f64x4 mut const";
+      var t = "mut const int float u8 u16 u32 u64 i8 i16 i32 i64 f32 f64 str bool bool8 fn bp u8x2 u8x3 u8x4 u8x8 i32x2 i32x3 i32x4 i32x8 i64x2 i62x3 i64x4 f32x2 f32x3 f32x4 f64x2 f64x3 f64x4";
       return {
         name: "Flint",
         aliases: ["flint", "ft"],
@@ -22,7 +22,7 @@ hljs.registerLanguage(
           { className: "symbol", begin: /'[a-zA-Z_][a-zA-Z0-9_]*/ },
           { className: "literal", begin: "\\b[A-Z_][A-Z0-9_]*\\b" },
           { className: "type", begin: "\\b[A-Z_][a-zA-Z0-9_]*\\b" },
-          { className: "operator", begin: "\\+\\+|--|==|!=|<=|>=|\\+=|-=|\\*=|/=|:=|=|<|>|::|\\+|-|\\*|/|!\\.|!|\\*|%|\\|>|\\?\\.|\\?\\?|\\?(?=\\()" },
+          { className: "operator", begin: "\\+\\+|--|==|!=|<=|>=|\\+=|-=|\\*=|/=|:=|=|<|>|::|\\+|-|\\*|/|&|!\\.|!|\\*|%|\\|>|\\?\\.|\\?\\?|\\?(?=\\()" },
           {
             className: "number",
             variants: [
