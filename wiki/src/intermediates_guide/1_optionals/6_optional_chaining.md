@@ -11,7 +11,7 @@ use Core.print
 
 data Vec2:
 	i32 x;
-	i32 y,
+	i32 y;
 	Vec2(x, y);
 
 def main():
@@ -35,7 +35,7 @@ use Core.print
 
 data Vec2:
 	i32 x;
-	i32 y,
+	i32 y;
 	Vec2(x, y);
 
 def main():
@@ -79,7 +79,7 @@ use Core.print
 
 data Vec2:
 	i32 x;
-	i32 y,
+	i32 y;
 	Vec2(x, y);
 
 def main():
