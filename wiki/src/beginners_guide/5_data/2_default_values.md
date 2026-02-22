@@ -1,13 +1,5 @@
 # Default Values
 
-<div class="warning">
-
-Default values do not work yet.
-
-While default values are able to be parsed in the data definition itself, the constructor of data cannot be called with the `_` operator to create a default instance of the type.
-
-</div>
-
 Sometimes, you may want a field to have a **default value**. In Flint, this is done by assigning a value to the field directly in its declaration.
 
 ```ft
@@ -29,7 +21,7 @@ data MyData:
 
 def main():
     MyData d = MyData(_, 20); // x uses the default value of 5
-    print($"d.x = {d.x}, d.y = {d.y}\n");
+    print($"d.(x, y) = ({d.x}, {d.y})\n");
 ```
 
 This program will print this line to the console:
