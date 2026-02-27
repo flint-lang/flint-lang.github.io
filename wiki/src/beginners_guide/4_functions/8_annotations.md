@@ -133,3 +133,54 @@ This program will print something like these lines to the console:
 > ```
 
 As you can see, the failing test now succeeds, as both annotations are used for the same test.
+
+## test_output_always
+
+Whether the test should also output it's captured output even if it succeeds.
+
+```ft
+use Core.assert
+use Core.print
+
+#test_output_always
+test "Always printing output":
+	print("Wahooo\n");
+	print("Wololololo\n");
+
+test "You should see nothing":
+	print("Wahooo\n");
+	print("Wololololo\n");
+
+#test_performance
+test "You should see this output":
+	print("Yeah this test will fail\n");
+	print("ERROR: no just kidding\n");
+	assert(false);
+
+def main():
+	print("Compile with the '--test' flag!\n");
+```
+
+when compiled using `flintc --file main.ft --test` the `test` binary should have this output:
+
+> ```
+> main.ft:
+>  ├─ Always printing output     ✓ passed
+>  │   ├─ Output ───┐
+>  │   │ Wahooo     │
+>  │   │ Wololololo │
+>  │   └────────────┘
+>  ├─ You should see nothing     ✓ passed
+>  └─ You should see this output ✗ failed
+>      ├─ Output ─────────────────┐
+>      │ Yeah this test will fail │
+>      │ ERROR: no just kidding   │
+>      ├──────────────────────────┘
+>      └─ Test took 0.004068 ms
+>
+> ✗ 1 test failed!
+> ```
+
+## test_output_never
+
+Whether the test should not output it's captured output even if it fails. This annotation, in combination with the `#test_output_never` annotation has a very interesting side-effect: Since the `#test_output_always` annotation toggles whether the test outputs on *success* and the `#test_output_never` annotation toggles whether the test outputs on *failure*, using both annotations on the same test leads to the output printing being flipped, now only printing when it succeeds but staying silent when it fails.
