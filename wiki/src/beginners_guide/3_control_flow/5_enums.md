@@ -186,4 +186,33 @@ This program will print these lines to the console:
 > e = VAL3, id = 2
 > ```
 
-As you can see, casting enums to strings works quite effortlessly in Flint, just like casting them to integers.
+As you can see, casting enums to strings works quite effortlessly in Flint, just like casting them to integers. You can also see a key property of enums here: they are just numbers under the hood. At runtime, when comparing two enum values, we just compare two numbers. The first value (`VAL1`) starts with the value `0`, the second value (`VAL2`) has the value of `1` and the thrid value (`VAL3`) has the value of `2`.
+
+## Manually defining enum values
+
+You also can set which enum value is which integer number under the hood. This is especially important for using enums as [Bit Flags](https://mplnet.gsfc.nasa.gov/about-flags) to pack multiple flags into one number. But here a small example:
+
+```ft
+use Core.print
+
+enum MyEnum:
+	VAL1 = 1,
+	VAL2 = 2,
+	VAL3 = 4;
+
+def main():
+	MyEnum e = MyEnum.VAL1;
+	print($"e = {e}, id = {i32(e)}\n");
+	e = MyEnum.VAL2;
+	print($"e = {e}, id = {i32(e)}\n");
+	e = MyEnum.VAL3;
+	print($"e = {e}, id = {i32(e)}\n");
+```
+
+This program will print these lines to the console:
+
+> ```
+> e = VAL1, id = 1
+> e = VAL2, id = 2
+> e = VAL3, id = 4
+> ```
