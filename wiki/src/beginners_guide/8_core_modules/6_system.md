@@ -6,11 +6,14 @@ use Core.system
 
 The `system` module provides functions to interact with the system, for example to execute system commands.
 
-|    Function Name | Parameter Types | Return Types | Possible Errors |
-| ---------------: | :-------------: | :----------: | :-------------: |
-| `system_command` |      `str`      | `i32`, `str` |   `ErrSystem`   |
-|    `get_cwd`     |       No        |    `str`     |       No        |
-|    `get_path`    |      `str`      |    `str`     |       No        |
+|     Function Name   | Parameter Types | Return Types | Possible Errors |
+| ------------------: | :-------------: | :----------: | :-------------: |
+|  `system_command`   |      `str`      | `i32`, `str` |   `ErrSystem`   |
+|     `get_cwd`       |       No        |    `str`     |       No        |
+|     `get_path`      |      `str`      |    `str`     |       No        |
+|  `start_capture`    |       No        |     No       |       No        |
+|   `end_capture`     |       No        |    `str`     |       No        |
+| `end_capture_lines` |       No        |   `str[]`    |       No        |
 
 ## error sets
 
@@ -117,3 +120,71 @@ This program will print a line like this to your console:
 > ```
 
 If you are on Windows the path will look different, of course.
+
+### start_capture
+
+The `start_capture` function starts capturing the stdout. This means that nothing printed after the `start_capture` function will be printed to the console, but is being collected in a buffer and then we need to call the `end_capture` function to get everything which has been captured. There is no example of `start_capture` which could be shown without the `end_capture` function, so you will find the example there.
+
+### end_capture
+
+The `end_capture` function ends capturing stdout and returns the up-to-that-point captured output as a simple string.
+
+```ft
+use Core.print
+use Core.system
+
+def main():
+	start_capture();
+	for (i, _) in 0..10:
+		print($"i = {i}\n");
+	str captured = end_capture();
+	print($"captured = '{captured}'\n");
+```
+
+This program will print these lines to the console:
+
+> ```
+> captured = 'i = 0
+> i = 1
+> i = 2
+> i = 3
+> i = 4
+> i = 5
+> i = 6
+> i = 7
+> i = 8
+> i = 9
+> '
+> ```
+
+### end_capture_lines
+
+The `end_capture_lines` function is essentially the same as the `end_capture` function with the only difference that the buffer string is split at all `\n` characters, meaning the `end_capture_lines` function returns a `str[]` where each element of the array is a single line which has been printed to the console.
+
+```ft
+use Core.print
+use Core.system
+
+def main():
+	start_capture();
+	for (i, _) in 0..10:
+		print($"i = {i}\n");
+	str[] captured_lines = end_capture_lines();
+	for (i, line) in captured_lines:
+		print($"line[{i}]: {line}\n");
+```
+
+This program will print these lines to the console:
+
+> ```
+> line[0]: i = 0
+> line[1]: i = 1
+> line[2]: i = 2
+> line[3]: i = 3
+> line[4]: i = 4
+> line[5]: i = 5
+> line[6]: i = 6
+> line[7]: i = 7
+> line[8]: i = 8
+> line[9]: i = 9
+> ```
