@@ -115,7 +115,8 @@
     - [Signatures](./beginners_guide/11_interop/4_signatures.md)
     - [Pointer Types](./beginners_guide/11_interop/5_pointers.md)
     - [Tags](./beginners_guide/11_interop/6_tags.md)
-    - [`extern` vs `export`]()
+    - [Opaque Types](./beginners_guide/11_interop/7_opaque.md)
+    - [Exporting]()
 
   - [Game Example]()
 
