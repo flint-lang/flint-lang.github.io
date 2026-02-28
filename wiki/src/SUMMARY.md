@@ -231,3 +231,14 @@
 
     - [Compile-Time Dispatch Tables]()
     - [Entity Call Dispatch]()
+
+# Developer Guide
+
+- [flintc](./developer_guide/flintc.md)
+  - [Setup](./developer_guide/flintc/setup.md)
+- [fls](./developer_guide/fls.md)
+- [fip]()
+
+# Langauge Specification
+
+- [TODO]()

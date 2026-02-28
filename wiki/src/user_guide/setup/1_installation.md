@@ -9,7 +9,7 @@ To make the Flint compiler available from any path in your terminal, and to make
 To make the Flint compiler available from any path in your terminal, and to make it executable through just calling `flintc` in your terminal, you need to copy the `flintc` executable into the `$HOME/.local/bin/` directory (if it does not exist yet, i would highly recommend to create it) and you need to ensure it is marked as executable with this command:
 
 ```sh
-chmod +x $HOME/.local/bin/flintc
+chmod +x "$HOME/.local/bin/flintc"
 ```
 
 After adding the `flintc` binary to the `$HOME/.local/bin` directory you should edit your `$HOME/.bashrc` file and ensure it contains the line
