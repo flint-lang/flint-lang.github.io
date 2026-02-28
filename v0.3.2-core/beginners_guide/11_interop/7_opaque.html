@@ -1,0 +1,391 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Opaque Types - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="opaque-types"><a class="header" href="#opaque-types">Opaque Types</a></h1>
+<p>What are opaque types? An opaque type, or <code>opaque</code> in Flint, is simply a pointer to memory where Flint neither knows where it points to nor does it know what it points to. If we would define an extern function like <code>extern def add(mut i32* x, mut i32 y)</code> then we <em>know</em> where <code>x</code> points to, the pointer <code>i32*</code> points to a value of type <code>i32</code>. But if we do <em>not</em> know where a pointer points to then we need to use <code>opaque</code>.</p>
+<p>If you are familiar with C, then the concept of opaque pointers should be nothing new to you: In C an opaque pointer is the type <code>void*</code>. It's not a pointer which points "to nothing", it can be seen more as a pointer which could point <strong>to anything</strong>. For example the <code>malloc</code> function in C returns a <code>void*</code> to the allocated memory and then needs to be cast to other pointer types to be used.</p>
+<p>Flint has no internal concepts of pointers, so if you define a "normal" function or variable they <strong>cannot</strong> be of any pointer type, like <code>i32*</code>. But when using C libraries it is very common for functions and even data itself to contain opaque pointers. Take this C struct type for example:</p>
+<pre><code class="language-c">typedef struct Container {
+    void *value;
+    size_t len;
+} Container;
+</code></pre>
+<p>For this type to be translatable to Flint types we need a concept of types in Flint without enabling raw pointers, pointer arithmetic and all the other low level things you could do with pointers. The above C type would translate to this data type in Flint (for example when auto-generating the bindings file using FIP):</p>
+<pre><code class="language-ft">data Container:
+    opaque value;
+    u64 len;
+    Container(value, len);
+</code></pre>
+<p>As you can see, the <code>value</code> has the type <code>opaque</code> in Flint and this enables us to interact with C and C types even though we do <em>not</em> know of which type they are.</p>
+<h2 id="example"><a class="header" href="#example">Example</a></h2>
+<p>Let's take this simple C file, <code>extern.c</code> here:</p>
+<pre><code class="language-c">#include &lt;stdlib.h&gt;
+
+typedef struct Container {
+    void *value;
+    size_t len;
+} Container;
+
+Container create() {
+    return (Container){
+        .value = malloc(100),
+        .len = 100,
+    };
+}
+
+void destroy(Container *c) {
+    free(c-&gt;value);
+    c-&gt;value = NULL;
+    c-&gt;len = 0;
+}
+</code></pre>
+<p>And use it using <code>use Fip.c</code> in Flint like so:</p>
+<pre><code class="language-ft">use Core.print
+use Fip.c
+
+def main():
+	c := Container(null, 0);
+	print($"c.value = {c.value}\n");
+	print($"c.len = {c.len}\n");
+
+	con := create();
+	print($"con.value = {con.value}\n");
+	print($"con.len = {con.len}\n");
+	destroy(&amp;con);
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>c.value = null
+c.len = 0
+con.value = 0x2e89ab20
+con.len = 100
+</code></pre>
+</blockquote>
+<p>And this <code>c.ft</code> file being generated in <code>.fip/generated/c.ft</code>:</p>
+<pre><code class="language-ft">data Container:
+	opaque value;
+	u64 len;
+	Container(value, len);
+
+extern def create() -&gt; Container;
+extern def destroy(mut Container* c);
+</code></pre>
+<p>There is quite a lot to unpack here. First of all, let's start with the <code>null</code> literal. The <code>null</code> literal is exactly the same as <code>NULL</code> in C or <code>nullptr</code> in C++ (and newer C). It's just a nullpointer, e.g. <code>0x0</code>. The <code>null</code> literal in Flint is of type <code>void*</code> and can be cast to any pointer and any opaque type of Flint. The type of <code>void*</code> was chosen because that type is not possible to define in Flint, thanks to the addition of the <code>opaque</code> type. Note that <code>opaque</code> is a distinct type in Flint, so it's <em>not</em> a <code>void*</code> under the parsers surface.</p>
+<p>As you can also see, the <code>opaque</code> type is part of the builtin types and can be cast to a string as a consequence. Note that the exact memory adress of your program might differ, so the exact output might not even match exactly to the output shown above.</p>
+<p>What Flint is concerned are <code>opaque</code> values truly opaque to it. They cannot be cast to "real" pointer types, and they cannot be accessed in any way. We can <em>only</em> compare them with the <code>null</code> literal to see if it's a nullpointer or not.</p>
+<h2 id="comparing-opaque-values-with-null"><a class="header" href="#comparing-opaque-values-with-null">Comparing opaque values with null</a></h2>
+<p>Let's keep the <code>extern.c</code> file the same, but now we change the <code>main.ft</code> a bit:</p>
+<pre><code class="language-ft">use Core.print
+use Fip.c
+
+def main():
+	c := Container(null, 0);
+	print($"c.value = {c.value}\n");
+	print($"c.len = {c.len}\n");
+
+	con := create();
+	if con.value == null:
+		print("con.value is null\n");
+	else:
+		print("con.value points to something\n");
+	print($"con.len = {con.len}\n");
+	destroy(&amp;con);
+	if con.value == null:
+		print("con.value was properly freed\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>c.value = null
+c.len = 0
+con.value points to something
+con.len = 100
+con.value was properly freed
+</code></pre>
+</blockquote>
+<p>As you can see, it always is pretty easy to tell if a pointer is a null pointer or not. And at this very topic and fact, that it is trivial to compare pointers to a nullpointer, comes the next thing to play.</p>
+<h2 id="leak-detection"><a class="header" href="#leak-detection">Leak detection</a></h2>
+<p>In Flint, opaque values point to memory. This memory needed to be allocated by C. This means that we need a very simple approach of leak-detection for external resources in Flint. The easiest and most straight forward way is to simply check each <code>opaque</code> typed value (both variables and fields of data) if they are <code>null</code> whenever they go out of scope / out of memory and if the <code>opaque</code> value still points somewhere in memory then it is considered to be still in-use memory, e.g. was not freed yet. Flint does not free <code>opaque</code> values by itself, instead it throws a runtime panic about leak detection at you.</p>
+<p>Here is a small example of exactly this behaviour. Take the same example as above bt remove the <code>destroy(&amp;con);</code> line:</p>
+<pre><code class="language-ft">use Core.print
+use Fip.c
+
+def main():
+	c := Container(null, 0);
+	print($"c.value = {c.value}\n");
+	print($"c.len = {c.len}\n");
+
+	con := create();
+	if con.value == null:
+		print("con.value is null\n");
+	else:
+		print("con.value points to something\n");
+	print($"con.len = {con.len}\n");
+	if con.value == null:
+		print("con.value was properly freed\n");
+</code></pre>
+<p>This program now will print these lines to the console:</p>
+<blockquote>
+<pre><code>c.value = null
+c.len = 0
+con.value points to something
+con.len = 100
+Error: Leaking memory!
+</code></pre>
+</blockquote>
+<p>The behaviour of the leak-detection for <code>opaque</code> types can be controlled with the <code>--opaque-XXX</code> flags of the <code>flintc</code> compiler.</p>
+<h2 id="low-level-calls"><a class="header" href="#low-level-calls">Low level calls</a></h2>
+<p>This whole design of opaque types has a very profound side-effect: we are now able to manually call things like <code>malloc</code> or <code>free</code> from within Flint itself. We cannot use the allocated values, however, that still needs to be done by extern C code. You can think about it like that: <code>malloc</code> <em>is</em> a C function so "ownership" of the allocated thing naturally is at C. And when freeing it, by calling <code>free</code> we "tell C to free it". We just had a <code>opaque</code> pointer to the memory but Flint cannot do anything with it. Here is a small example, now the <code>extern.c</code> file changes:</p>
+<pre><code class="language-c">void *malloc(unsigned long n);
+void free(void *ptr);
+</code></pre>
+<p>And the Flint code now looks like this:</p>
+<pre><code class="language-ft">use Core.print
+use Fip.c
+
+def main():
+	opaque ptr = malloc(100);
+	if ptr != null:
+		print($"allocation of {100} bytes successful\n");
+	free(ptr);
+	print("freeing of ptr successful\n");
+</code></pre>
+<p>And this is how the auto-generated <code>.fip/generated/c.ft</code> file looks now:</p>
+<pre><code class="language-ft">extern def malloc(mut u64 n) -&gt; opaque;
+extern def free(mut opaque ptr);
+</code></pre>
+<p>This program prints these lines to the console:</p>
+<blockquote>
+<pre><code>allocation of 100 bytes successful
+freeing of ptr successful
+Error: Leaking memory!
+</code></pre>
+</blockquote>
+<p>As you can see, we still get a leak error despite freeing the value, what's going on here? It's pretty simple. <code>free</code> at a low level just frees the memory the pointer <code>ptr</code> we passed to it points to, but it does not change the pointer <code>ptr</code> itself. We need to manually and explicitely set it's value to <code>null</code> after freeing in this case:</p>
+<pre><code class="language-ft">use Core.print
+use Fip.c
+
+def main():
+	opaque ptr = malloc(100);
+	if ptr != null:
+		print($"allocation of {100} bytes successful\n");
+	free(ptr);
+	print("freeing of ptr successful\n");
+	ptr = null;
+</code></pre>
+<p>And now this program will print only these lines to the console:</p>
+<blockquote>
+<pre><code>allocation of 100 bytes successful
+freeing of ptr successful
+</code></pre>
+</blockquote>
+<p>This encourages you to either do it as in the <code>destroy</code> function at the top where we set the pointer to <code>NULL</code> after freeing it, or you need to do it manually in Flint. Either way, Flint's "leak detection" only checks whether an opaque value is null, nothing more. Keep this fact in mind!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/11_interop/6_tags.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../intermediates_guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/11_interop/6_tags.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../intermediates_guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+    </div>
+    </body>
+</html>
