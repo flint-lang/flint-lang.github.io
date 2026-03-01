@@ -103,7 +103,7 @@
     - [Composition](./beginners_guide/9_entities/3_composition.md)
     - [Extending Entities](./beginners_guide/9_entities/4_extending_entities.md)
     - [Monolithic Entities]()
-    - [Interfaces]()
+    - [Interfaces](./beginners_guide/9_entities/6_interfaces.md)
 
   - [Links & Hooks]()
 
