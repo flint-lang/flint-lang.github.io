@@ -5408,6 +5408,101 @@ f3: -30
 </blockquote>
 <p>As you can see, if you had defined a data or func type before and then added it to an entity the other entity extends, the compiler will tell you that you need to fix the entity that extends it, since it then would have been a double-inclusion, which is a good thing in my view, as it means that entity definitions will stay as minimal as possible ever over a long time period and potential changes to their "parent" entities.</p>
 <p>Just like with the <code>requires</code> clausel you are <em>only</em> allowed to put values of type <code>entity</code> in the extends clausel, and just like the <code>requires</code> clausel you can extend as many other entities as you want. There do not exist any relationships between entities at runtime, they are all different types. This also means that you are <em>NOT</em> able to "cast" any entity type to any other entity type either.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="interfaces"><a class="header" href="#interfaces">Interfaces</a></h1>
+<p>What are interfaces? In OOP an interface is like a "contract" describing which methods a class has without describing <em>how</em> these methods are implemented. In Flint, we have a concept similar to that and you already know it: <code>func</code> modules.</p>
+<p>Func modules define functions which operate on a given set of data and whenever we add a func module to an entity we also must add it's required data to the entity for composition. So, entities are just a "collection of func modules with their associated data". As every <code>func</code> module always explicitely <code>requires</code> which data it will operate on and we <em>know</em> that each entity which has a given <code>func</code> module always has it's associated data, we can essentially "store" an entity on a func-module typed variable, and this is our interface.</p>
+<p>Here a small example:</p>
+<pre><code class="language-ft">use Core.print
+
+data Data:
+	i32 x;
+	i32 y;
+	Data(x, y);
+
+func Func requires(Data d):
+	def move(i32x2 diff):
+		d.(x, y) += diff.(x, y);
+
+	def get_x() -&gt; i32:
+		return d.x;
+
+	def get_y() -&gt; i32:
+		return d.y;
+
+entity Entity:
+	data: Data;
+	func: Func;
+	Entity(Data);
+
+data Data2:
+	i32 z;
+	i32 speed;
+	Data2(z, speed);
+
+func Func2 requires(Data d, Data2 d2):
+	def move2(f32x3 direction):
+		f32x3 diff = direction * f32(d2.speed);
+		d.(x, y) += i32x2(diff.x, diff.y);
+		d2.z += i32(diff.z);
+
+	def get_z() -&gt; i32:
+		return d2.z;
+
+entity Entity2 extends(Entity e):
+	data: Data2;
+	func: Func2;
+	Entity2(e, Data2);
+
+def apply_move_operation(mut Func f, i32x2 diff):
+	f.move(diff);
+
+def main():
+	e1 := Entity(Data(10, 20));
+	print($"e1.(x, y) = ({e1.get_x()}, {e1.get_y()})\n");
+	apply_move_operation(e1, i32x2(5, 5));
+	print($"e1.(x, y) = ({e1.get_x()}, {e1.get_y()})\n");
+
+	e2 := Entity2(Data(10, 20), Data2(30, 3));
+	print($"e2.(x, y, z) = ({e2.get_x()}, {e2.get_y()}, {e2.get_z()})\n");
+	apply_move_operation(e2, i32x2(5, 5));
+	print($"e2.(x, y, z) = ({e2.get_x()}, {e2.get_y()}, {e2.get_z()})\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>e1.(x, y) = (10, 20)
+e1.(x, y) = (15, 25)
+e2.(x, y, z) = (10, 20, 30)
+e2.(x, y, z) = (15, 25, 30)
+</code></pre>
+</blockquote>
+<p>There are a few things we need to go through first. You can see that <code>Entity2</code> extends <code>Entity</code> which means that <code>Entity2</code> also has the <code>Data</code> and <code>Func</code> modules, just like <code>Entity</code>. Because of that we can "cast" each entity type to their respective <code>func</code> types. So, both <code>Entity</code> and <code>Entity2</code> are "castable" to <code>Func</code> but only <code>Entity2</code> can be "cast" to <code>Func2</code>, since <code>Entity</code> does not contain the func module <code>Func2</code>.</p>
+<p>"Casting" here is not quite correct. Each <code>func</code> module, when used as a variable type, is just a "slice" of it's required data. So in our case <code>Func</code> is a simple struct: <code>data&lt;Data&gt;</code>, which means when we call <code>f.move(...)</code> in the <code>apply_operation</code> function the "method call" resolves to <code>Func.move(f.$0, diff)</code> just like it would with a "real" entity.</p>
+<p>As every data in Flint is just a pointer to the actually allocated data we can modify the data even when passing func modules around as interfaces. But you will learn about these internals of Flint later, they are not that important for now.</p>
+<h2 id="lifetime"><a class="header" href="#lifetime">Lifetime</a></h2>
+<p>The lifetime of a func-module as interface is not bound by the lifetime of the entity from which the interface was created. Let'ss look at a small example to clarify that. All the other code is exactly the same as above, just the <code>main</code> function is different:</p>
+<pre><code class="language-ft">def main():
+	Func f;
+	if true:
+		e1 := Entity(Data(10, 20));
+		f = e1;
+	print($"f.(x, y) = ({f.get_x()}, {f.get_y()})\n");
+	apply_move_operation(f, i32x2(5, 5));
+	print($"f.(x, y) = ({f.get_x()}, {f.get_y()})\n");
+
+	e2 := Entity2(Data(10, 20), Data2(30, 3));
+	print($"e2.(x, y, z) = ({e2.get_x()}, {e2.get_y()}, {e2.get_z()})\n");
+	apply_move_operation(e2, i32x2(5, 5));
+	print($"e2.(x, y, z) = ({e2.get_x()}, {e2.get_y()}, {e2.get_z()})\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>f.(x, y) = (10, 20)
+f.(x, y) = (15, 25)
+e2.(x, y, z) = (10, 20, 30)
+e2.(x, y, z) = (15, 25, 30)
+</code></pre>
+</blockquote>
+<p>As you can see, the interface <code>f</code> is <em>still</em> valid after the <code>if true:</code> branch even though the variable <code>e1</code> went out of scope. This is because all data in Flint is DIMA-managed (more on that later). The entity <code>e1</code> went out of scope, but because <code>f</code> still holds onto <code>Data</code> of <code>e1</code> it is not released yet. If we were do the same for <code>e2</code> then <code>Data2</code> <em>would</em> be released after the branch, but <code>Data</code> would not.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="interop"><a class="header" href="#interop">Interop</a></h1>
 <p>Interop, or Interoperability is the capability to interact with other languages than the language you are using right now. It is often described as <code>FFI</code>, Foreign Function Interface. Is is an essential part of programming, to use libraries or code of other languages in your project. It makes sharing code much easier, the most popular language as a common denominator between multiple languages is the <code>C</code> programming language. It has evolved much more into a protocol than an actual language (in the context of FFI) over the years. Nearly all languages are able to interact with C code in a way, and Flint is no exception to that.</p>
 <p>But Flint's approach to interop is much more generalized and not limited to C, as a matter of fact, you can call into <strong>any</strong> other language using Flint. There are, of course, limitations, especially around the topic of language-specifc constructs (<code>trait</code>s in Rust, <code>class</code>es in C++, etc) but the benefits of a generalized interop approach are immense.</p>
