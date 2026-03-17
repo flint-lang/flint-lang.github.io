@@ -110,12 +110,12 @@ def main():
 will not compile again. Because now we have declared `p` to be immutable, but we try to pass it to to the call `increment_by` which expects a mutable `Point` argument, so we have a type mismatch here, because when we made `p` immutable it would be wrong if it could be modified by a function. We get this compile error:
 
 > ```
-> Parse Error at main.ft:13:18
-> └──┬┤E0000│
-> 11 │ def main():
-> 13 │ »   increment_by(p, 3);
-> ┌──┴──────────────────┘
-> └─ Variable 'p' is marked as 'const' and cannot be modified!
+> Parse Error at main.ft:9:5
+> └─┬┤E0000│
+> 8 │ def increment_by(Point p, i32 value):
+> 9 │ »   p.(x, y) += (value, value);
+> ┌─┴─────┘
+> └─ Expression is marked as constant and cannot be modified!
 > ```
 
 ## Returning Data from Functions
