@@ -51,16 +51,13 @@ def print_var(MyVariant var):
 		MyVariant.Tuple(t): print($"holds tuple value of ({t.$0}, {t.$1}, {t.$2})\n");
 
 def main():
-	MyVariant var = i32(-5);
+	MyVariant var = MyVariant.Int(-5);
 	print_var(var);
 
-	var = f32(3.4);
+	var = MyVariant.Float(3.4);
 	print_var(var);
 
-	// Flint currently has no way of using a group as the rhs of a variant assignment
-	// when a tuple needs to be stored in the variant, but it will have it *eventually*
-	data<i32, f32, bool8> tuple = (5, 6.9, bool8(u8(33)));
-	var = tuple;
+	var = MyVariant.Tuple(5, 6.9, bool8(u8(33)));
 	print_var(var);
 ```
 
@@ -102,6 +99,17 @@ This program will print this line to the console:
 > Is i32: 10
 > ```
 
-There is, again, quite a lot to go through. First of all, the Type is absolutely needed for tagged accesses to be able to differentiate between a tagged access and an access of that type. This also prevents future collisions if you would, for example, later define a type with the same name as your variant tag. If we would not do this differentiation, you would then later on need to change your tag and change it everywhere you have used it or you would need to change your created type's name to something different to prevent collisions. Both would be a horrible experience. So, this is the reason to why it is **required** to explicitely state the type of the variant before the tag, if the variant's type is missing the "tag" is interpreted as a type and compilation will fail!
+There is, again, quite a lot to go through. First of all, the Type is absolutely needed for tagged accesses (`Type.Tag`) to be able to differentiate between a tagged access and an access of that type. This also prevents future collisions if you would, for example, later define a type with the same name as your variant tag. If we would not do this differentiation, you would then later on need to change your tag and change it everywhere you have used it or you would need to change your created type's name to something different to prevent collisions. Both would be a horrible experience. So, this is the reason to why it is **required** to explicitely state the type of the variant before the tag, if the variant's type is missing the "tag" is interpreted as a type and compilation will fail!
 
-This decision might annoy you at first, but we hope that you will be able to see the reasons behind it and why it's so important to have this rule in place, as it also completely removes any ambuguity from the programmer itself.
+This decision might annoy you at first, but we hope that you will be able to see the reasons behind it and why it's so important to have this rule in place, as it also completely removes any ambuguity from the program itself.
+
+## Empty Payloads
+
+For tagged variants, it is also possible to declare the type of the variant as `void`, meaning that this variation does not hold any payload. This capability has some implications. First of all, you *always* need to write the type `void` when defining a tagged variant, like
+
+```ft
+variant MyVariant:
+	Empty(void), Value(f32);
+```
+
+It is not allowed to just write `Empty` or `Empty()` here, you need to write the type `void` manually, that's intentional. When switching on a variant containing an empty payload tag you just need to write `MyVariant.Empty()`, e.g. not provide a capture variable like `f` in the case of `MyVariant.Value(f)`. And it's also the same for the variant constructors, instead of writing `MyVariant.Value(3.3)` you need to write `MyVariant.Empty()`. There is no reason why writing `MyVariant.Empty` is not allowed other than not having as much overlap between variants and enums, and we want to minimize syntactic overlap as much as possible.
