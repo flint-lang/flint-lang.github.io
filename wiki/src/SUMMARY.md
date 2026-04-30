@@ -13,16 +13,13 @@
 # Learning Flint
 
 - [From Beginner to Intermediate](./beginners_guide.md)
-
   - [Basics](./beginners_guide/1_basics.md)
-
     - [The Hello World Program](./beginners_guide/1_basics/1_program.md)
     - [Compiling the Program](./beginners_guide/1_basics/2_compiling.md)
     - [Comments in Flint](./beginners_guide/1_basics/3_comments.md)
     - [Indentation in Flint](./beginners_guide/1_basics/4_indentation.md)
 
   - [Variables and Types](./beginners_guide/2_variables_and_types.md)
-
     - [Primitive Types](./beginners_guide/2_variables_and_types/1_primitive_types.md)
     - [Variables](./beginners_guide/2_variables_and_types/2_variables.md)
     - [Inferred Typing](./beginners_guide/2_variables_and_types/3_inferred_typing.md)
@@ -31,7 +28,6 @@
     - [String Interpolation](./beginners_guide/2_variables_and_types/6_string_interpolation.md)
 
   - [Control Flow](./beginners_guide/3_control_flow.md)
-
     - [The bool Type](./beginners_guide/3_control_flow/1_the_bool_type.md)
     - [Boolean Operations](./beginners_guide/3_control_flow/2_boolean_operations.md)
     - [Branching](./beginners_guide/3_control_flow/3_branching.md)
@@ -40,7 +36,6 @@
     - [Switch](./beginners_guide/3_control_flow/6_switch.md)
 
   - [Functions](./beginners_guide/4_functions.md)
-
     - [What is a Function?](./beginners_guide/4_functions/1_what_is_a_function.md)
     - [Adding Parameters](./beginners_guide/4_functions/2_adding_parameters.md)
     - [Returning Values](./beginners_guide/4_functions/3_returning_values.md)
@@ -51,7 +46,6 @@
     - [Annotations](./beginners_guide/4_functions/8_annotations.md)
 
   - [Data: The Core of Flint](./beginners_guide/5_data.md)
-
     - [Declaring Data Modules](./beginners_guide/5_data/1_declaring_data_modules.md)
     - [Default Values](./beginners_guide/5_data/2_default_values.md)
     - [Nested Data](./beginners_guide/5_data/3_nested_data.md)
@@ -63,7 +57,6 @@
     - [Const Data](./beginners_guide/5_data/9_const_data.md)
 
   - [Arrays & Ranges](./beginners_guide/6_arrays.md)
-
     - [Introduction to Arrays](./beginners_guide/6_arrays/1_introduction.md)
     - [Iterating Over Arrays](./beginners_guide/6_arrays/2_iterating_over_arrays.md)
     - [Strings](./beginners_guide/6_arrays/3_strings.md)
@@ -75,7 +68,6 @@
     - [Multidimensional Access Patterns](./beginners_guide/6_arrays/9_multidimensional_access_patterns.md)
 
   - [Imports](./beginners_guide/7_imports.md)
-
     - [The `use` Clausel](./beginners_guide/7_imports/1_the_use_clausel.md)
     - [Circular Dependencies](./beginners_guide/7_imports/2_circular_dependencies.md)
     - [Import Aliasing](./beginners_guide/7_imports/3_import_aliasing.md)
@@ -83,7 +75,6 @@
     - [Relative Paths](./beginners_guide/7_imports/5_relative_paths.md)
 
   - [Core Modules](./beginners_guide/8_core_modules.md)
-
     - [print](./beginners_guide/8_core_modules/1_print.md)
     - [read](./beginners_guide/8_core_modules/2_read.md)
     - [assert](./beginners_guide/8_core_modules/3_assert.md)
@@ -97,7 +88,6 @@
     - [parallel]()
 
   - [Entities & Func modules](./beginners_guide/9_entities.md)
-
     - [Func Modules](./beginners_guide/9_entities/1_func_modules.md)
     - [Entities](./beginners_guide/9_entities/2_entities.md)
     - [Composition](./beginners_guide/9_entities/3_composition.md)
@@ -108,7 +98,6 @@
   - [Links & Hooks]()
 
   - [Interop](./beginners_guide/11_interop.md)
-
     - [Introduction](./beginners_guide/11_interop/1_introduction.md)
     - [Defining External Functions](./beginners_guide/11_interop/2_defining.md)
     - [Interop Modules](./beginners_guide/11_interop/3_modules.md)
@@ -119,14 +108,11 @@
     - [Exporting]()
 
   - [Game Example]()
-
     - [Introduction]()
     - [Using raylib]()
 
 - [From Intermediate to Expert](./intermediates_guide.md)
-
   - [Optionals](./intermediates_guide/1_optionals.md)
-
     - [Introduction](./intermediates_guide/1_optionals/1_introduction.md)
     - [Unwrapping](./intermediates_guide/1_optionals/2_unwrapping.md)
     - [Comparing Optionals](./intermediates_guide/1_optionals/3_comparing_optionals.md)
@@ -137,7 +123,6 @@
     - [List Example](./intermediates_guide/1_optionals/8_list.md)
 
   - [Variants](./intermediates_guide/2_variants.md)
-
     - [Introduction](./intermediates_guide/2_variants/1_introduction.md)
     - [Switching on Variants](./intermediates_guide/2_variants/2_variant_switch.md)
     - [Tagged Variants](./intermediates_guide/2_variants/3_tagged.md)
@@ -148,7 +133,6 @@
     - [Optional Variants]()
 
   - [Error Sets](./intermediates_guide/3_error_sets.md)
-
     - [Introduction](./intermediates_guide/3_error_sets/1_introduction.md)
     - [Error Set Refinement](./intermediates_guide/3_error_sets/2_refinement.md)
     - [Function Signatures](./intermediates_guide/3_error_sets/3_signatures.md)
@@ -175,18 +159,16 @@
     - [Performance Optimization]()
 
   - [Pipes]()
-
     - [Introduction]()
     - [Chaining Operations]()
     - [Composing Functions]()
 
   - [Blueprints]()
-
     - [Introduction]()
     - [The `bp` Type]()
     - [Linearization]()
     - [fn Implications]()
-    - [Higher order Functions]()
+    - [Higher-Order Functions]()
     - [The Eval Function]()
     - [Performance Implications]()
 
@@ -197,14 +179,11 @@
   - [Generic Library Example]()
 
 - [From Expert to Master]()
-
   - [Paralellism]()
-
-    - [How DOCP makes parallelism trivial]()
+    - [How DCMP makes parallelism trivial]()
     - [The `parallel` Core module]()
 
   - [Concurrency & shared data]()
-
     - [Understanding Concurrency]()
     - [Spawning Threads]()
     - [Syncronizing Threads]()
@@ -219,7 +198,6 @@
   - [FIP Internals & IM authoring]()
 
   - [DIMA Internals]()
-
     - [Slots]()
     - [Blocks]()
     - [Heads]()
@@ -227,8 +205,7 @@
     - [Slot Pinning]()
     - [Annotations]()
 
-  - [DOCP Internals]()
-
+  - [DCMP Internals]()
     - [Compile-Time Dispatch Tables]()
     - [Entity Call Dispatch]()
 

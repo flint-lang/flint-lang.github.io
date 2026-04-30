@@ -72,6 +72,6 @@ By default, Flint minimizes the need for shared data, promoting safer designs. U
 
 ## Conclusion
 
-Flints concurrency approach, through its DOCP paradigm, is inherently simpler than in many other languages. Because Flint focuses on data modules themselves, their encapsulation and separation, it becomes much simpler to prevent race conditions or other problems related to concurrency.
+Flints concurrency approach, through its DCMP paradigm, is inherently simpler than in many other languages. Because Flint focuses on data modules themselves, their encapsulation and separation, it becomes much simpler to prevent race conditions or other problems related to concurrency.
 
 You have learned a big chunk of Flints features by now. While you do not yet know everything, lets focus next on building a small program. Lets then focus on making a small library and publishing it on **FlintHub** to begin your collaborative Flint journey!

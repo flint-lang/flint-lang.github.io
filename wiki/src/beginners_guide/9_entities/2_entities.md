@@ -1,6 +1,6 @@
 # Entities
 
-An `entity` is essentially a collection of data and functionality, similar to an `Object` or `Class` in OOP. DOCP is based on the concept of **composition** instead of **inheritance**, but more on that [later](./3_composition.md). You simply need to know that any entity is composed of `data` and `func` modules. Here is a small example of the most simple entity:
+An `entity` is essentially a collection of data and functionality, similar to an `Object` or `Class` in OOP. DCMP is based on the concept of **composition** instead of **inheritance**, but more on that [later](./3_composition.md). You simply need to know that any entity is composed of `data` and `func` modules. Here is a small example of the most simple entity:
 
 ```ft
 use Core.print
@@ -30,7 +30,7 @@ This program will print this line to the console:
 > pos: (100, 120), size: (200, 220)
 > ```
 
-There is **a lot** to talk about here. First of all, the syntax to define an entity is *weird* you might say. When defining an entity you *describe* which `data` and `func` module the entity consists of, and then you write a **Constructor** similar to how you do it for any `data` type, and in the constructor you define the order in which data needs to be passed to the entity when constructing it. In our case the entity only contains the `DTransform` data so there is no order to set.
+There is **a lot** to talk about here. First of all, the syntax to define an entity is _weird_ you might say. When defining an entity you _describe_ which `data` and `func` module the entity consists of, and then you write a **Constructor** similar to how you do it for any `data` type, and in the constructor you define the order in which data needs to be passed to the entity when constructing it. In our case the entity only contains the `DTransform` data so there is no order to set.
 
 As you can see, we can call the `print` function on the variable `e` of type `Entity` without passing in any data. On the call-side the function looks exactly like defined in the `FMove` func module, with no parameters. We can call the `print` function of the `FMove` func module because the entity `Entity` explicitely contains that func module's functions (via the `func: <Type>;` line).
 
@@ -75,11 +75,11 @@ This program prints these lines to the console:
 > e.pos = (100, 120)
 > ```
 
-This *may* seem inefficient or boiler-platy, but this design has big impications regarding multi-threading safety and general code safety, but this is a topic of a waaaay later chapter in the Expert to Master book.
+This _may_ seem inefficient or boiler-platy, but this design has big impications regarding multi-threading safety and general code safety, but this is a topic of a waaaay later chapter in the Expert to Master book.
 
 ## Missing data
 
-There are only a few reasons to why we `require` any data in `func` modules at all. The first reason is that whenever we call a function like `print` on the entity `e` we *know* that this function *only* ever touches the `DTransform` data of the entity, but not any other data it may contain. This is crucial for parallelism. The other reason, which is more important now, is that the required data forms a *contract* to the entity. If the entity does not provide the data the func module requires then we get a compile error. Here is an example of just that:
+There are only a few reasons to why we `require` any data in `func` modules at all. The first reason is that whenever we call a function like `print` on the entity `e` we _know_ that this function _only_ ever touches the `DTransform` data of the entity, but not any other data it may contain. This is crucial for parallelism. The other reason, which is more important now, is that the required data forms a _contract_ to the entity. If the entity does not provide the data the func module requires then we get a compile error. Here is an example of just that:
 
 ```ft
 use Core.print

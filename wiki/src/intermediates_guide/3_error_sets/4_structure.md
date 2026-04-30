@@ -66,14 +66,14 @@ def main():
 This program will print these lines to the console:
 
 > ```
-> type_id = 1560177182
+> type_id = 3169583248
 > value_id = 0
 > message =
 > Is NullDivision
 > res = 0
 > ```
 
-As you can see, the `NullDivision` is value `0` and the hashing function outputs the `u32` hash of `2646001312` for the type `ErrArithmetic`.
+As you can see, the `NullDivision` is value `0` and the hashing function outputs the `u32` hash of `3169583248` for the type `ErrArithmetic`.
 
 ## Casting errors to strings
 

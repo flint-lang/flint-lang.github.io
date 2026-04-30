@@ -1,6 +1,6 @@
 # Func Modules
 
-The basics of DOCP are `func` modules. A `func` module is a collection of functions which operate on the same data. The simplest example is one where we define a func module which does not require any data to operate:
+The basics of DCMP are `func` modules. A `func` module is a collection of functions which operate on the same data. The simplest example is one where we define a func module which does not require any data to operate:
 
 ```ft
 use Core.print
@@ -71,7 +71,7 @@ data MyData:
 func MyFunc requires(MyData d):
 	def move(i32 x, i32 y):
 		d.pos = d.pos + (x, y);
-	
+
 	def print():
 		print($"pos: {d.pos}, size: {d.size}\n");
 
@@ -91,7 +91,7 @@ This program will print these lines to the console:
 
 We have quite a lot to talk about here. First of all, note the new `requires(...)` clausel after the `func` module definition. It means that this func module, `MyFunc`, now operates on the data `MyData`. This becomes more important when we come to entities in the next chapter.
 
-As told earlier, `func` modules disappear at compile-time in the form of new functions, the `move` function becomes `MyFunc.move` as said earlier. The `requires` clausel is just one more rule to that, and it's very simple. The data required by the clausel becomes the **implicit first parameter of every function in that `func` module**. All required data is *always* a mutable parameter of *every* function in that `func` module's body.
+As told earlier, `func` modules disappear at compile-time in the form of new functions, the `move` function becomes `MyFunc.move` as said earlier. The `requires` clausel is just one more rule to that, and it's very simple. The data required by the clausel becomes the **implicit first parameter of every function in that `func` module**. All required data is _always_ a mutable parameter of _every_ function in that `func` module's body.
 
 This means that the `move` function will have the signature `MyFunc.move(mut MyData, i32, i32)` after compilation and that the `print` function will have the signature `MyFunc.print(mut MyData)`. This key property of func modules is very important to understand in order to be able to understand `func` modules as a whole.
 
@@ -112,7 +112,7 @@ data MyData:
 func MyFunc requires(MyData d1, MyData d2):
 	def move(i32 x, i32 y):
 		d.pos = d.pos + (x, y);
-	
+
 	def print():
 		print($"pos: {d.pos}, size: {d.size}\n");
 
@@ -136,7 +136,7 @@ This program will result in this compilation error:
 
 ## Requiring multiple data
 
-Func modules are not limited at only one data type they can require, you can require as many data types in a func module as you would like to, given that all required data types are unique amongst them. It is *only* allowed to require `data` types, no other types are allowed to be required by `func` modules.
+Func modules are not limited at only one data type they can require, you can require as many data types in a func module as you would like to, given that all required data types are unique amongst them. It is _only_ allowed to require `data` types, no other types are allowed to be required by `func` modules.
 
 Here is a small example of using multiple different data types in the `requires` clausel of `func` modules:
 
@@ -155,7 +155,7 @@ data Data2:
 func MyFunc requires(MyData d1, Data2 d2):
 	def move(i32 x, i32 y):
 		d1.pos = d1.pos + i32x2(f32(x) * d2.dir.x, f32(y) * d2.dir.y);
-	
+
 	def print():
 		print($"pos: {d1.pos}, size: {d1.size}, dir: {d2.dir}\n");
 
@@ -176,4 +176,4 @@ This program will print these lines to the console:
 
 As you can see, the signatures of the functions now became `MyFunc.move(mut MyData, mut Data2, i32, i32)` and `MyFunc.print(mut MyData, mut Data2)` respectively. The order of implicit parameters stays consistent from the `requires` clausel to the actual function signature.
 
-This is as far as we can go with `func` modules without talking about `entities`, and only with them `func` modules will *actually* become useful. So, let's on to them, shall we?
+This is as far as we can go with `func` modules without talking about `entities`, and only with them `func` modules will _actually_ become useful. So, let's on to them, shall we?
