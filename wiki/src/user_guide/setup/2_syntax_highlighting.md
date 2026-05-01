@@ -4,9 +4,7 @@ Syntax highlighting is pretty important for any language. Flint does support syn
 
 ## VSCode
 
-The VSCode setup is extremely simple. You just need to download the [latest](https://github.com/flint-lang/vscode-extension/releases) `.vsix` extension file from the release page of the `vscode-extension` repository. Note that the vsix is called `flint-lsp-X.X.X.vsix`. The same extension handles both the LSP and syntax highlighting, but for now we only care about syntax highlighting.
-
-With the downloaded `.vsix` file you need to navigate to the **Extensions** page (Ctrl+Shift+X). Then on the top right of the extensions page you need to click the three dots to open the **Views and More Actions...** options menu and in this menu you need to select **Install from VSIX...**. It should be the last option in this list. Then navigate to your just downloaded `.vsix` file, select it and click **Install**.
+The VSCode setup is extremely simple. There exists an extension for Flint on the VSCode and OpenVSX marketplaces. You just need to search for **Flint Language Server** and install it, and you are done. You also could download and install the `.vsix` extension from the [latest](https://github.com/flint-lang/vscode-extension/releases) release manually if you want to.
 
 The syntax highlighting now should work correctly and should identify `.ft` files to  be Flint files. That's all you need to do to get Flint syntax highlighting in VSCode.
 
