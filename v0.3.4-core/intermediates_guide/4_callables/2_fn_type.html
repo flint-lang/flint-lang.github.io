@@ -1,0 +1,332 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The fn Type - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="the-fn-type"><a class="header" href="#the-fn-type">The <code>fn</code> Type</a></h1>
+<p>Now that you have a basic understanding of the Thread Stack, we can talk about callables and the <code>fn</code> type. The <code>fn</code> type simply is the <strong>type of a function</strong>. Callables are essentially function instances, you can have a function variable which can be called, for example, and this variable needs a type.</p>
+<h2 id="signatures"><a class="header" href="#signatures">Signatures</a></h2>
+<p>First, the signatures of functions need to be covered before callables can be a topic. The <code>fn</code> type is just a simple <strong>function type</strong>. For example this function:</p>
+<pre><code class="language-rs">def greet():
+    print("Hello, World!\n");
+</code></pre>
+<p>does not have any function parameters nor does it return any values. Not returning a value is the same as returning a <code>void</code> value. So, the signature of this function would be <code>fn&lt;() -&gt; void&gt;</code>. The <code>()</code> denotes that the function does not have any parameters. This type, <code>fn&lt;() -&gt; void&gt;</code>, already <em>is</em> the type of the <code>greet</code> function. The type of functions is always notated with the <code>fn</code> type.</p>
+<p>Let's have a look at a more "complex" function, for example the <code>add</code> function:</p>
+<pre><code class="language-rs">def add(i32 x, i32 y) -&gt; i32:
+    return x + y;
+</code></pre>
+<p>The type of that function itself is <code>fn&lt;i32, i32 -&gt; i32&gt;</code>. As you can clearly see, everything to the left of the <code>-&gt;</code> marks parameter types while everything to the right of the <code>-&gt;</code> marks return types. The <code>fn</code> type syntax directly follows a syntax which is very similar to the one when functions are defined. Note that a function returning multiple values returns a group, but when you define a function like this:</p>
+<pre><code class="language-rs">def div(i32 x, i32 y) -&gt; (i32, i32):
+	return (x / y, x % y);
+</code></pre>
+<p>then it's type is not <code>fn&lt;i32, i32 -&gt; (i32, i32)&gt;</code> but it's <code>fn&lt;i32, i32 -&gt; i32, i32&gt;</code> instead. So, when defining a <code>fn</code> type of a function returning multiple values, the parenthesis must be left out.</p>
+<h3 id="special-cases"><a class="header" href="#special-cases">Special cases</a></h3>
+<p>There exist two special-cases for the function signature notation in Flint when you manually define a <code>fn</code> type:</p>
+<ul>
+<li>If the function does not return anything</li>
+<li>If the function does not return anything nor does it have any parameters</li>
+</ul>
+<p>If the function does not return anything, then the <code>-&gt; void</code> can simply be left out. For example, a function like</p>
+<pre><code class="language-rs">use Core.print
+
+def print_value(i32 value):
+	print($"value = {value}\n");
+
+def main():
+	fn&lt;i32&gt; p = ::print_value;
+	p(10);
+</code></pre>
+<p>has the signature of <code>fn&lt;i32 -&gt; void&gt;</code> but the <code>fn</code> type can be notated as simply <code>fn&lt;i32&gt;</code>. It is quite common of functions to only have parameters and not return anything, this is the reason to why this more ergonomic notation exists. The above example will simply print <code>value = 10</code> to the console.</p>
+<p>The second special case is when the referenced function neither has any return values nor does it have any parameters, in that case both the parameters and the return types can be omitted, so instead of writing <code>fn&lt;() -&gt; void&gt;</code> we can write <code>fn&lt;&gt;</code> as well, this case is completely unambiguous:</p>
+<pre><code class="language-rs">use Core.print
+
+def greet():
+	print("Hello, World!\n");
+
+def main():
+	fn&lt;&gt; g = ::greet;
+	g();
+</code></pre>
+<p>This example will just print <code>Hello, World!</code> to the console. As you noticed, there is no special-case for the case when a function has no parameters but returns something. The reason why there is no special-case, or "sugar" for that case is that <em>it's very uncommon and not really smart either</em>. Flint does not have any global state, so having a <code>fn&lt;() -&gt; i32&gt;</code> function does not really make any sense, as this function would ultimately <em>always</em> return a constant, so why does the function then exist at all?</p>
+<h2 id="function-references"><a class="header" href="#function-references">Function references</a></h2>
+<p>Function referencing is the act of creating a function instance which can be stored in variables. It will become more clear once you saw a few examples. Let's start with the most simple example of the same <code>greet</code> function as above:</p>
+<pre><code class="language-rs">use Core.print
+
+def greet():
+    print("Hello, World!\n");
+
+def main():
+    fn&lt;() -&gt; void&gt; g = ::greet;
+    g();
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>Hello, World!
+</code></pre>
+</blockquote>
+<p>The <strong>function reference operator <code>::</code></strong> can be seen in this example for the first time. Why Flint needs a separate operator for this will be discussed later when argument binding is explained. The function reference <code>::greet</code> is the most simple form of a function reference. If to the left of the <code>::</code> nothing is written, then it means that the function referencing operator searches for functions with the name of <code>greet</code> within the file's namespace. You could, in theory, also reference the <code>print</code> function, but this is not possible in Flint.</p>
+<p>In the last chapter the basic theory of the Thread Stack has been taught. This theory is needed now. Every single user-defined function is managed via the Thread Stack, meaning that the local state of any user-created and called function is stored in the TS structure. <code>Core</code> functions, however, are not implemented in Flint itself. They are low level functions which do not use the Thread Stack at all, and any call to a Core module's function will still result in a regular hardware-stack based call. Because functions of Core modules are not managed by the TS, they also cannot be referenced. The same applies to <code>extern</code> functions as well, they too can not be referenced using the function reference operator <code>::</code>. If you try to reference the <code>print</code> function through an expression like <code>::print</code> you would get an error like this:</p>
+<blockquote>
+<pre><code>Parse Error at main.ft:9:10
+└─┬┤E0000│
+6 │ def main():
+9 │ »   p := ::print;
+┌─┴──────────┘
+├─ Referencing Core module function 'print'
+└─ Referencing functions of Core modules is not allowed
+</code></pre>
+</blockquote>
+<p>In this example the line <code>p := ::print;</code> was added directly after the <code>g();</code> line from the above example.</p>
+<h2 id="callables"><a class="header" href="#callables">Callables</a></h2>
+<p>You have already seen a <strong>Callable</strong> before. Whenever we store a function on a variable, this variable is now named a <strong>callable</strong>, because it's a <em>callable variable</em>. So, we have been using callable throughout this chapter already.</p>
+<p>It is very important to understand the Thread Stack in order to be able to understand callables. If we have a variable like <code>fn&lt;() -&gt; void&gt; g = ...</code> then we need to know the type and the structure of that type in memory. In the last chapter the structure of the function frame has been discussed, and this knowledge is needed now. As per the rules of the last chapter, the function frame of the <code>greet</code> function looks like this:</p>
+<pre><code class="language-c">struct function_frame_t__greet {
+    function_t base;
+};
+</code></pre>
+<p>No arguments, no return values, no local variables. A function as small as it gets. If now a function reference is done, like <code>::greet</code>, then the function reference operator will allocate the above function frame type on the heap using <code>malloc</code> under the hood. But the variable <code>g</code> can have <em>any</em> function stored on it which has the signature of <code>fn&lt;() -&gt; void&gt;</code>:</p>
+<pre><code class="language-rs">use Core.print
+
+def greet():
+	print("Hello, World!\n");
+
+def greet2():
+	i32 local = 10;
+	print($"Hello from second greeting! local = {local}\n");
+
+def main():
+	fn&lt;() -&gt; void&gt; g = ::greet;
+	g();
+
+	g = ::greet2;
+	g();
+</code></pre>
+<p>This example will print these lines to the console:</p>
+<blockquote>
+<pre><code>Hello, World!
+Hello from second greeting! local = 10
+</code></pre>
+</blockquote>
+<p>While both functions have identical signatures, their actual frame sizes differ because <code>greet2</code> has a local variable that <code>greet</code> does not. The function frame of the <code>greet2</code> function looks like this:</p>
+<pre><code class="language-c">struct function_frame_t__greet2 {
+    function_t base;
+    int32_t local;
+};
+</code></pre>
+<p>And, it's a completely different function all together. So, <strong>how does the callable know which function to call</strong>? The solution to this is very simple, actually. Instead of allocating just enough space for the <code>function_frame_t__XXX</code> the function reference allocates 8 bytes more and stores the pointer to the function to call at the first 8 bytes:</p>
+<pre><code class="language-c">struct callable_frame_t__greet2 {
+    void *fn_ptr;
+    function_frame_t__greet2 frame;
+};
+</code></pre>
+<p>Note that this above C code is only equal conceptually, Flint does not create any internal types for that callable frame type. By storing the pointer to the function to call directly in front of the frame which is passed to that called function, callables become very easy to implement. Remember: every single function in Flint has the same signature under the hood, being <code>i1 fn_name(ptr stack)</code>. So, when calling a callable we essentially do nothing than calling the stored fn pointer and passing the frame to it, like <code>g.fn_ptr(g.frame)</code>. This is a very lean abstraction on top of the Thread Stack.</p>
+<h3 id="callable-cleanup"><a class="header" href="#callable-cleanup">Callable Cleanup</a></h3>
+<p>When a callable goes out of scope or is overwritten, for example with a new function reference, like in the above example <code>g = ::greet2;</code>, then the original value of the callable <code>g</code> is freed. There does not happen a relocation. Note that it also is not possible for two callables to point to the same memory at the same time either, so when you assign one callable to another, like <code>g = g2;</code> for example then the allocated function frame of <code>g</code> is freed, and then the frame of <code>g2</code> is cloned into <code>g</code>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../intermediates_guide/4_callables/1_thread_stack.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../intermediates_guide/4_callables/3_functions_as_values.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../intermediates_guide/4_callables/1_thread_stack.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../intermediates_guide/4_callables/3_functions_as_values.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+    </div>
+    </body>
+</html>
