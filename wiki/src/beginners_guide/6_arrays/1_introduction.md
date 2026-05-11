@@ -89,14 +89,6 @@ This program will print this line to the console:
 
 ## Grouped Access and Assignment
 
-<div class="warning">
-
-This feature is not yet implemented in the compiler
-
-Currently, this feature does not yet work in the current version of the compiler, but it is **definitely** planned to be implemented in a later version.
-
-</div>
-
 Just like with tuples, mutli-types, data or basically any type in Flint, arrays have some form of interoperability with groups too. The syntax looks a bit different, though. Here is the same example as above, but using a grouped assignment:
 
 ```ft
@@ -115,3 +107,37 @@ This program will print this line to the console:
 > ```
 
 As you can see, instead of doing `.(x, y)` (for example for `i32x2`) we write `.[idx1, idx2]`. We definitely need the `.` in front of the `[` symbol to differentiate a grouped array access from a multi-dimensional array access, but you will learn about multi-dimensional arrays soon.
+
+Just like we can write grouped array assignments, we also are able to access multiple different indices of arrays at the same time too. This allows us to do things like element-swaps of arrays without temporary variables:
+
+```ft
+use Core.print
+
+def main():
+    i32[] arr = i32[4](0);
+	for (i, elem) in arr:
+		elem = i32(i);
+	for (i, elem) in arr:
+		print($"arr[{i}] = {elem}\n");
+	print("\n");
+
+	arr.[1, 2] = arr.[2, 1];
+	for (i, elem) in arr:
+		print($"arr[{i}] = {elem}\n");
+```
+
+This program will print these lines to the console:
+
+> ```
+> arr[0] = 0
+> arr[1] = 1
+> arr[2] = 2
+> arr[3] = 3
+>
+> arr[0] = 0
+> arr[1] = 2
+> arr[2] = 1
+> arr[3] = 3
+> ```
+
+In this example we have swapped the values on indices `1` and `2` respectively. Just like any group, there are no limits to how many values we can swap at the same time, we also could write `arr.[0, 1, 2, 3] = arr.[2, 1, 3, 0];` too if we would want to. Just like any grouped assignment, storing the values in the array works from left to right, and loading them works from left to right too. All values are loaded from the array from left to right to produce the group of `(2, 1, 3, 0)` and then that group is stored on the indices from left to right, so `arr[0] = 2`, `arr[1] = 1`, `arr[2] = 3` and `arr[3] = 0` respectively. Try it for yourself and play around a bit to get a better feeling for grouped accesses and assignments!
