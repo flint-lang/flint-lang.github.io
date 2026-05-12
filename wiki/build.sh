@@ -3,6 +3,8 @@ set -e
 
 WIKI="$(pwd)"
 echo "WIKI: $WIKI"
+BUILD="$WIKI/build"
+BUILD_WIKI="$WIKI/build/wiki"
 
 # $1 - The version name of the book, e.g. v0.1.6-core
 # $2 - The hash of the book to build
@@ -24,34 +26,34 @@ build_book() {
 	cp "$WIKI/version_select.html" "$WIKI/tmp/wiki"
 	cp "$WIKI/version_select.js" "$WIKI/tmp/wiki"
 
-	rm -rf "$WIKI/build/$1"
-	mkdir -p "$WIKI/build/$1"
+	rm -rf "$BUILD_WIKI/$1"
+	mkdir -p "$BUILD_WIKI/$1"
 	echo "-- Building the book for the '$1' version..."
 	echo "-- Source dir: $WIKI/tmp/wiki"
-	echo "-- Output dir: $WIKI/build/$1"
-	mdbook build -d "$WIKI/build/$1" "$WIKI/tmp/wiki"
+	echo "-- Output dir: $BUILD_WIKI/$1"
+	mdbook build -d "$BUILD_WIKI/$1" "$WIKI/tmp/wiki"
 
 	echo "-- Adding the Flint syntax highlighter..."
-	cat "$WIKI/flint_highlight.js" >> "$WIKI/build/$1/highlight.js"
+	cat "$WIKI/flint_highlight.js" >> "$BUILD_WIKI/$1/highlight.js"
 }
 
 build_latest() {
-	rm -rf "$WIKI/build/latest"
-	mkdir -p "$WIKI/build/latest"
-	mdbook build -d "$WIKI/build/latest" "$WIKI"
+	rm -rf "$BUILD_WIKI/latest"
+	mkdir -p "$BUILD_WIKI/latest"
+	mdbook build -d "$BUILD_WIKI/latest" "$WIKI"
 
 	echo "-- Adding the Flint syntax highlighter..."
-	cat "$WIKI/flint_highlight.js" >> "$WIKI/build/latest/highlight.js"
+	cat "$WIKI/flint_highlight.js" >> "$BUILD_WIKI/latest/highlight.js"
 
 	echo "-- Adding the Flint theme..."
-	mkdir -p "$WIKI/build/latest/theme"
-	cp "$WIKI/theme/flint.css" "$WIKI/build/latest/theme"
-	cp "$WIKI/theme/flint-highlight.css" "$WIKI/build/latest/theme"
+	mkdir -p "$BUILD_WIKI/latest/theme"
+	cp "$WIKI/theme/flint.css" "$BUILD_WIKI/latest/theme"
+	cp "$WIKI/theme/flint-highlight.css" "$BUILD_WIKI/latest/theme"
 
 	echo "-- Adding the Version Selector..."
-	cp "$WIKI/version_select.css" "$WIKI/build/latest"
-	cp "$WIKI/version_select.html" "$WIKI/build/latest"
-	cp "$WIKI/version_select.js" "$WIKI/build/latest"
+	cp "$WIKI/version_select.css" "$BUILD_WIKI/latest"
+	cp "$WIKI/version_select.html" "$BUILD_WIKI/latest"
+	cp "$WIKI/version_select.js" "$BUILD_WIKI/latest"
 }
 
 # Ensure that the tmp directory exists and that we have cloned the wiki into it
@@ -69,7 +71,9 @@ git pull
 cd ..
 
 # Copy the index.html into the build directory
-cp "$WIKI/../index.html" "$WIKI/build/index.html"
+mkdir -p "$BUILD_WIKI"
+cp "$WIKI/index.html" "$BUILD_WIKI/index.html"
+cp "$WIKI/../index.html" "$BUILD/index.html"
 
 while IFS=',' read -r -a fields
 do
@@ -78,16 +82,16 @@ do
 	build_book "${fields[0]}" "${fields[1]}"
 done < <(grep -v "^$" versions.csv | tail -n +2)
 
-rm -rf "$WIKI/build/latest"
+rm -rf "$BUILD_WIKI/latest"
 echo "$1"
 if [ "$1" = "--debug" ]; then
 	build_latest
 fi
 
-cp "$WIKI/version_select.html" "$WIKI/build"
+cp "$WIKI/version_select.html" "$BUILD_WIKI"
 
 echo "-- Hosting locally via darkhttpd..."
-cd "$WIKI/build"
+cd "$BUILD"
 darkhttpd ./
 cd ..
 

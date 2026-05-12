@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const firstChild = sidebarElement.firstElementChild;
     if (firstChild) {
       // Fetch the version selector HTML
-      fetch("/version_select.html")
+      fetch("/wiki/version_select.html")
         .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -37,9 +37,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const currentPath = window.location.pathname;
             const pathSegments = currentPath.split("/").filter((segment) => segment != "");
 
-            if (pathSegments.length > 0) {
-              // The first segment should be the version
-              const currentVersion = pathSegments[0];
+            if (pathSegments.length > 1) {
+              // The second segment should be the version (the first segment is the 'wiki' text)
+              const currentVersion = pathSegments[1];
               console.log("Current version detected: ", currentVersion);
               versionSelect.value = currentVersion;
             }
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
             versionSelect.addEventListener("change", function () {
               const selectedVersion = this.value;
               // Nativate to the selected version directory
-              window.location.href = `/${selectedVersion}/`;
+              window.location.href = `/wiki/${selectedVersion}/`;
             });
           }
         })
