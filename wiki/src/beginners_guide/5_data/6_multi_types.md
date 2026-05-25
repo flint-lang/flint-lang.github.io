@@ -1,6 +1,6 @@
 # Multi-Types
 
-Multi-Types are essentially vectorized variants of _some_ primitive types to increase both readability, performance (SIMD) and ease of use for vectorized math operations and much more. Here is an example of how multi-types work:
+Multi-Types are essentially vectorized variants of primitive types to increase both readability, performance (SIMD) and ease of use for vectorized math operations and much more. Here is an example of how multi-types work:
 
 ```ft
 use Core.print
@@ -19,7 +19,7 @@ This program will print these lines to the console:
 > v3 = (4, 5, 6)
 > ```
 
-As you can see, the 3-width i32 multi-type has the "fields" of x, y and z, each being of type `i32`. There exist several multi-types in Flint today:
+As you can see, the 3-width i32 multi-type has the "fields" of x, y and z, each being of type `i32`. There exist several multi-types in Flint today, to be more precise, every single integer and floating-point literal has multiple multi-type vector variations of it:
 
 |  Type   | Element Type | Vector Size |
 | :-----: | :----------: | :---------: |
@@ -28,10 +28,34 @@ As you can see, the 3-width i32 multi-type has the "fields" of x, y and z, each 
 | `u8x4`  |    `u8`      |      4      |
 | `u8x8`  |    `u8`      |      8      |
 |  <hr>   |              |             |
+| `i8x2`  |    `i8`      |      2      |
+| `i8x3`  |    `i8`      |      3      |
+| `i8x4`  |    `i8`      |      4      |
+| `i8x8`  |    `i8`      |      8      |
+|  <hr>   |              |             |
+| `u16x2` |    `u16`     |      2      |
+| `u16x3` |    `u16`     |      3      |
+| `u16x4` |    `u16`     |      4      |
+| `u16x8` |    `u16`     |      8      |
+|  <hr>   |              |             |
+| `i16x2` |    `i16`     |      2      |
+| `i16x3` |    `i16`     |      3      |
+| `i16x4` |    `i16`     |      4      |
+| `i16x8` |    `i16`     |      8      |
+|  <hr>   |              |             |
+| `u32x2` |    `u32`     |      2      |
+| `u32x3` |    `u32`     |      3      |
+| `u32x4` |    `u32`     |      4      |
+| `u32x8` |    `u32`     |      8      |
+|  <hr>   |              |             |
 | `i32x2` |    `i32`     |      2      |
 | `i32x3` |    `i32`     |      3      |
 | `i32x4` |    `i32`     |      4      |
 | `i32x8` |    `i32`     |      8      |
+|  <hr>   |              |             |
+| `u64x2` |    `u64`     |      2      |
+| `u64x3` |    `u64`     |      3      |
+| `u64x4` |    `u64`     |      4      |
 |  <hr>   |              |             |
 | `i64x2` |    `i64`     |      2      |
 | `i64x3` |    `i64`     |      3      |
