@@ -149,10 +149,9 @@
     - [The Thread Stack](./intermediates_guide/4_callables/1_thread_stack.md)
     - [The `fn` Type](./intermediates_guide/4_callables/2_fn_type.md)
     - [Functions as Values](./intermediates_guide/4_callables/3_functions_as_values.md)
-    - [Persistence Locals]()
+    - [Persistent Locals](./intermediates_guide/4_callables/4_persistent_locals.md)
     - [Argument Binding]()
     - [Error Sets in Callables](./intermediates_guide/4_callables/6_error_sets_in_callables.md)
-    - [Use Cases]()
 
   - [Pipes]()
     - [Introduction]()
