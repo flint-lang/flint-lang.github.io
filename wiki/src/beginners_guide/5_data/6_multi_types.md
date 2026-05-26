@@ -72,7 +72,7 @@ As you can see, the 3-width i32 multi-type has the "fields" of x, y and z, each 
 |  <hr>   |              |             |
 | `bool8` |    `bool`    |      8      |
 
-All multi-types with less than width 4 can be accessed via the field names directly, while all multi-types which are bigger, like `i32x8` can only be accessed with the same index-based accesser like tuples through the `.$N` syntax. This is also the reason why tuples needed to be explained before multi-types. There actually exist several aliases for each component, each being unambiguous. Below is a table describing which "field" names exist for each component:
+All multi-types with less than or equal to width 4 can be accessed via the field names directly, while all multi-types which are bigger, like `i32x8` can only be accessed with the same index-based accesser like tuples through the `.$N` syntax. This is also the reason why tuples needed to be explained before multi-types. There actually exist several aliases for each component, each being unambiguous. Below is a table describing which "field" names exist for each component:
 
 | Width | Field 0 | Field 1 | Field 2 | Field 3 |
 | :---: | :-----: | :-----: | :-----: | :-----: |
