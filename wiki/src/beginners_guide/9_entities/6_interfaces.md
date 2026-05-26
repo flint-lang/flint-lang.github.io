@@ -84,18 +84,18 @@ The lifetime of a func-module as interface is not bound by the lifetime of the e
 
 ```ft
 def main():
-	Func f;
-	if true:
-		e1 := Entity(Data(10, 20));
-		f = e1;
+	e1 := Entity(Data(10, 20));
+	Func f = e1;
 	print($"f.(x, y) = ({f.get_x()}, {f.get_y()})\n");
 	apply_move_operation(f, i32x2(5, 5));
 	print($"f.(x, y) = ({f.get_x()}, {f.get_y()})\n");
-
-	e2 := Entity2(Data(10, 20), Data2(30, 3));
-	print($"e2.(x, y, z) = ({e2.get_x()}, {e2.get_y()}, {e2.get_z()})\n");
-	apply_move_operation(e2, i32x2(5, 5));
-	print($"e2.(x, y, z) = ({e2.get_x()}, {e2.get_y()}, {e2.get_z()})\n");
+	
+	if true:
+		e2 := Entity2(Data(30, 50), Data2(30, 3));
+		f = e2;
+	print($"f.(x, y) = ({f.get_x()}, {f.get_y()})\n");
+	apply_move_operation(f, i32x2(5, 5));
+	print($"f.(x, y) = ({f.get_x()}, {f.get_y()})\n");
 ```
 
 This program will print these lines to the console:
@@ -103,8 +103,8 @@ This program will print these lines to the console:
 > ```
 > f.(x, y) = (10, 20)
 > f.(x, y) = (15, 25)
-> e2.(x, y, z) = (10, 20, 30)
-> e2.(x, y, z) = (15, 25, 30)
+> f.(x, y) = (30, 50)
+> f.(x, y) = (35, 55)
 > ```
 
 As you can see, the interface `f` is *still* valid after the `if true:` branch even though the variable `e1` went out of scope. This is because all data in Flint is DIMA-managed (more on that later). The entity `e1` went out of scope, but because `f` still holds onto `Data` of `e1` it is not released yet. If we were do the same for `e2` then `Data2` *would* be released after the branch, but `Data` would not.
