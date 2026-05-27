@@ -3,7 +3,7 @@ hljs.registerLanguage(
   (function () {
     "use strict";
     return function (e) {
-      var t = "str void bool anyerror opaque fn bp mut const u8 u16 u32 u64 i8 i16 i32 i64 int f32 f64 float bool8 u8x2 u8x3 u8x4 u8x8 i32x2 i32x3 i32x4 i32x8 i64x2 i64x3 i64x4 f32x2 f32x3 f32x4 f64x2 f64x3 f64x4";
+      var t = "str void anyerror opaque fn bp mut const persistent bool bool8 u8 u8x2 u8x3 u8x4 u8x8 i8 i8x2 i8x3 i8x4 i8x8 u16 u16x2 u16x3 u16x4 u16x8 i16 i16x2 i16x3 i16x4 i16x8 u32 u32x2 u32x3 u32x4 u32x8 i32 i32x2 i32x3 i32x4 i32x8 u64 u64x2 u64x3 u64x4 i64 i64x2 i64x3 i64x4 f32 f32x2 f32x3 f32x4 f32x8 f64 f64x2 f64x2 f64x3 f64x4";
       var keywords = {
         $pattern: e.IDENT_RE + "!?",
         keyword: "use as extern def data func entity enum error variant requires extends link hook return throw catch if else do while for in continue break spawn sync async type",
