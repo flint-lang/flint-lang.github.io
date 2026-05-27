@@ -7,15 +7,15 @@ Until now everything you know about groups is to use them when returning multipl
 In Flint it is trivial to essentially write vector operations in one line of code. Through the use of groups we can easily express that some things, like multiplying all values of a data structure, need to happen at the same time.
 A **vector** operation essentially means that the same operation is applied to multiple different values. Each of those values is called a **scalar**. A sclar operation would be something like `vec4.x += 5` for example, or even a simple addition like `x + y` is considered a scalar operation, because it's an operation applied to two scalar (single) values. Vector operations are pretty common in modern processors, essentially every single processor has support for them. Most modern AMD and Intel CPUs have the capability to perform vector operations up to at least `256 bits`, sometimes even higher.
 
-If you want to know more about this topic you need to wait until the later [SIMD]() chapter. But essentially this means that the CPU has a 256 bit "budget" for vectorized operations, which means it can apply the same operation on 4 `64 bit` values or 8 `32 bit` values at the same time. And these are also the types supported by multi-types: `i64x4` and `i32x8`. So, everything you need to know is that the vectorized code has the potential to run as much as **8x faster** than scalar code. So, if you can, *always* use Flint's multi-types.
+If you want to know more about this topic you need to wait until the later [SIMD]() chapter. But essentially this means that the CPU has a 256 bit "budget" for vectorized operations, which means it can apply the same operation on 4 `64 bit` values or 8 `32 bit` values at the same time. And these are also the types supported by multi-types: `i64x4` and `i32x8`. So, everything you need to know is that the vectorized code has the potential to run as much as **8x faster** than scalar code. So, if you can, _always_ use Flint's multi-types.
 
-But to pull the circle back to grouped operations. Whenever possible, Flint will try to vectorize grouped operations. So, not only are they less to write and easier to read but they also have the potential to be magnitudes faster than scalar operations. Just note that it is *not guaranteed* for a grouped operation to compile down to a vectorized operation, but it *is guaranteed* for multi-types.
+But to pull the circle back to grouped operations. Whenever possible, Flint will try to vectorize grouped operations. So, not only are they less to write and easier to read but they also have the potential to be magnitudes faster than scalar operations. Just note that it is _not guaranteed_ for a grouped operation to compile down to a vectorized operation, but it _is guaranteed_ for multi-types.
 
 ## Splatting
 
 Splatting is the act of expanding a **scalar** value to a **homogeneous group of size `N`**. It is pretty simple in action:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -37,7 +37,7 @@ Splatting essentially just means that the single value `2` will be "cast" to a g
 
 ## Set-Like Comparisons
 
-The last thing we talk about for now about groups is that groups can be used for set-like comparisons. It is *really* powerful and once you have seen and understood it you may see it being appliccable in many different cases. Stay with me for this one, it will be great. First we need to discuss a simple example to get to the point why set-like comparisons are even needed or wanted, so here is a small example (without using the set-like comparisons):
+The last thing we talk about for now about groups is that groups can be used for set-like comparisons. It is _really_ powerful and once you have seen and understood it you may see it being appliccable in many different cases. Stay with me for this one, it will be great. First we need to discuss a simple example to get to the point why set-like comparisons are even needed or wanted, so here is a small example (without using the set-like comparisons):
 
 ```ft
 use Core.print
@@ -111,6 +111,6 @@ This program will print these lines to the console:
 > is VAL2 or VAL4
 > ```
 
-And here you can see the "superpower" of this approach. Because we compare a scalar to a **group**, not a set value, we can use *any* grouped operation in the comparison. The grouped operation `MyEnum.(VAL1, VAL3, VAL5)` looks exaclty like a grouped field access, but for enum values. The resulting group will have the result type of `(MyEnum, MyEnum, MyEnum)`, so it's a homogeneous group and it has the same type as the lhs, namely the type of `MyEnum`. And the length comparison for the grouped and non-grouped comparison will only grow bigger and bigger, the set-like comparison will look simpler the more values it contiains.
+And here you can see the "superpower" of this approach. Because we compare a scalar to a **group**, not a set value, we can use _any_ grouped operation in the comparison. The grouped operation `MyEnum.(VAL1, VAL3, VAL5)` looks exaclty like a grouped field access, but for enum values. The resulting group will have the result type of `(MyEnum, MyEnum, MyEnum)`, so it's a homogeneous group and it has the same type as the lhs, namely the type of `MyEnum`. And the length comparison for the grouped and non-grouped comparison will only grow bigger and bigger, the set-like comparison will look simpler the more values it contiains.
 
 You may have seen that the act of comparing a scalar to a group only works because of the splatting rule of the group-scalar interaction in Flint, so without it the above behaviour would not be possible.

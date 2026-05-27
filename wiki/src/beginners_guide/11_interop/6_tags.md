@@ -57,7 +57,7 @@ sources = ["extern.c"]
 command = ["gcc", "-c", "__SOURCES__", "-o", "__OUTPUT__"]
 ```
 
-The *module tag* is the `[c]` in our case. We could write *any* text in there, actually. The text should be an identifier, however, so it should only contain alphanumerics and underscores, just like defining any variable or type name in Flint.
+The _module tag_ is the `[c]` in our case. We could write _any_ text in there, actually. The text should be an identifier, however, so it should only contain alphanumerics and underscores, just like defining any variable or type name in Flint.
 
 Now comes a bit of "magic". This is the Flint code for our example:
 
@@ -113,9 +113,9 @@ This enables a very fast work-flow when dealing with extern code. You change ext
 
 ## Import aliasing
 
-Because the line `use Fip.c` results in a *real* file being generated, we can also alias the import:
+Because the line `use Fip.c` results in a _real_ file being generated, we can also alias the import:
 
-```rs
+```ft
 use Core.print
 use Fip.c as c
 
@@ -140,7 +140,7 @@ This program will print these lines to the console:
 > x = 32
 > ```
 
-This means that now *all* things coming from C need to be prefixed with a `c.` which is pretty convenient. It also means that there are no naming collisions possible between code from C and code from Flint.
+This means that now _all_ things coming from C need to be prefixed with a `c.` which is pretty convenient. It also means that there are no naming collisions possible between code from C and code from Flint.
 
 ## Multiple Tags
 
@@ -162,7 +162,7 @@ Vector3 vadd(const Vector3 v1, const Vector3 v2) {
 
 Then we simply add the `use Fip.ex2 as e` line to our code and use the functions and types provided by this additional module:
 
-```rs
+```ft
 use Core.print
 use Fip.c as c
 use Fip.ex2 as e
@@ -217,7 +217,7 @@ headers = ["/usr/include/SDL/SDL.h", "/usr/include/SDL/SDL_audio.h"]
 
 And then in Flint you would just need to write
 
-```rs
+```ft
 use Fip.raylib as rl
 use Fip.sdl as sdl
 ```

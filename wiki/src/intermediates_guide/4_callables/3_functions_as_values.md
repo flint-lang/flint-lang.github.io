@@ -2,7 +2,7 @@
 
 As discussed in the last chapter, functions can be stored on a callable variable, can be overwritten and called later. Another thing possible with callables is to pass them around, modify them within other functions, and call them in a context where the function itself never could "know" which function to call otherwise. Let's look at a small example showcasing callables being passed to functions:
 
-```rs
+```ft
 use Core.print
 
 def add(i32 x, i32 y) -> i32:
@@ -53,7 +53,7 @@ As you can see, the function `apply_op` simply does not care which callable you 
 
 It's not just possible to pass callables to functions, we also can return them:
 
-```rs
+```ft
 use Core.print
 
 def add(i32 x, i32 y) -> i32:
@@ -90,7 +90,7 @@ This example will print these lines to the console:
 
 Callables, like any complex data type in Flint, are always passed by reference, meaning that we can modify a passed-in callable:
 
-```rs
+```ft
 use Core.print
 
 def add(i32 x, i32 y) -> i32:

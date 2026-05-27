@@ -6,23 +6,23 @@ Now that you have a basic understanding of the Thread Stack, we can talk about c
 
 First, the signatures of functions need to be covered before callables can be a topic. The `fn` type is just a simple **function type**. For example this function:
 
-```rs
+```ft
 def greet():
     print("Hello, World!\n");
 ```
 
-does not have any function parameters nor does it return any values. Not returning a value is the same as returning a `void` value. So, the signature of this function would be `fn<() -> void>`. The `()` denotes that the function does not have any parameters. This type, `fn<() -> void>`, already *is* the type of the `greet` function. The type of functions is always notated with the `fn` type.
+does not have any function parameters nor does it return any values. Not returning a value is the same as returning a `void` value. So, the signature of this function would be `fn<() -> void>`. The `()` denotes that the function does not have any parameters. This type, `fn<() -> void>`, already _is_ the type of the `greet` function. The type of functions is always notated with the `fn` type.
 
 Let's have a look at a more "complex" function, for example the `add` function:
 
-```rs
+```ft
 def add(i32 x, i32 y) -> i32:
     return x + y;
 ```
 
 The type of that function itself is `fn<i32, i32 -> i32>`. As you can clearly see, everything to the left of the `->` marks parameter types while everything to the right of the `->` marks return types. The `fn` type syntax directly follows a syntax which is very similar to the one when functions are defined. Note that a function returning multiple values returns a group, but when you define a function like this:
 
-```rs
+```ft
 def div(i32 x, i32 y) -> (i32, i32):
 	return (x / y, x % y);
 ```
@@ -38,7 +38,7 @@ There exist two special-cases for the function signature notation in Flint when 
 
 If the function does not return anything, then the `-> void` can simply be left out. For example, a function like
 
-```rs
+```ft
 use Core.print
 
 def print_value(i32 value):
@@ -53,7 +53,7 @@ has the signature of `fn<i32 -> void>` but the `fn` type can be notated as simpl
 
 The second special case is when the referenced function neither has any return values nor does it have any parameters, in that case both the parameters and the return types can be omitted, so instead of writing `fn<() -> void>` we can write `fn<>` as well, this case is completely unambiguous:
 
-```rs
+```ft
 use Core.print
 
 def greet():
@@ -64,13 +64,13 @@ def main():
 	g();
 ```
 
-This example will just print `Hello, World!` to the console. As you noticed, there is no special-case for the case when a function has no parameters but returns something. The reason why there is no special-case, or "sugar" for that case is that *it's very uncommon and not really smart either*. Flint does not have any global state, so having a `fn<() -> i32>` function does not really make any sense, as this function would ultimately *always* return a constant, so why does the function then exist at all?
+This example will just print `Hello, World!` to the console. As you noticed, there is no special-case for the case when a function has no parameters but returns something. The reason why there is no special-case, or "sugar" for that case is that _it's very uncommon and not really smart either_. Flint does not have any global state, so having a `fn<() -> i32>` function does not really make any sense, as this function would ultimately _always_ return a constant, so why does the function then exist at all?
 
 ## Function references
 
 Function referencing is the act of creating a function instance which can be stored in variables. It will become more clear once you saw a few examples. Let's start with the most simple example of the same `greet` function as above:
 
-```rs
+```ft
 use Core.print
 
 def greet():
@@ -105,7 +105,7 @@ In this example the line `p := ::print;` was added directly after the `g();` lin
 
 ## Callables
 
-You have already seen a **Callable** before. Whenever we store a function on a variable, this variable is now named a **callable**, because it's a *callable variable*. So, we have been using callable throughout this chapter already.
+You have already seen a **Callable** before. Whenever we store a function on a variable, this variable is now named a **callable**, because it's a _callable variable_. So, we have been using callable throughout this chapter already.
 
 It is very important to understand the Thread Stack in order to be able to understand callables. If we have a variable like `fn<() -> void> g = ...` then we need to know the type and the structure of that type in memory. In the last chapter the structure of the function frame has been discussed, and this knowledge is needed now. As per the rules of the last chapter, the function frame of the `greet` function looks like this:
 
@@ -115,9 +115,9 @@ struct function_frame_t__greet {
 };
 ```
 
-No arguments, no return values, no local variables. A function as small as it gets. If now a function reference is done, like `::greet`, then the function reference operator will allocate the above function frame type on the heap using `malloc` under the hood. But the variable `g` can have *any* function stored on it which has the signature of `fn<() -> void>`:
+No arguments, no return values, no local variables. A function as small as it gets. If now a function reference is done, like `::greet`, then the function reference operator will allocate the above function frame type on the heap using `malloc` under the hood. But the variable `g` can have _any_ function stored on it which has the signature of `fn<() -> void>`:
 
-```rs
+```ft
 use Core.print
 
 def greet():
