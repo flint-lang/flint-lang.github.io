@@ -15,7 +15,10 @@ hljs.registerLanguage(
         e.COMMENT("/\\*", "\\*/", { contains: ["self"] }),
         { className: "symbol", begin: /'[a-zA-Z_][a-zA-Z0-9_]*/ },
         { className: "literal", begin: "\\b[A-Z_][A-Z0-9_]*\\b" },
-        { className: "type", begin: "\\b[A-Z_][a-zA-Z0-9_]*\\b" },
+        {
+          className: "type",
+          begin: "\\b[A-Z_][a-zA-Z0-9_]*\\b|\\?(?=[^.?\\(\\[])",
+        },
         { className: "operator", begin: "::\\b" },
         { className: "function", begin: "(?<=::)[a-z_][a-zA-Z0-9_]*" },
         {
