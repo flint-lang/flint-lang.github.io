@@ -4,7 +4,7 @@
 
 Inferring the error variant return type is not yet implemented.
 
-This feature, while _defintely_ planned, is not implemented yet. This feature becomes _extremely_ useful in the context of function composition and blueprints, so it's considered a "must-have" feature for Flint.
+This feature, while _defintely_ planned, is not implemented yet. This feature becomes *extremelyÜ useful in the context of function composition and blueprints, so it's considered a "must-have" feature for Flint. Inferring the error set has a low syntax surface but has **huge** compiler requirements, which the compiler just does not support yet to enable them.
 
 </div>
 
