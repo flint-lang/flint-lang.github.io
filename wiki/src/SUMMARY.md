@@ -95,7 +95,12 @@
     - [Entity Functions](./beginners_guide/9_entities/5_entity_functions.md)
     - [Interfaces](./beginners_guide/9_entities/6_interfaces.md)
 
-  - [Links & Hooks]()
+  - [Links](./beginners_guide/10_links.md)
+    - [Virtual Functions](./beginners_guide/10_links/1_virtual_functions.md)
+    - [Linking Functions](./beginners_guide/10_links/2_linking_functions.md)
+    - [Signatures](./beginners_guide/10_links/3_signatures.md)
+    - [Practical Example](./beginners_guide/10_links/4_practical_example.md)
+    - [Linking Entity Functions](./beginners_guide/10_links/5_linking_entity_functions.md)
 
   - [Interop](./beginners_guide/11_interop.md)
     - [Introduction](./beginners_guide/11_interop/1_introduction.md)
