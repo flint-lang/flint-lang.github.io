@@ -15,7 +15,7 @@ data DPosition:
 entity Player:
 	data: DPosition;
 	func: IMove;
-	Entity(Data);
+	Player(DPosition);
 
 def apply(mut IMove m):
 	m.move();
