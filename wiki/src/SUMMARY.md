@@ -148,7 +148,7 @@
     - [Best Practices](./intermediates_guide/3_error_sets/8_best_practices.md)
     - [Error Switch Inlining](./intermediates_guide/3_error_sets/9_inlining.md)
     - [Inferring the Error Variant](./intermediates_guide/3_error_sets/10_inferring.md)
-    - [Linearization]()
+    - [Linearization](./intermediates_guide/3_error_sets/11_linearization.md)
 
   - [Callables & Variable Persistence](./intermediates_guide/4_callables.md)
     - [The Thread Stack](./intermediates_guide/4_callables/1_thread_stack.md)
