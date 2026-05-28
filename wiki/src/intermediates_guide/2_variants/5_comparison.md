@@ -169,9 +169,9 @@ This program will print these lines to the console:
 > are equal
 > ```
 
-You will see in the next big chapter about [Error Sets](/intermediates_guide/3_error_sets.md) and you actually have seen it before for getting the [length of strings](/beginners_guide/6_arrays/3_strings.md#getting-a-strings-length) that you can access fields of primitive types or builtin types, fields which you normally do not see.
+You will see in the next big chapter about [Error Sets](../3_error_sets.md) and you actually have seen it before for getting the [length of strings](../../beginners_guide/6_arrays/3_strings.md#getting-a-strings-length) that you can access fields of primitive types or builtin types, fields which you normally do not see.
 
-Note that the `active_type` indices start at `1`. This means that `i32` has the value `1`, `i64` the value `2` and `i32x3` the value `3`. Why the value `0` is not used here and why we have a one-based indexing in this case will be explained in a [later](/intermediates_guide/2_variants/8_optional_variants.md) chapter, stay tuned for that!
+Note that the `active_type` indices start at `1`. This means that `i32` has the value `1`, `i64` the value `2` and `i32x3` the value `3`. Why the value `0` is not used here and why we have a one-based indexing in this case will be explained in a [later](../2_variants/8_optional_variants.md) chapter, stay tuned for that!
 
 ## Comparing Values
 

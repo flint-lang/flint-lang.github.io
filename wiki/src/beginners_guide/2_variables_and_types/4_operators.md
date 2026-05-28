@@ -70,7 +70,7 @@ Note that you can also use parenthesis to explicitely state the order of operati
 
 ### The `==` and `!=` Operators
 
-One can also _compare_ two integer values with one another. The comparison returns a boolean (`bool` type) which is used for comparisons, but you will learn more about what a `bool` is in the upcoming chapter [here](/wiki/src/beginners_guide/3_control_flow.md). For now, just note that the operator exists.
+One can also _compare_ two integer values with one another. The comparison returns a boolean (`bool` type) which is used for comparisons, but you will learn more about what a `bool` is in the upcoming chapter [here](../3_control_flow.md). For now, just note that the operator exists.
 
 ## Floating Point Arithmetic
 
