@@ -74,13 +74,11 @@ This program will print these lines to the console:
 
 There are a few things we need to go through first. You can see that `Entity2` extends `Entity` which means that `Entity2` also has the `Data` and `Func` modules, just like `Entity`. Because of that we can "cast" each entity type to their respective `func` types. So, both `Entity` and `Entity2` are "castable" to `Func` but only `Entity2` can be "cast" to `Func2`, since `Entity` does not contain the func module `Func2`.
 
-"Casting" here is not quite correct. Each `func` module, when used as a variable type, is just a "slice" of it's required data. So in our case `Func` is a simple struct: `data<Data>`, which means when we call `f.move(...)` in the `apply_operation` function the "method call" resolves to `Func.move(f.$0, diff)` just like it would with a "real" entity.
-
-As every data in Flint is just a pointer to the actually allocated data we can modify the data even when passing func modules around as interfaces. But you will learn about these internals of Flint later, they are not that important for now.
+Every func-module instance is essentially a fat-pointer at runtime. It contains a pointer to the entity value it holds onto + some other needed runtime-information. Functions of different func-modules can be `link`ed and redirected (you will learn this in the next chapter) so the actual function being executed could differ. Note that func-modules used as interface objects do *not* result in direct compile-time resolved calls, so doing `f.move(diff)` in our case does *not* automatically mean that the `Func.move` function is being called, but more on that later.
 
 ## Lifetime
 
-The lifetime of a func-module as interface is not bound by the lifetime of the entity from which the interface was created. Let'ss look at a small example to clarify that. All the other code is exactly the same as above, just the `main` function is different:
+The lifetime of a func-module as interface is not bound by the lifetime of the entity from which the interface was created. Lets look at a small example to clarify that. All the other code is exactly the same as above, just the `main` function is different:
 
 ```ft
 def main():
@@ -107,4 +105,4 @@ This program will print these lines to the console:
 > f.(x, y) = (35, 55)
 > ```
 
-As you can see, the interface `f` is *still* valid after the `if true:` branch even though the variable `e1` went out of scope. This is because all data in Flint is DIMA-managed (more on that later). The entity `e1` went out of scope, but because `f` still holds onto `Data` of `e1` it is not released yet. If we were do the same for `e2` then `Data2` *would* be released after the branch, but `Data` would not.
+As you can see, the interface `f` is *still* valid after the `if true:` branch even though the variable `e1` went out of scope. This is because all entities in Flint are DIMA-managed, just like `data` is. The entity `e2` went out of scope, but because `f` still holds onto it, the entity in `e2` it is not released yet.
