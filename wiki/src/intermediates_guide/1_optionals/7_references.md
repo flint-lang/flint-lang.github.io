@@ -28,20 +28,31 @@ This example will print this line to the console:
 
 As you can see, we do not modify `md` directly. We only modify the optional `ref`, but the optional `ref` internally is a reference to the data of `md`.
 
-<div class="warning">
+## Lifetime
 
-Because DIMA does not exist yet, be cautious with references.
-
-DIMA will include ARC and will handle the case when the "owner" of the data (in our case `md`) goes out of scope but the optional does not. Because DIMA is not implemented yet, this code:
+Thanks to DIMA, optionals can hold onto the data longer than the lifetime of the data itself:
 
 ```ft
-MyData? ref = none;
-if true:
-	MyData val = MyData(10, 3.14, "segfault");
-	ref = val;
-print($"ref.x = {ref!.x}\n");
+use Core.print
+
+data MyData:
+	i32 x;
+	f32 y;
+	str v;
+	MyData(x, y, v);
+
+def main():
+	MyData? ref = none;
+	if true:
+		MyData val = MyData(10, 3.14, "segfault");
+		ref = val;
+	print($"ref.x = {ref!.x}\n");
 ```
 
-will cause a segmentation fault of the program. You _need_ to be aware of this current limitation when using optionals.
+This program will print this line to the console:
 
-</div>
+> ```
+> ref.x = 10
+> ```
+
+Because data is DIMA-managed, the reference-count of the allocated data increases by 1 when it's assigned to an optional value, meaning that the optional reference to that data is still valid, even if the original data already went out-of-scope.
