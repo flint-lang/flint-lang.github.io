@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>math - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="math"><a class="header" href="#math">math</a></h1>
+<pre><code class="language-ft">use Core.math
+</code></pre>
+<p>The <code>math</code> module provides math functions which are used very frequently in math-heavy workloads.</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">Function Name</th><th style="text-align: center">Parameter Types</th><th style="text-align: center">Return Types</th><th style="text-align: center">Possible Errors</th></tr></thead><tbody>
+<tr><td style="text-align: center"><code>sin</code></td><td style="text-align: center"><code>f32</code></td><td style="text-align: center"><code>f32</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>sin</code></td><td style="text-align: center"><code>f64</code></td><td style="text-align: center"><code>f64</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><hr></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: center"><code>cos</code></td><td style="text-align: center"><code>f32</code></td><td style="text-align: center"><code>f32</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>cos</code></td><td style="text-align: center"><code>f64</code></td><td style="text-align: center"><code>f64</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><hr></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: center"><code>sqrt</code></td><td style="text-align: center"><code>f32</code></td><td style="text-align: center"><code>f32</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>sqrt</code></td><td style="text-align: center"><code>f64</code></td><td style="text-align: center"><code>f64</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><hr></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: center"><code>abs</code></td><td style="text-align: center"><code>i32</code></td><td style="text-align: center"><code>i32</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>abs</code></td><td style="text-align: center"><code>i64</code></td><td style="text-align: center"><code>i64</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>abs</code></td><td style="text-align: center"><code>f32</code></td><td style="text-align: center"><code>f32</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>abs</code></td><td style="text-align: center"><code>f64</code></td><td style="text-align: center"><code>f64</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><hr></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: center"><code>min</code></td><td style="text-align: center"><code>u32</code>, <code>u32</code></td><td style="text-align: center"><code>u32</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>min</code></td><td style="text-align: center"><code>u64</code>, <code>u64</code></td><td style="text-align: center"><code>u64</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>min</code></td><td style="text-align: center"><code>i32</code>, <code>i32</code></td><td style="text-align: center"><code>i32</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>min</code></td><td style="text-align: center"><code>i64</code>, <code>i64</code></td><td style="text-align: center"><code>i64</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>min</code></td><td style="text-align: center"><code>f32</code>, <code>f32</code></td><td style="text-align: center"><code>f32</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>min</code></td><td style="text-align: center"><code>f64</code>, <code>f64</code></td><td style="text-align: center"><code>f64</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><hr></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: center"><code>max</code></td><td style="text-align: center"><code>u32</code>, <code>u32</code></td><td style="text-align: center"><code>u32</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>max</code></td><td style="text-align: center"><code>u64</code>, <code>u64</code></td><td style="text-align: center"><code>u64</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>max</code></td><td style="text-align: center"><code>i32</code>, <code>i32</code></td><td style="text-align: center"><code>i32</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>max</code></td><td style="text-align: center"><code>i64</code>, <code>i64</code></td><td style="text-align: center"><code>i64</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>max</code></td><td style="text-align: center"><code>f32</code>, <code>f32</code></td><td style="text-align: center"><code>f32</code></td><td style="text-align: center">No</td></tr>
+<tr><td style="text-align: center"><code>max</code></td><td style="text-align: center"><code>f64</code>, <code>f64</code></td><td style="text-align: center"><code>f64</code></td><td style="text-align: center">No</td></tr>
+</tbody></table>
+</div>
+<h2 id="functions"><a class="header" href="#functions">functions</a></h2>
+<h3 id="sin"><a class="header" href="#sin">sin</a></h3>
+<p>The <code>sin</code> function executes the sine function on the given parameter. The parameter is in radians, so you need to convert it from degrees to radians before using it.</p>
+<pre><code class="language-ft">use Core.print
+use Core.math
+
+def main():
+    f32 x = sin(0.5236)
+    print($"x = {x}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>x = 0.5
+</code></pre>
+</blockquote>
+<h3 id="cos"><a class="header" href="#cos">cos</a></h3>
+<p>The <code>cos</code> function executes the cosine function on the given parameter. The parameter is in radians, so you need to convert it from degrees to radians before using it.</p>
+<pre><code class="language-ft">use Core.print
+use Core.math
+
+def main():
+    f32 x = sin(1.0472)
+    print($"x = {x}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>x = 0.5
+</code></pre>
+</blockquote>
+<h3 id="sqrt"><a class="header" href="#sqrt">sqrt</a></h3>
+<p>The <code>sqrt</code> function executes the sqare root on the given parameter.</p>
+<pre><code class="language-ft">use Core.print
+use Core.math
+
+def main():
+    f32 x = sqrt(9.0);
+    print($"x = {x}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>x = 3
+</code></pre>
+</blockquote>
+<h3 id="abs"><a class="header" href="#abs">abs</a></h3>
+<p>The <code>abs</code> function returns the absolute value of the given signed value parameter. Note that this function only has overloads for signed integers and floating point types. If the input of the integer overloads of the <code>abs</code> function is <code>I32_MIN</code> or <code>I64_MIN</code> then <code>I32_MAX</code> or <code>I64_MAX</code> is returned instead (one smaller than the "real" absolute value would be).</p>
+<pre><code class="language-ft">use Core.print
+use Core.math
+
+def main():
+    i32 x = -2_147;
+    print($"abs({x}) = {abs(x)}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>abs(-2147) = 2147
+</code></pre>
+</blockquote>
+<h3 id="min"><a class="header" href="#min">min</a></h3>
+<p>The <code>min</code> function simply returns the minimum of two given values.</p>
+<pre><code class="language-ft">use Core.print
+use Core.math
+
+def main():
+    i32 x = 121;
+    i32 y = 234;
+    print($"min({x}, {y}) = {min(x, y)}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>min(121, 234) = 121
+</code></pre>
+</blockquote>
+<h3 id="max"><a class="header" href="#max">max</a></h3>
+<p>The <code>max</code> function simply returns the maximum of two given values.</p>
+<pre><code class="language-ft">use Core.print
+use Core.math
+
+def main():
+    i32 x = 121;
+    i32 y = 234;
+    print($"max({x}, {y}) = {max(x, y)}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>max(121, 234) = 234
+</code></pre>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/8_core_modules/6_system.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../beginners_guide/8_core_modules/8_parse.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/8_core_modules/6_system.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../beginners_guide/8_core_modules/8_parse.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+    </div>
+    </body>
+</html>

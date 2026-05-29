@@ -1,0 +1,289 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Relative Paths - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="relative-paths"><a class="header" href="#relative-paths">Relative Paths</a></h1>
+<p>Flint only supports relative paths when importing files with the <code>use</code> clausel. This means that you can import files located in subdirectories too, for example:</p>
+<p>File <code>subdir/file.ft</code>:</p>
+<pre><code class="language-ft">use Core.print
+
+def hello_from_file():
+    print("Hello from file!\n");
+</code></pre>
+<p>File <code>main.ft</code>:</p>
+<pre><code class="language-ft">use "subdir/file.ft"
+
+def main():
+    hello_from_file();
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>Hello from file!
+</code></pre>
+</blockquote>
+<h2 id="going-up-directories"><a class="header" href="#going-up-directories">Going up directories</a></h2>
+<p>This means you can always go <strong>down</strong> into subdirectories, but how do you go up? Well it's like Unix paths essentially, using <code>..</code>. Let's say your <code>main.ft</code> now is inside the <code>subdir</code> and the <code>file.ft</code> is in the top-level:</p>
+<p>File <code>file.ft</code></p>
+<pre><code class="language-ft">use Core.print
+
+def hello_from_file():
+    print("Hello from file!\n");
+</code></pre>
+<p>File <code>subdir/main.ft</code></p>
+<pre><code class="language-ft">use "../file.ft"
+
+def main():
+    hello_from_file();
+</code></pre>
+<p>And you then compile the program with the command</p>
+<pre><code class="language-sh">flintc -f subdir/main.ft
+</code></pre>
+<p>This program will print this line to he console:</p>
+<blockquote>
+<pre><code>Hello from file!
+</code></pre>
+</blockquote>
+<h2 id="exiting-the-cwd-is-considered-an-error"><a class="header" href="#exiting-the-cwd-is-considered-an-error">Exiting the cwd is considered an error</a></h2>
+<p>Okay, let's use the exact same files as with the previous example, but this time we change the current working directory to be inside the <code>subdir</code> instead. We then try to compile the program with this command:</p>
+<pre><code class="language-sh">flintc -f main.ft
+</code></pre>
+<p>We will then get this compilation error (the <code>VERSION</code> will be the compiler version in use, like <code>v0.3.0-core</code> for example):</p>
+<blockquote>
+<pre><code>Parse Error at main.ft:1:5
+└─┬┤E0000│
+1 │ use "../file.ft"
+┌─┴─────┘
+├─ The import tried to escape the current working directory of the compiler
+├─ If you really need to reference a file outside this working directory, move up a directory
+├─ Only files within the current working directory are allowed to be accessed by the compiler
+└─ See https://flint-lang.github.io/VERSION/beginners_guide/7_imports/5_relative_paths.html#exiting-the-cwd-is-considered-an-error for more information
+</code></pre>
+</blockquote>
+<p>And you now might ask... why? The short answer: security. The long answer is still security but a bit more nuanced. When you have a project then you will have all your actual source code most likely located in the <code>src</code> subdirectory of your project with other stuff of the project in other directories. The source directory, the directory where the <code>.git</code> folder is located at, will then most likely be the directory from where you will execute your compiler. You will, however, be unlikely to execute the compiler in a directory above.</p>
+<p>Okay let's start a bit different first and let's look at a theoretical project structure:</p>
+<pre><code>projects
+ ├─ main_project
+ │  └─ main.ft
+ └─ lib_project
+    └─ lib.ft
+</code></pre>
+<p>In this hypothetical file structure you have a directory containing your projects and one of the projects has a dependency to another project, the <code>main.ft</code> may look like this:</p>
+<pre><code class="language-ft">use Core.print
+
+use "../lib_project/lib.ft"
+
+def main():
+    lib_fn();
+</code></pre>
+<p>It is not important what the <code>lib_project</code> actually contains for this demonstration, we just say it contains the function <code>lib_fn</code> which we need to call from within our main project. Okay so what happens if you <code>cd</code> into your <code>main_project</code> and execute the compiler, and what <em>should</em> happen? We know that the compiler will crash because through the <code>..</code> we referenced a directory outside the current working directory of the compiler invocation itself, so we went "outside of our project scope". If you really would need a project structure like above then you would need to change directory to the <code>projects</code> directory for the program to even compile.</p>
+<p>This is extremely annoying, and this is on porpuse. Let's now say you send your cool project to someone, or host it on GitHub, or things like that. If the other person downloading your project tries to compile it the compiler will immediately fail since the main file references code outside the project. Let's think about what would happen if the compiler would not check this: The compiler will try to find the <code>../lib_project</code> directory and the person downloading the project might not have this downloaded, or it might be in another directory. So, even if the compiler would did not check this case, it might fail on the user anyways. This check exists for the developer as a constant reminder that they need to fix their project structure, maybe by integrating the <code>lib_project</code> as a git submodule or maybe by simply integrating external code into the project itself.</p>
+<p>This simple rule aims at constantly annoying the programmer to fix their dependencies, and I am totally fine regarding annoyance with a clear purpose. So, if you see this error the next time, maybe do not rage about the compiler but think about how you can solve your broken dependencies.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/7_imports/4_namespaces.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../beginners_guide/8_core_modules.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/7_imports/4_namespaces.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../beginners_guide/8_core_modules.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+
+
+    </div>
+    </body>
+</html>
