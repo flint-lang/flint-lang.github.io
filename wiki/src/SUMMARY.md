@@ -112,9 +112,15 @@
     - [Opaque Types](./beginners_guide/11_interop/7_opaque.md)
     - [Exporting]()
 
-  - [Game Example]()
-    - [Introduction]()
-    - [Using raylib]()
+  - [Game Example](./beginners_guide/12_game_example.md)
+    - [Using Raylib]()
+    - [Basic Game Loop]()
+    - [The Ball]()
+    - [Paddles]()
+    - [Player and CPU]()
+    - [Collision Detection]()
+    - [Sound Effects]()
+    - [Putting it all together]()
 
 - [From Intermediate to Expert](./intermediates_guide.md)
   - [Optionals](./intermediates_guide/1_optionals.md)
@@ -162,6 +168,8 @@
     - [Introduction]()
     - [Chaining Operations]()
     - [Composing Functions]()
+
+  - [Hooks]()
 
   - [Blueprints]()
     - [Introduction]()

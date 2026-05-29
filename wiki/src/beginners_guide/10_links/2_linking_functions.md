@@ -131,7 +131,7 @@ This program will print these lines to the console:
 > d.pos = (20, 30)
 > ```
 
-The `link` syntax might look alien to you at first. This is because the `::` operator was not talked about yet in Flint. It's called the **function reference operator** and is used to create function references. This operator and its broader use-cases are a topic of a [later](wiki/src/intermediates_guide/4_callables/2_fn_type.md) chapter, it is not needed to understand the function reference operator to understand links for now.
+The `link` syntax might look alien to you at first. This is because the `::` operator was not talked about yet in Flint. It's called the **function reference operator** and is used to create function references. This operator and its broader use-cases are a topic of a [later](../../intermediates_guide/4_callables/2_fn_type.md) chapter, it is not needed to understand the function reference operator to understand links for now.
 
 So, the line
 
