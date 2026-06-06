@@ -51,14 +51,14 @@ This program shows this compiler error:
 > 6 │ def print(i32 x):
 > ┌─┴─┘
 > ├─ Redefinition of function: print(i32)
-> └─ First defined at: Bmm6x3ZN:0:0
+> └─ First defined at: Core.print
 > ```
 
-The `First defined at: ...` error line here simply means that the function was first defined in the core module, namely `Core.print`. This error message will change in the future, but it is good enough for now. But as you can see, the `print(i32)` function already exists, which means we cannot define this function when the `print` function already exists from the `print` Core module. But, as shown above, we can define the functions inside a `func` module and by doing so the functions do no longer collide with the builtin print functions.
+The `First defined at: ...` error line here simply means that the function was first defined in the core module, namely `Core.print`. As you can see, the `print(i32)` function already exists, which means we cannot define this function as it would collide with the already existent `print` function from the `print` Core module. But, as shown above, we can define the functions inside a `func` module and by doing so the functions do no longer collide with the builtin print functions. This means that `func` modules which do not require any data can essentially be used as [Namespaces](https://en.wikipedia.org/wiki/Namespace).
 
 ## Requiring Data
 
-But if this would have been the only purpose of `func` modules they would not be that interesting. The thing which makes func modules interesting is that you can explicitely require data in them. Here a small example:
+But if this would have been the only purpose of `func` modules they would not be that interesting. The thing which makes func modules interesting is that you can explicitely require data they operate on. Here a small example:
 
 ```ft
 use Core.print
