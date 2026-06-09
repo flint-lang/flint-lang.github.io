@@ -40,8 +40,8 @@ but keep the rest of the code as-is (the working example from the previous chapt
 > 22 │ »   »   IMove::move -> FMovable::move,
 > ┌──┴─────────┘
 > ├─ Linking functions with different explicit signatures is not allowed
-> ├─ Left signature: move()
-> └─ Right signature: move(i32)
+> ├─ Left signature: move() -> void {anyerror}
+> └─ Right signature: move(const i32) -> void {anyerror}
 > ```
 
 because the *explicit* signatures of the functions now differ, `IMove::move` expects no parameters while `FMovable::move` now expects a single `i32` parameter.
