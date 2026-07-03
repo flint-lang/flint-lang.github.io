@@ -28,7 +28,7 @@ This program will print these lines to the console:
 > main.ft:
 >  ├─ fails    ✗ failed
 >  └─ succeeds ✓ passed
-> 
+>
 > ✗ 1 test failed!
 > ```
 
@@ -60,13 +60,13 @@ This program will print something like these lines to the console:
 >  │   └─ Test took 2.438704 ms
 >  └─ Long Test  ✓ passed
 >      └─ Test took 1349.054036 ms
-> 
+>
 > ✓ All tests passed!
 > ```
 
 ### Performance tests as unit tests
 
-A performance test is *also* a unit-test. If the test fails it will be printed as `failed` in the output as well:
+A performance test is _also_ a unit-test. If the test fails it will be printed as `failed` in the output as well:
 
 ```ft
 use Core.assert
@@ -93,7 +93,7 @@ This program will print something like these lines to the console:
 >  │   └─ Test took 1.974890 ms
 >  └─ Long Test  ✗ failed
 >      └─ Test took 399.604718 ms
-> 
+>
 > ✗ 1 test failed!
 > ```
 
@@ -128,7 +128,7 @@ This program will print something like these lines to the console:
 >  │   └─ Test took 1.760641 ms
 >  └─ Long Test  ✓ passed
 >      └─ Test took 405.461352 ms
-> 
+>
 > ✓ All tests passed!
 > ```
 
@@ -161,7 +161,7 @@ def main():
 	print("Compile with the '--test' flag!\n");
 ```
 
-when compiled using `flintc --file main.ft --test` the `test` binary should have this output:
+when compiled using `flintc main.ft --test` the `test` binary should have this output:
 
 > ```
 > main.ft:
@@ -183,4 +183,4 @@ when compiled using `flintc --file main.ft --test` the `test` binary should have
 
 ## test_output_never
 
-Whether the test should not output it's captured output even if it fails. This annotation, in combination with the `#test_output_never` annotation has a very interesting side-effect: Since the `#test_output_always` annotation toggles whether the test outputs on *success* and the `#test_output_never` annotation toggles whether the test outputs on *failure*, using both annotations on the same test leads to the output printing being flipped, now only printing when it succeeds but staying silent when it fails.
+Whether the test should not output it's captured output even if it fails. This annotation, in combination with the `#test_output_never` annotation has a very interesting side-effect: Since the `#test_output_always` annotation toggles whether the test outputs on _success_ and the `#test_output_never` annotation toggles whether the test outputs on _failure_, using both annotations on the same test leads to the output printing being flipped, now only printing when it succeeds but staying silent when it fails.

@@ -7,7 +7,7 @@ If you have not installed the `fip-c` IM yet, please follow the instructions in 
 Now, with the `fip-c` IM installed, we can try to run the command again:
 
 ```sh
-flintc --file main.ft
+flintc main.ft
 ```
 
 Because compilation now succeeded, you will see absolutely no output, but the `main` executable has been created. When running the compiled program you will see this line printed to the console:
@@ -16,14 +16,14 @@ Because compilation now succeeded, you will see absolutely no output, but the `m
 Hello from C!
 ```
 
-That was a lot to do just to get interop up and running, I admit that. But this whole process can (and will) be done using tools too. The `flint` executable (or maybe the `flintc` executable should handle that, I am not sure yet) will contain the capability to set up FIP for us. But, let's talk about all those directories, what they do and why they exist. First, let's talk about the `config` directory and what the content in the `fip.toml` *actually* means. The `fip.toml` file has a very simple content, it's just these two lines:
+That was a lot to do just to get interop up and running, I admit that. But this whole process can (and will) be done using tools too. The `flint` executable (or maybe the `flintc` executable should handle that, I am not sure yet) will contain the capability to set up FIP for us. But, let's talk about all those directories, what they do and why they exist. First, let's talk about the `config` directory and what the content in the `fip.toml` _actually_ means. The `fip.toml` file has a very simple content, it's just these two lines:
 
 ```toml
 [fip-c]
 enable = true
 ```
 
-This essentially tells the compiler to search for the `fip-c` executable available through the `PATH` variable and to start it when the compiler encounters the first extern function definition. It essentially tells the compiler that the module exists and should be used by it. And then we have the `fip-c.toml` file. It is very important to understand that the Flint compiler *never* parses or even looks at the `fip-c.toml` configuration file. This configuration is *only* used by the `fip-c` Interop Module.
+This essentially tells the compiler to search for the `fip-c` executable available through the `PATH` variable and to start it when the compiler encounters the first extern function definition. It essentially tells the compiler that the module exists and should be used by it. And then we have the `fip-c.toml` file. It is very important to understand that the Flint compiler _never_ parses or even looks at the `fip-c.toml` configuration file. This configuration is _only_ used by the `fip-c` Interop Module.
 This config file is a bit more complex, so let's go through it.
 
 ```toml
@@ -33,13 +33,13 @@ sources = ["hello.c"]
 command = ["gcc", "-c", "__SOURCES__", "-o", "__OUTPUT__"]
 ```
 
-At the very top is the *module tag*. Don't worry about it just yet, it will be explained in a [later](./6_tags.md) chapter.
+At the very top is the _module tag_. Don't worry about it just yet, it will be explained in a [later](./6_tags.md) chapter.
 
 - `headers` (mandatory): This field is a simple list of C header files. It is also allowed to put `.c` files in there, this is fine for our simple example but for larger C projects you should only put `.h` files in there, since we do not care for actual implementations for interop. This field tells the `fip-c` module which files to parse. Because the `fip-c` module is built using `libclang` it is able to freely parse and "understand" C code. It parses all the headers and collects all symbols it found, and then is able to tell the `flintc` compiler whether a given symbol like an extern function exists at all.
 - `sources` (optional): This field is a simple list of source files which need to be compiled by the `command`. This should be a list of `.c` files.
 - `command` (optional): This field Describes how to compile our sources to produce a single output `.o` file. It is important that we produce a `.o` file (here the `-c` flag for `gcc`). The `__SOURCES__` value will be expanded to `hello.c`. It will be a list of sources to compile using gcc. The `__OUTPUT__` value will be expanded to a 8-byte long hash.
 
-Each IM produces one or more `.o` files which then need to be linked by the main compiler, that's why it's important that the files have the same length respectively, as it needs to be communicated over FIP *which* `.o` files the specific IMs produced.
+Each IM produces one or more `.o` files which then need to be linked by the main compiler, that's why it's important that the files have the same length respectively, as it needs to be communicated over FIP _which_ `.o` files the specific IMs produced.
 
 If you are on Windows then you would need a C compiler and possibly a Developer PowerShell from the VS setup. So, you need to handle how to compile the extern language, like C, by yourself on Windows. On Linux, `gcc` is just available in the `PATH` variable and no setup is required from Your side.
 
@@ -86,7 +86,7 @@ And when we then try to compile this program we get yet another error:
 
 <div class="warning">
 
-This error message is not final, since it does not contain any information to *what* actually failed.
+This error message is not final, since it does not contain any information to _what_ actually failed.
 
 You need to use `flintc-debug` for the time being to actually find out what went wrong. When looking at the FIP logs, which start with `[Master]:` or `[Slave N]:` you can find out which symbols the `fip-c` module found and which symbol the Flint Compiler is searching for. You can find these lines in the output of the `flintc-debug` build:
 

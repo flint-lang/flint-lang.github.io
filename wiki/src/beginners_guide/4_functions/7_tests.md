@@ -12,7 +12,7 @@ test "fails":
     assert(false);
 ```
 
-You need to compile this program with the `--test` flag added to it (`flintc --file main.ft --test`). This command will (by default) produce a binary called `test` instead of the otherwise automatically created `main` binary.
+You need to compile this program with the `--test` flag added to it (`flintc main.ft --test`). This command will (by default) produce a binary called `test` instead of the otherwise automatically created `main` binary.
 This program will print these lines to the console:
 
 > ```
@@ -23,7 +23,7 @@ This program will print these lines to the console:
 > ✗ 1 test failed!
 > ```
 
-As you can see, there is no `main` function in this file and compilation does not crash. This is because when defining tests not the user-defined main function is *ever* called. Instead, all "test functions" of all files are executed and evaluated. A test succeeds when it does not return an error. So, if you throw within a test then that test will fail (for example the `assert(false);` call throws the `ErrAssert` error). Using the test functions you are able to test your code for correctness.
+As you can see, there is no `main` function in this file and compilation does not crash. This is because when defining tests not the user-defined main function is _ever_ called. Instead, all "test functions" of all files are executed and evaluated. A test succeeds when it does not return an error. So, if you throw within a test then that test will fail (for example the `assert(false);` call throws the `ErrAssert` error). Using the test functions you are able to test your code for correctness.
 
 ## Name uniqueness
 

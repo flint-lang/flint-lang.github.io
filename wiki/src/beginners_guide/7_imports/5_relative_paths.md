@@ -51,7 +51,7 @@ def main():
 And you then compile the program with the command
 
 ```sh
-flintc -f subdir/main.ft
+flintc subdir/main.ft
 ```
 
 This program will print this line to he console:
@@ -65,7 +65,7 @@ This program will print this line to he console:
 Okay, let's use the exact same files as with the previous example, but this time we change the current working directory to be inside the `subdir` instead. We then try to compile the program with this command:
 
 ```sh
-flintc -f main.ft
+flintc main.ft
 ```
 
 We will then get this compilation error (the `VERSION` will be the compiler version in use, like `v0.3.0-core` for example):
@@ -104,7 +104,7 @@ def main():
     lib_fn();
 ```
 
-It is not important what the `lib_project` actually contains for this demonstration, we just say it contains the function `lib_fn` which we need to call from within our main project. Okay so what happens if you `cd` into your `main_project` and execute the compiler, and what *should* happen? We know that the compiler will crash because through the `..` we referenced a directory outside the current working directory of the compiler invocation itself, so we went "outside of our project scope". If you really would need a project structure like above then you would need to change directory to the `projects` directory for the program to even compile.
+It is not important what the `lib_project` actually contains for this demonstration, we just say it contains the function `lib_fn` which we need to call from within our main project. Okay so what happens if you `cd` into your `main_project` and execute the compiler, and what _should_ happen? We know that the compiler will crash because through the `..` we referenced a directory outside the current working directory of the compiler invocation itself, so we went "outside of our project scope". If you really would need a project structure like above then you would need to change directory to the `projects` directory for the program to even compile.
 
 This is extremely annoying, and this is on porpuse. Let's now say you send your cool project to someone, or host it on GitHub, or things like that. If the other person downloading your project tries to compile it the compiler will immediately fail since the main file references code outside the project. Let's think about what would happen if the compiler would not check this: The compiler will try to find the `../lib_project` directory and the person downloading the project might not have this downloaded, or it might be in another directory. So, even if the compiler would did not check this case, it might fail on the user anyways. This check exists for the developer as a constant reminder that they need to fix their project structure, maybe by integrating the `lib_project` as a git submodule or maybe by simply integrating external code into the project itself.
 

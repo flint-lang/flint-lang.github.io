@@ -40,7 +40,7 @@ def add(i32 x, i32 y) -> i32:
 And you compile the program with the same command as usual:
 
 ```ft
-flintc -f main.ft
+flintc main.ft
 ```
 
 When running the built program, this line will be printed to the console:

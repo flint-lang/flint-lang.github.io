@@ -5,7 +5,7 @@ Save the code from the previous chapter into a file named `hello.ft`. `ft` is th
 To compile the `.ft` file to an executable file, we call
 
 ```sh
-flintc --file hello.ft --out hello
+flintc hello.ft --out hello
 ```
 
 This will output the executable in the current working directory. It can be exexuted with the command

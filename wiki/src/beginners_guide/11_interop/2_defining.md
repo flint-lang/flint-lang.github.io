@@ -24,7 +24,7 @@ As you can see, we can define `extern` functions simply by adding the `extern` k
 You can now try to compile the Flint file using the command
 
 ```sh
-flintc --file main.ft
+flintc main.ft
 ```
 
 You should see a output like the following:
@@ -70,7 +70,7 @@ main.ft
 With these configuration files added, let's try to compile the program again:
 
 ```sh
-flintc --file main.ft
+flintc main.ft
 ```
 
 And now we... still see the same error? Yes. FIP is based on the concept of Interop Modules, and we will fix our problem in the next chapter!
