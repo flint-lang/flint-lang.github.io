@@ -9,6 +9,7 @@
   - [Syntax Highlighting](./user_guide/setup/2_syntax_highlighting.md)
   - [Language Server Setup](./user_guide/setup/3_fls_setup.md)
   - [FIP Setup](./user_guide/setup/4_fip_setup.md)
+  - [Debugging](./user_guide/setup/5_debugging.md)
 
 # Learning Flint
 
