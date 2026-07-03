@@ -17,21 +17,31 @@ The `math` module provides math functions which are used very frequently in math
 |    `sqrt`     |      `f32`      |    `f32`     |       No        |
 |    `sqrt`     |      `f64`      |    `f64`     |       No        |
 |      <hr>     |                 |              |                 |
+|     `abs`     |       `i8`      |     `i8`     |       No        |
+|     `abs`     |      `i16`      |    `i16`     |       No        |
 |     `abs`     |      `i32`      |    `i32`     |       No        |
 |     `abs`     |      `i64`      |    `i64`     |       No        |
 |     `abs`     |      `f32`      |    `f32`     |       No        |
 |     `abs`     |      `f64`      |    `f64`     |       No        |
 |      <hr>     |                 |              |                 |
+|     `min`     |    `u8`, `u8`   |     `u8`     |       No        |
+|     `min`     |    `i8`, `i8`   |     `i8`     |       No        |
+|     `min`     |   `u16`, `u16`  |    `u16`     |       No        |
+|     `min`     |   `i16`, `i16`  |    `i16`     |       No        |
 |     `min`     |   `u32`, `u32`  |    `u32`     |       No        |
-|     `min`     |   `u64`, `u64`  |    `u64`     |       No        |
 |     `min`     |   `i32`, `i32`  |    `i32`     |       No        |
+|     `min`     |   `u64`, `u64`  |    `u64`     |       No        |
 |     `min`     |   `i64`, `i64`  |    `i64`     |       No        |
 |     `min`     |   `f32`, `f32`  |    `f32`     |       No        |
 |     `min`     |   `f64`, `f64`  |    `f64`     |       No        |
 |      <hr>     |                 |              |                 |
+|     `max`     |    `u8`, `u8`   |     `u8`     |       No        |
+|     `max`     |    `i8`, `i8`   |     `i8`     |       No        |
+|     `max`     |   `u16`, `u16`  |    `u16`     |       No        |
+|     `max`     |   `i16`, `i16`  |    `i16`     |       No        |
 |     `max`     |   `u32`, `u32`  |    `u32`     |       No        |
-|     `max`     |   `u64`, `u64`  |    `u64`     |       No        |
 |     `max`     |   `i32`, `i32`  |    `i32`     |       No        |
+|     `max`     |   `u64`, `u64`  |    `u64`     |       No        |
 |     `max`     |   `i64`, `i64`  |    `i64`     |       No        |
 |     `max`     |   `f32`, `f32`  |    `f32`     |       No        |
 |     `max`     |   `f64`, `f64`  |    `f64`     |       No        |

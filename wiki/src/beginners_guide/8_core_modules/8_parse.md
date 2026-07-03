@@ -9,10 +9,13 @@ The `parse` module provides functions related to parsing strings into other type
 | Function Name | Parameter Types | Return Types | Possible Errors |
 | :-----------: | :-------------: | :----------: | :-------------: |
 |  `parse_u8`   |      `str`      |    `u8`      |   `ErrParse`    |
-|  `parse_i32`  |      `str`      |    `i32`     |   `ErrParse`    |
+|  `parse_i8`   |      `str`      |    `i8`      |   `ErrParse`    |
+|  `parse_u16`  |      `str`      |    `u16`     |   `ErrParse`    |
+|  `parse_i16`  |      `str`      |    `i16`     |   `ErrParse`    |
 |  `parse_u32`  |      `str`      |    `u32`     |   `ErrParse`    |
-|  `parse_i64`  |      `str`      |    `i64`     |   `ErrParse`    |
+|  `parse_i32`  |      `str`      |    `i32`     |   `ErrParse`    |
 |  `parse_u64`  |      `str`      |    `u64`     |   `ErrParse`    |
+|  `parse_i64`  |      `str`      |    `i64`     |   `ErrParse`    |
 |  `parse_f32`  |      `str`      |    `f32`     |   `ErrParse`    |
 |  `parse_f64`  |      `str`      |    `f64`     |   `ErrParse`    |
 

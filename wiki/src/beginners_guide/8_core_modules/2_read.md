@@ -9,10 +9,10 @@ The `read` module provides several functions to read input from the command line
 | Function Name | Parameter Types | Return Types | Possible Errors |
 | ------------: | :-------------: | :----------: | :-------------: |
 |    `read_str` |       No        |    `str`     |       No        |
-|    `read_i32` |       No        |    `i32`     |     ErrRead     |
-|    `read_i64` |       No        |    `i64`     |     ErrRead     |
 |    `read_u32` |       No        |    `u32`     |     ErrRead     |
+|    `read_i32` |       No        |    `i32`     |     ErrRead     |
 |    `read_u64` |       No        |    `u64`     |     ErrRead     |
+|    `read_i64` |       No        |    `i64`     |     ErrRead     |
 |    `read_f32` |       No        |    `f32`     |     ErrRead     |
 |    `read_f64` |       No        |    `f64`     |     ErrRead     |
 

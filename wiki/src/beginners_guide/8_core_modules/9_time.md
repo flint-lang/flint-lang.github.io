@@ -7,13 +7,13 @@ use Core.time
 The `time` module provides time-related functions and types used for profiling, time measurements and other time-related tasks.
 
 | Function Name |     Parameter Types      | Return Types | Possible Errors |
-| :-----------: | :----------------------: | :----------: | :-------------: |
-|     `now`     |            No            |  `TimeStamp` |        No       |
-|   `duration`  | `TimeStamp`, `TimeStamp` |  `Duration`  |        No       |
-|   `as_unit`   |  `Duration`, `TimeUnit`  |    `f64`     |        No       |
-|    `sleep`    |        `Duration`        |      No      |        No       |
-|    `sleep`    |    `u64`, `TimeUnit`     |      No      |        No       |
-|    `from`     |    `u64`, `TimeUnit`     |  `Duration`  |        No       |
+| ------------: | :----------------------: | :----------: | :-------------: |
+|         `now` |            No            |  `TimeStamp` |        No       |
+|    `duration` | `TimeStamp`, `TimeStamp` |  `Duration`  |        No       |
+|     `as_unit` |  `Duration`, `TimeUnit`  |    `f64`     |        No       |
+|       `sleep` |        `Duration`        |      No      |        No       |
+|       `sleep` |    `u64`, `TimeUnit`     |      No      |        No       |
+|        `from` |    `u64`, `TimeUnit`     |  `Duration`  |        No       |
 
 
 ## types

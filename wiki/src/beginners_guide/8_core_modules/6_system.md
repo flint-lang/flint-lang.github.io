@@ -8,11 +8,11 @@ The `system` module provides functions to interact with the system, for example 
 
 |     Function Name   | Parameter Types | Return Types | Possible Errors |
 | ------------------: | :-------------: | :----------: | :-------------: |
-|  `system_command`   |      `str`      | `i32`, `str` |   `ErrSystem`   |
-|     `get_cwd`       |       No        |    `str`     |       No        |
-|     `get_path`      |      `str`      |    `str`     |       No        |
-|  `start_capture`    |       No        |     No       |       No        |
-|   `end_capture`     |       No        |    `str`     |       No        |
+|    `system_command` |      `str`      | `i32`, `str` |   `ErrSystem`   |
+|           `get_cwd` |       No        |    `str`     |       No        |
+|          `get_path` |      `str`      |    `str`     |       No        |
+|     `start_capture` |       No        |     No       |       No        |
+|       `end_capture` |       No        |    `str`     |       No        |
 | `end_capture_lines` |       No        |   `str[]`    |       No        |
 
 ## error sets
