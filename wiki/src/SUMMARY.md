@@ -111,6 +111,7 @@
     - [Pointer Types](./beginners_guide/11_interop/5_pointers.md)
     - [Tags](./beginners_guide/11_interop/6_tags.md)
     - [Opaque Types](./beginners_guide/11_interop/7_opaque.md)
+    - [Named Opaque Types](./beginners_guide/11_interop/8_named_opaque.md)
     - [Exporting]()
 
   - [Game Example](./beginners_guide/12_game_example.md)
