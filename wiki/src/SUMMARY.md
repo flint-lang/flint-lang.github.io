@@ -67,6 +67,8 @@
     - [Ranges](./beginners_guide/6_arrays/7_ranges.md)
     - [Access Patterns](./beginners_guide/6_arrays/8_access_patterns.md)
     - [Multidimensional Access Patterns](./beginners_guide/6_arrays/9_multidimensional_access_patterns.md)
+    - [Fixed Arrays](./beginners_guide/6_arrays/10_fixed_arrays.md)
+    - [Inline Array Initialization](./beginners_guide/6_arrays/11_inline_array_initialization.md)
 
   - [Imports](./beginners_guide/7_imports.md)
     - [The `use` Clausel](./beginners_guide/7_imports/1_the_use_clausel.md)

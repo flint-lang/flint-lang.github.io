@@ -55,17 +55,9 @@ This program will print these lines to the console:
 > elem_10 = 0
 > ```
 
-As you can see, Flint just continues with execution. When you try to access an value thats outside the bounds of the array, Flint will just clamp the index to the last element of the array instead, and printing a message that an Out Of Bounds access has occured. You can actually change Flint's behaviour for OOB-handling with the **Array Options**. Here is a small cutout of the help message of the compiler:
+As you can see, Flint just continues with execution. When you try to access an value thats outside the bounds of the array, Flint will just clamp the index to the last element of the array instead, and printing a message that an Out Of Bounds access has occured. You can actually change Flint's behaviour for OOB-handling with the `--array` flag. Execute `flintc --array --help` now, it contains an in-depth explaination about each mode, what each mode means and what you need them for.
 
-> ```
-> Array Options:
->   --array-print               [Default] Prints a small message to the console whenever accessing an array OOB
->   --array-silent              Disables the debug printing when OOB access happens
->   --array-crash               Hard crashes when an OOB access happens
->   --array-unsafe              Disables all bounds checks for array accesses
-> ```
-
-Try compiling the above code with the different array options set and see for yourself how the Flint program behaves. Flint aims to be as safe and as verbose (in its output) as possible and we try to make safety the default and let you opt-out of safety (for example through the --array-unsafe flag) if you are 100% sure that OOB accesses are impossible for your program.
+Try compiling the above code with the different array options set and see for yourself how the Flint program behaves. Flint aims to be as safe and as verbose (in its output) as possible and we try to make safety the default and let you opt-out of safety (for example through the `--array unsafe` flag) if you are 100% sure that OOB accesses are impossible for your program.
 
 ## Assigning Values
 
