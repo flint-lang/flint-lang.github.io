@@ -39,6 +39,18 @@ Once you have downloaded the `fip-c` binary simply put it in a directory which i
 
 ## Windows
 
+<div class="warning">
+
+The C Interop Module for the Flint Interop Protocol is broken currently
+
+The `fip-c` IM is broken on Windows at the moment. I am glad that I got the compiler to fully work on Windows again, but *something* about the `fip-c` IM is completely broken on Windows, and I just do not know *what* it is. I hope this will get resolved soon. Until then, there is no user-defined automatic FIP-based C interop on Windows.
+
+A workaround is to use the `--no-fip` flag for the time being. So, you need to manually write out the `extern def ...` functions, manually compile the C program to a `.o` file and then use the `--flags="..."` flag to pass the `.o` file path to the linker so that it links the file together with your built program.
+
+It just shows how much FIP and the entire system does for you in terms of interop. I hope to get it fixed within the next release.
+
+</div>
+
 ### Winget
 
 ```ps1
