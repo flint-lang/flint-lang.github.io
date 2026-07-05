@@ -101,6 +101,52 @@ As you can see, we composed two different func modules inside one new entity typ
 
 There is nothing magical about entity-defined functions, just like there is nothing magical about func-module functions.
 
+## Accessing Parent Data
+
+It is possible to access the data of parent entities inside entity functions. For parent data to be accessible, that parent data needs to be named:
+
+```ft
+use Core.print
+
+data Data1:
+	i32 x;
+	i32 y;
+	Data1(x, y);
+
+data Data2:
+	i32 z;
+	i32 w;
+	Data2(z, w);
+
+func Func requires(Data1 d):
+	def fun():
+		print("fun\n");
+
+entity E:
+	data: Data1 d1;
+	func: Func;
+	E(d1)
+
+entity Entity extends(E e1):
+	data: Data2 d2;
+	Entity(e1, d2);
+
+	def print():
+		print($"d1.(x, y) = {e1.d1.(x, y)}, d2.(z, w) = {d2.(z, w)}\n");
+
+def main():
+	e := Entity(Data1(10, 20), Data2(30, 40));
+	e.print();
+```
+
+This program will print this line to the console:
+
+> ```
+> d1.(x, y) = (10, 20), d2.(z, w) = (30, 40)
+> ```
+
+For example we can only access the parent entity data `e1.d1` because we gave it a name, `d1`. If we would not have given the parent entity data a name then we would not be able to access it in entity functions of extended entities.
+
 ## Entity Extension
 
 When extending entities, the newly created entity includes all its parents `data` modules and `func` modules, which means that any function of their parents can be called in that newly created entity. Entity-functions, however, are on a strict per-type basis. So, if you define an entity-function in entity type `A` and extend it in type `B` through `entity B extends(A a):` then the entity-functions of `A` will **not** be present in type `B`. Their signatures simply do not match, and if `B` would get `A`s functions then it would start to look and feel like OOP, which DCMP isn't.
