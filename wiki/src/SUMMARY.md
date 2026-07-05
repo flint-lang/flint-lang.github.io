@@ -90,6 +90,7 @@
     - [time](./beginners_guide/8_core_modules/9_time.md)
     - [random]()
     - [parallel]()
+    - [array]()
 
   - [Entities & Func modules](./beginners_guide/9_entities.md)
     - [Func Modules](./beginners_guide/9_entities/1_func_modules.md)
@@ -118,8 +119,7 @@
     - [Exporting]()
 
   - [Game Example](./beginners_guide/12_game_example.md)
-    - [Using Raylib]()
-    - [Basic Game Loop]()
+    - [Introduction to Raylib](./beginners_guide/12_game_example/1_introduction.md)
     - [The Ball]()
     - [Paddles]()
     - [Player and CPU]()
