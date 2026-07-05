@@ -119,7 +119,3 @@ As with other places when printing floating point values, the output differs in 
 So, if you see the above output, do not worry, it will be fixed in some later release!
 
 </div>
-
-## Side note
-
-You are not allowed to ever alias a `Core` module import. Core modules need to be written out explicitely in every file using them. There does not exist a true technical limitation for this, it's a deliberate desgin choice to make dependencies on `Core` modules explicit and easily visible. You may have seen this pattern already, but it is recommended to put all `Core` module imports at the very top of the file, before any other file imports or function definitions.
