@@ -2,7 +2,7 @@
 
 Up until this point, we have always initialized the entire array with a given value, like `i32[10](0)` where the entire array of `10` elements is filled with the value `0`. But, arrays also can be inline-initialized. Insetad of the `(<value>)` syntax we use the `{<value>, ...}` syntax:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -19,9 +19,9 @@ This program will print these lines to the console:
 > v3[2] = 30
 > ```
 
-Inline-initialized arrays **must** have a known size, meaning that an inline-iniitalized array initializer will *always* result in a fixed array being created. That fixed array, as we saw earlier, can be cast to a dynamic array implicitely, this means that you an use a inline-initialized fixed array in all places where a dynamic array is requested. This is especially handy when just want to create a "temporary" array to be used inside a function, for example:
+Inline-initialized arrays **must** have a known size, meaning that an inline-iniitalized array initializer will _always_ result in a fixed array being created. That fixed array, as we saw earlier, can be cast to a dynamic array implicitely, this means that you an use a inline-initialized fixed array in all places where a dynamic array is requested. This is especially handy when just want to create a "temporary" array to be used inside a function, for example:
 
-```rs
+```ft
 use Core.print
 
 def print_flags(str[] flags):
@@ -63,7 +63,7 @@ However, always needing to add a length can become pretty cumbersome pretty fast
 
 We can use the default-operator `_` here again to infer the size of the inline-initialized array:
 
-```rs
+```ft
 use Core.print
 
 def print_flags(str[] flags):
@@ -88,9 +88,9 @@ This program has the same output as the program above. As you can also see, it i
 
 ## Storing empty arrays
 
-However, we can *not* store an fixed empty array anywhere:
+However, we can _not_ store an fixed empty array anywhere:
 
-```rs
+```ft
 use Core.print
 
 def main():
@@ -112,4 +112,4 @@ This program will print this compile error:
 > └─ Stored fixed arrays cannot be empty
 > ```
 
-because...why would we want to?? It makes no sense to store a *fixed* empty array. We know that this array will **always** be empty, which means it could be removed from a codebase entirely and nothing would have changed. The `.len` will always return `0`, every access is an out-of-bounds access, since there are no elements in the array, and it has no runtime size either.
+because...why would we want to?? It makes no sense to store a _fixed_ empty array. We know that this array will **always** be empty, which means it could be removed from a codebase entirely and nothing would have changed. The `.len` will always return `0`, every access is an out-of-bounds access, since there are no elements in the array, and it has no runtime size either.
