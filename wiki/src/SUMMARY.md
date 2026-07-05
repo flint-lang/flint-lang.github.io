@@ -45,6 +45,7 @@
     - [Groups](./beginners_guide/4_functions/6_groups.md)
     - [Tests](./beginners_guide/4_functions/7_tests.md)
     - [Annotations](./beginners_guide/4_functions/8_annotations.md)
+    - [Discarding Return Values](./beginners_guide/4_functions/9_discarding_return_values.md)
 
   - [Data: The Core of Flint](./beginners_guide/5_data.md)
     - [Declaring Data Modules](./beginners_guide/5_data/1_declaring_data_modules.md)
