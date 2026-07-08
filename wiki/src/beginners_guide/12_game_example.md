@@ -18,4 +18,4 @@ This whole chapter is *not* mandatory for you to learn Flint, as no new concepts
 
 We will create the game using [raylib](https://www.raylib.com), a C library which makes creating games very easy. This guide goes through the entire process of creating such a small game step by step. You don't need any prior knowledge in raylib or game developement in general, everything you need will be explained as you go.
 
-The finished game will be around `330` lines of code, so it's still a rather small program.
+The finished game will be around `350` lines of code, so it's still a rather small program.

@@ -88,6 +88,7 @@ being printed to the console. This means that everything works exactly as intend
 
 The next thing we need to make sure of is that the window does not immediately close after the program starts up. We do this by adding a [game loop](https://gameprogrammingpatterns.com/game-loop.html). The `main.ft` now looks like this after adding the game loop:
 
+**`main.ft`**:
 ```ft
 use Fip.raylib as rl
 
@@ -131,10 +132,11 @@ rl.SetConfigFlags(flags);
 
 Now the Pong game will always run at your screens refresh rate and not needlessly run at thousands of frames per second for no benefit. But now with these flags active, the game is resizable and is properly VSynced.
 
-## Rendering
+## drawing
 
-Lets next start looking at rendering and how to render objects to the screen. For this, we first need to find out the actual size of the screen at each iteration of our game loop, or otherwise our the game would not scale when resizing the game. For this, we add a local variable, `screen` to the file. We update the screen every iteration of the game loop by calling `GetScreenWidth` and `GetScreenHeight` respectively:
+Lets next start looking at drawing and how to draw objects to the screen. For this, we first need to find out the actual size of the screen at each iteration of our game loop, or otherwise our the game would not scale when resizing the game. For this, we add a local variable, `screen` to the file. We update the screen every iteration of the game loop by calling `GetScreenWidth` and `GetScreenHeight` respectively:
 
+**`main.ft`**:
 ```ft
 use Fip.raylib as rl
 
@@ -158,14 +160,15 @@ def main():
 	rl.CloseWindow();
 ```
 
-The next step is to properly render the game board. We already have our "dark" green background. The next thing we need to render is the right half of the screen with a different color (`green`) and to render the circle in the middle with the . For this, we use the `DrawRectanlge` and `DrawCircle` functions from raylib respectively:
+The next step is to properly draw the game board. We already have our "dark" green background. The next thing we need to draw is the right half of the screen with a different color (`green`), draw a vertical (`white`) line in the middle of the screen and to draw the circle in the middle with the . For this, we use the `DrawRectanlge`, `DrawLine` and `DrawCircle` functions from raylib respectively:
 
 ```ft
 extern def DrawRectangle(mut i32 posX, mut i32 posY, mut i32 width, mut i32 height, mut Color color);
+extern def DrawLine(mut i32 startPosX, mut i32 startPosY, mut i32 endPosX, mut i32 endPosY, mut Color color);
 extern def DrawCircle(mut i32 centerX, mut i32 centerY, mut f32 radius, mut Color color);
 ```
 
-After clearing the background, and before ending our rendering, we now just need to insert the calls to these functions:
+After clearing the background, and before ending our drawing, we now just need to insert the calls to these functions:
 
 ```ft
 		rl.BeginDrawing();
@@ -173,14 +176,16 @@ After clearing the background, and before ending our rendering, we now just need
 
 		// Overwrite right half of screen with green rectangle
 		rl.DrawRectangle(screen.x / 2, 0, screen.x / 2, screen.y, Colors.green);
-		// Render circle in the middle of the screen
+		// Draw vertical line in the middle of the screen
+		rl.DrawLine(screen.x / 2, 0, screen.x / 2, screen.y, Colors.white);
+		// Draw circle in the middle of the screen
 		rl.DrawCircle(screen.x / 2, screen.y / 2, 150.0, Colors.light_green);
 
 		rl.EndDrawing();
 ```
 
-And now we should see the whole game board being rendered on screen:
+And now we should see the whole game board being drawed on screen:
 
 ![Game Board](../../images/12_game_example/1_introduction/game_board.png)
 
-You now know how to do basic rendering using raylib. So, let's get on to the next chapter, let's add a ball to our game field!
+You now know how to do basic drawing using raylib. So, let's get on to the next chapter, let's add a ball to our game field!
