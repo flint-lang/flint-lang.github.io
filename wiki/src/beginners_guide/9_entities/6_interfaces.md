@@ -1,8 +1,8 @@
 # Interfaces
 
-What are interfaces? In OOP an interface is like a "contract" describing which methods a class has without describing *how* these methods are implemented. In Flint, we have a concept similar to that and you already know it: `func` modules.
+What are interfaces? In OOP an interface is like a "contract" describing which methods a class has without describing _how_ these methods are implemented. In Flint, we have a concept similar to that and you already know it: `func` modules.
 
-Func modules define functions which operate on a given set of data and whenever we add a func module to an entity we also must add it's required data to the entity for composition. So, entities are just a "collection of func modules with their associated data". As every `func` module always explicitely `requires` which data it will operate on and we *know* that each entity which has a given `func` module always has it's associated data, we can essentially "store" an entity on a func-module typed variable, and this is our interface.
+Func modules define functions which operate on a given set of data and whenever we add a func module to an entity we also must add it's required data to the entity for composition. So, entities are just a "collection of func modules with their associated data". As every `func` module always explicitely `requires` which data it will operate on and we _know_ that each entity which has a given `func` module always has it's associated data, we can essentially "store" an entity on a func-module typed variable, and this is our interface.
 
 Here a small example:
 
@@ -74,7 +74,7 @@ This program will print these lines to the console:
 
 There are a few things we need to go through first. You can see that `Entity2` extends `Entity` which means that `Entity2` also has the `Data` and `Func` modules, just like `Entity`. Because of that we can "cast" each entity type to their respective `func` types. So, both `Entity` and `Entity2` are "castable" to `Func` but only `Entity2` can be "cast" to `Func2`, since `Entity` does not contain the func module `Func2`.
 
-Every func-module instance is essentially a fat-pointer at runtime. It contains a pointer to the entity value it holds onto + some other needed runtime-information. Functions of different func-modules can be `link`ed and redirected (you will learn this in the next chapter) so the actual function being executed could differ. Note that func-modules used as interface objects do *not* result in direct compile-time resolved calls, so doing `f.move(diff)` in our case does *not* automatically mean that the `Func.move` function is being called, but more on that later.
+Every func-module instance is essentially a fat-pointer at runtime. It contains a pointer to the entity value it holds onto + some other needed runtime-information. Functions of different func-modules can be `link`ed and redirected (you will learn this in the next chapter) so the actual function being executed could differ. Note that func-modules used as interface objects do _not_ result in direct compile-time resolved calls, so doing `f.move(diff)` in our case does _not_ automatically mean that the `Func.move` function is being called, but more on that later.
 
 ## Lifetime
 
@@ -87,7 +87,7 @@ def main():
 	print($"f.(x, y) = ({f.get_x()}, {f.get_y()})\n");
 	apply_move_operation(f, i32x2(5, 5));
 	print($"f.(x, y) = ({f.get_x()}, {f.get_y()})\n");
-	
+
 	if true:
 		e2 := Entity2(Data(30, 50), Data2(30, 3));
 		f = e2;
@@ -105,4 +105,4 @@ This program will print these lines to the console:
 > f.(x, y) = (35, 55)
 > ```
 
-As you can see, the interface `f` is *still* valid after the `if true:` branch even though the variable `e1` went out of scope. This is because all entities in Flint are DIMA-managed, just like `data` is. The entity `e2` went out of scope, but because `f` still holds onto it, the entity in `e2` it is not released yet.
+As you can see, the interface `f` is _still_ valid after the `if true:` branch even though the variable `e1` went out of scope. This is because all entities in Flint are DIMA-managed, just like `data` is (DIMA will be explained [later](../../experts_guide/1_dima.md)). The entity `e2` went out of scope, but because `f` still holds onto it, the entity in `e2` it is not released yet.

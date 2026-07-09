@@ -1,0 +1,11 @@
+# DIMA Internals
+
+DIMA, or **Deterministic Incremental Memory Architecture** is just a fancy name for a relatively simple system under the hood. DIMA, in its essence, is just an ARC-based incrementally growing per-type segmented arena allocator. DIMA is designed and integrated in the compiler in a way to make it easy to swap for a different memory system in the future if that is something I will ever need. For now, DIMA is the best memory architecture for Flint specifically because it directly can utilize some of its unique characteristics in regards to the number of different types.
+
+Because we compose types using `DCMP`, the number of unique `data` types is relatively small. Since many `data` types are shared in many `entity` types (as they are composed in entities), we can use this as an advantage. If the number of unique data types is low but the number of instances is high, storing them in large chunks for better cache utilization and data locality becomes something which is quite easy to do.
+
+The core idea of DIMA is the following: We think of allocated data in chunks. The chunk size starts at a given size, like `16` for example, and if we need more than `16` instance of a given data type, we create a new chunk. But with a catch: The newly created chunk is *larger* than the last one. The growth factor is roughly 10%, so the second block we create can store 18 values, the third one 20, then 22, 24, 26, 29, 32, 35 etc. This means that to allocate space for 1 million instances, we need roughly `116` of these chunks.
+
+These "chunks" are called a `Block` in DIMA. Note that to showcase how it works under the hood, C is used to describe types and some functions / systems. So, to properly understand it a bit of knowledge in C is welcomed. If you really want to look at the implementation of `DIMA`, then it is recommended to look at the single-header C file containing the *entire* DIMA implementation, in roughly 400 lines of C code [here](https://github.com/flint-lang/dima/blob/main/dima-c/dima.h). If you know C well, just looking at the file might help you understand DIMA more than reading through this chapter.
+
+But that's just a rough overview, lets dive right into how it works.

@@ -211,12 +211,11 @@
 
   - [FIP Internals & IM authoring]()
 
-  - [DIMA Internals]()
-    - [Slots]()
-    - [Blocks]()
-    - [Heads]()
-    - [Defragmentation]()
+  - [DIMA Internals](./experts_guide/1_dima.md)
+    - [Structures](./experts_guide/1_dima/1_structures.md)
+    - [Allocation & Deallocation](./experts_guide/1_dima/2_alloc_and_dealloc.md)
     - [Slot Pinning]()
+    - [Defragmentation]()
     - [Annotations]()
 
   - [DCMP Internals]()

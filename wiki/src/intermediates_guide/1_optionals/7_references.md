@@ -1,6 +1,6 @@
 # Optionals as References
 
-Flint does not have pointer or reference types, as you know. But optionals **are** implicitely this missing reference-type piece. For all complex data types, which are stored in DIMA slots, optionals become reference types to other data. You will learn why this is like it is much much later when we actually talk about DIMA, but for now just remember that optional complex data types are references. Let's look at a small example to showcase this:
+Flint does not have pointer or reference types, as you know. But optionals **are** implicitely this missing reference-type piece. For all complex data types, which are stored in DIMA slots, optionals become reference types to other data (or entities). You will learn why this is like it is [much much later](../../experts_guide/1_dima.md) when we actually talk about DIMA, but for now just remember that optional complex data types are references. Let's look at a small example to showcase this:
 
 ```ft
 use Core.print
@@ -30,7 +30,7 @@ As you can see, we do not modify `md` directly. We only modify the optional `ref
 
 ## Lifetime
 
-Thanks to DIMA, optionals can hold onto the data longer than the lifetime of the data itself:
+Thanks to DIMA, optionals can hold onto the data longer than the lifetime of the variable itself:
 
 ```ft
 use Core.print
@@ -55,4 +55,4 @@ This program will print this line to the console:
 > ref.x = 10
 > ```
 
-Because data is DIMA-managed, the reference-count of the allocated data increases by 1 when it's assigned to an optional value, meaning that the optional reference to that data is still valid, even if the original data already went out-of-scope.
+Because data is DIMA-managed, the reference-count of the allocated data increases by 1 when it's assigned to an optional value, meaning that the optional reference to that data is still valid, even if the original variable already went out-of-scope.
