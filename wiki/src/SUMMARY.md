@@ -192,11 +192,7 @@
 
   - [Generic Library Example]()
 
-- [From Expert to Master]()
-  - [Paralellism]()
-    - [How DCMP makes parallelism trivial]()
-    - [The `parallel` Core module]()
-
+- [From Expert to Master](./experts_guide.md)
   - [Concurrency & shared data]()
     - [Understanding Concurrency]()
     - [Spawning Threads]()
@@ -206,6 +202,10 @@
     - [Threading Internals]()
     - [Shared Data]()
     - [Annotations]()
+
+  - [Paralellism]()
+    - [How DCMP makes parallelism trivial]()
+    - [The `parallel` Core module]()
 
   - [Async Compute]()
 
