@@ -151,4 +151,4 @@ When looking at the `mut IMove m` interface instance, the function call `m.move(
 
 Instead of calling `m.move()` we call a "dispatch" function and pass the **function ID** of the function we *would* call to it. This dispatch functions, which are created on a per-entity basis, then forward the call to the linked-to function, in our case `FMovable.move`.
 
-You will learn the exact low level details of it all in a [later]() chapter, don't worry. For now, just remember that any `link`s when defining an entity also take effect when using the entity through an interface instance.
+You will learn the exact low level details of it all in a later chapter, don't worry. For now, just remember that any `link`s when defining an entity also take effect when using the entity through an interface instance.

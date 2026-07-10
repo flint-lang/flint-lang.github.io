@@ -47,7 +47,7 @@ This program will print these lines to the console:
 > res = 2
 > ```
 
-As you can see, the function `apply_op` simply does not care which callable you pass into it as long as the signature matches up. The `apply_op` actls like a "work delegator" to apply operations given the parameters to call the function with. This example is a very simple one, in the later [Argument Bindings]() chapter there will be a similar example but with the operations in a *list* instead, where a list of operations is built up and then that list is executed, so stay tuned, there is some cool stuff ahead!
+As you can see, the function `apply_op` simply does not care which callable you pass into it as long as the signature matches up. The `apply_op` actls like a "work delegator" to apply operations given the parameters to call the function with. This example is a very simple one, in the later *Argument Bindings* chapter there will be a similar example but with the operations in a *list* instead, where a list of operations is built up and then that list is executed, so stay tuned, there is some cool stuff ahead!
 
 ## Returning callables from functions
 

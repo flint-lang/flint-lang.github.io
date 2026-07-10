@@ -2,7 +2,7 @@
 
 Const data in Flint are compile-time constant global data. This means that they are data which has no runtime footprint, cannot be initialized and does not exist after compilation. This is especially useful for configuration files or global variables.
 
-In Flint, global variables work different than they do in other languages, because Flint does not have any global variables in the traditional sense (it does have runtime-mutable globals but you only will learn about them in a way [later]() chapter). Constant data has emerged from the fact how default-values of data fields work under the hood, but let's look at a simple example first:
+In Flint, global variables work different than they do in other languages, because Flint does not have any global variables in the traditional sense (it does have runtime-mutable globals but you only will learn about them in a later chapter when talking about `shared data`). Constant data has emerged from the fact how default-values of data fields work under the hood, but let's look at a simple example first:
 
 ```ft
 use Core.print

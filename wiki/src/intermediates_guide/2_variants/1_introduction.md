@@ -47,6 +47,6 @@ struct {
 
 We reserve `8` bytes for our value field of the struct. If we will now store an `i32` in the `value` the first 4 bytes will be used for that value and the other 4 bytes just stay empty. This means that our whole `variant` now uses exactly `9` bytes of memory, and if we would add another 10 possible types it would still only use the maximum size of them.
 
-Okay and now let's talk about the `type` flag, because it's pretty interesting as well... When we define our variant from left to right we actually assign type IDs to each possible type of our variant. In our case the type `i32` will have the ID of `1`, `f32` will have `2` and `u64` will have `3`. But where is the `0`, you may ask. This will be explained in a [later]() chapter, but for now just know that it's reserved for the absence of values (optionals).
+Okay and now let's talk about the `type` flag, because it's pretty interesting as well... When we define our variant from left to right we actually assign type IDs to each possible type of our variant. In our case the type `i32` will have the ID of `1`, `f32` will have `2` and `u64` will have `3`. But where is the `0`, you may ask. This will be explained in a later chapter when talking about optional variants, but for now just know that it's reserved for the absence of values (optionals).
 
 Okay, now you can define `variant` types and know how they look like under the hood, but how do you use them? We will learn this in the next chapter!
