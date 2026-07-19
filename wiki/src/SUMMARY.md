@@ -2,7 +2,7 @@
 
 [Introduction](./introduction.md)
 
-# User Guide
+# Getting Started
 
 - [Setup](./user_guide/setup.md)
   - [Installation](./user_guide/setup/1_installation.md)
@@ -44,8 +44,7 @@
     - [Returning Multiple Values](./beginners_guide/4_functions/5_returning_multiple_values.md)
     - [Groups](./beginners_guide/4_functions/6_groups.md)
     - [Tests](./beginners_guide/4_functions/7_tests.md)
-    - [Annotations](./beginners_guide/4_functions/8_annotations.md)
-    - [Discarding Return Values](./beginners_guide/4_functions/9_discarding_return_values.md)
+    - [Discarding Return Values](./beginners_guide/4_functions/8_discarding_return_values.md)
 
   - [Data: The Core of Flint](./beginners_guide/5_data.md)
     - [Declaring Data Modules](./beginners_guide/5_data/1_declaring_data_modules.md)
@@ -223,6 +222,9 @@
   - [random]()
   - [parallel]()
   - [array]()
+
+- [Annotations](./annotations.md)
+  - [test](./annotations/test.md)
 
 - [Language Specification]()
 

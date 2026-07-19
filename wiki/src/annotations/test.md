@@ -1,12 +1,6 @@
-# Annotations
+# test
 
-Annotations are a way where you can directly communicate with the Flint compiler. Annotations are used for all places where adding explicit syntax for certain things would completely bloat the language and annotations are a lightweight way of communicating with the compiler. There only exist two annotations at the moment, but there will be more annotations added in the future.
-
-An annotation is defined using the `#` symbol. Everything following that symbol is part of the annotation, so there cannot be anything written after an annotation, similar how nothing is able to be written to the right of a single-line comment `//`. Annotations can also be stacked, so more than one annotation can be defined at once to be used for one test.
-
-This file contains all (currently supported) annotations. It will expand in the future once more annotations are added to Flint.
-
-## test_should_fail
+## #test_should_fail
 
 This annotation is used when a test should fail. You can use this when testing an error case and expect that a given operation would lead to a thrown error. If the test does not throw an error then it's considered to be failed:
 
@@ -34,7 +28,7 @@ This program will print these lines to the console:
 
 As you can see, the `#test_should_fail` annotation essentially just inverts the tests.
 
-## test_performance
+## #test_performance
 
 You can use the `#test_performance` annotation whenever you want to test the performance of a given operation or operation chain. For example when you have a very complex function you can test how long it takes to process various inputs.
 
@@ -97,44 +91,7 @@ This program will print something like these lines to the console:
 > ✗ 1 test failed!
 > ```
 
-### Stacking annotations
-
-As mentioned above, annotations can also be stacked. So we could define both `#test_should_fail` and `#test_performance` for the same test:
-
-```ft
-
-use Core.assert
-
-#test_performance
-test "Short Test":
-	u64 sum = 0;
-	for (i, _) in 0..1_000_000:
-		sum += 1;
-
-#test_should_fail
-#test_performance
-test "Long Test":
-	u64 sum = 0;
-	for (i, _) in 0..1_000_000_000:
-		sum += 1;
-		assert(sum < 100_000_000);
-```
-
-This program will print something like these lines to the console:
-
-> ```
-> test_files/test_minimal.ft:
->  ├─ Short Test ✓ passed
->  │   └─ Test took 1.760641 ms
->  └─ Long Test  ✓ passed
->      └─ Test took 405.461352 ms
->
-> ✓ All tests passed!
-> ```
-
-As you can see, the failing test now succeeds, as both annotations are used for the same test.
-
-## test_output_always
+## #test_output_always
 
 Whether the test should also output it's captured output even if it succeeds.
 
@@ -181,6 +138,6 @@ when compiled using `flintc main.ft --test` the `test` binary should have this o
 > ✗ 1 test failed!
 > ```
 
-## test_output_never
+## #test_output_never
 
 Whether the test should not output it's captured output even if it fails. This annotation, in combination with the `#test_output_never` annotation has a very interesting side-effect: Since the `#test_output_always` annotation toggles whether the test outputs on _success_ and the `#test_output_never` annotation toggles whether the test outputs on _failure_, using both annotations on the same test leads to the output printing being flipped, now only printing when it succeeds but staying silent when it fails.
