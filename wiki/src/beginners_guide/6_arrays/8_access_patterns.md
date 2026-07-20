@@ -1,6 +1,6 @@
 # Access Patterns
 
-But ranges can not only be used for string slicing, but for array slicing too. It pretty much works exactly the same as when slicing strings, and it even has the absolute same syntax, since strings are more or less character arrays under the hood too.
+Ranges can not only be used for string slicing, but for array slicing too. It pretty much works exactly the same as when slicing strings, and it even has the absolute same syntax, since strings are more or less character arrays under the hood too.
 
 ```ft
 use Core.print

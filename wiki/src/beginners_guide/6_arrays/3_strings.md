@@ -1,6 +1,6 @@
 # Strings
 
-As stated earlier, strings and arrays have very much in common, actually. If we would make a deep-dive into how Flint works internally we would see that arrays and strings actually are the same data structure, but thats too low level for now. But, the important thing to note here is the similarity of strings with arrays, as a string is essentially just an array of characters, but what _is_ a character in string really?
+As stated earlier, strings and arrays have very much in common. If we would make a deep-dive into how Flint works internally we would see that arrays and strings are the same data structure, but thats too low level for now. The important thing to note here is the similarity of strings with arrays, as a string is essentially just an array of characters, but what *is* a character in a string really?
 
 In Flint, a character has the type `u8`, a type we have not discussed until now. So, if you save the sting `hello` on a variable its essentially the same as if you would store a `u8[]` array of length `5`. There exists a separate `str` type, however, to make our life with strings a lot easier than it would if we would need to think of strings as arrays of bytes.
 
@@ -29,16 +29,16 @@ use Core.print
 def main():
     str name = "Marc";
     u8 third = name[2];
-    print($"third = '{third}' at idx {i32(third)}\n");
+    print($"third = '{third}' = {i32(third)}\n");
 ```
 
 This program will print this line to the console:
 
 > ```
-> third = 'r' at idx 114
+> third = 'r' = 114
 > ```
 
-As you can see, `r` really is just the number `114` inside the computer. But what does this mean for arithmetic, comparisons etc? Because `u8` is "just a normal integer type" we can add, multiply, substract, divide, compare etc, everything like with `i32` values. But, we can not directly just store numbers on it without explicit typecasting. Here is an example of this:
+As you can see, `r` really is just the number `114` at the low level. But what does this mean for arithmetic, comparisons etc? Because `u8` is "just a normal integer type" we can add, multiply, substract, divide, compare etc, everything like with `i32` values. Here is an example of this:
 
 ```ft
 use Core.print
@@ -60,7 +60,7 @@ This program will print these lines to the console:
 
 ## Getting a string's length
 
-It is not uncommon to have a string as a paramter of a function, for example, and then we often want to get the length of the string somehow, maybe we dont know the length of a string beforehand, for example when parsing user input (will be talked about in a later chapter). But, very often we don't know the size of a string when writing the program, so we need a way to get a strings length at runtime. Here is a small program demonstrating how to get and use the length of a string:
+It is not uncommon to have a string as a paramter of a function, for example, and then we often want to get the length of the string somehow, maybe we dont know the length of a string beforehand, for example when parsing user input (will be talked about in a later chapter). But, very often we don't know the size of a string when writing the program, so we need a way to get a strings length at runtime. Here is a small program demonstrating how to get and use the `length` of a string:
 
 ```ft
 use Core.print
@@ -68,13 +68,13 @@ use Core.print
 def main():
     str some_string = "some neat string";
     len := some_string.length;
-    print($"string '{some_string}' is {len} characters long\n");
+    print($"string \"{some_string}\" is {len} characters long\n");
 ```
 
 This program will print this line to the console:
 
 > ```
-> string 'some neat string' is 16 characters long
+> string "some neat string" is 16 characters long
 > ```
 
 The variable `len` is of type `u64` here. The `length` field of a string is **always** a `u64`. One-dimensional arrays have also the result type of `u64` for their `.length` field. Here is a small example how you can print an unknown string line by line:
@@ -111,3 +111,5 @@ This program will print these lines to the console:
 > 6: '
 > '
 > ```
+
+Because the `length` field access has become so verbose and it was annoying to always write it out, you can also access the length of strings and arrays using the `.len` field too. Both fields work, but I would recommend using `.len` since `.length` *may* be removed in the future. I would like feedback on this, if possible. Which field name do you prefer? For the time being, both names are kept in the compiler, I think having the choice is a good thing, but I am not sure about the future of the `length` name.
