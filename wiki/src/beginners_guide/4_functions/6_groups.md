@@ -1,6 +1,6 @@
 # Groups
 
-What are groups? Groups are a new concept of Flint which allow us to do operations on multiple variables at the same time. You will see the potential and the integration of groups into other systems of Flint in later chapters, but even now groups are very powerful.
+What are groups? Groups are not entirely new, you might already know them under the more general term of [swizzling](https://en.wikipedia.org/wiki/Swizzling_(computer_graphics)). However, Groups are much more than *just* swizzling. Groups allow us to do operations on multiple variables at the same time and thus are a language-native way to express simultaniety. You will see the potential and the integration of groups into other systems of Flint in later chapters, but even now groups are very powerful. Throughout this Wiki, you will see multiple use-cases where the concept of groups has helped to unify different language syntax areas.
 
 You have already seen groups in action when returning multiple values from a function, but that was just the beginning.
 

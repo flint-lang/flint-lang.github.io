@@ -1,8 +1,8 @@
 # Const Data
 
-Const data in Flint are compile-time constant global data. This means that they are data which has no runtime footprint, cannot be initialized and does not exist after compilation. This is especially useful for configuration files or global variables.
+Const data in Flint are compile-time constant globals. This means that they are data which has no runtime footprint, cannot be initialized and does not exist after compilation. This is especially useful for configuration files or global variables. A const data definition is **not** a data component.
 
-In Flint, global variables work different than they do in other languages, because Flint does not have any global variables in the traditional sense (it does have runtime-mutable globals but you only will learn about them in a later chapter when talking about `shared data`). Constant data has emerged from the fact how default-values of data fields work under the hood, but let's look at a simple example first:
+There are two categories of global variables in Flint: Compile-time globals as `const data` and runtime globals as `shared data`. We will talk about `shared data` in the next chapter, this chapter focuses on `const data`. The design of `const data` has emerged from the fact how default-values of data fields work under the hood, but let's look at a simple example first:
 
 ```ft
 use Core.print
@@ -20,11 +20,11 @@ This program will print this line to the console:
 > x = 10
 > ```
 
-As you can see, the `const data Globals` does not contain an initializer for it's "fields", that's because it is not usable as a runtime-type like all data is which we have looked at up until now. We can access the global constant variables defined in `Globals` by writing `Globals.x`.
+As you can see, the `const data Globals` does not contain an initializer for its "fields". That is because it is not usable as a runtime-type like all data components are. We can access the global constant variables defined in `Globals` by writing `Globals.x`.
 
 ## Expression Substitution
 
-This is a very complex name for something very simple: When we write the expression `Globals.x` the compiler will *not* insert the value it computed for this expression, like `10` in our example. Instead something way more simple happens: The compiler will literally just copy and paste the expression after the `=` in the const data definition for `x`. So, in this case it will insert the expression `10` where `Globals.x` stands now. So, the program will resolve more to something like this:
+This is a very complex name for something very simple: When we write the expression `Globals.x` the compiler will *not* insert the **value** it computed for this expression, like `10` in our example. Instead something way more simple happens: The compiler will literally just copy and paste the **expression itself** which is written after the `=` in the const data definition for `x`. In our case it will insert the expression `10` where `Globals.x` stands now. But if you would write an expression like a function call, for example, the whole function call expression will be substituted. So, the program will resolve more to something like this:
 
 ```ft
 use Core.print
@@ -61,7 +61,7 @@ This program will print these lines to the console:
 > md.(x, y, s) = (10, 38.200001, "Hello 2")
 > ```
 
-But what exactly happened here? Well because the expression `Globals.md` got **replaced** with `MyData(10, 38.2, "Hello 2")` what we actually wrote was this code right here:
+But what exactly happened here? Well because the expression `Globals.md` got **replaced (substituted)** with `MyData(10, 38.2, "Hello 2")`, what we actually wrote was this code right here:
 
 ```ft
 use Core.print
@@ -101,4 +101,4 @@ This program will print these lines to the console:
 > x = 30
 > ```
 
-As you can see, `const data` is essentially a lightweight-macro system akin to C's `#define` macros, but const data is way not as powerful as C macros are, it's just a simple expression-substitution rule, nothing more and nothing less.
+As you can see, `const data` is essentially a lightweight-macro system akin to C's `#define` macros, but `const data` is **far less powerful** than C macros are, it's just a simple expression-substitution rule, nothing more and nothing less.

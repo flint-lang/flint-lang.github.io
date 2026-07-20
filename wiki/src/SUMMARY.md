@@ -47,15 +47,16 @@
     - [Discarding Return Values](./beginners_guide/4_functions/8_discarding_return_values.md)
 
   - [Data: The Core of Flint](./beginners_guide/5_data.md)
-    - [Declaring Data Modules](./beginners_guide/5_data/1_declaring_data_modules.md)
+    - [Declaring Data Components](./beginners_guide/5_data/1_declaring_data_components.md)
     - [Default Values](./beginners_guide/5_data/2_default_values.md)
     - [Nested Data](./beginners_guide/5_data/3_nested_data.md)
     - [Using Data in Functions](./beginners_guide/5_data/4_using_data_in_functions.md)
     - [Tuples](./beginners_guide/5_data/5_tuples.md)
-    - [Multi-Types](./beginners_guide/5_data/6_multi_types.md)
+    - [Vectors](./beginners_guide/5_data/6_vectors.md)
     - [Groups 2](./beginners_guide/5_data/7_groups_2.md)
     - [Type Aliasing](./beginners_guide/5_data/8_type_aliasing.md)
     - [Const Data](./beginners_guide/5_data/9_const_data.md)
+    - [Shared Data](./beginners_guide/5_data/10_shared_data.md)
 
   - [Arrays & Ranges](./beginners_guide/6_arrays.md)
     - [Introduction to Arrays](./beginners_guide/6_arrays/1_introduction.md)

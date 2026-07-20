@@ -19,11 +19,16 @@ typedef struct {
 } Vector2;
 ```
 
-Under the hood, both Flint's `data` module and C's `struct` are exactly the same. They are just collections of data packed into a struct. So, what are tuples then? Well, tuples are collections of data, packed into a struct too. But with one big difference: They are **anonymous**, meaning that they dont get a _type name_, but when looking at the lowest level, `data` and tuples are actually extremely similar.
+Under the hood, both Flint's `data` component and C's `struct` are exactly the same. They are just collections of data packed into a struct. So, what are tuples then? Well, tuples are collections of data, packed into a struct too. But with two big differences:
+
+1. They are **anonymous**, meaning that they dont get a *type name*
+2. They are not DIMA-managed (you will learn the implications of this later)
+
+But when looking at the lowest level, `data` and tuples are very similar.
 
 ## Defining Tuples
 
-Because tuples are anonymous they are not defined like data modules are. They are rather defined inline, like a variable, for example. So here is the basic syntax to define a tuple in Flint:
+Because tuples are anonymous they are not defined like data components are. They are defined inline, like a variable, for example. So here is the basic syntax to define a tuple in Flint:
 
 ```ft
 def main():
@@ -32,11 +37,11 @@ def main():
 
 Do you recognize the `data` keyword? This is the reason i told you earlier that tuples and data are actually pretty much the same thing, but one is named while the other one is not. This connection and the understanding of it is crucial to understand tuples, because otherwise you now would be really confused by the syntax: "Wait, what does the `data` keyword have to do with tuples here?".
 
-And here we have another very nice property of Flint's groups – they enable seemless interoperability between different types! As you can see, the "initializer" for a tuple is actually a group with the same types as the tuple itself. So, the "initializer" of a tuple could also be a grouped field access (d.(a, b, c)` or a group from multiple variables or anything else you can do with groups. As you can see, groups form a whole layer of making syntax easier for a lot of systems.
+And here we have another very nice property of Flint's groups – they enable seemless interoperability between different types! As you can see, the "initializer" for a tuple is a group with the same types as the tuple itself. So, the "initializer" of a tuple could also be a grouped field access (d.(a, b, c)` or a group from multiple variables or anything else you can do with groups. As you can see, groups form a whole layer of unifying syntax for a lot of systems.
 
 ## Tuple Access
 
-But what about assigning and accessing the specific fields of a tuple? With `data` modules, we can access the fields directly by the name of the field (`v2.x`) but tuples are anonymous, meaning that neither the type itself has a name, nor do the fields.
+But what about assigning and accessing the specific fields of a tuple? With `data` components, we can access the fields directly by the name of the field (`v2.x`) but tuples are anonymous, meaning that neither the type itself has a name, nor do the fields.
 
 In Flint, we access the fields of a tuple by its "index". The first field of the tuple above is of type `i32`, the second of type `f32` and the third of type `str`, so we can use the fixed ordering as our accessing syntax right away. But we cannot do `tuple.0`, `tuple.1` etc directly because that would look pretty weird to have an integer literal directly. Here is an example of how to access the single values of a tuple in Flint:
 
@@ -63,7 +68,7 @@ This program will print these lines to the console:
 > third = "hello!"
 > ```
 
-As you can clearly see, we access the elements of the tuple with the `.$N` syntax, where `N` is the index of the element we want to access. Like always for indices, we start at 0 as Flint has zero-based indexing. If we would try to access an element which is out of bounds, like `.$3` in our case we would actually get a compile error:
+As you can clearly see, we access the elements of the tuple with the `.$N` syntax, where `N` is the index of the element we want to access. Like always for indices, we start at `0` as Flint has zero-based indexing. If we would try to access an element which is out of bounds, like `.$3` in our case we would get a compile error:
 
 ```ft
 def main():
@@ -112,7 +117,7 @@ This program prints these lines to the console:
 
 ## Grouped accesses and assignments
 
-Just like with "normal" data you can do grouped field accesses and assignments with tuples too. Instead of the field names you need to write the field ids again:
+Just like with data components you can do grouped field accesses and assignments with tuples too. Instead of the field names you need to write the field ids again:
 
 ```ft
 use Core.print
@@ -129,11 +134,11 @@ This program prints this line to the console:
 > tuple.($0, $1, $2) = (7, 4.7, "yes")
 > ```
 
-## Addition Information
+## Additional Information
 
-### Multi-Type overlap
+### Vector Type overlap
 
-Tuples are not allowed to be defined as a type that can be represented with a mutli-type instead. So, this example for example:
+Tuples are not allowed to be defined as a type that can be represented with a vector instead. This example:
 
 ```ft
 use Core.print
@@ -144,7 +149,7 @@ def main():
     print($"tuple.($0, $1, $2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
 ```
 
-will throw a this compilation error:
+will result in this compilation error:
 
 > ```
 > Parse Error at main.ft:4:5
@@ -152,8 +157,10 @@ will throw a this compilation error:
 > 3 │ def main():
 > 4 │ »   data<i32, i32, i32> tuple = (1, 1, 1);
 > ┌─┴─────┘
-> └─ Cannot create a tuple type which overlaps with a multi-type
+> └─ Cannot create a tuple type which overlaps with a vector
 > ```
+
+The compiler simply won't let you use the `data<i32, i32, i32>` type, you need to use `i32x3` instead. There is no technical reason to this choice other than nudging users towards using the right tool for the job.
 
 ### Returning Tuples
 
@@ -195,7 +202,7 @@ def main():
     print($"tuple.($0, $1, $2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
 ```
 
-annyway. This program will print this line to the console:
+This program will print this line to the console:
 
 > ```
 > tuple.($0, $1, $2) = (1, 4.7, hello)
@@ -222,7 +229,7 @@ This program will print this message to the console:
 > tuple.(i32, f32, str) = (1, 2.2, "three")
 > ```
 
-Also, like "normal" data, tuples can be passed to functions as mutable references:
+Also, like data components, tuples can be passed to functions as mutable references:
 
 ```ft
 use Core.print

@@ -1,6 +1,6 @@
 # Nested Data
 
-Data modules can include other data modules as fields. This allows you to create nested structures, which are common in real-world programming. Here is an example of this concept in action:
+Data components can include other data components as fields. This allows you to create nested structures, which are common in real-world programming. Here is an example of this concept in action:
 
 ```ft
 use Core.print
@@ -30,7 +30,7 @@ This program will print these lines to the console:
 > rect.bottom_right.(x, y) = (10, 10)
 > ```
 
-Note that storing the `Point` variables in the `rect` variable through its constructor creates _copies_ of the points. In other languages this would need to be done manually, but in Flint its automatic. So, when changing `p1` and `p2` after the creation of `rect`, the `top_left` and `bottom_right` fields will not be changed:
+Note that storing the `Point` variables in the `rect` variable through its constructor creates *copies* of the points. In other languages this would need to be done manually, but in Flint its automatic ([it deep-clones, not just shallow-copies](https://www.geeksforgeeks.org/blogs/difference-between-shallow-and-deep-copy-of-a-class/)). So, when changing `p1` and `p2` after the creation of `rect`, the `top_left` and `bottom_right` fields will not be changed:
 
 ```ft
 use Core.print
@@ -83,9 +83,9 @@ This program will print these lines to the console:
 
 <div class="warning">
 
-The below example actually compiles, but its impossible to run usefully.
+The below example compiles fine, but its impossible to construct the data.
 
-Data is actually allowed to contain itself, but its impossible to initialize, as Flint has noo concept of **nullpointers** or **null** like other languages have. Flint has its optionals `T?` instead, but you will learn about them in a much later chapter. For now, just be aware that it _is_ possible to create circular data, but you cannot initialize it.
+Data is allowed to contain itself, but its impossible to initialize, as Flint has no concept of **null** like other languages have (like Java). Flint has its optionals `T?` instead, but you will learn about them in a much later chapter. For now, just be aware that it *is* possible to create circular data, but you cannot initialize it.
 
 </div>
 

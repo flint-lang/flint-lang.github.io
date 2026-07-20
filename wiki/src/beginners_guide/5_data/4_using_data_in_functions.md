@@ -1,6 +1,6 @@
 # Using Data in Functions
 
-Data modules can be passed to and returned from functions, enabling you to manipulate them easily.
+Data components can be passed to and returned from functions, enabling you to manipulate them easily.
 
 ```ft
 use Core.print
@@ -45,7 +45,7 @@ def main():
     print($"Point(x: {p.x}, y: {p.y})\n");
 ```
 
-If you try to compile this program you will actually get a compile error:
+If you try to compile this program you will get a compile error:
 
 > ```
 > Parse Error at main.ft:9:5
@@ -56,12 +56,12 @@ If you try to compile this program you will actually get a compile error:
 > └─ Variable 'p' is marked as 'const' and cannot be modified!
 > ```
 
-But why is that? For this to explain we actually need to talk about **mutability** for a bit. Mutability is the ability to mutate (change) variables. Up until now this has not been a problem yet, because Flint actually has clear mutability rules:
+But why is that? For this to explain we need to talk about **mutability** for a bit. Mutability is the ability to mutate (change) variables. Up until now this has not been a problem yet, because Flint has clear mutability rules:
 
 - Local variables declared within a scope are always **mutable** except explicitely made immutable
 - Function parameters are always **immutable** except explicitely made mutable
 
-Flint has two keywords for this very reason: `mut` and `const`. You can use `const` when declaring a variable in a scope to make the variable constant, thus not-changable after its declaration and you can use `mut` to make parameters of functions explicitely mutable. Note that putting `const` in front of a function parameter has no effect, as its const annyway, same as putting `mut` in front of a variable declaration, as variables are mutable annyway.
+Flint has two keywords for this very reason: `mut` and `const`. You can use `const` when declaring a variable in a scope to make the variable constant, thus not-changable after its declaration and you can use `mut` to make parameters of functions explicitely mutable. Note that putting `const` in front of a function parameter has no effect, as its const by default, same as putting `mut` in front of a variable declaration, as variables are mutable by default.
 
 So, to fix our little compile error we need to change the signature of our function a bit:
 
@@ -107,7 +107,7 @@ def main():
     print($"Point(x: {p.x}, y: {p.y})\n");
 ```
 
-will not compile again. Because now we have declared `p` to be immutable, but we try to pass it to to the call `increment_by` which expects a mutable `Point` argument, so we have a type mismatch here, because when we made `p` immutable it would be wrong if it could be modified by a function. We get this compile error:
+will not compile again. Because now we have declared `p` to be immutable, but we try to pass it to to the call `increment_by` which expects a mutable `Point` argument, so we have a type mismatch here. We get this compile error:
 
 > ```
 > Parse Error at main.ft:9:5

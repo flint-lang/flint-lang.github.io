@@ -1,6 +1,6 @@
-# Multi-Types
+# Vectors
 
-Multi-Types are essentially vectorized variants of primitive types to increase both readability, performance (SIMD) and ease of use for vectorized math operations and much more. Here is an example of how multi-types work:
+Vectors are vectorized variants of primitive types to increase both readability, performance (SIMD) and ease of use for vectorized math operations and much more. Here is an example of how vectors work:
 
 ```ft
 use Core.print
@@ -19,7 +19,7 @@ This program will print these lines to the console:
 > v3 = (4, 5, 6)
 > ```
 
-As you can see, the 3-width i32 multi-type has the "fields" of x, y and z, each being of type `i32`. There exist several multi-types in Flint today, to be more precise, every single integer and floating-point literal has multiple multi-type vector variations of it:
+As you can see, the 3-width `i32` vector has the "fields" `x`, `y` and `z`, each being of type `i32`. There exist several vector types in Flint today, to be more precise, every single integer and floating-point literal has multiple vector variations of it:
 
 |  Type   | Element Type | Vector Size |
 | :-----: | :----------: | :---------: |
@@ -72,10 +72,14 @@ As you can see, the 3-width i32 multi-type has the "fields" of x, y and z, each 
 |  <hr>   |              |             |
 | `bool8` |    `bool`    |      8      |
 
-All multi-types with less than or equal to width 4 can be accessed via the field names directly, while all multi-types which are bigger, like `i32x8` can only be accessed with the same index-based accesser like tuples through the `.$N` syntax. This is also the reason why tuples needed to be explained before multi-types. There actually exist several aliases for each component, each being unambiguous. Below is a table describing which "field" names exist for each component:
+All vectors with up to width 4 can be accessed via the field names directly, while all vectors larger than 4, like `i32x8`, can only be accessed with the same index-based accesser like tuples through the `.$N` syntax. This is also the reason why tuples needed to be explained before vectors. There exist several aliases for each component, each being unambiguous. Below is a table describing which "field" names exist for each component:
 
 | Width | Field 0 | Field 1 | Field 2 | Field 3 |
 | :---: | :-----: | :-----: | :-----: | :-----: |
+|   2   |   `$0`  |   `$1`  |         |         |
+|   3   |   `$0`  |   `$1`  |   `$2`  |         |
+|   4   |   `$0`  |   `$1`  |   `$2`  |   `$3`  |
+|  <hr> |         |         |         |         |
 |   2   |   `u`   |   `v`   |         |         |
 |  <hr> |         |         |         |         |
 |   2   |   `i`   |   `j`   |         |         |
@@ -93,13 +97,15 @@ All multi-types with less than or equal to width 4 can be accessed via the field
 |   3   |   `r`   |   `g`   |   `b`   |         |
 |   4   |   `r`   |   `g`   |   `b`   |   `a`   |
 
-As you can see, different widths have different aliases for the coordinates. The `u` and `v` aliases for vectors of size two, for example, are used a lot in UV-coordinate systems, and `rgba` just starts at three components, because just having `r` and `g` for two-sized vectors does not make any sense.
+As you can see, different widths have different field names for the coordinates. The `u` and `v` fields for vectors of size two, for example, are used a lot in UV-coordinate systems, and `rgba` just starts at three components, because just having `r` and `g` for vectors of width 2 does not make any sense.
 
-The names are designed in a way that eliminates collisions in every case. The same letter will always be used for the same coordinate. If we would have added `uvw`, like it nomally would be, the `w` would collide with the fourth field in `xyzw`, so now it would be ambiguous whether `w` is the third or fourth field of a multi-type without knowing the type upfront, which would be really bad UX. So, instead we opted to design the names in a way that completely eliminates ambiguity.
+The names are designed in a way that eliminates collisions in every case. The same letter will always be used for the same coordinate. If we would have added `uvw`, like it nomally would be, the `w` would collide with the fourth field in `xyzw`, so now it would be ambiguous whether `w` is the third or fourth field of a vector without knowing the type upfront, which would be really bad UX. So, instead we opted to design the names in a way that completely eliminates ambiguity.
 
-## Multi-Types with Functions
+If you really want to disambiguate the index of the vector, for example when `a` is the index `0` in other languages or libraries (`argb` format exists), then you can still use the `.$0` coordinate and this unambiguously always just means "first element of vector".
 
-But let's move on to functions, because multi-types can be returned from functions too, unlike tuples. So, we can very well define a function like this:
+## Vectors with Functions
+
+Lets move on to functions, because vectors can be returned from functions too, unlike tuples. So, we can very well define a function like this:
 
 ```ft
 use Core.print
@@ -118,11 +124,11 @@ This program will print this line to the console:
 > (x, y) = (10, 20)
 > ```
 
-As you can see, interoperability between mutli-types and groups _just works_. **Groups** are Flint's "type interoperability layer". You can pack multiple single values into a group, then store it in a tuple. Or access multiple fields of a tuple and store it in a multi-type etc. Groups are the real "middle-ground" of Flint's type system, because you can return a group of `(i32, i32)` and still store it in a mutli-type or you can return a `i32x2` and store it in a group. The group, however, could also be a grouped assignment of a tuple, so you could very well write `tuple.($0, $2) = get_vec_2(10, 20);` and store the `i32x2` return value on the `$0` and `$2` fields of the tuple, because its a grouped assignment and groups are natively meant to be interoperable with Flint's other types.
+As you can see, interoperability between vectors and groups *just works*. **Groups** are Flint's "type interoperability layer". You can pack multiple single values into a group, then store it in a tuple. Or access multiple fields of a tuple and store it in a vector etc. Groups are the real "middle-ground" of Flint's type system, because you can return a group of `(i32, i32)` and still store it in a vector or you can return a `i32x2` and store it in a group. The group, however, could also be a grouped assignment of a tuple, so you could very well write `tuple.($0, $2) = get_vec_2(10, 20);` and store the `i32x2` return value on the `$0` and `$2` fields of the tuple, because its a grouped assignment and groups are natively meant to be interoperable with Flint's other types.
 
-## Multi-Type Arithmetic
+## Vector Arithmetic
 
-Multi-types are **primitive types** in Flint, which means that they have first-class arithmetic support. The mutli-type variant of any type supports the same arithmetic operations as its underlying type. Here is one example of this:
+Vectors are **primitive types** in Flint, which means that they have first-class arithmetic support. The vector variant of any type supports the same arithmetic operations as its underlying type. Here is one example of this:
 
 ```ft
 use Core.print
@@ -142,4 +148,4 @@ This program will print this line to the console:
 
 ## Important Note
 
-When using Multi-Types you gain free access to SIMD instructions. SIMD means **S**ingle **I**nstruction, **M**ultiple **D**ata and its a very optimized way of doing operations, such as additions. For example, adding two `i32x4` variables is just as fast as adding a single `i32` variable. This makes Flint's multi-types both extremely fast and extremely easy to use.
+When using vectors you gain free access to SIMD instructions. SIMD means **S**ingle **I**nstruction, **M**ultiple **D**ata and its a very optimized way of doing operations, such as additions. For example, adding two `i32x4` variables is just as fast as adding a single `i32` variable. This makes Flint's vectors both very fast and very easy to use.

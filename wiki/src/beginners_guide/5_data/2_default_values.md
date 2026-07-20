@@ -9,7 +9,7 @@ data MyData:
     MyData(x, y);
 ```
 
-When instantiating this data module, you can use `_` to signify using the default value for a field. The `_` operator is **only** used in _unused_ or _default_ contexts, nowhere else. So, if you see a single `_` in Flint you can **always** assume that either something is unused or set to a default.
+When instantiating this data module, you can use `_` to signify using the default value for a field. The `_` operator is **only** used in *unused* or *default* contexts, nowhere else. So, if you see a single `_` in Flint you can **always** assume that either something is unused, discarded or set to a default.
 
 ```ft
 use Core.print
