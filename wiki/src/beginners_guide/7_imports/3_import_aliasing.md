@@ -42,11 +42,11 @@ This program will print this line to the console:
 > res = 30
 > ```
 
-As you can see, **any** `use` clausel can be aliased. The identifier after the `as` keyword is the aliasing name, which you need to specify when you call the function. If you would remove the `p.` in the `utils.ft` file you would get a compile error.
+As you can see, **any** `use` clausel can be aliased (even the `use Core.print` clausel). The identifier after the `as` keyword is the aliasing name, which you need to specify when using a symbol from that imported namespace. If you would remove the `p.` in the `utils.ft` file the function would reference itself and would infinitely recurse.
 
 ## Alias chain
 
-Let's try something else, let's import the `utils.ft` file using an alias too, as then something cool happens, have a look:
+Lets try something else, lets import the `utils.ft` file using an alias too, as then something cool happens, have a look:
 
 The `add.ft` and `utils.ft` files stayed the exact same.
 
@@ -62,17 +62,17 @@ def main():
     print($"res = {res}\n");
 ```
 
-This program will print these lines to the console:
+This program will print this line to the console:
 
 > ```
 > res = 30
 > ```
 
-As you can see, we now skipped the function `add` defined in the `utils.ft` file entirely and called the `add` function from `add.ft` directly! This is a very important characteristic of import aliasing: The aliased import becomes part of the global symbols of the file namespace and can be used in files importing it. But if you remove the `as u` alias in the `main.ft` then you will *not* be able to access the alias `a` at all! You are only allowed to access a file's aliases when accessing the file through an alias itself. You will understand how it all works and why it works like it does shortly.
+As you can see, we now skipped the function `add` defined in the `utils.ft` file entirely and called the `add` function from `add.ft` directly! This is a very important characteristic of import aliasing: The aliased import becomes part of the global symbols of the file namespace and can be used in files importing it. But if you remove the `as u` alias in the `main.ft` then you will *not* be able to access the alias `a` at all! You are only allowed to access a files aliases when accessing the file through an alias itself. You will understand how it all works and why it works like it does shortly.
 
 ## Types from aliased files
 
-Just like functions can be used with a file alias, types can too:
+Types can be used with a file alias just like functions:
 
 file `data.ft`
 
@@ -116,6 +116,6 @@ As with other places when printing floating point values, the output differs in 
 > v3 = (15, 25, 35)
 > ```
 
-So, if you see the above output, do not worry, it will be fixed in some later release!
+So, if you see this output, do not worry, it will be fixed in some later release!
 
 </div>

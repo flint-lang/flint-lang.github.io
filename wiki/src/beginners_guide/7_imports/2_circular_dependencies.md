@@ -1,8 +1,8 @@
 # Circular Dependencies
 
-You may have asked yourself already _"What will happen if file `A` imports file `B` and file `B` imports file `A` again?"_. This is called a circular dependency. It's called circular, because the dependency graph forms a circle, where the "line of imports" ends up at its starting point. If you try to write import statements in C where every file imports each other you will get a compilation error, as circular dependencies are not allowed and cannot be resolved.
+You may have asked yourself already *"What will happen if file `A` imports file `B` and file `B` imports file `A` again?"*. This is called a [circular dependency](https://en.wikipedia.org/wiki/Circular_dependency). It's called circular, because the dependency graph forms a circle, where the "line of imports" ends up at its starting point. If you try to write imports in C where every file imports each other you will get a compilation error, as circular dependencies are not allowed and cannot be resolved.
 
-But Flint's `use` clausels work quite different from the `#import` from C-style languages. Whereas these literally just copy and paste the code from the other file, the `use` clausel in Flint is a lot...smarter. The `use` clausel only imports files at a depth of `1`, but what does this mean? Well, here is a small example to showcase what i mean with that:
+But Flint's `use` clausels work quite different from the `#import` from C-style languages. Whereas these literally just copy and paste the code from the other file, the `use` clausel in Flint is a lot...smarter. The `use` clausel only imports symbols of files at a depth of `1`, but what does this mean? Well, here is a small example to showcase what i mean with that:
 
 The `helper.ft` file:
 
@@ -40,15 +40,16 @@ When compiling this program, you will see this line printed to the console:
 > res = -55
 > ```
 
-In this example you can see how Flint has an importing depth of `1`, unlike many other languages. So, when you include `utils.ft` in the `main.ft` file you _only_ gain access to the `some_operation` function, but _not_ to the `substract_and_mult` function from the `helper.ft` file. There is no recursive resolution of imports happening, meaning that **every** import in Flint is "shallow". If you would need the `substract_and_mult` function within your `main.ft` file you would need to write an explicit `use "helper.ft"` clausel. This is absolutely intentional, because having _only_ shallow inclusions we get something even better: **_circular inclusion support_**.
+In this example you can see how Flint has an importing depth of `1`, unlike many other languages. So, when you include `utils.ft` in the `main.ft` file you *only* gain access to the `some_operation` function, but *not* to the `substract_and_mult` function from the `helper.ft` file. There is no recursive resolution of imports happening, meaning that **every** import in Flint is "shallow". If you would need the `substract_and_mult` function within your `main.ft` file you would need to write an explicit `use "helper.ft"` clausel. This is absolutely intentional, because by having *only* shallow inclusions we get something nice: ***circular inclusion support***.
 
-Circular dependencies are **not** considered a fault in Flint, at all. Often times you want to separate code on meaning, but the single files still need access to one another. In C-style languages you would solve this with forward-declarations, header files etc. But in Flint you just include any file you like, and it simply does not matter if a circle emerges or not, the Flint compiler will handle it all! Here is an example showcasing circular dependencies with a recursive function:
+Circular dependencies are **not** considered a fault in Flint, at all. Often times you want to separate code on meaning, but the single files still need access to one another. In C-style languages you would solve this with forward-declarations, header files etc. But in Flint you just include any file you like, and it simply does not matter if a circle emerges or not, the Flint compiler will handle it all. Here is an example showcasing circular dependencies with a recursive function:
 
 The `utils.ft` file:
 
 ```ft
-use "main.ft"
 use Core.print
+
+use "main.ft"
 
 def recursive_count_utils(i32 x):
     if x > 5:
@@ -61,8 +62,9 @@ def recursive_count_utils(i32 x):
 The `main.ft` file:
 
 ```ft
-use "utils.ft"
 use Core.print
+
+use "utils.ft"
 
 def recursive_count_main(i32 x):
     if x > 5:
@@ -101,4 +103,4 @@ As you can see, circular dependencies are absolutely no problem in Flint, and th
 
 ## Side note
 
-Because the files `main.ft` and `utils.ft` form a circle in the last example, you actually also could compile the program with the command `flintc utils.ft` and it would still work, as it would explore all files until it finds the main function. You can always think of file dependencies as a "tree". If, for example, file `main.ft` includes file `A`, which includes file `B` and you specify file `A` when compiling, you will get an error that no main function is defined, as the `main.ft` function was no longer part of the tree. If, however, file `A` or file `B` include `main.ft`, the compiler will be able to find the main file and main function again. Try it out and test a few file dependency trees and see for yourself how the compiler reacts to it.
+Because the files `main.ft` and `utils.ft` form a circle in the last example, you also could compile the program with the command `flintc utils.ft` and it would still work, as it would explore all files in the inclusion graph and naturallyfinds the main function in the `main.ft` file. You can always think of file dependencies as a "tree". If, for example, file `main.ft` includes file `A`, which includes file `B` and you specify file `A` when compiling, you will get an error that no main function is defined, as the `main.ft` function was no longer part of the tree. If, however, file `A` or file `B` include `main.ft`, the compiler will be able to find the main file and main function again. Try it out and test a few file dependency trees and see for yourself how the compiler reacts to it.
