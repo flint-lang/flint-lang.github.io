@@ -161,8 +161,6 @@
     - [Chaining Operations]()
     - [Composing Functions]()
 
-  - [Hooks]()
-
   - [Blueprints]()
     - [Introduction]()
     - [The `bp` Type]()
@@ -190,8 +188,6 @@
     - [Annotations]()
 
   - [Paralellism]()
-    - [How DCMP makes parallelism trivial]()
-    - [The `parallel` Core module]()
 
   - [Async Compute]()
 
@@ -203,10 +199,6 @@
     - [Slot Pinning]()
     - [Defragmentation]()
     - [Annotations]()
-
-  - [DCMP Internals]()
-    - [Compile-Time Dispatch Tables]()
-    - [Entity Call Dispatch]()
 
 # Reference
 
