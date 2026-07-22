@@ -1,6 +1,6 @@
 # Named Opaque Types
 
-A named opaque type is needed to distinguish two different opaque types, in order to provide some level of type-safety when dealing with opaques. Let's take a look at a small example to showcase this. We take this `extern.h` file:
+A named opaque type is needed to distinguish two different opaque types, in order to provide some level of type-safety when dealing with opaques. Lets take a look at a small example to showcase this. We take this `extern.h` file:
 
 ```c
 #include <stdio.h>
@@ -56,7 +56,7 @@ extern def create_named_opaque() -> NamedOpaque;
 extern def free_named_opaque(mut NamedOpaque* value);
 ```
 
-The `typedef void* NamedOpaque` directly resulted in a named opaque definition, `opaque NamedOpaque;`. Named opaques are incompatible with one another. Let's change the program a bit (the `fip-c.toml` file stays the same). The new `extern.h` now looks like:
+The `typedef void* NamedOpaque` directly resulted in a named opaque definition, `opaque NamedOpaque;`. Named opaques are incompatible with one another. Lets change the program a bit (the `fip-c.toml` file stays the same). The new `extern.h` now looks like:
 
 ```c
 #include <stdlib.h>
@@ -124,6 +124,6 @@ Now, when we try to compile the program we get this compile error:
 >     └─ But got:  GLObject
 > ```
 
-This showcases the advantage we have when using named opaque types instead of raw `void*` in C or `opaque` in Flint: The compiler better understands the API and understands now that passing a `GLObject` typed value where a `GLFrame` is expected is just wrong! As you can see, even though _both_ `GLFrame` and `GLObject` are a `void*` under the hood, they are fundamentally type-incompatible in Flint, preventing you from passing / storing opaque values to functions which expect something else.
+This showcases the advantage we have when using named opaque types instead of raw `void*` in C or `opaque` in Flint: The compiler better understands the API and understands now that passing a `GLObject` typed value where a `GLFrame` is expected is just wrong! As you can see, even though *both* `GLFrame` and `GLObject` are a `void*` under the hood, they are fundamentally type-incompatible in Flint, preventing you from passing / storing opaque values to functions which expect something else.
 
 This named opaque system, however, greatly depends on the quality of the C library itself (for auto-bindings). For example when a C function takes a raw `void*` parameter directly, there isn't much the Flint compiler or FIP can do here, in that case a regular `opaque` type is emitted for the parameter type (like in the `free` function for example).
