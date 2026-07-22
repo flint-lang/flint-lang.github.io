@@ -4,7 +4,7 @@ The next thing we want to add is the ball itself. It is added before any players
 
 ## A simple ball
 
-We start by defining the data our ball will need. The ball moves in a given direction, which means it needs a `dir`ection, a `pos`ition, a `speed` and of course a `size` too. So, we end up with this data structure for the ball:
+We start by defining the data our ball will need. The ball moves in a given direction, which means it needs a `dir`ection, a `pos`ition, a `speed` and of course a `radius` too. So, we end up with this data structure for the ball:
 
 **`ball.ft`**:
 ```ft
@@ -20,10 +20,10 @@ data DBall:
 	DBall(pos, dir, speed, radius);
 ```
 
-We will not need a reusable `func` module for the ball here, a simple monolithic entity is plenty. So, we just define our `Ball` entity with entity functions in it. For now, we will just add one function to the `Ball` entity: `draw`.
+We will not need a reusable `func` component for the ball here, as the balls functionality is not shared with any other object. So, we just define our `Ball` object with defined the functions directly in it. For now, we will just add one function to the `Ball` object: `draw`.
 
 ```ft
-entity Ball:
+object Ball:
 	data: DBall ball;
 	Ball(ball);
 
@@ -31,11 +31,11 @@ entity Ball:
 		rl.DrawCircle(i32(ball.pos.x), i32(ball.pos.y), ball.radius, Colors.yellow);
 ```
 
-The balls color is yellow. As you can see, the position, direction and speed of the ball are all implemented as floating point values but the `DrawCircle` function expects values of type `i32` for the `x` and `y` position when rendering. It is generally recommended to store positions, directions etc always as floating point numbers, as in games we often do incremental changes (move a tiny bit) each frame, those incremental changes would get lost entirely when using integer values.
+The balls color is yellow. As you can see, the position, direction and speed of the ball are all implemented as floating point values but the `DrawCircle` function expects values of type `i32` for the `x` and `y` position when rendering. It is generally recommended to store positions, directions etc always as floating point numbers, as in games we often do incremental changes (move a tiny bit) each frame, those incremental changes would get lost entirely when using integer values (as this "tiny bit" is almost always less than 1 but greater than 0).
 
 ## Creating and drawing
 
-Now that we created the `ball.ft` file we want to create and render the ball in the game loop. So, we add the `use "ball.ft"` clausel to the main file and then we create the ball before entering the main loop:
+Now that we created the `ball.ft` file we want to create and render the ball in the game loop. So, we add the `use "ball.ft"` clausel to the main file and then we create the ball before entering the game loop:
 
 ```ft
 	// Initialize game objects
@@ -50,7 +50,7 @@ Now that we created the `ball.ft` file we want to create and render the ball in 
 		rl.EndDrawing();
 ```
 
-If you now compile and run the game, the ball will be drawn centered in the middle of the game window.
+If you now compile and run the game, the ball will be drawn in the center of the game window.
 
 ![Ball Centered](../../images/12_game_example/2_the_ball/ball_centered.png)
 
@@ -98,9 +98,11 @@ def main():
 ```
 
 The first thing we need to do is to add
+
 ```ft
 use Core.time
 ```
+
 at the very top to include the `time` Core module in the `main.ft` file. To calculate the time which passed between frames ([delta time](https://en.wikipedia.org/wiki/Delta_timing)) we just compare the `TimeStamp` of the last frame with the current new `TimeStamp` of this frame. So, we need to start by adding
 
 ```ft
@@ -108,7 +110,7 @@ at the very top to include the `time` Core module in the `main.ft` file. To calc
 	while not rl.WindowShouldClose():
 ```
 
-before the loop to keep track of the time stamp of the last frame. We do not get the last frame / current frame difference at the very top of the loop, we actually do it right in the middle, after drawing the game board itself but before drawing the game objects. So, before drawing the ball we need to add those lines right here:
+before the loop to keep track of the time stamp of the last frame. We do not get the last frame / current frame difference at the very top of the loop, we do it right in the middle, after drawing the game board itself but before drawing the game objects. So, before drawing the ball we need to add those lines right here:
 
 ```ft
 		// Get the delta time
@@ -118,18 +120,18 @@ before the loop to keep track of the time stamp of the last frame. We do not get
 		last_frame = current_frame;
 ```
 
-We get a time stamp (`now()`) to get the current absolute time. We then calculate the frame difference (`frame_duration`) as a difference between the two time stamps, and then use the `as_unit` function to give the time difference a unit, in our case `TimeUnit.S` for seconds. If the game runs at `60 FPS` for example, the `delta` will now have the value of `0.0166667` seconds or roughly `16.67` milliseconds. This is how we can get the delta time in the main loop.
+We get a time stamp (`now()`) to get the current absolute time. We then calculate the frame difference (`frame_duration`) as a difference between the two time stamps, and then use the `as_unit` function to give the time difference a unit, in our case the unit is `TimeUnit.S` for seconds. If the game runs at `60 FPS` for example, the `delta` will now have the value of `0.0166667` seconds or roughly `16.67` milliseconds. This is how we can get the delta time in the main loop.
 
-The next thing which needs to be done is to add an `update` function to the `Ball` entity like so:
+The next thing which needs to be done is to add an `update` function to the `Ball` object like so:
 
 ```ft
 	def update(f32 delta):
 		ball.pos += ball.dir * (delta * ball.speed);
 ```
 
-It is recommended to put all `const` functions (functions not mutating local state of the entity / func module) at the top and mutable functions (no `const`) below them. This function is rather simple, we just incrementally update the ball position by adding it's direction updated with it's speed and the frame delta. This means that the ball will move `ball.speed` pixels in the direction of `ball.dir` per second. The "per second" part is the one why we need the `delta`.
+It is recommended to put all `const` functions (functions not mutating local state of the object / func component) at the top and mutable functions (no `const`) below them. This function is rather simple, we just incrementally update the ball position by adding its direction updated with its speed and the frame delta. This means that the ball will move `ball.speed` pixels in the direction of `ball.dir` per second. The "per second" part is the only reason why we need the `delta` in the first place.
 
-Now that we have the `update` function on the ball, we can call the `update` function of the ball in the `main.ft` file:
+Now that we have the `update` function on the ball, we can call it in the `main.ft` file:
 
 ```ft
 		last_frame = current_frame;
@@ -138,7 +140,7 @@ Now that we have the `update` function on the ball, we can call the `update` fun
 		ball.update(delta);
 ```
 
-We add this code after getting the `delta` (since we use it) but before calling `ball.draw()`. If you try to run this program, you will see that the ball moves to the bottom right, that's because the `dir` is set to be `f32x2(1, 1)` so it just moves to the bottom right with a speed of `100` pixels per second (actually, `141` pixels per second because the direction is not normalized).
+We add this code after getting the `delta` (since we use it) but before calling `ball.draw()`. If you try to run this program, you will see that the ball moves to the bottom right, that's because the `dir` is set to be `f32x2(1, 1)` so it just moves to the bottom right with a speed of `100` pixels per second (actually `141` pixels per second because the direction is not normalized).
 
 ## Randomizing the ball direction
 
@@ -160,7 +162,7 @@ For now the ball will always fly to the bottom right. But the ball should either
 
 Since we call mathematical functions here, we need to include the `Core.math` module at the very top to gain access to `cos` and `sin`. I will not explain the mathematics here. We get a random angle between `-40` and `40` degrees and randomly choose whether the ball will fly to the left or to the right and then we reset the ball to start at the middle of the screen and set the speed and direction to their respective default values.
 
-This means that in the `main.ft` file, we now no longer need to `properly` initialize the ball at all, we can change the ball initialization line to these two lines instead:
+This means that in the `main.ft` file, we now no longer need to "properly" initialize the ball at all, we can change the ball initialization line to these two lines instead:
 
 ```ft
 	ball := Ball(DBall(_));
@@ -171,7 +173,7 @@ As you can see, the ball now flies in a random direction on program startup, but
 
 ## Colliding with the walls
 
-This system will be changed a bit in a later chapter when we actually implement a proper collision system, but for now it would be great if the ball would just bounce off all four edges of the screen. To accomplish this, we first need to add two more functions to the ball, `reflect_v` and `reflect_h`. The `reflect_v` reflects the direction vertically (when colliding with left or right) while the `reflect_h` reflects it horizontally (when colliding with top or bottom):
+This system will be changed a bit in a later chapter when we implement a proper collision system, but for now it would be great if the ball would just bounce off all four edges of the screen. To accomplish this, we first need to add two more functions to the ball, `reflect_v` and `reflect_h`. The `reflect_v` reflects the direction vertically (when colliding with left or right) while the `reflect_h` reflects it horizontally (when colliding with top or bottom):
 
 ```ft
 	def reflect_v():
@@ -197,6 +199,6 @@ These functions only flip the `x` or `y` axis respectively. Okay, with these fun
 			self.reflect_v();
 ```
 
-and now, when you try to run the program, the ball actually collides with all four sides and bounces off within the screen. Also, if the ball goes off screen (for example when you resize it) it will always fly back into the screen. If we would remove the `and ball.dir.(x or y) (> or <) 0` checks then the ball would flip every single time `update` is called, so it would "vibrate" at the same position outside the screen. But through this check we ensure that the ball always "comes back" to the screen.
+and now, when you try to run the program, the ball collides with all four sides and bounces off within the screen. Also, if the ball goes off screen (for example when you resize it) it will always fly back into the screen. If we would remove the `and ball.dir.(x or y) (> or <) 0` checks then the ball would flip every single time `update` is called when it is outside the screen bounds, so it would "vibrate" at the same position outside the screen. But through this check we ensure that the ball always "comes back" to the visible screen area.
 
 ![Ball Collision](../../images/12_game_example/2_the_ball/ball_collision.png)

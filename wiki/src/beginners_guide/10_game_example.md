@@ -12,7 +12,7 @@ For this reason, it has not been tested in any way on Windows, I am sorry for th
 
 Welcome to the last chapter of the beginners guide! You have learnt a lot of Flint concepts in small examples over the coarse of this guide so far. Now we will move on to bring all those features together to create a small game using Flint. The small game we will create is [Pong](https://en.wikipedia.org/wiki/Pong).
 
-This whole chapter is _not_ mandatory for you to learn Flint, as no new concepts will be introduced. This chapters only purpose is to apply all concepts learnt up until this point in a meaningful way. Applying the concepts in a practical example will help you to consolidate them. So, even if you feel proficient in Flint, it is still recommended to follow this game example chapter before moving on to the intermediates guide.
+This whole chapter is *not* mandatory for you to learn Flint, as no new concepts will be introduced. This chapters only purpose is to apply all concepts learnt up until this point in a meaningful way. Applying the concepts in a practical example will help you to consolidate them. So, even if you feel proficient in Flint, it is still recommended to follow this game example chapter before moving on to the intermediates guide.
 
 ![Finished Game Example](../images/12_game_example/finished_game_example.png)
 

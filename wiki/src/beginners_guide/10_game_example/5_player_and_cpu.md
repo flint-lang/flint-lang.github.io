@@ -4,7 +4,7 @@ Next up we need to properly separate the paddle out into two different kinds of 
 
 ## Player
 
-First we will create a new `player.ft` file which will contain all the player-specific code. We essentially move the `Paddle` entity definition to the `player.ft` file and rename it to `Player` and then we also move the `update` function from `FPaddleCommon` to the `Player` entity:
+First we will create a new `player.ft` file which will contain all the player-specific code. We essentially move the `Paddle` object definition to the `player.ft` file and rename it to `Player` and then we also move the `update` function from `FPaddleCommon` to the `Player` object:
 
 **`player.ft`**:
 ```ft
@@ -25,9 +25,9 @@ entity Paddle:
 		self.clamp_position();
 ```
 
-As you can see, we did not just copy-paste it, we added the `paddle` name for the `DPaddle` data and changed `FPaddleCommon.clamp_position(paddle)` to `self.clamp_position()` since all entity-functions have an implicit `self` parameter, it just looks cleaner this way.
+As you can see, we did not just copy-paste it, we added the `paddle` name for the `DPaddle` data and changed `FPaddleCommon.clamp_position(paddle)` to `self.clamp_position()` since all object functions have an implicit `self` parameter. It is not mandatory to change it, but it just looks cleaner this way.
 
-And then in the main file we add the `use "player.ft"` clausel and instead of creating a `paddle := Paddle` we create a `player := Player` and rename all occurrences of `paddle` with `player`.
+And then in the main file we add the `use "player.ft"` clausel and instead of creating a `paddle := Paddle` we create a `player := Player` and rename all occurrences of `paddle` to `player`.
 
 This all should have made absolutely zero difference to the program behaviour, but that was just the base work. We now can add player-specific functionality. For example, the `reset` function to make sure that the player is not spawned in the middle of the field but on the left side of the field instead:
 
@@ -42,7 +42,7 @@ and we call it in the `main` function right after creating the player, just like
 	// Initialize game objects
 	ball := Ball(DBall(_));
 	ball.reset();
-	player := Player(DPaddle(_, f32x2(screen / 2), _));
+	player := Player(DPaddle(_));
 	player.reset();
 ```
 
@@ -50,7 +50,7 @@ As you can see, the player now is located at the left side of the screen, where 
 
 ## Cpu
 
-Now that the player is at the left side of the screen, where it belongs, we can look at implementing the `Cpu` entity. For this, we create yet another file, `cpu.ft` with this content:
+Now that the player is at the left side of the screen, we can look at implementing the `Cpu` object. For this, we create yet another file, `cpu.ft` with this content:
 
 **`cpu.ft`**:
 ```ft
@@ -58,7 +58,7 @@ use Fip.raylib as rl
 
 use "paddle.ft"
 
-entity Cpu:
+object Cpu:
 	data: DPaddle paddle;
 	func: FPaddleCommon;
 	Cpu(paddle);
@@ -74,7 +74,7 @@ entity Cpu:
 Next up lets add the `use "cpu.ft"` clausel to the main function and then initialize, reset, update and draw the cpu in the main file:
 
 ```ft
-	cpu := Cpu(DPaddle(_, f32x2(screen / 2), _));
+	cpu := Cpu(DPaddle(_));
 	cpu.reset();
 	// ...
 	while not rl.WindowShouldClose():

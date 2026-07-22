@@ -1,6 +1,6 @@
 # Collision Detection
 
-Next up is the ability to let the ball collide with the paddle and to then let it bounce off of it. The overall idea is that we wnat to check whether the ball "touches" the paddle and if it does we call `reflect_v` on the ball to change it's movement direction. For this to work, we need to know both about the paddle as well as the ball, so we create a new file, `collisions.ft` which will detect and handle all collisions between paddles and the ball.
+Next up is the ability to let the ball collide with the paddle and to then let it bounce off of it. The overall idea is that we wnat to check whether the ball "touches" the paddle and if it does we call `reflect_v` on the ball to change its movement direction. For this to work, we need to know about boththe paddle and the ball, so we create a new file, `collisions.ft` which will detect and handle all collisions between paddles and the ball.
 
 **`collisions.ft`**:
 ```ft
@@ -17,7 +17,7 @@ def check_collisions(mut Ball ball, FPaddleCommon paddle):
 
 The function `check_collisions` is very simple, it just takes a ball and a paddle, calls the `collides_with` function of the paddle and if it collided then it calls `reflect_v` on the ball.
 
-The `collides_with` function, however, does not exist yet on the paddle. But before we can create it, we need to add the `get_radius`, `get_x` and `get_y` functions to the `Ball` entity. You cannot access entity data directly from outside, so we cannot write `ball.ball.pos.x` or `ball.ball.radius` etc directly. If we want to have access to entity-local data, it needs to be returned by a function call, getters essentially. Those three functions are all very simple, and they do not modify the data so they can be const too:
+The `collides_with` function, however, does not exist yet on the paddle. But before we can create it, we need to add the `get_radius`, `get_x` and `get_y` functions to the `Ball` object. We cannot access object data directly from outside, so we cannot write `ball.ball.pos.x` or `ball.ball.radius` etc directly. If we want to have access to object-local data, it needs to be returned by a function call, getters essentially. Those three functions are all very simple, and they do not modify the data so they can be const too:
 
 ```ft
 	const def get_x() -> f32:
@@ -30,7 +30,7 @@ The `collides_with` function, however, does not exist yet on the paddle. But bef
 		return ball.radius;
 ```
 
-I like to define the getters before any other functions in an entity (or func module), in our case we define them above the `draw` function. And now with these functions in place, we can finally implement the `collides_with` function in the `paddle.ft` file to check whether the paddle collided with a given ball:
+I like to define the getters before any other functions in an object (or func component), in our case we define them above the `draw` function. And now with these functions in place, we can finally implement the `collides_with` function in the `paddle.ft` file to check whether the paddle collided with a given ball:
 
 ```ft
 	const def collides_with(Ball ball) -> bool:

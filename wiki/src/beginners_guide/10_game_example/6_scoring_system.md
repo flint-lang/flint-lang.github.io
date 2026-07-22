@@ -29,7 +29,7 @@ by just adding two calls to `DrawText` before calling `EndDrawing` at the end of
 		rl.EndDrawing();
 ```
 
-The UI is drawn at the very end so that the ball flies "behind" it. With this simple change, we now have two labels telling us the scores of each player.
+The UI is drawn at the very end so that the ball is rendered "behind" it. With this simple change, we now have two labels telling us the scores of each player.
 
 ![UI](../../images/12_game_example/6_scoring_system/ui.png)
 
@@ -59,20 +59,23 @@ def check_collisions(mut Ball ball, FPaddleCommon player, FPaddleCommon cpu) -> 
 	return GameState.RUNNING;
 ```
 
-We do not change the `main` function yet, as we first need to properly return `P1_WON` and `P2_WON`, but for that we need a way to check whether the ball has passed the paddle. Since the actual behaviour is different for both paddles but it's a common paddle behaviour, we add just the function declaration to the `FPaddleCommon` func module:
+We do not change the `main` function yet, as we first need to properly return `P1_WON` and `P2_WON`, but for that we need a way to check whether the ball has passed the paddle. Since the actual behaviour is different for both paddles but its a common paddle behaviour, this becomes the point where we need to add an interface, since we want the same surface functionality their implementations should differ:
 
 ```ft
-func FPaddleCommon requires(DPaddle paddle):
+interface IPaddle:
 	const def ball_passed(Ball ball) -> bool;
+	const def collides_with(Ball ball) -> bool;
+	const def draw();
+	def clamp_position();
+	def reset();
 ```
 
-Since the function is virtual (no body) we need to `link` the function declaration to a proper function definition in both the `Player` and `Cpu` entities:
+And now we have an interface with all the functionality a paddle should have. And now we can implement the `ball_passed` function in the `Player` and `Cpu` objects respectively, all other functions are already implemented in the `FPaddleCommon` func component (and the `update` is already implemented in each object respectively too).
 
 ```ft
-entity Player:
+entity Player implements(IPaddle):
 	data: DPaddle paddle;
 	func: FPaddleCommon;
-	link: FPaddleCommon::ball_passed -> Player::ball_passed;
 	Player(paddle);
 
 	const def ball_passed(Ball ball) -> bool:
@@ -84,10 +87,9 @@ entity Player:
 and
 
 ```ft
-entity Cpu:
+object Cpu implements(IPaddle):
 	data: DPaddle paddle;
 	func: FPaddleCommon;
-	link: FPaddleCommon::ball_passed -> Cpu::ball_passed;
 	Cpu(paddle);
 
 	const def ball_passed(Ball ball) -> bool:
@@ -96,10 +98,10 @@ entity Cpu:
 	// ...
 ```
 
-And now that both the `Player` and `Cpu` both implement the function, we can call it in the `check_collisions` function:
+Since now we added polymorphic behaviour to our paddles, we need to change the signature of the `check_collisions` function to not use a `FPaddleCommon` but a `IPaddle` instead, and now we are able to call `ball_passed` on the `player` and `cpu` instances:
 
 ```ft
-def check_collisions(mut Ball ball, FPaddleCommon player, FPaddleCommon cpu) -> GameState:
+def check_collisions(mut Ball ball, IPaddle player, IPaddle cpu) -> GameState:
 	// Check if the ball passed one of the players
 	if cpu.ball_passed(ball):
 		return GameState.P1_WON;
@@ -122,7 +124,7 @@ and to now complete this feature addition, we need to check the return value of 
 				cpu_score++;
 ```
 
-The scores will not change yet because the `ball_passed` functions always return `false`, so we need to implement them. They aren't that hard, for the `Player` it's implementation is
+The scores will not change yet because the `ball_passed` functions always return `false`, so we need to implement them. They aren't that hard, for the `Player` its implementation is
 
 ```ft
 	const def ball_passed(Ball ball) -> bool:
@@ -141,7 +143,7 @@ As you can see, the `player_score++;` is executed a bunch of times when the scor
 For this we add a small helper function to the `main.ft` file:
 
 ```ft
-def reset_objects(mut Ball ball, mut Player player, mut Cpu cpu):
+def reset_objects(mut Ball ball, mut IPaddle player, mut IPaddle cpu):
 	ball.reset();
 	player.reset();
 	cpu.reset();
@@ -151,7 +153,7 @@ and then we just call it directly after creating the three objects and in the re
 
 ![Game State](../../images/12_game_example/6_scoring_system/game_state.png)
 
-We need to do one small change though to the `ball.ft` file, the `bounce_left` and `bounce_right` case is no longer needed. It can be removed entirely from the `update` function:
+We need to do one small change though to the `ball.ft` file, the `bounce_left` and `bounce_right` case is no longer needed. It can be removed entirely from the `update` function (since when it passes the `Player` or the `Cpu` the game is reset):
 
 ```ft
 	def update(f32 delta):

@@ -1,6 +1,6 @@
 # Paddles
 
-Next up we will finally work on the paddles themselves. Since we have two paddles, the `Cpu` and the `Player` paddle, which are kinda similar but a *bit* different, we *will* use a `func` module for this task, since the job of a func-module is to provide reusable code which can be used across many entities. For now, we will still create a unified `Paddle` entity, even though this entity *will* be removed in the next chapter.
+Next up we will finally work on the paddles themselves. Since we have two paddles, the `Cpu` and the `Player` paddle, which are kinda similar but a *bit* different, we *will* use a `func` component for this task, since the job of a func component is to provide reusable code which can be used across many objects. For now, we will still create a unified `Paddle` object, even though this object *will* be removed in the next chapter.
 
 ## A simple paddle
 
@@ -19,14 +19,14 @@ data DPaddle:
 	DPaddle(size, pos, speed);
 ```
 
-which we put into a new file, `paddle.ft`. We also know that we need a `draw` function to be able to draw the paddle to the screen. With this information we can now create the `func` module and the `entity`. The `func` module will be called `FPaddleCommon` since it contains the common functionality between both our paddles we will ultimately end up with:
+which we put into a new file, `paddle.ft`. We also know that we need a `draw` function to be able to draw the paddle to the screen. With this information we can now create the `func` component and the `object`. The `func` component will be called `FPaddleCommon` since it contains the common functionality both our paddles (`Cpu` and `Player`) will contain:
 
 ```ft
 func FPaddleCommon requires(DPaddle paddle):
 	const def draw():
 		return;
 
-entity Paddle:
+object Paddle:
 	data: DPaddle;
 	func: FPaddleCommon;
 	Paddle(DPaddle);
@@ -79,7 +79,7 @@ The next step is to make the paddle movable through keyboard presses. For now we
 			paddle.pos = paddle.pos + (0.0, paddle.speed * delta);
 ```
 
-We use the `IsKeyDown` function of raylib here which actually expects the `KeyboardKey` enum but as C libraries often do, it is written to expect an `i32` instead (not much Fip can do here) so that's why we need to cast the enum value to an `i32` value before passing it to the function.
+We use the `IsKeyDown` function of raylib here which actually would expect the `KeyboardKey` enum but as C libraries often do, it is written to expect an `i32` instead (there is not much Fip can do here) so that's why we need to cast the enum value to an `i32` value before passing it to the function.
 
 ```ft
 extern def IsKeyDown(mut i32 key) -> bool;

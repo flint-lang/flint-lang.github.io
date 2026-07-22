@@ -12,7 +12,7 @@ Adding the `ball.speed *= 1.1;` to the `reflect_v` function of the `Ball` entity
 
 ## Next Steps
 
-This tutorial now can be considered compelted. Add a small win or loose sound like a "tada" when the player makes a point, or change other things, play around with it a bit, or build something entirely different using Flint.
+This tutorial now can be considered compelted. There exists one remaining problem, thoug. The sound abruptly stops mid-wave and the amplitude when stopping might not be 0. You could fix this yourself, if you want to, but I thought fixing this problem is too much for this small showcase. So, feel free to iterate on this small game and improve it if you want! Add a small win or loose sound like a "tada" when the player makes a point, or change other things, play around with it a bit, or build something entirely different using Flint.
 
 ## All Files
 
@@ -34,7 +34,7 @@ use "cpu.ft"
 use "paddle.ft"
 use "player.ft"
 
-def reset_objects(mut Ball ball, mut Player player, mut Cpu cpu):
+def reset_objects(mut Ball ball, mut IPaddle player, mut IPaddle cpu):
 	ball.reset();
 	player.reset();
 	cpu.reset();
@@ -52,8 +52,8 @@ def main():
 
 	// Initialize game objects
 	ball := Ball(DBall(_));
-	player := Player(DPaddle(_, f32x2(screen / 2), _));
-	cpu := Cpu(DPaddle(_, f32x2(screen / 2), _));
+	player := Player(DPaddle(_));
+	cpu := Cpu(DPaddle(_));
 	reset_objects(ball, player, cpu);
 
 	u32 player_score = 0;
@@ -133,7 +133,7 @@ data DAudio:
 	bool playing = false;
 	DAudio(stream, buffer, phase, frequency, total_frames, frames_written, playing);
 
-entity Audio:
+object Audio:
 	data: DAudio a;
 	Audio(a);
 
@@ -207,7 +207,7 @@ data DBall:
 	f32 radius = 20;
 	DBall(pos, dir, speed, radius);
 
-entity Ball:
+object Ball:
 	data: DBall ball;
 	Ball(ball);
 
@@ -263,7 +263,7 @@ use "paddle.ft"
 enum GameState:
 	RUNNING, P1_WON, P2_WON;
 
-def check_collisions(mut Audio a, mut Ball ball, FPaddleCommon player, FPaddleCommon cpu) -> GameState:
+def check_collisions(mut Audio a, mut Ball ball, IPaddle player, IPaddle cpu) -> GameState:
 	// Check if the ball passed one of the players
 	if cpu.ball_passed(ball):
 		return GameState.P1_WON;
@@ -311,10 +311,9 @@ use Fip.raylib as rl
 
 use "paddle.ft"
 
-entity Cpu:
+object Cpu implements(IPaddle):
 	data: DPaddle paddle;
 	func: FPaddleCommon;
-	link: FPaddleCommon::ball_passed -> Cpu::ball_passed;
 	Cpu(paddle);
 
 	const def ball_passed(Ball ball) -> bool:
@@ -338,6 +337,13 @@ use Fip.raylib as rl
 
 use "colors.ft"
 
+interface IPaddle:
+	const def ball_passed(Ball ball) -> bool;
+	const def collides_with(Ball ball) -> bool;
+	const def draw();
+	def clamp_position();
+	def reset();
+
 data DPaddle:
 	i32x2 size = i32x2(24, 120);
 	f32x2 pos = f32x2(0, 0);
@@ -345,8 +351,6 @@ data DPaddle:
 	DPaddle(size, pos, speed);
 
 func FPaddleCommon requires(DPaddle paddle):
-	const def ball_passed(Ball ball) -> bool;
-
 	const def draw():
 		i32x2 render_pos = i32x2(paddle.pos) - paddle.size / 2;
 		rl.Rectangle rec = rl.Rectangle(render_pos.x, render_pos.y, paddle.size.x, paddle.size.y);
@@ -387,10 +391,9 @@ use Fip.raylib as rl
 
 use "paddle.ft"
 
-entity Player:
+object Player implements(IPaddle):
 	data: DPaddle paddle;
 	func: FPaddleCommon;
-	link: FPaddleCommon::ball_passed -> Player::ball_passed;
 	Player(paddle);
 
 	const def ball_passed(Ball ball) -> bool:

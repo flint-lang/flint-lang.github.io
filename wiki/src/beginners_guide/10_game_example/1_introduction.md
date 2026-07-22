@@ -38,7 +38,7 @@ const data Colors:
 	rl.Color yellow = rl.Color(243, 213, 91, 255);
 ```
 
-As you can see, the file just contains a bunch of const data expressions used later on. We do not need them *just yet* but we need it shortly. Lets not focus too much on that file, lets move on to the `main.ft` file instead:
+As you can see, the file just contains a bunch of const data expressions used later on. We do not need them *just yet* but we need them shortly. Lets not focus too much on that file and instead move on to the `main.ft` file:
 
 **`main.ft`**:
 ```ft
@@ -49,7 +49,7 @@ def main():
 	rl.CloseWindow();
 ```
 
-As you can see, this is truly a small program, we just call the `InitWindow` and `CloseWindow` functions respectively. I like to give an import alias to auto-generated extern files files, in this case the alias `rl` for `raylib`. All functions and types coming from raylib will be prefixed with this alias. The parameters to the `InitWindow` function are the window width, the height and the name. You can always look up the signatures of any function or type in the auto-generated `.fip/generated/raylib.ft` file, in the case of `InitWindow` the definition looks like this:
+As you can see, this is truly a small program, we just call the `InitWindow` and `CloseWindow` functions respectively. I like to give an import alias to auto-generated extern files, in this case the alias `rl` for `raylib`. All functions and types coming from raylib will be prefixed with this alias across all upcoming examples. The parameters to the `InitWindow` function are the window width, the height and the name. You can always look up the signatures of any function or type in the auto-generated `.fip/generated/raylib.ft` file, in the case of `InitWindow` the definition looks like this:
 
 ```ft
 extern def InitWindow(mut i32 width, mut i32 height, const str title);
@@ -107,7 +107,7 @@ def main():
 
 As you can see, we now used our previously defined `colors.ft` file to get access to the `Colors.dark_green` color. The main game loop can immediately be spotted. The `while not rl.WindowShouldClose():` is pretty descriptive. While the window (the game) should not close, execute this loop. We can close the game manually by pressing `ESC` on the keyboard, this is a pre-set key by raylib which it understands as "okay, exit the game" by default.
 
-In the loop body we do three things, first we tell raylib that we want to begin drawing to the window / the screen, then we tell it to clear the background with a given color and then we tell it to end drawing. I will not go deeply in-depth how raylib works under the hood, but this is how we draw things to the screen. You will see this pattern throughout the use of raylib, we do a `begin_xx` or `init_xx` (like init window) and later on a `end_xx` or `close_xx`. This pattern is very common with [immediate mode rendering](https://en.wikipedia.org/wiki/Immediate_mode_(computer_graphics)).
+In the loop body we do three things, first we tell raylib that we want to begin drawing to the window / the screen, then we tell it to clear the background with a given color and then we tell it to end drawing. I will not go deeply in-depth how raylib works under the hood, but this is how we draw things to the screen. You will see this pattern throughout the use of raylib, we do a `begin_xx` or `init_xx` (like init window) and later on a `end_xx` or `close_xx`. This pattern is very common in [immediate mode rendering](https://en.wikipedia.org/wiki/Immediate_mode_(computer_graphics)).
 
 If you run the program, the window which is opened now should look like this:
 
@@ -115,7 +115,7 @@ If you run the program, the window which is opened now should look like this:
 
 ## Resizing
 
-Next up we make the window resizable. We do this by adding these two lines *before* initializing the window. That's pretty important to put these flags in front of it, as otherwise they are not applied when creating our window:
+Next up we make the window resizable. We do this by adding these two lines *before* initializing the window. It is important to put these flags in front of it, as otherwise they are not applied when creating our window:
 
 ```ft
 u32 flags = u32(rl.ConfigFlags.FLAG_WINDOW_RESIZABLE);
@@ -132,9 +132,9 @@ rl.SetConfigFlags(flags);
 
 Now the Pong game will always run at your screens refresh rate and not needlessly run at thousands of frames per second for no benefit. But now with these flags active, the game is resizable and is properly VSynced.
 
-## drawing
+## Drawing
 
-Lets next start looking at drawing and how to draw objects to the screen. For this, we first need to find out the actual size of the screen at each iteration of our game loop, or otherwise our the game would not scale when resizing the game. For this, we add a local variable, `screen` to the file. We update the screen every iteration of the game loop by calling `GetScreenWidth` and `GetScreenHeight` respectively:
+Lets next start looking at drawing and how to draw objects to the screen. For this, we first need to find out the actual size of the screen at each iteration of our game loop, or otherwise our the game would not scale when resizing the window. For this, we add a local variable, `screen` to the file. We update the screen every iteration of the game loop by calling `GetScreenWidth` and `GetScreenHeight` respectively:
 
 **`main.ft`**:
 ```ft
@@ -160,7 +160,7 @@ def main():
 	rl.CloseWindow();
 ```
 
-The next step is to properly draw the game board. We already have our "dark" green background. The next thing we need to draw is the right half of the screen with a different color (`green`), draw a vertical (`white`) line in the middle of the screen and to draw the circle in the middle with the . For this, we use the `DrawRectanlge`, `DrawLine` and `DrawCircle` functions from raylib respectively:
+The next step is to properly draw the game board. We already have our "dark" green background. The next thing we need to draw is the right half of the screen with a different color (`green`), draw a vertical (`white`) line in the middle of the screen and to draw the circle in the center. For this, we use the `DrawRectanlge`, `DrawLine` and `DrawCircle` functions from raylib respectively:
 
 ```ft
 extern def DrawRectangle(mut i32 posX, mut i32 posY, mut i32 width, mut i32 height, mut Color color);
@@ -184,8 +184,8 @@ After clearing the background, and before ending our drawing, we now just need t
 		rl.EndDrawing();
 ```
 
-And now we should see the whole game board being drawed on screen:
+And now we should see the whole game board being drawn on screen:
 
 ![Game Board](../../images/12_game_example/1_introduction/game_board.png)
 
-You now know how to do basic drawing using raylib. So, let's get on to the next chapter, let's add a ball to our game field!
+You now know how to do basic drawing using raylib. So, lets get on to the next chapter and add a ball to our game field!

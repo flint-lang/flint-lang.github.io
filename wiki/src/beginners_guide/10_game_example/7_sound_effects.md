@@ -1,6 +1,6 @@
 # Sound Effects
 
-A game without *any* sound-effects is a very boring game. We will add *very* simple sound-effects to Pong, but don't expect something fancy here, it will just be a beep when the ball collides with the paddles. This is just to showcase a few more advanced interop features, like pointers, opaques etc.
+A game without *any* sound-effects is a very boring game. We will add *very* simple sound-effects to Pong, but don't expect something fancy here, it will just be a beep when the ball collides with the paddles. This is just to usefully showcase a few more advanced interop features, like pointers, opaques etc.
 
 ## Basic Setup
 
@@ -20,7 +20,7 @@ const data AudioConfig:
 	float COLLISION_FREQUENCY = 220.0;
 ```
 
-For audio playback we need a `SAMPLE_RATE` and a `BUFFER_SIZE` for our audi buffer. The `COLLISION_FREQUENCY` is the frequency which is played on collision, when the ball collides with a paddle. And now the "real" data, `DAudio`:
+For audio playback we need a `SAMPLE_RATE` and a `BUFFER_SIZE` for our audio buffer. The `COLLISION_FREQUENCY` is the frequency which is played on collision, when the ball collides with a paddle. And now the "real" data, `DAudio`:
 
 ```ft
 data DAudio:
@@ -69,10 +69,10 @@ typedef struct AudioStream {
 
 As you can direclty read from the raylib documentation, the `rAudioBuffer` and `rAudioProcessor` are *opaque structs* here, so the `rAudioBuffer *` pointer here is, quite literally, an opaque pointer since it's an pointer into memory we have no information about.
 
-Next up we create the `entity` type with the functions all unimplemented for now:
+Next up we create the `Audio` object with the functions all unimplemented for now:
 
 ```ft
-entity Audio:
+object Audio:
 	data: DAudio a;
 	Audio(a);
 
@@ -89,7 +89,7 @@ entity Audio:
 		return;
 ```
 
-Wtih the `play` function we *start* to play a given frequency for a given duration, the `update` just needs to be called on each frame update, and `stop` will only be called internally by `update` if the currently playing sound is "finished". The `deinit` function needs to be called at the very end.
+Wtih the `play` function we will *start* to play a given frequency for a given duration, the `update` just needs to be called on each frame update, and `stop` will only be called internally by `update` if the currently playing sound is "finished". The `deinit` function needs to be called at the very end of the program, before shutdown.
 
 We also add a small helper function to the `audio.ft` file to make creating an `Audio` instance easier:
 
@@ -131,7 +131,7 @@ and deinit it at the very end:
 
 ## Playing Audio
 
-We want to play the beep whenever we detect a collision. Since we detect collisions in the `collisions.ft` file, we need to pass the `Audio` entity as an parameter to the `check_collisions` function and then just call `a.play(...)` when the ball collides with any paddle:
+We want to play the beep whenever we detect a collision. Since we detect collisions in the `collisions.ft` file, we need to pass the `Audio` object as an parameter to the `check_collisions` function and then just call `a.play(...)` when the ball collides with any paddle:
 
 ```ft
 def check_collisions(mut Audio a, mut Ball ball, FPaddleCommon player, FPaddleCommon cpu) -> GameState:
@@ -161,7 +161,7 @@ def check_collisions(mut Audio a, mut Ball ball, FPaddleCommon player, FPaddleCo
 	return GameState.RUNNING;
 ```
 
-and then, we also need to pass the constructed `Audio` entity `a` to the `check_collisions` call too:
+and then, we also need to pass the constructed `Audio` object `a` to the `check_collisions` call in the `main.ft` file too:
 
 ```ft
 		switch check_collisions(a, ball, player, cpu):
@@ -172,7 +172,7 @@ We also need to add the `use "audio.ft"` clausel to both `main.ft` and `collisio
 
 ## Implementation
 
-Okay, with this we now have the overall structure up, now we just need to implement the functions of the `Audio` entity type.
+Okay, with this we now have the overall structure up, now we just need to implement the functions of the `Audio` object type.
 
 ### `deinit`
 

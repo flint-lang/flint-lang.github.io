@@ -83,7 +83,7 @@ func Movement requires(Transform t):
 	def move():
 		t.pos += t.dir * t.speed;
 	
-	def print_position():
+	const def print_position():
 		print($"t.pos = {t.pos}\n");
 
 object Object:
