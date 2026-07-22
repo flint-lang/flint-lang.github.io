@@ -2,7 +2,7 @@
 
 Interop Modules (IMs) are the small individual pieces which are repsponsible for external languages. For this chapter we will focus on the `fip-c` IM. So, the project from the previous page is still broken and results in a compilation error, and we now want to fix that situation.
 
-If you have not installed the `fip-c` IM yet, please follow the instructions in the [FIP Setup](user_guide/setup/4_fip_setup.md) page and then continue on with this chapter when FIP is installed.
+If you have not installed the `fip-c` IM yet, please follow the instructions in the [FIP Setup](../../setup/4_fip_setup.md) page and then continue on with this chapter when FIP is installed.
 
 Now, with the `fip-c` IM installed, we can try to run the command again:
 
