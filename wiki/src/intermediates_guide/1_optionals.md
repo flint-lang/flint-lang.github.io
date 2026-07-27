@@ -1,6 +1,6 @@
 # Optionals
 
-Welcome to the first chapter of the intermediates guide. In this first chapter we look at the optional type and what you can do with it. Other languages don't necessarily "need" an optional type because of other designs like Java's `null`, C's `NULL` or C++'s `nullptr`. In Flint, however, not every varaible or "object" can be "null" or "empty" implicitely.
+Welcome to the first chapter of the intermediates guide. In this first chapter we look at the optional type and what you can do with it. Other languages don't necessarily "need" an optional type because of other designs like Java's `null`, C's `NULL` or C++'s `nullptr`. In Flint, however, not every varaible or instance can be "null" or "empty" implicitely.
 
 ## What are Optionals?
 

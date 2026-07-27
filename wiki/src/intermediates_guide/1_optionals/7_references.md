@@ -1,6 +1,6 @@
 # Optionals as References
 
-Flint does not have pointer or reference types, as you know. But optionals **are** implicitely this missing reference-type piece. For all complex data types, which are stored in DIMA slots, optionals become reference types to other data (or entities). You will learn why this is like it is [much much later](../../experts_guide/1_dima.md) when we actually talk about DIMA, but for now just remember that optional complex data types are references. Let's look at a small example to showcase this:
+Optional values can be used as "lightweight pointers" of sorts. Normally, when we write an assignment like `Data d2 = d1;` the compiler will clone `d1` and store that cloned value in `d2`, meaning they point to entirely different memory. However, optionals do not work quite like this. When assigning the "real" complex data (complex data is a category of types, namely `data`, `entity`) `Data? d2 = d1;` the value `d2` now points to the same memory as `d1` does. This works because all complex data types are stored in DIMA slots. You will learn why this is like it is [much much later](../../experts_guide/1_dima.md) when we actually talk about DIMA, but for now just remember that optional complex data types are references. Lets look at a small example to showcase this:
 
 ```ft
 use Core.print
@@ -55,4 +55,4 @@ This program will print this line to the console:
 > ref.x = 10
 > ```
 
-Because data is DIMA-managed, the reference-count of the allocated data increases by 1 when it's assigned to an optional value, meaning that the optional reference to that data is still valid, even if the original variable already went out-of-scope.
+Because data is DIMA-managed, the reference-count of the allocated data increases by 1 when it is assigned to an optional value, meaning that the optional reference to that data is still valid, even if the original variable already went out-of-scope.
