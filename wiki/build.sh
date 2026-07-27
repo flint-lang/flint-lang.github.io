@@ -21,6 +21,7 @@ build_book() {
 	mkdir -p "$WIKI/tmp/wiki/theme"
 	cp "$WIKI/theme/flint.css" "$WIKI/tmp/wiki/theme"
 	cp "$WIKI/theme/flint-highlight.css" "$WIKI/tmp/wiki/theme"
+	cp "$WIKI/header.js" "$WIKI/tmp/wiki"
 
 	echo "-- Adding the Version Selector..."
 	cp "$WIKI/version_select.css" "$WIKI/tmp/wiki"

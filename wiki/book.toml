@@ -19,7 +19,7 @@ level = 0
 [output.html]
 git-repository-url = "https://github.com/flint-lang/flintc"
 additional-css = ["theme/flint.css", "theme/flint-highlight.css", "version_select.css"]
-additional-js = ["version_select.js"]
+additional-js = ["version_select.js", "header.js"]
 default-theme = "flint"
 preferred-dark-theme = "flint"
 theme = "theme"
