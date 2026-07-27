@@ -2,6 +2,14 @@
 
 Next up will be the topic of error context. The error context is a simple string message which will be passed alongside / inside the error structure. We already have talked about the error structure itself, so now we can talk about what that `message` field really is. With every error you throw you have the additional ability to pass in a string message, the context of the thrown error. You can also define default messages for the case that no message is added in the throw. Below is an example of it all:
 
+<div class="warning">
+
+This example sometimes fails to compile when using the `--parallel` flag
+
+If you compile with any other flag, everything is fine, but compiling this program using the `--parallel` flag *may* not compile. It's likely a race condition or something similar in the compiler but I was not able to figure out what exactly it is. This is the only example of the wiki where it *sometimes* happens, but it does not happen reliably enough to find the root cause.
+
+</div>
+
 ```ft
 use Core.print
 
