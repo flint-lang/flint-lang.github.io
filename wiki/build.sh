@@ -4,7 +4,8 @@ set -e
 WIKI="$(pwd)"
 echo "WIKI: $WIKI"
 BUILD="$WIKI/build"
-BUILD_WIKI="$WIKI/build/wiki"
+BUILD_WIKI="$BUILD/wiki"
+BUILD_PLAYGROUND="$BUILD/playground"
 
 # $1 - The version name of the book, e.g. v0.1.6-core
 # $2 - The hash of the book to build
@@ -72,8 +73,11 @@ cd ..
 
 # Copy the index.html into the build directory
 mkdir -p "$BUILD_WIKI"
+mkdir -p "$BUILD_PLAYGROUND"
 cp "$WIKI/index.html" "$BUILD_WIKI/index.html"
+cp "$WIKI/../playground/index.html" "$BUILD_PLAYGROUND/index.html"
 cp "$WIKI/../index.html" "$BUILD/index.html"
+cp "$WIKI/../style.css" "$BUILD/style.css"
 
 while IFS=',' read -r -a fields
 do

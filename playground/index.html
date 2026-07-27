@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flint Playground</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/flint-lang/logo/main/logo_square.svg"
+        type="image/svg+xml" />
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+        .construction {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 8rem);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .construction-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .construction h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .construction p {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+        }
+
+        .construction .note {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            opacity: 0.7;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .construction h1 {
+                font-size: 1.8rem;
+            }
+
+            .construction p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="wrap nav">
+            <a class="brand" href="/" aria-label="Flint home">
+                <img src="https://raw.githubusercontent.com/flint-lang/logo/main/logo.svg" alt="Flint logo" />
+                <div class="brand-text">
+                    <strong style="text-transform: none">Flint</strong>
+                    <span>Transparent by design</span>
+                </div>
+            </a>
+            <nav class="nav-links" aria-label="Primary">
+                <a href="../">Home</a>
+                <a href="../wiki/">Wiki</a>
+                <a class="active" href="./">Playground</a>
+                <a href="https://github.com/flint-lang/flintc">GitHub</a>
+                <a href="https://discord.gg/efqCDaVmb">Discord</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="top" class="wrap">
+        <div class="construction">
+            <div class="construction-icon">&#9888;</div>
+            <h1>Under Construction</h1>
+            <p>
+                The Flint Playground is not available yet. The Flint compiler
+                does not run on WASM, and Flint is not able to compile
+                with WASM as a target either.
+            </p>
+            <p>
+                Expect that it will take some time until the playground
+                will be functional.
+            </p>
+            <p class="note">
+                In the meantime, you can install Flint locally and
+                try it out. Check the
+                <a href="../wiki/">Wiki</a> for instructions.
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <p>
+            Built with <span style="color: var(--primary)">&#10084;</span> for
+            developers who value clarity.
+            <a href="https://github.com/flint-lang/flintc">Flint on GitHub</a>
+        </p>
+    </footer>
+</body>
+
+</html>
