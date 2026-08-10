@@ -32,7 +32,7 @@ This program will print these lines to the console:
 > s = Hello There
 > ```
 
-There are a few differences of inline-defined variants and "properly" defined variants. Inline-defined variants **cannot** be tagged, because the varaint type itself does not even have a name, so tagging is impossible. This means that the type of an inline-variant needs to be specified when we want to unwrap the value a variant currently holds, which can be seen in the `print_var` function. But other than this fact, that tagging is impossible, inline-defined variants behave exactly the same as normally defined variants.
+There are a few differences of inline-defined variants and "properly" defined variants. Inline-defined variants **cannot** be tagged, because the varaint type itself does not even have a name, so tagging is impossible. This means that the type of an inline-variant needs to be specified when we want to unwrap the value a variant currently holds, which can be seen in the `print_var` function. But other than this fact, that tagging is impossible, inline-defined variants behave exactly the same as "normally" defined variants.
 
 Inline-defined variants become useful when we do not want to pullute our global namespace with yet another symbol name for yet another variant type, for example when a field in custom-defined `data` can be either `i32` or `f32`:
 

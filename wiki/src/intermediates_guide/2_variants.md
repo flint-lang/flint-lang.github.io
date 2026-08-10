@@ -1,10 +1,10 @@
 # Variants
 
-Welcome to the second chapter of the intermediates guide. In this chapter we look at the variant type and what you can do with it. The `variant` type is used to define a type that could be **one of** a given collection of other types. Where optionalls allowed us to define **emptiness**, the `variant` type allows us to define *variation* in types.
+Welcome to the second chapter of the intermediates guide. In this chapter we look at the variant type and what you can do with it. The `variant` type is used to define a type that could be **one of** a given collection of other types. Where optionals allowed us to define **emptiness**, the `variant` type allows us to define *variation* in types. If you are familiar with the term, a variant is a [sum type / tagged union](https://en.wikipedia.org/wiki/Tagged_union).
 
 ## What are Variants?
 
-A variant is, once again, essentially just a struct under the hood. It is composed of a 1 Byte flag value to determine which type it holds followed by the actual type of the variant. This "type" as the second value is just **N** bytes of storage, where `N` is the number of bytes needed to store the **biggest** of all possible types.
+A variant is essentially just a struct under the hood. It is composed of a `1 Byte` flag value to determine which type it holds followed by the actual value container of the variant. This value container as the second value is just **N** bytes of storage, where `N` is the number of bytes needed to store the **biggest** of all possible types of the variant.
 
 ## Why are Variants Important?
 

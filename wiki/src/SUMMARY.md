@@ -126,7 +126,7 @@
     - [Variant Comparison](./intermediates_guide/2_variants/5_comparison.md)
     - [Unwrapping Variants](./intermediates_guide/2_variants/6_unwrapping.md)
     - [Variant Extraction](./intermediates_guide/2_variants/7_extraction.md)
-    - [Optional Variants]()
+    - [Optional Variants](./intermediates_guide/2_variants/8_optional_variants.md)
 
   - [Error Sets](./intermediates_guide/3_error_sets.md)
     - [Introduction](./intermediates_guide/3_error_sets/1_introduction.md)

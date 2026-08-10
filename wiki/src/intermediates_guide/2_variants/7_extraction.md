@@ -1,10 +1,10 @@
 # Variant Extraction
 
-Similar to how the variant unwrapping operator `!(T)` had similarities to the optional force-unwrap operator `!`, the variant extraction operator `?(T)` has equally as much similarities to the optional chaining operator `?`. As a quick reminder, the optional chaining operator was used to, well, form chained expressions from optionals like `maybe?.field_maybe?.field` where the result of the whole chain always was `T?`, either the chain succeeded and returned `T` or it failed and returned `none`.
+Similar to how the variant unwrapping operator `!(T)` had similarities to the optional force-unwrap operator `!`, the variant extraction operator `?(T)` has equally as much similarities to the optional chaining operator `?`. As a quick reminder, the optional chaining operator was used to form chained expressions from optionals like `maybe?.field_maybe?.field` where the result of the whole chain always was `T?`, either the chain succeeded and returned a value of type `T` (the type of `field`) or it failed and returned `none`.
 
-The variant extraction operator `?(T)` slots right into that same machinery and it pretty much works identically to the optional chaining operator. Where for optional chaining you either _have_ a value or you _don't_, for variants it's more nuanced as you could have one of many types. But you either _have_ a value of a given type or you _don't_. So, we can use the variant extraction operator `?(T)` _within_ optional chains and mix and match them as we wish, and the result of that optional chain has the type `T?`, because either all parts of the chain succeeded or _any_ part of the chain returned `none` as a result.
+The variant extraction operator `?(T)` slots right into that same machinery and it pretty much works identically to the optional chaining operator. Where for optional chaining you either *have* a value or you *don't*, for variants it's more nuanced as you could have one of many types. But you either *have* a value of a given type or you *don't*. So, we can use the variant extraction operator `?(T)` *within* optional chains and mix and match them as we wish, and the result of that chain always has the type `T?`, because either all parts of the chain succeeded or *any* part of the chain returned `none` as a result.
 
-Let's look at a more simple case for the extraction operator before moving on to the more complicated chaining approach.
+Lets look at a more simple case for the extraction operator before moving on to the more complicated chaining approach.
 
 ```ft
 use Core.print
@@ -36,7 +36,7 @@ This program will print these lines to the console:
 > f == none
 > ```
 
-As you can see, the variant extraction operator `?(T)` has quite a few similarities to the optional chaining operator `?`, so much that it can be used within optional chains too. Let's look at the more complicated example now:
+As you can see, the variant extraction operator `?(T)` has quite a few similarities to the optional chaining operator `?`, so much that it can be used within optional chains too. Lets look at the more complicated example now:
 
 <div class="warning">
 
@@ -78,4 +78,4 @@ This program will print these lines to the console:
 > x2 = 30
 > ```
 
-You can see quite a lot of information packed into that little program above, actually. First of all we must extract the tagged variation through it's tag again. Also, `MyData` is a linked list in this example containing an optional next field. This example was chosen to showcase the ability to mix and match variant extractions with optional chains. Because the variant extraction essentially works exactly the same as the optional chaining operator we will not go i depth here, it should be clear how it works by now.
+You can see quite a lot of information packed into that little program above. First of all we must extract the tagged variation through its tag again. Also, `MyData` is a linked list in this example containing an optional next field. This example was chosen to showcase the ability to mix and match variant extractions with optional chains.
