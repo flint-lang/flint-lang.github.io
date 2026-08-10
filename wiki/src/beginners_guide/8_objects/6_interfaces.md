@@ -23,7 +23,7 @@ data Data:
 
 object Object implements(Serializable):
 	data: Data d;
-	Object(d)
+	Object(d);
 
 	const def to_string() -> str:
 		return $"\{ x: {d.x} \}";
@@ -48,7 +48,7 @@ data Data:
 
 object Object1 implements(Serializable):
 	data: Data d;
-	Object1(d)
+	Object1(d);
 
 	const def to_string() -> str:
 		return $"\{ x: {d.x} \}";

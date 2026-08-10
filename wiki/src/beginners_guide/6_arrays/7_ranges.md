@@ -65,7 +65,7 @@ def get_slice(str src, u64 from, u64 to) -> str:
 	return res;
 
 def main():
-	str string = "Hello there"
+	str string = "Hello there";
 	str slice = get_slice(string, 2, string.length);
 	print($"{string}\n");
 	print($"{slice}\n");
@@ -95,7 +95,7 @@ def get_slice(str src, u64 from, u64 to) -> str:
 	return res;
 
 def main():
-	str string = "Hello there"
+	str string = "Hello there";
 
 	TimeStamp t0 = now();
 	for i := 0; i < 1_000_000; i++:
