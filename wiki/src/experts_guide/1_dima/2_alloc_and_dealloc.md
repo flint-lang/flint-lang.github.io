@@ -1,6 +1,6 @@
 # Allocation & Deallocation
 
-Now that you know the basic structures, lets go through the entire process of how allocation and deallocation works. Again, if you are proficient in the C programming language, I would recommend looking at the [dima.h](https://github.com/flint-lang/dima/blob/main/dima-c/dima.h) file directly.
+Now that you know the basic structures, lets go through the entire process of how allocation and deallocation works. Again, if you are proficient in the C programming language, I would recommend looking at the [dima.h](https://github.com/flint-lang/dima/blob/main/dima-c/dima.h) implementation directly.
 
 When we write a line like
 
@@ -17,7 +17,7 @@ void *allocate(head_t **head_ref) {
     if (head->block_count == 0) {
         // Create initial block
         create_block();
-        allocate_in_block();
+        slot = allocate_in_block();
     } else {
         // Try to find empty slot in all blocks
         for (size_t i = 0; i < head->block_count; i++) {
@@ -29,15 +29,13 @@ void *allocate(head_t **head_ref) {
             for (size_t i = 0; i < head->block_count; i++) {
                 // If empty block (NULL block) is found, create it and set slot
                 create_block();
-                allocate_in_block();
-                slot = ...;
+                slot = allocate_in_block();
             }
         }
         if (slot == NULL) {
             // If no empty slot found, create new block and reallocate the head
             create_block();
-            allocate_in_block();
-            slot = ...;
+            slot = allocate_in_block();
         }
     }
     // Copy default value into slot, return pointer to slot
@@ -46,9 +44,9 @@ void *allocate(head_t **head_ref) {
 }
 ```
 
-This call returns a pointer into the newly allocated to the slot itself. The pointer returned from the `allocate` function does not point to the slot directly, but it points to the `value` of the slot, e.g. it's a direct value pointer. So, in the case of allocating a value of type `MyData`, the newly allocated value can directly be accessed via this pointer.
+This call returns a pointer into the newly allocated slot, to the instance within the slot itself. The pointer returned from the `allocate` function does not point to the slot directly, but it points to the `value` of the slot, e.g. it's a direct value pointer. So, in the case of allocating a value of type `MyData`, the newly allocated value can directly be accessed via this pointer.
 
-Since Memory management is ARC-based (or better said RC-based), we need to call `retain` when passing a value to a function and `release` after the function call. The `retain` function is dead simple, it just does a negative fixed pointer offset from the value pointer and then increments the `arc` field.
+Since Memory management is ARC-based (or better said RC-based since we do not use atomics), we need to call `retain` when passing a value to a function and `release` after the function call. The `retain` function is dead simple, it just does a negative fixed pointer offset from the value pointer and then increments the `arc` field.
 
 ```c
 void retain(void *value) {
@@ -77,7 +75,7 @@ void release(head_t **head_ref, void *value) {
     if (block->first_free_slot_id > index) {
         block->first_free_slot_id = index;
     }
-    // Check if there are still values in the block, do nothing
+    // Check if there are still values in the block, do nothing if there are
     if (LIKELY(block->used > 0)) {
         return;
     }

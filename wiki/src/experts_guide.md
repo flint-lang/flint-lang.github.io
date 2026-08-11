@@ -4,4 +4,4 @@ Welcome to the Experts guide! In this guide you will learn new Flint features re
 
 The goal of this guide is to teach how Flint works under the hood, and to complete its transparency promise by showing how everything maps to lower levels.
 
-So, let's get started!
+So, lets get started!
