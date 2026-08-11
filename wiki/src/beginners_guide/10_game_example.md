@@ -2,11 +2,9 @@
 
 <div class="warning">
 
-FIP on Windows is broken
+This game is untested on Windows since i did not get raylib to work on it.
 
-Since FIP currently is broken in Windows (for more information look [here](../../setup/4_fip_setup.md) this game example would be pretty hard to implement on Windows.
-
-For this reason, it has not been tested in any way on Windows, I am sorry for that. It will be tested and this warning will be removed once FIP on Windows fully works again.
+FIP itself now is fixed on Windows, since the windows ABI was added to the Flint compiler recently. However, now that FIP is fixed on Windows, `raylib` does not work on it. On Linux, you just install raylib with your package manager, include `raylib.h` and link with it using `-lraylib` and you are done. On Windows, I went down a rabbit hole of trying to compile raylib myself, and linking to it, and I just never got it to work correctly as there always was *something* missing. I got a lot of missing symbol linking errors and I ended up with linking a dozen Windows stuff from half a dozen directories and I ultimately gave up since something *that* complicated will not end up in this guide anyway. Windows is not my native developement platform. If you are a Windows developer, and figure out how to use raylib easily with Flint, I would be greatful for any help.
 
 </div>
 
