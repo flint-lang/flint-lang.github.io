@@ -8,16 +8,16 @@ When calling a function which chan throw we can use the `catch` keyword **as a b
 use Core.print
 
 error MyError:
-	VAL1, VAL2, VAL3;
+	Val1, Val2, Val3;
 
 def foo(bool crash) -> i32:
 	if crash:
-		throw MyError.VAL1("foo failed");
+		throw MyError.Val1("foo failed");
 	return 42;
 
 def bar(bool crash) -> i32 {MyError}:
 	if crash:
-		throw MyError.VAL2("bar failed");
+		throw MyError.Val2("bar failed");
 	return 69;
 
 def main():

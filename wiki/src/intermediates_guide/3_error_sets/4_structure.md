@@ -10,7 +10,7 @@ struct {
 }
 ```
 
-The `type_id` is a unique id of the error set type. It is the result of a hashing function, where the name of the error set type is being hashed. This means that the same error set will _always_ result in the same type id. The `value_id` is the index of the actual thrown value. Given these error sets:
+The `type_id` is a unique id of the error set type. It is the result of a hashing function, where the name of the error set type is being hashed. This means that the same error set will *always* result in the same type id. The `value_id` is the index of the actual thrown value. Given these error sets:
 
 ```ft
 error ErrBase:
@@ -77,7 +77,7 @@ As you can see, the `NullDivision` is value `0` and the hashing function outputs
 
 ## Casting errors to strings
 
-But those values, the `type_id` and the `value_id` should be purely internal. It is uncertain whether we will remove the ability to access them directly in the future, but what is certain is that you should not use them. Instead of printing the above example like `type_id = ...` and `value_id = ...` you should use the ability to cast errors to strings:
+But those values, the `type_id` and the `value_id` should be purely internal. It is uncertain whether we will remove the ability to access them directly in the future, but what is certain is that you should not use them too often. Instead of printing the above example like `type_id = ...` and `value_id = ...` you should use the ability to cast errors to strings:
 
 ```ft
 use Core.print
@@ -119,6 +119,6 @@ This program will print these lines to the console:
 As you can see, the `message` field is not turned into a string when casting an error to a strings. This is intentional, since now you can choose for yourself whether you want to have the message in the string (for example through doing `$"{e}: {e.message}"`).
 The `type_id` and `value_id` fields will no longer be accessed throughout the rest of the guide, from now on we cast errors to strings in all examples.
 
-The `type_id` id is dependant on the relative path of the file the error is defined in. This means that, while the `type_id` is stable across machines as long as the compiler is executed in the same relative path to the file, it still can differ. So, you should definitely ***NOT*** try to do something like `err.type_id == 2349234209` for example. First of all, that would be a magic number, and second of all the hash (type_id) is dependant from the relative path. You definitely should *not* access nor use the `type_id` directly, using a switch is the preferred approach.
+The `type_id` id is dependant on the relative path of the file the error is defined in. This means that, while the `type_id` is stable across machines as long as the compiler is executed in the same relative path to the file, it still can differ. So, you should definitely ***NOT*** try to do something like `err.type_id == 2349234209` for example. First of all, that would be a magic number, and second of all the hash (`type_id`) is dependant from the relative path. You definitely should *not* access nor use the `type_id` directly, using a switch is the preferred approach.
 
-For now the `type_id` and `value_id` fields stay in there, but being able to access them will be removed some time in the future.
+For now the `type_id` and `value_id` fields stay accessible in there, but being able to access them will (most likely) be removed some time in the future.

@@ -1,12 +1,12 @@
 # Error Context
 
-Next up will be the topic of error context. The error context is a simple string message which will be passed alongside / inside the error structure. We already have talked about the error structure itself, so now we can talk about what that `message` field really is. With every error you throw you have the additional ability to pass in a string message, the context of the thrown error. You can also define default messages for the case that no message is added in the throw. Below is an example of it all:
+The error context is a simple string message which will be passed alongside / inside the error structure. We already have talked about the error structure itself, so now we can talk about what that `message` field really is. With every error you throw you have the additional ability to pass in a string message, the context of the thrown error. You can also define default messages for the case that no message is added in the throw. Below is an example of it all:
 
 <div class="warning">
 
 This example sometimes fails to compile when using the `--parallel` flag
 
-If you compile with any other flag, everything is fine, but compiling this program using the `--parallel` flag *may* not compile. It's likely a race condition or something similar in the compiler but I was not able to figure out what exactly it is. This is the only example of the wiki where it *sometimes* happens, but it does not happen reliably enough to find the root cause.
+If you compile with any other flag, everything is fine, but compiling this program using the `--parallel` flag *may* not compile. It's likely a race condition or something similar in the compiler but I was not able to figure out what exactly it is. This is the only example of the wiki where it *sometimes* happens, but it does not happen reliably enough to find the root cause (yet).
 
 </div>
 
@@ -39,7 +39,7 @@ def main():
 	print_err(true);
 ```
 
-This program prints these lines to the console:
+This program will print these lines to the console:
 
 > ```
 > ErrSpecial.S1: "Special Error 1"
@@ -47,3 +47,11 @@ This program prints these lines to the console:
 > ```
 
 As you can see, the default message from the error set definition is being stored in the returned error by default, but when providing a custom message the provided message is passed within the thrown error structure instead. You may also be able to recognize that **any** expression can be put in between the parenthesis of the throw. So, even calls or variables or string interpolation, it really just does not matter, the result just has to be of type `str`. You can use the `message` field to pass in an error context in the thrown error.
+
+<div class="warning">
+
+It is strongly advised against calling potentially failing functions in the expression when trowing errors.
+
+When those function calls fail themselves the error bubbles up even though you were trying to create a context for a different error. Always try to build up the error message from local context of where and why the error happened.
+
+</div>

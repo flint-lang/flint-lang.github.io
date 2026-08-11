@@ -16,7 +16,7 @@ Errors are an integral part of programming because sometimes things dont work as
 
 ## What to Expect
 
-In this chapter, we will ocver the following topics:
+In this chapter, we will cover the following topics:
 
 - Declaring and using error set types
 - How to throw and catch errors
