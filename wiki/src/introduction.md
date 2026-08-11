@@ -5,7 +5,7 @@ This is the Flint Wiki, it serves as the single source of truth for everything F
 This Wiki is split into a few sections:
 
 - [1. Setup](./user_guide/setup.md): The basic setup, how to install Flint etc.
-- [2. Quick Guide](./quick_guide.md): The quick guide assumes prior programming language in general. It is a condensed form of the three-part guide, where each chapter is broken down. It serves as a quick check to see if Flint even fits to the programming style of a developer in the first place.
+- [2. Syntax Cheatsheet](./syntax_cheatsheet.md): The Syntax Cheatsheet assumes prior programming language in general. It is a condensed form of the three-part guide, where each chapter is broken down. It serves as a quick check to see if Flint even fits to the programming style of a developer in the first place.
 - [3. From Beginner to Intermediate](./beginners_guide.md), [4. From Intermediate to Expert](./intermediates_guide.md) and [5. From Expert to Master](./experts_guide.md): This is a three-part guide which really goes in-depth about Flint. It does not assume any prior programming knowledge. For someone who already knows how to program, most information of these guides are redundant. However, these are the parts of the wiki where everything about Flint is documented.
 - The Developer Guides [6. flintc](./developer_guide/flintc.md) and [7. fls](./developer_guide/fls.md) go in-depth on the implementation-side of things, how the compiler and the language server work etc. They are only meant for people who either want to contribute to Flint or are interested in how the compiler or language server work.
 

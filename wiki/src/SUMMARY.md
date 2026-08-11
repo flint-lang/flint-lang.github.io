@@ -11,6 +11,18 @@
   - [FIP Setup](./setup/4_fip_setup.md)
   - [Debugging](./setup/5_debugging.md)
 
+- [Syntax Cheatsheet](./syntax_cheatsheet.md)
+  - [Basic Syntax](./syntax_cheatsheet/1_basic_syntax.md)
+  - [Data](./syntax_cheatsheet/2_data.md)
+  - [Arrays](./syntax_cheatsheet/3_arrays.md)
+  - [Groups](./syntax_cheatsheet/4_groups.md)
+  - [File Imports](./syntax_cheatsheet/5_file_imports.md)
+  - [Objects](./syntax_cheatsheet/6_objects.md)
+  - [Interop](./syntax_cheatsheet/7_interop.md)
+  - [Optionals & Variants](./syntax_cheatsheet/8_optionals_variants.md)
+  - [Error Sets](./syntax_cheatsheet/9_error_sets.md)
+  - [Callables](./syntax_cheatsheet/10_callables.md)
+
 # Learning Flint
 
 - [From Beginner to Intermediate](./beginners_guide.md)
