@@ -1,6 +1,6 @@
 # Error Sets in Callables
 
-As you know, _every_ user-defined function in Flint is able to throw an error, it's part of the base structure of the function frame. Because _every_ function can throw, this also becomes true for callables. A callable can return an error just like a regular function call is able to:
+As you know, *every* user-defined function in Flint is able to throw an error, it's part of the base structure of the function frame. Because *every* function can throw, this also becomes true for callables. A callable can return an error just like a regular function call is able to:
 
 ```ft
 use Core.assert
@@ -25,9 +25,9 @@ This program will print these lines to the console:
 >  └─ ErrAssert.AssertionFailed: "The assertion has failed"
 > ```
 
-As you can see, the callable call `f(true);` failed and let the error bubble up to the main function. You can also see that the type of `f` is _not_ the same as the type of the function `may_fail`. The function `may_fail` has the type `fn<bool -> void {ErrAssert}>`. The `-> void` can be omitted, so it has the type of `fn<bool {ErrAssert}>` but we store it on a callable of type `fn<bool>`, how is that possible?
+As you can see, the callable call `f(true);` failed and let the error bubble up to the main function. You can also see that the type of `f` is *not* the same as the type of the function `may_fail`. The function `may_fail` has the type `fn<bool -> void {ErrAssert}>`. The `-> void` can be omitted, so it has the type of `fn<bool {ErrAssert}>` but we store it on a callable of type `fn<bool>`, how is that possible?
 
-Simply said: the frame structure is the exact same anyways, and because the error `ErrAssert` is a specialized error set of the `anyerror` set, we can store it on a `fn<bool>`. What happens when we define a fn type like `fn<bool>` is that Flint will expand that type to this type, actually: `fn<bool -> void {anyerror}>`. So, it's a function which takes a bool, returns nothiing, and might throw any error. This means that we can store any function reference on that callable, independent of that referenced functions possible thrown error sets.
+Simply said: the frame structure is the exact same anyways, and because the error `ErrAssert` is a specialized error set of the `anyerror` set, we can store it on a `fn<bool>`. What happens when we define a fn type like `fn<bool>` is that Flint will expand that type to this type: `fn<bool -> void {anyerror}>`. So, it's a function which takes a bool, returns nothing, and might throw any error. This means that we can store any function reference on that callable, independent of that referenced functions possible thrown error sets.
 
 ## Specifying the error sets
 
@@ -94,4 +94,4 @@ This program will print these lines to the console:
 > ErrAssert = ErrAssert.AssertionFailed
 > ```
 
-Just like that, specific error types now can be catched and handled accordingly from **a callable**. Remember: you can store any function frame on that callable variable `f` as long as the signature matches up!
+Just like that, specific error types now can be catched and handled accordingly from **a callable**. Remember: you can store any function frame on that callable variable `f` as long as the signature matches up. This is very powerful for higher order functions, for example a processing function which requires that the passed-in callable must be able to throw errors of certain types, as then that processing function can catch thrown errors internally, even through the actual function it executed potentially differs widely.

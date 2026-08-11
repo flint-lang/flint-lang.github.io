@@ -1,6 +1,6 @@
 # Functions as Values
 
-As discussed in the last chapter, functions can be stored on a callable variable, can be overwritten and called later. Another thing possible with callables is to pass them around, modify them within other functions, and call them in a context where the function itself never could "know" which function to call otherwise. Let's look at a small example showcasing callables being passed to functions:
+As discussed in the last chapter, functions can be stored on a callable variable, can be overwritten and called later. Another thing possible with callables is to pass them around, modify them within other functions, and call them in a context where the function itself never could "know" which function to call otherwise. Lets look at a small example showcasing callables being passed to functions:
 
 ```ft
 use Core.print
@@ -63,8 +63,7 @@ def sub(i32 x, i32 y) -> i32:
 	return x - y;
 
 def get_sub() -> fn<i32, i32 -> i32>:
-	s := ::sub;
-	return s;
+	return ::sub;
 
 def apply_op(fn<i32, i32 -> i32> op, i32 x, i32 y) -> i32:
 	return op(x, y);

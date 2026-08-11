@@ -4,20 +4,20 @@ Now that you have a basic understanding of the Thread Stack, we can talk about c
 
 ## Signatures
 
-First, the signatures of functions need to be covered before callables can be a topic. The `fn` type is just a simple **function type**. For example this function:
+The signatures of functions need to be covered before anything else. The `fn` type is just a simple **function type**. For example this function:
 
 ```ft
 def greet():
-    print("Hello, World!\n");
+	print("Hello, World!\n");
 ```
 
-does not have any function parameters nor does it return any values. Not returning a value is the same as returning a `void` value. So, the signature of this function would be `fn<() -> void>`. The `()` denotes that the function does not have any parameters. This type, `fn<() -> void>`, already _is_ the type of the `greet` function. The type of functions is always notated with the `fn` type.
+does not have any parameters nor does it return any values. Not returning a value is the same as returning a `void` value. So, the signature of this function would be `fn<() -> void>`. The `()` denotes that the function does not have any parameters. This type, `fn<() -> void>`, already *is* the type of the `greet` function. The type of functions is always notated with the `fn` type.
 
 Let's have a look at a more "complex" function, for example the `add` function:
 
 ```ft
 def add(i32 x, i32 y) -> i32:
-    return x + y;
+	return x + y;
 ```
 
 The type of that function itself is `fn<i32, i32 -> i32>`. As you can clearly see, everything to the left of the `->` marks parameter types while everything to the right of the `->` marks return types. The `fn` type syntax directly follows a syntax which is very similar to the one when functions are defined. Note that a function returning multiple values returns a group, but when you define a function like this:
@@ -27,11 +27,11 @@ def div(i32 x, i32 y) -> (i32, i32):
 	return (x / y, x % y);
 ```
 
-then it's type is not `fn<i32, i32 -> (i32, i32)>` but it's `fn<i32, i32 -> i32, i32>` instead. So, when defining a `fn` type of a function returning multiple values, the parenthesis must be left out.
+then it's type is not `fn<i32, i32 -> (i32, i32)>` but it's `fn<i32, i32 -> i32, i32>` instead. So, when defining a `fn` type of a function returning multiple values, the parenthesis must be left out in the return type.
 
 ### Special cases
 
-There exist two special-cases for the function signature notation in Flint when you manually define a `fn` type:
+There exist two additional special-cases for the function signature notation in Flint when you manually define a `fn` type. The first special-case you saw was the `()` when the function has no parameters. The other two special-cases are:
 
 - If the function does not return anything
 - If the function does not return anything nor does it have any parameters
@@ -64,21 +64,21 @@ def main():
 	g();
 ```
 
-This example will just print `Hello, World!` to the console. As you noticed, there is no special-case for the case when a function has no parameters but returns something. The reason why there is no special-case, or "sugar" for that case is that _it's very uncommon and not really smart either_. Flint does not have any global state, so having a `fn<() -> i32>` function does not really make any sense, as this function would ultimately _always_ return a constant, so why does the function then exist at all?
+This example will just print `Hello, World!` to the console.
 
 ## Function references
 
-Function referencing is the act of creating a function instance which can be stored in variables. It will become more clear once you saw a few examples. Let's start with the most simple example of the same `greet` function as above:
+Function referencing is the act of creating a function instance which can be stored in variables. It will become more clear once you saw a few examples. Lets start with the most simple example of the same `greet` function as above:
 
 ```ft
 use Core.print
 
 def greet():
-    print("Hello, World!\n");
+	print("Hello, World!\n");
 
 def main():
-    fn<() -> void> g = ::greet;
-    g();
+	fn<() -> void> g = ::greet;
+	g();
 ```
 
 This program will print this line to the console:
@@ -87,9 +87,9 @@ This program will print this line to the console:
 > Hello, World!
 > ```
 
-The **function reference operator `::`** can be seen in this example for the first time. Why Flint needs a separate operator for this will be discussed later when argument binding is explained. The function reference `::greet` is the most simple form of a function reference. If to the left of the `::` nothing is written, then it means that the function referencing operator searches for functions with the name of `greet` within the file's namespace. You could, in theory, also reference the `print` function, but this is not possible in Flint.
+You saw the **function reference operator `::`** in every above example already. Why Flint needs a separate operator for this will be discussed later when argument binding is explained. The function reference `::greet` is the most simple form of a function reference. If to the left of the `::` nothing is written, then it means that the function referencing operator searches for functions with the name of `greet` within the files namespace. You could, in theory, also reference the `print` function, but this is not possible in Flint.
 
-In the last chapter the basic theory of the Thread Stack has been taught. This theory is needed now. Every single user-defined function is managed via the Thread Stack, meaning that the local state of any user-created and called function is stored in the TS structure. `Core` functions, however, are not implemented in Flint itself. They are low level functions which do not use the Thread Stack at all, and any call to a Core module's function will still result in a regular hardware-stack based call. Because functions of Core modules are not managed by the TS, they also cannot be referenced. The same applies to `extern` functions as well, they too can not be referenced using the function reference operator `::`. If you try to reference the `print` function through an expression like `::print` you would get an error like this:
+In the last chapter the basic theory of the Thread Stack has been taught. This theory is needed now. Every single user-defined function is managed via the Thread Stack, meaning that the local state of any user-created and called function is stored in the TS structure. `Core` functions, however, are not implemented in Flint itself. They are low level functions which do not use the Thread Stack at all, and any call to a Core modules function will still result in a regular hardware-stack based call. Because functions of Core modules are not managed by the TS, they also cannot be referenced. The same applies to `extern` functions as well, they too can not be referenced using the function reference operator `::`. If you try to reference the `print` function through an expression like `::print` you would get an error like this:
 
 > ```
 > Parse Error at main.ft:9:10
@@ -101,11 +101,11 @@ In the last chapter the basic theory of the Thread Stack has been taught. This t
 > └─ Referencing functions of Core modules is not allowed
 > ```
 
-In this example the line `p := ::print;` was added directly after the `g();` line from the above example.
+In this example the `p := ::print;` line was added directly after the `g();` line from the above example.
 
 ## Callables
 
-You have already seen a **Callable** before. Whenever we store a function on a variable, this variable is now named a **callable**, because it's a _callable variable_. So, we have been using callable throughout this chapter already.
+You have already seen a **Callable** before. Whenever we store a function on a variable, this variable is now named a **callable**, because it's a *callable variable*. So, we have been using callables throughout this chapter already.
 
 It is very important to understand the Thread Stack in order to be able to understand callables. If we have a variable like `fn<() -> void> g = ...` then we need to know the type and the structure of that type in memory. In the last chapter the structure of the function frame has been discussed, and this knowledge is needed now. As per the rules of the last chapter, the function frame of the `greet` function looks like this:
 
@@ -115,7 +115,7 @@ struct function_frame_t__greet {
 };
 ```
 
-No arguments, no return values, no local variables. A function as small as it gets. If now a function reference is done, like `::greet`, then the function reference operator will allocate the above function frame type on the heap using `malloc` under the hood. But the variable `g` can have _any_ function stored on it which has the signature of `fn<() -> void>`:
+No arguments, no return values, no local variables. A function as small as it gets. If now a function reference is done, like `::greet`, then the function reference operator will allocate the above function frame type on the heap using `malloc` under the hood. But the variable `g` can have *any* function stored on it which has the signature of `fn<() -> void>`:
 
 ```ft
 use Core.print
@@ -142,7 +142,7 @@ This example will print these lines to the console:
 > Hello from second greeting! local = 10
 > ```
 
-While both functions have identical signatures, their actual frame sizes differ because `greet2` has a local variable that `greet` does not. The function frame of the `greet2` function looks like this:
+While both functions have identical signatures, their frame sizes differ because `greet2` has a local variable that `greet` does not. The function frame of the `greet2` function looks like this:
 
 ```c
 struct function_frame_t__greet2 {
@@ -151,7 +151,7 @@ struct function_frame_t__greet2 {
 };
 ```
 
-And, it's a completely different function all together. So, **how does the callable know which function to call**? The solution to this is very simple, actually. Instead of allocating just enough space for the `function_frame_t__XXX` the function reference allocates 8 bytes more and stores the pointer to the function to call at the first 8 bytes:
+So, **how does the callable know which function to call**? The solution to this is very simple. Instead of allocating just enough space for the `function_frame_t__XXX` the function reference allocates 8 bytes more and stores the pointer to the function to call at the first 8 bytes:
 
 ```c
 struct callable_frame_t__greet2 {
@@ -160,7 +160,7 @@ struct callable_frame_t__greet2 {
 };
 ```
 
-Note that this above C code is only equal conceptually, Flint does not create any internal types for that callable frame type. By storing the pointer to the function to call directly in front of the frame which is passed to that called function, callables become very easy to implement. Remember: every single function in Flint has the same signature under the hood, being `i1 fn_name(ptr stack)`. So, when calling a callable we essentially do nothing than calling the stored fn pointer and passing the frame to it, like `g.fn_ptr(g.frame)`. This is a very lean abstraction on top of the Thread Stack.
+Note that this above C code is only equal conceptually, Flint does not create any internal types for that callable frame type. By storing the pointer to the function to call directly in front of the frame which is passed to that called function, callables become very easy to implement. Remember: every single function in Flint has the same signature under the hood, being `i1 fn_name(ptr stack)`. So, when calling a callable we essentially do nothing than calling the stored fn pointer and passing the frame to it, like `g->fn_ptr(g->frame)`. This is a very lean abstraction on top of the Thread Stack.
 
 ### Callable Cleanup
 

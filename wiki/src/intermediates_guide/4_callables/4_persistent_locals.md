@@ -1,12 +1,10 @@
 # Persistent Locals
 
-Because of Flints unique approach to execution thanks to the Thread Stack, callables have yet another very nice feature: local variable persistence. You know the basics of the Thread Stack and thus you know that a callable functions frame stays valid even after a call. The overall frame **persists** across calls.
+Because of Flints execution model, callables have yet another very nice feature: local variable persistence. You know the basics of the Thread Stack and thus you know that a callable functions frame stays valid even after a call. The overall frame **persists** in memory across calls.
 
 This core property, that the frame of a callable persists across calls, is the basis of persistent local variables. Unlike the `static` keyword of other languages like `Java` or `C++`, a variable marked as `persistent` is *not* shared across functions or callable instances. Every `persistent` local variable persists across function calls on a per-callable instance basis, which is *very* different from the `static` keyword of other languages.
 
-Persistent locals enable clean, encapsulated state without global variables or complex object patterns.
-
-Persistent locals can be used across a wide variety of things:
+Persistent locals enable clean, encapsulated state without global variables or complex object patterns. They can be used across a wide variety of things:
 
 - Counters and accumulators
 - Caches / memoization (once Flint has support for maps)
@@ -53,9 +51,9 @@ This program will print these lines to the console:
 > counter() = 0
 > ```
 
-As can be seen, the `persistent` storage modifier keyword (similar to how `const` is a storage modifier keyword). It is not allowed to use `persistent` together with `const` on a local variable, because why would the local variables state need to persist if it's constant? A persistent constant value would be the equivalent of just a regular constant value, just use `const data` for this use case instead.
+As can be seen, the `persistent` keyword is a storage modifier keyword, similar to how `const` and `mut` are storage modifier keywords. It is not allowed to use `persistent` together with `const` on a local variable, because why would the local variables state need to persist if it's constant? A persistent constant value would be the equivalent of just a regular constant value, just use `const data` for this use case instead.
 
-When calling a function with `persistent` local variables through a "regular" call (`counter()`) then the persistent value will not "remember" its previous state. The persistent state of a persistent local variable exists as long as the callable frame exists.
+The local state of a function is reset on each function invocation when calling a function with `persistent` local variables through a "regular" call (`counter()`). The persistent local state will only persist when referencing the function as a callable. The persistent state of a persistent local variable exists as long as the callable frame exists.
 
 ## Rate-Limiter
 
@@ -98,11 +96,11 @@ This program will print these lines to the console:
 > Executed
 > ```
 
-Every line printed to the console will have a delay of 1 second from the last line respectively. We are not limited to one single timer, however. The possibilities are endless, I bet you will get creative with local variable persistence!
+Every line printed to the console will have a delay of 1 second from the last line respectively. We are not limited to one single timer, though.
 
 ## State Machines
 
-A very good example use-case for persistent locals are state-machines. Depending on the state a state-machine is currently in, it may need to behave differently. Through persistent locals, this state is function-local and very managable mentally.
+A very good example use-case for persistent locals are state-machines. Depending on the state a state-machine is currently in, it may need to behave differently. Through persistent locals, this state is function-local and very managable mentally because the state does not need to be managed by the caller themselves and then passed to the function, like you would do it in other languages.
 
 ```ft
 use Core.print
@@ -140,9 +138,9 @@ This program will print these lines to the console:
 > Executed State 3
 > ```
 
-There is no explicit state-object which needs to be stored or passed around to the function. It "remembers" in which state it currently is, so the function itself manages it's state and delegates its work depending on it. This is only a simple example, but the same principle could be applied to any function in any context.
+There is no explicit state-object which needs to be stored or passed around to the function. It "remembers" in which state it currently is, so the function itself manages its state and delegates its work depending on it. This is only a simple example, but the same principle could be applied to any function in any context.
 
-Such contextful functions and functions which rely heavily on persistent locals need callable instances to work correctly. If the `execute_next_phase` was called directly, then only the first state would be executed over and over again. It is still open to discussion whether this is just a regular consequence of the design or functions should not lean too hard onto local variable persistence. Maybe adding a `#function_only_callable` annotation would help here and prevent any direct-calls to that function at compile-time.
+Such contextful functions and functions which rely heavily on persistent locals need callable instances to work correctly. If the `execute_next_phase` was called directly, then only the first state would be executed over and over again. It is still open to discussion whether this is just a regular consequence of the design or functions should not lean too hard onto local variable persistence. Maybe adding a `#function_only_callable` annotation would help here and prevent any direct-calls to that function at compile-time, as this function would essentially be useless when called directly.
 
 ## Accumulators
 
@@ -196,4 +194,4 @@ This program will print these lines to the console:
 > result = 1
 > ```
 
-Persistent locals are a concept which, as far as I am aware, does not exist yet in any other language. The closest analogy would be closures with mutable captured state, but even this is not the exact same thing. This behaviour can be simulated by passing a "context" parameter to the function, and then the function would become stateful, but that's not a 1:1 comparison, as this manual state-passing approach would be very...manual.
+Persistent locals are a concept which, as far as I am aware, does not exist yet in any other language. The closest analogy would be closures with mutable captured state, but that is not the exact same thing. This behaviour can be simulated by passing a "context" parameter to the function, and then the function would become stateful, but that's not a 1:1 comparison, as this manual state-passing approach would be very...manual.
