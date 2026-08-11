@@ -42,7 +42,7 @@ This program will print this line to the console:
 > res = 30
 > ```
 
-As you can see, **any** `use` clausel can be aliased (even the `use Core.print` clausel). The identifier after the `as` keyword is the aliasing name, which you need to specify when using a symbol from that imported namespace. If you would remove the `p.` in the `utils.ft` file the function would reference itself and would infinitely recurse.
+As you can see, **any** `use` clause can be aliased (even the `use Core.print` clause). The identifier after the `as` keyword is the aliasing name, which you need to specify when using a symbol from that imported namespace. If you would remove the `p.` in the `utils.ft` file the function would reference itself and would infinitely recurse.
 
 ## Alias chain
 

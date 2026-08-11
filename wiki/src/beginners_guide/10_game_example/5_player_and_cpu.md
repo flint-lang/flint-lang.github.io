@@ -7,6 +7,7 @@ Next up we need to properly separate the paddle out into two different kinds of 
 First we will create a new `player.ft` file which will contain all the player-specific code. We essentially move the `Paddle` object definition to the `player.ft` file and rename it to `Player` and then we also move the `update` function from `FPaddleCommon` to the `Player` object:
 
 **`player.ft`**:
+
 ```ft
 use Fip.raylib as rl
 
@@ -27,7 +28,7 @@ entity Paddle:
 
 As you can see, we did not just copy-paste it, we added the `paddle` name for the `DPaddle` data and changed `FPaddleCommon.clamp_position(paddle)` to `self.clamp_position()` since all object functions have an implicit `self` parameter. It is not mandatory to change it, but it just looks cleaner this way.
 
-And then in the main file we add the `use "player.ft"` clausel and instead of creating a `paddle := Paddle` we create a `player := Player` and rename all occurrences of `paddle` to `player`.
+And then in the main file we add the `use "player.ft"` clause and instead of creating a `paddle := Paddle` we create a `player := Player` and rename all occurrences of `paddle` to `player`.
 
 This all should have made absolutely zero difference to the program behaviour, but that was just the base work. We now can add player-specific functionality. For example, the `reset` function to make sure that the player is not spawned in the middle of the field but on the left side of the field instead:
 
@@ -53,6 +54,7 @@ As you can see, the player now is located at the left side of the screen, where 
 Now that the player is at the left side of the screen, we can look at implementing the `Cpu` object. For this, we create yet another file, `cpu.ft` with this content:
 
 **`cpu.ft`**:
+
 ```ft
 use Fip.raylib as rl
 
@@ -71,7 +73,7 @@ object Cpu:
 		paddle.pos = f32x2(rl.GetScreenWidth() - paddle.size.x / 2 - 10, rl.GetScreenHeight() / 2);
 ```
 
-Next up lets add the `use "cpu.ft"` clausel to the main function and then initialize, reset, update and draw the cpu in the main file:
+Next up lets add the `use "cpu.ft"` clause to the main function and then initialize, reset, update and draw the cpu in the main file:
 
 ```ft
 	cpu := Cpu(DPaddle(_));

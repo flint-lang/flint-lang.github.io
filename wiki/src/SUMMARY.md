@@ -72,7 +72,7 @@
     - [Inline Array Initialization](./beginners_guide/6_arrays/11_inline_array_initialization.md)
 
   - [Imports](./beginners_guide/7_imports.md)
-    - [The `use` Clausel](./beginners_guide/7_imports/1_the_use_clausel.md)
+    - [The `use` Clause](./beginners_guide/7_imports/1_the_use_clause.md)
     - [Circular Dependencies](./beginners_guide/7_imports/2_circular_dependencies.md)
     - [Import Aliasing](./beginners_guide/7_imports/3_import_aliasing.md)
     - [Namespaces](./beginners_guide/7_imports/4_namespaces.md)

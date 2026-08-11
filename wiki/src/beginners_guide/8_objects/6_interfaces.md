@@ -29,7 +29,7 @@ object Object implements(Serializable):
 		return $"\{ x: {d.x} \}";
 ```
 
-We have a new clausel here, the `implements` clausel. It is pretty similar to the `requires` clausel of `func` components. We create our object and then we explicitely say which interfaces it `implements`. This is done explicitely because through the addition of polymorphism, some internal things need to be generated additionaly which were not required for non-polymorphic objects. The common case (object instances, func instances etc) is all 100% identical between objects which do and do not implement interfaces.
+We have a new clause here, the `implements` clause. It is pretty similar to the `requires` clause of `func` components. We create our object and then we explicitely say which interfaces it `implements`. This is done explicitely because through the addition of polymorphism, some internal things need to be generated additionaly which were not required for non-polymorphic objects. The common case (object instances, func instances etc) is all 100% identical between objects which do and do not implement interfaces.
 
 As you can see, we defined the `to_string` function inside our object. The `Serializable.to_string` function **needs** to be implemented *somewhere* in the object. But the `Object.to_string` function has the signature of `const Object -> str` and not `() -> str` which the `Serializable.to_string` function expects. So, how can this function be the implementation for it? Function linking (resolving the virtual function to its implementation) always happens on basis of the **explicit signature** of function, **not** on the **implicit signature** ([Implicit vs explicit signatures](./4_signatures.md#implicit-vs-explicit-signatures)).
 

@@ -2,7 +2,7 @@
 
 You may have asked yourself already *"What will happen if file `A` imports file `B` and file `B` imports file `A` again?"*. This is called a [circular dependency](https://en.wikipedia.org/wiki/Circular_dependency). It's called circular, because the dependency graph forms a circle, where the "line of imports" ends up at its starting point. If you try to write imports in C where every file imports each other you will get a compilation error, as circular dependencies are not allowed and cannot be resolved.
 
-But Flint's `use` clausels work quite different from the `#import` from C-style languages. Whereas these literally just copy and paste the code from the other file, the `use` clausel in Flint is a lot...smarter. The `use` clausel only imports symbols of files at a depth of `1`, but what does this mean? Well, here is a small example to showcase what i mean with that:
+But Flint's `use` clauses work quite different from the `#import` from C-style languages. Whereas these literally just copy and paste the code from the other file, the `use` clause in Flint is a lot...smarter. The `use` clause only imports symbols of files at a depth of `1`, but what does this mean? Well, here is a small example to showcase what i mean with that:
 
 The `helper.ft` file:
 
@@ -99,7 +99,7 @@ This program will print these lines to the console:
 > utils end
 > ```
 
-As you can see, circular dependencies are absolutely no problem in Flint, and the only reason they are no problem is the dynamic exploratory nature of the compiler (you only specify one file and the compiler will find all included files on its own) and the fact that the inclusion depth is only 1, so every use clausel is a shallow include.
+As you can see, circular dependencies are absolutely no problem in Flint, and the only reason they are no problem is the dynamic exploratory nature of the compiler (you only specify one file and the compiler will find all included files on its own) and the fact that the inclusion depth is only 1, so every use clause is a shallow include.
 
 ## Side note
 

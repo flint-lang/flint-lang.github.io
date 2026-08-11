@@ -7,6 +7,7 @@ The next thing we want to add is the ball itself. It is added before any players
 We start by defining the data our ball will need. The ball moves in a given direction, which means it needs a `dir`ection, a `pos`ition, a `speed` and of course a `radius` too. So, we end up with this data structure for the ball:
 
 **`ball.ft`**:
+
 ```ft
 use Fip.raylib as rl
 
@@ -35,7 +36,7 @@ The balls color is yellow. As you can see, the position, direction and speed of 
 
 ## Creating and drawing
 
-Now that we created the `ball.ft` file we want to create and render the ball in the game loop. So, we add the `use "ball.ft"` clausel to the main file and then we create the ball before entering the game loop:
+Now that we created the `ball.ft` file we want to create and render the ball in the game loop. So, we add the `use "ball.ft"` clause to the main file and then we create the ball before entering the game loop:
 
 ```ft
 	// Initialize game objects
@@ -61,6 +62,7 @@ If you resize the game, however, the ball does stay in the same absolute positio
 To be able to move the ball, we *need* to know how much time has passed since the last frame. We *could* just call the `GetFrameTime()` function from raylib, but I want to practically use the `time` Core module here to showcase the exact same thing. As a baseline, this is how the `main.ft` looks now:
 
 **`main.ft`**:
+
 ```ft
 use Fip.raylib as rl
 

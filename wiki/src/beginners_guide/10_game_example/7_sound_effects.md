@@ -7,6 +7,7 @@ A game without *any* sound-effects is a very boring game. We will add *very* sim
 As usual, the `data` is where everything begins. In this case it's the `const data`:
 
 **`audio.ft`**:
+
 ```ft
 use Core.print
 use Core.time
@@ -157,7 +158,7 @@ def check_collisions(mut Audio a, mut Ball ball, FPaddleCommon player, FPaddleCo
 		a.play(AudioConfig.COLLISION_FREQUENCY, ms_100);
 		ball.reflect_v();
 		return GameState.RUNNING;
-	
+
 	return GameState.RUNNING;
 ```
 
@@ -168,7 +169,7 @@ and then, we also need to pass the constructed `Audio` object `a` to the `check_
 			// ...
 ```
 
-We also need to add the `use "audio.ft"` clausel to both `main.ft` and `collisions.ft` too, and we need to add `Core.time` to the `collisions.ft` file.
+We also need to add the `use "audio.ft"` clause to both `main.ft` and `collisions.ft` too, and we need to add `Core.time` to the `collisions.ft` file.
 
 ## Implementation
 

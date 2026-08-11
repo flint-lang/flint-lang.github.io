@@ -22,7 +22,7 @@ This program will print this line to the console:
 > st.($0, $1, $2) = (-6, 4.5, 9)
 > ```
 
-As you can see, whe have aliased the tuple type `data<i32, f32, u64>` to be usable with the alias `SomeTuple`. Type aliases, just like the `use` clausels, are part of the **clausels**, this means that they do not end with a semicolon (`;`).
+As you can see, whe have aliased the tuple type `data<i32, f32, u64>` to be usable with the alias `SomeTuple`. Type aliases, just like the `use` clauses, are part of the **clauses**, this means that they do not end with a semicolon (`;`).
 
 You can nest aliases or use them within data or other definitions. You can even alias primitive types if you would want to:
 

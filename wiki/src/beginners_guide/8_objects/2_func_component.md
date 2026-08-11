@@ -16,7 +16,7 @@ data Transform:
 func Movement requires(Transform t):
 	def move():
 		t.pos += t.dir * t.speed;
-	
+
 	def print_position():
 		print($"t.pos = {t.pos}\n");
 
@@ -34,7 +34,7 @@ This program will print these lines to the console:
 > t.pos = (1.74, 4.204)
 > ```
 
-We define a new `func` component through the `func` keyword. After the name of the defined component, however, we need to write the `requires(...)` clausel. In this clausel we must put a list of `data` components and their accessor names respectively. All required data becomes available to be used inside the functions defined in the `func` component.
+We define a new `func` component through the `func` keyword. After the name of the defined component, however, we need to write the `requires(...)` clause. In this clause we must put a list of `data` components and their accessor names respectively. All required data becomes available to be used inside the functions defined in the `func` component.
 
 As you can see in the `main` function, we call functions inside the component using `Movement.move` for example. The `move` function does not have a single parameter defined, yet we still must pass the data component to it, why?
 
@@ -48,7 +48,7 @@ def Movement.print_position(mut Transform t):
 	print($"t.pos = {t.pos}\n");
 ```
 
-at compile-time. But if this would be the only thing we need the func component for, it would be very boring indeed. But, as you can see clearly, the types defined in the `requires(..)` clausel become the first implicit N parameters of the functions within a `func` component.
+at compile-time. But if this would be the only thing we need the func component for, it would be very boring indeed. But, as you can see clearly, the types defined in the `requires(..)` clause become the first implicit N parameters of the functions within a `func` component.
 
 ## Requiring the same data twice
 
@@ -99,7 +99,7 @@ Regarding the `requires(i32 x)`, is there a use case where something like this w
 
 </div>
 
-Here is a small example of using multiple different data types in the `requires` clausel of `func` components:
+Here is a small example of using multiple different data types in the `requires` clause of `func` components:
 
 ```ft
 use Core.print
@@ -135,7 +135,7 @@ This program will print these lines to the console:
 > pos: (133, 144), size: (100, 100), dir: (3.3, 2.2)
 > ```
 
-As you can see, the signatures of the functions now became `MyFunc.move(mut MyData, mut Data2, i32, i32)` and `MyFunc.print(mut MyData, mut Data2)` respectively. The order of implicit parameters stays consistent from the `requires` clausel to the actual function signature.
+As you can see, the signatures of the functions now became `MyFunc.move(mut MyData, mut Data2, i32, i32)` and `MyFunc.print(mut MyData, mut Data2)` respectively. The order of implicit parameters stays consistent from the `requires` clause to the actual function signature.
 
 This is as far as we can go with `func` components in isolation, without composing them within object definitions.
 

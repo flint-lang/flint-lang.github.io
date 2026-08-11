@@ -1,6 +1,6 @@
 # Relative Paths
 
-Flint only supports relative paths when importing files with the `use` clausel. This means that you can import files located in subdirectories too, for example:
+Flint only supports relative paths when importing files with the `use` clause. This means that you can import files located in subdirectories too, for example:
 
 File `subdir/file.ft`:
 
