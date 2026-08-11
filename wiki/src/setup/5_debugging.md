@@ -1,6 +1,6 @@
 # Debugging
 
-When compiling a Flint project with the default flags, like `flintc main.ft` then the compiler already is in **debug mode**. This means that the compiler emits **debug symbols**, for line-stepping, value inspection, breakpoints etc. How debuggers work or how you can debug a program will not be explained here. Just search online for "how to debug C" (or any compiled langauge), the workflow is the *exact* same.
+When compiling a Flint project with the default flags, like `flintc main.ft` the the compiler already is in **debug mode**. This means that the compiler emits **debug symbols**, for line-stepping, value inspection, breakpoints etc. How debuggers work or how you can debug a program will not be explained here. Just search online for "how to debug C" (or any compiled langauge), the workflow is the *exact* same.
 
 If you do not want debug symbols you need to change the `--optimize` / `-O` flag, for example `flintc main.ft -O fast`. In any mode other than `debug`, no debug informations are emitted.
 
