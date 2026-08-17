@@ -18,7 +18,7 @@ def main():
 This program will print this line to the console:
 
 > ```
-> error.17591431759785607604.Crash: "Custom Message"
+> error.17756989193349715908.Crash: "Custom Message"
 > ```
 
 Anonymous errors have no underlying error set type visible to the programmer, like when defining your own error set types. This means that it is not possible to tell which error was thrown when throwing anonymous errors, only **that** an error has happened. Also note that we can still access the fields `type_id`, `value_id` and `message` on an error of type `anyerror`. The error structure did not change at all, as you know already. When using anonymous errors, the compiler will just "make up" a name for an error set on a per-function basis (using the function ID). This means that, if you would throw a few anonymous errors within the same function, all those anonymous errors would end up in the same internal error set type:
@@ -45,15 +45,15 @@ def main():
 This program will print these lines to the console:
 
 > ```
-> error.18152922749114152985.Crash: "Custom Message"
-> error.18152922749114152985.CrashOther: ""
-> error.18152922749114152985.CrashLast: "LAST"
+> error.12543703015361850365.Crash: "Custom Message"
+> error.12543703015361850365.CrashOther: ""
+> error.12543703015361850365.CrashLast: "LAST"
 > ```
 
 As you can clearly see in the output of this example, the error type, `error.18152922749114152985`, is identical, but the value (`Crash`, `CrashOther`, `CrashLast`) differs. The name of the newly created error type is just `error.<fn_id>`, so if you change the signature or the body of a function, then its function ID will change. So, under the hood the error set
 
 ```ft
-error "error.18152922749114152985":
+error "error.12543703015361850365":
 	Crash, CrashOther, CrashLast;
 ```
 
