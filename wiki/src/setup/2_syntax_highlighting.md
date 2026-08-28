@@ -20,14 +20,6 @@ require('lazy').setup({
   {
     'flint-lang/flint-syntax.nvim',
     ft = 'flint',
-    config = function()
-      vim.cmd [[
-          augroup flint_indent
-            autocmd!
-            autocmd FileType flint setlocal tabstop=4 shiftwidth=4 noexpandtab
-          augroup END
-      ]]
-    end,
   },
   -- ...
 })
