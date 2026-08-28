@@ -8,7 +8,7 @@ There is essentially just one small finishing touch I would like to add. Current
 		ball.speed *= 1.1;
 ```
 
-Adding the `ball.speed *= 1.1;` to the `reflect_v` function of the `Ball` entity type in `ball.ft` is everything which needs to be done here.
+Adding the `ball.speed *= 1.1;` to the `reflect_v` function of the `Ball` object type in `ball.ft` is everything which needs to be done here.
 
 ## Next Steps
 
@@ -285,7 +285,7 @@ def check_collisions(mut Audio a, mut Ball ball, IPaddle player, IPaddle cpu) ->
 		a.play(AudioConfig.COLLISION_FREQUENCY, ms_100);
 		ball.reflect_v();
 		return GameState.RUNNING;
-	
+
 	return GameState.RUNNING;
 ```
 

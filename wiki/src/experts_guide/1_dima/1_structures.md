@@ -12,7 +12,7 @@ struct head_t {
     // (will be described later) this default value is copied into it
     const void *default_value;
 
-    // The size of the `data` or `entity` type stored in each `Slot`
+    // The size of the `data` or `object` type stored in each `Slot`
     size_t type_size;
 
     // How many active blocks are allocated in the variable `blocks` member
@@ -28,7 +28,7 @@ Every type, for example if we define a `data` or `object` type, has a global var
 
 ```c
 head_t *<HASH>.dima.head.data.MyDataType = ...;
-head_t *<HASH>.dima.head.entity.MyObjectType = ...;
+head_t *<HASH>.dima.head.object.MyObjectType = ...;
 ```
 
 These global variables really have these dotted names as their symbols, in llvm IR code you can define symbols with a dot in them.

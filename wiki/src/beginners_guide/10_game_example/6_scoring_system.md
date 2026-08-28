@@ -38,6 +38,7 @@ The UI is drawn at the very end so that the ball is rendered "behind" it. With t
 The next thing we add is a `GameState` enum to the `collisions.ft` file, and we change the `check_collisions` function to return a given game state, based on certain events (like a player scoring a value):
 
 **`collisions.ft`**:
+
 ```ft
 use Core.print
 
@@ -73,7 +74,7 @@ interface IPaddle:
 And now we have an interface with all the functionality a paddle should have. And now we can implement the `ball_passed` function in the `Player` and `Cpu` objects respectively, all other functions are already implemented in the `FPaddleCommon` func component (and the `update` is already implemented in each object respectively too).
 
 ```ft
-entity Player implements(IPaddle):
+object Player implements(IPaddle):
 	data: DPaddle paddle;
 	func: FPaddleCommon;
 	Player(paddle);
@@ -94,7 +95,7 @@ object Cpu implements(IPaddle):
 
 	const def ball_passed(Ball ball) -> bool:
 		return false;
-	
+
 	// ...
 ```
 

@@ -13,7 +13,7 @@ use Fip.raylib as rl
 
 use "paddle.ft"
 
-entity Paddle:
+object Paddle:
 	data: DPaddle paddle;
 	func: FPaddleCommon;
 	Paddle(paddle);
