@@ -1,0 +1,72 @@
+/* Flint Theme - Main colors (Dark) */
+:root {
+  --bg: #20202c;
+  --fg: #c0bab2;
+  --sidebar-bg: #1f1f28;
+  --sidebar-fg: #c0bab2;
+  --sidebar-non-existant: #727169;
+  --sidebar-active: #c0af87;
+  --sidebar-spacer: #4f5d64;
+  --scrollbar: #4f5d64;
+  --icons: #727169;
+  --icons-hover: #c0af87;
+  --links: #8ba5b4;
+  --inline-code-color: #8ea49e;
+  --theme-popup-bg: #1f1f28;
+  --theme-popup-border: #c0bab2;
+  --theme-hover: #2f343f;
+  --quote-bg: #20202c;
+  --quote-border: #c0af87;
+  --table-border-color: #4f5d64;
+  --table-header-bg: #1f1f28;
+  --table-alternate-bg: #2f343f;
+  --searchbar-border-color: #4f5d64;
+  --searchbar-bg: #1f1f28;
+  --searchbar-fg: #c0bab2;
+  --searchbar-shadow-color: rgba(31, 31, 40, 0.8);
+  --searchresults-header-fg: #c0af87;
+  --searchresults-border-color: #4f5d64;
+  --searchresults-li-bg: #1f1f28;
+  --search-mark-bg: #c0af87;
+}
+
+/* Custom styling for Flint */
+.flint-theme {
+  --flint-primary: #8ba5b4;
+  --flint-secondary: #c4746e;
+  --flint-accent: #c0af87;
+}
+
+/* Dark theme body styling */
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+/* Menu bar styling */
+.menu-bar {
+  background-color: var(--sidebar-bg);
+  border-bottom: 1px solid var(--sidebar-spacer);
+}
+
+/* Content area */
+#content {
+  background-color: var(--bg);
+}
+
+/* baseline */
+.chapter .chapter-item > a {
+  color: var(--sidebar-fg);
+}
+
+/* the actual selected link */
+.chapter .chapter-item > a.active,
+.chapter .chapter-item > a[aria-current="page"] {
+  color: var(--sidebar-active);
+}
+
+/* mark any li that contains the active link (descendants included) */
+.chapter .chapter-item:has(a.active) > a,
+.chapter .chapter-item:has(a[aria-current="page"]) > a {
+  color: var(--sidebar-active);
+}

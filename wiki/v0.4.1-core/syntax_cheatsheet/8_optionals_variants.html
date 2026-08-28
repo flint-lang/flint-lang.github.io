@@ -1,0 +1,358 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Optionals &amp; Variants - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/flint.css">
+        <link rel="stylesheet" href="../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/flint-lang/flintc" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="optionals--variants"><a class="header" href="#optionals--variants">Optionals &amp; Variants</a></h1>
+<h2 id="optionals"><a class="header" href="#optionals">Optionals</a></h2>
+<p>Nullable type, written inline as <code>T?</code>. There is no implicit nullability as values are always initialized.</p>
+<pre><code class="language-ft">// 'none' is void? (zeroinitializer)
+i32? maybe = none;
+maybe = 69;
+</code></pre>
+<h3 id="unwrapping"><a class="header" href="#unwrapping">Unwrapping</a></h3>
+<pre><code class="language-ft">// force-unwrap; hard-crashes on none
+i32 v = maybe!;
+</code></pre>
+<p>Behaviour on empty access is configurable (<code>flintc --optional &lt;mode&gt;</code>).</p>
+<h3 id="comparing"><a class="header" href="#comparing">Comparing</a></h3>
+<pre><code class="language-ft">if maybe == none:
+    ...
+if maybe != none:
+    ...
+
+i32? a = 5;
+i32? b = 5;
+// equal if both none or both hold matching values
+if a == b:
+    ...
+</code></pre>
+<h3 id="null-coalescing"><a class="header" href="#null-coalescing">Null Coalescing</a></h3>
+<pre><code class="language-ft">// T? ?? T -&gt; T; never crashes
+i32 x = maybe ?? 0;
+</code></pre>
+<h3 id="switching"><a class="header" href="#switching">Switching</a></h3>
+<pre><code class="language-ft">switch maybe:
+    none: print("none\n");
+    v:    print($"value = {v}\n");
+</code></pre>
+<p><code>v</code> is a <strong>mutable reference</strong> to the value field (assigning <code>v = 10</code> writes the optional). Don't touch the switched-on variable inside the value branch, the reference stays valid after <code>maybe = none</code>.</p>
+<h3 id="optional-chaining"><a class="header" href="#optional-chaining">Optional Chaining</a></h3>
+<pre><code class="language-ft">// T? -&gt; T?; none if any step was none
+i32? x = v2m?.x;
+
+// mix: force-unwrap nm, chain v2m
+nm!.v2m?.x;
+</code></pre>
+<p>The chain result is always the rightmost type wrapped in an optional, e.g. <code>T?</code>.</p>
+<h3 id="optionals-as-references"><a class="header" href="#optionals-as-references">Optionals as References</a></h3>
+<p>Complex types in optionals are DIMA-backed references:</p>
+<pre><code class="language-ft">MyData? ref = md;
+
+// mutates md
+ref!.(x, y) = (7, 6.28);
+
+MyData? ref2 = none;
+if true:
+    MyData val = MyData(10, 3.14, "segfault");
+    // outlives the scope, refcount bumped
+    ref2 = val;
+</code></pre>
+<h2 id="variants"><a class="header" href="#variants">Variants</a></h2>
+<p>Tagged unions. Storage: <code>{ u8 active_type, byte[N] }</code> sized to the largest possible type.</p>
+<pre><code class="language-ft">variant MyVariant:
+    i32, f32, u64;
+
+def main():
+    MyVariant var = i32(5);
+    var = f32(3.4);
+    var = u64(55);
+</code></pre>
+<h3 id="switching-1"><a class="header" href="#switching-1">Switching</a></h3>
+<pre><code class="language-ft">switch var:
+    i32(i): print($"i32: {i}\n");
+    f32(f): print($"f32: {f}\n");
+    u64(u): print($"u64: {u}\n");
+</code></pre>
+<p>The accessor names are branch-scoped. Variants are passed <strong>by reference</strong>. Assigning a tuple into a variant requires a temp tuple variable.</p>
+<h3 id="tagged-variants"><a class="header" href="#tagged-variants">Tagged Variants</a></h3>
+<pre><code class="language-ft">use Core.print
+
+variant MyVariant:
+    Int(i32),
+    Float(f32),
+    Tuple(i32, f32, bool8),
+    Empty(void);
+
+def main():
+    MyVariant var = MyVariant.Int(-5);
+    var = MyVariant.Tuple(5, 6.9, bool8(u8(33)));
+
+    switch var:
+        MyVariant.Int(i):   print($"i = {i}\n");
+        MyVariant.Float(f): print($"f = {f}\n");
+        MyVariant.Tuple(t): print($"({t.$0}, {t.$1}, {t.$2})\n");
+        MyVariant.Empty():  print("is empty\n");
+</code></pre>
+<p>Tags must always be qualified (<code>MyVariant.Int</code>) to disambiguate from types. Empty payload: <code>Empty(void)</code>; construct/switch as <code>MyVariant.Empty()</code>.</p>
+<h3 id="inline-variants"><a class="header" href="#inline-variants">Inline Variants</a></h3>
+<pre><code class="language-ft">def print_var(variant&lt;i32, f32, str&gt; var):
+    switch var:
+        i32(i): ...
+        str(s): ...
+
+def main():
+    variant&lt;i32, f32, str&gt; var = i32(-55);
+    print_var(var);
+</code></pre>
+<p>Inline variants cannot be tagged, so switches must name the types.</p>
+<h3 id="comparing-1"><a class="header" href="#comparing-1">Comparing</a></h3>
+<pre><code class="language-ft">// does it hold an i32?
+if var == i32:
+    ...
+
+// tagged check
+if var == MyVariant.Int:
+    ...
+
+// same type AND same value, checked via memcmp
+if var_1 == var_2:
+    ...
+
+// u8, 1-based, readonly
+print($"active = {var.active_type}\n");
+
+// type + value check
+if var == i32(7):
+    ...
+</code></pre>
+<h3 id="unwrap--extract"><a class="header" href="#unwrap--extract">Unwrap &amp; Extract</a></h3>
+<pre><code class="language-ft">// force-unwrap; crashes on wrong type
+i32 v = var!(i32);
+
+// extract -&gt; i32?, none if wrong type
+i32? v = var?(i32);
+
+// tag form, chains with ?.
+i32? x = var?(MyVar.Data).x;
+</code></pre>
+<h3 id="optional-variants"><a class="header" href="#optional-variants">Optional Variants</a></h3>
+<p><code>T?</code> where T is a variant is the <strong>same struct</strong> as internal tag <code>0</code> is reserved for <code>none</code>:</p>
+<pre><code class="language-ft">MyVar? opt = var;
+
+// These two are equal
+f32 x = (opt!)!(MyVar.Float);
+f32 y = opt!!(MyVar.Float);
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../syntax_cheatsheet/7_interop.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../syntax_cheatsheet/9_error_sets.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../syntax_cheatsheet/7_interop.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../syntax_cheatsheet/9_error_sets.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../version_select.js"></script>
+        <script src="../header.js"></script>
+
+
+    </div>
+    </body>
+</html>
