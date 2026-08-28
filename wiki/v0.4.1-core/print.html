@@ -239,14 +239,6 @@ sudo dnf install flintc
   {
     'flint-lang/flint-syntax.nvim',
     ft = 'flint',
-    config = function()
-      vim.cmd [[
-          augroup flint_indent
-            autocmd!
-            autocmd FileType flint setlocal tabstop=4 shiftwidth=4 noexpandtab
-          augroup END
-      ]]
-    end,
   },
   -- ...
 })
@@ -268,53 +260,7 @@ sudo dnf install flintc
 <h3 id="vscode-1"><a class="header" href="#vscode-1">VSCode</a></h3>
 <p>If you have the VSCode extension installed (described in the <a href="setup/./syntax_highlighting.html">previous</a> page) then you already have everything set up. Everything should just work™.</p>
 <h3 id="neovim-1"><a class="header" href="#neovim-1">NeoVim</a></h3>
-<p>To enable LSP support for the NeoVim extension you need to edit the <code>syntax-highlight.nvim</code> setup in your <code>init.lua</code> file. You need to add a few lines to the setup, the complete setup should look like this:</p>
-<pre><code class="language-lua">require('lazy').setup({
-  -- ...
-  {
-    'flint-lang/flint-syntax.nvim',
-    ft = 'flint',
-    config = function()
-      -- Set the tab width to 4
-      vim.cmd [[
-          augroup flint_indent
-            autocmd!
-            autocmd FileType flint setlocal tabstop=4 shiftwidth=4 noexpandtab
-          augroup END
-      ]]
-
-      -- LSP configuration
-      local lspconfig = require 'lspconfig'
-      local configs = require 'lspconfig.configs'
-
-      -- Define flint LSP if not already defined
-      if not configs.flint then
-        configs.flint = {
-          default_config = {
-            cmd = { 'fls' }, -- Make sure this is in your PATH
-            filetypes = { 'flint' },
-            root_dir = function(fname)
-              return lspconfig.util.find_git_ancestor(fname) or vim.fn.getcwd()
-            end,
-            settings = {},
-          },
-          docs = {
-            description = [[
-Flint Language Server Protocol implementation.
-Make sure 'fls' is in your PATH.
-            ]],
-          },
-        }
-      end
-
-      -- Setup the LSP
-      lspconfig.flint.setup {}
-    end,
-  },
-  -- ...
-})
-</code></pre>
-<p>That's it, you now should now have LSP support in your neovim setup. This assumes that you already have <code>lspconfig</code> installed in NeoVim. If you have used the <a href="https://github.com/nvim-lua/kickstart.nvim">kickstart.nvim</a> repository as a basis for your own configuration (highly recommended) then it should already be installed and ready to be used.</p>
+<p>If you enabled the package from the <a href="setup/./syntax_highlighting.html">previous</a> page, the langauge server should also just work correctly.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="fip-setup"><a class="header" href="#fip-setup">FIP Setup</a></h1>
 <h2 id="linux-2"><a class="header" href="#linux-2">Linux</a></h2>
 <h3 id="arch-1"><a class="header" href="#arch-1">Arch</a></h3>
