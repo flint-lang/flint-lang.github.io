@@ -572,7 +572,7 @@
                     around transparency. Write expressive, high-level code
                     while understanding exactly what happens at runtime.
                     Automatic memory management through DIMA, powerful
-                    composable entities, callables and persistent locals,
+                    composable objects, callables and persistent locals,
                     and interoperability with C libraries make Flint practical
                     for real-world projects.
                 </p>
@@ -592,12 +592,12 @@
                 <div class="carousel" id="flint-carousel" aria-label="Flint core concepts">
                     <div class="carousel-viewport">
                         <article class="carousel-slide active">
-                            <h3>DCMP</h3>
+                            <h3>Compositional Core</h3>
                             <p>
-                                Data modules and func modules compose into
-                                entities with explicit behavior boundaries.
+                                Compose data and func components into
+                                objects with explicit behavior boundaries.
                             </p>
-                            <pre><code><span class="kw">entity</span> <span class="ty">Bird</span>:
+                            <pre><code><span class="kw">object</span> <span class="ty">Bird</span>:
     <span class="kw">data</span>: <span class="ty">Wings</span>;
     <span class="kw">func</span>: <span class="ty">Fly</span>;
     <span class="ty">Bird</span>(<span class="ty">Wings</span>);</code></pre>
@@ -606,9 +606,9 @@
                         <article class="carousel-slide">
                             <h3>DIMA</h3>
                             <p>
-                                Flint manages data memory through a
-                                deterministic architecture designed
-                                for the special needs of DCMP.
+                                Flint manages memory of data and objects through an
+                                arc-based deterministic architecture designed
+                                around the special needs of its compositional core.
                             </p>
                             <pre><code><span class="kw">data</span> <span class="ty">ListNode</span>:
     <span class="ty">i32</span> value = 0;
@@ -620,7 +620,7 @@
                             <h3>Callables</h3>
                             <p>
                                 Functions can be stored, passed around, and
-                                keep persistent state between calls.
+                                keep persistent per-instance state between calls.
                             </p>
                             <pre><code><span class="kw">def</span> <span class="fn">counter</span>() -> <span class="ty">i32</span>:
     <span class="ct">persistent</span> <span class="ty">i32</span> c = 0;
@@ -635,22 +635,20 @@
                         <article class="carousel-slide">
                             <h3>Groups</h3>
                             <p>
-                                Groups are a new concept in Flint, they
-                                allow you to express simultaniety in a
-                                very natural way, for easy variable swaps
-                                and simultanious accesses or assignments.
+                                Groups take the concept of simultaneity and unify it across
+                                the language in a very natural way: for easy variable swaps,
+                                simultaneous accesses or assignments and many more.
                             </p>
                             <pre><code><span class="kw">def</span> <span class="fn">main</span>():
     <span class="ty">i32</span> x = 10;
     <span class="ty">i32</span> y = 20;
     (x, y) = (y, x); <span class="cm">// Swapping variables</span>
-
     <span class="ty">i32x3</span> v1 = (10, 20, 30);
     v1.(x, y) = v1.(z, x); <span class="cm">// Swapping fields</span></code></pre>
                         </article>
 
                         <article class="carousel-slide">
-                            <h3>Multi-Types</h3>
+                            <h3>Vectors</h3>
                             <p>
                                 Flint comes with many builtin vector types
                                 enabling easy and native use of SIMD operations.
@@ -664,11 +662,11 @@
                     </div>
 
                     <div class="carousel-dots" aria-label="Carousel navigation">
-                        <button class="carousel-dot active" type="button" aria-label="Show DCMP"></button>
+                        <button class="carousel-dot active" type="button" aria-label="Show Compositional Core"></button>
                         <button class="carousel-dot" type="button" aria-label="Show DIMA"></button>
                         <button class="carousel-dot" type="button" aria-label="Show Callables"></button>
                         <button class="carousel-dot" type="button" aria-label="Show Groups"></button>
-                        <button class="carousel-dot" type="button" aria-label="Show Multi-Types"></button>
+                        <button class="carousel-dot" type="button" aria-label="Show Vectors"></button>
                     </div>
                 </div>
             </div>
@@ -680,8 +678,9 @@
                     <h2>Why choose Flint?</h2>
                     <p class="sub">
                         Flint stands out by combining high-level ergonomics
-                        with runtime transparency. Here's what makes it
-                        different:
+                        with runtime transparency. This combination is rather
+                        uncommon, as most languages either want transparency
+                        or high-level ergonomics but rarely both.
                     </p>
                 </div>
             </div>
@@ -697,12 +696,14 @@
                     </p>
                 </article>
                 <article class="card">
-                    <h3>Declarative Composable Modules</h3>
+                    <h3>Compositional Core</h3>
                     <p>
-                        Flint's unique DCMP paradigm combines the best of
-                        OOP and ECS. Build complex systems through
-                        composition of data and behavior, with compile-time
-                        dispatch and clear semantics.
+                        Flint's core is centered on the composition of components
+                        into larger objects. Regarding modern definitions of OOP,
+                        Flint is an OOP language, but you will not find anything
+                        regarding inheritance in Flint. The compositional design
+                        enables you to build complex systems which always stay
+                        simple to extend, with clear semantics.
                     </p>
                 </article>
                 <article class="card">
@@ -741,17 +742,19 @@
             </div>
         </section>
 
-        <section id="paradigm" class="section">
+        <section id="composition" class="section">
             <div class="section-head">
                 <div>
-                    <h2>The Declarative Composable Modules Paradigm</h2>
+                    <h2>Composition as a Core Concept</h2>
                     <p class="sub">
-                        DCMP is Flint's core innovation: a new programming
-                        paradigm that elegantly combines data composition
-                        with behavior. It is based on the core idea of separating
-                        data from behaviour, and then recombining them in a declarative
-                        manner. DCMP requires a different mindset than OOP, you might
-                        need to adjust your thinking to use it effectively.
+                        Flint centers itself around composition as a core concept.
+                        This enables it to make some static guarantees about the
+                        code you write. Because data and functionality is separated
+                        and then composed in a declarative manner, the runtime can
+                        optimize code in ways it would not be able to with "classic"
+                        objects in OOP. This compositional approach requires a
+                        different mindset than OOP, you might need to adjust your
+                        thinking to use it effectively.
                     </p>
                 </div>
             </div>
@@ -763,49 +766,48 @@
                         <div class="step">
                             <div class="num">1</div>
                             <div>
-                                <strong>Data Modules</strong>
+                                <strong>Data Components</strong>
                                 <span>
-                                    Define what data your system contains.
-                                    Data modules are reusable across many
-                                    different func modules and
-                                    entities.
+                                    Define what data your systems contain.
+                                    Data components are reusable across many
+                                    different func components and objects.
                                 </span>
                             </div>
                         </div>
                         <div class="step">
                             <div class="num">2</div>
                             <div>
-                                <strong>Func Modules</strong>
+                                <strong>Func Components</strong>
                                 <span>
                                     Define behavior that operates on
                                     specific data. Transparent about
-                                    requirements and effects. Func modules
-                                    also act like native interfaces.
+                                    requirements and effects.
                                 </span>
                             </div>
                         </div>
                         <div class="step">
                             <div class="num">3</div>
                             <div>
-                                <strong>Entities</strong>
+                                <strong>Interfaces</strong>
                                 <span>
-                                    Compose data and behavior together
-                                    deterministically. There are many more
-                                    enttiy-specific features than shown
-                                    here, they can be found in the Wiki.
+                                    Define polymorphic behaviour through
+                                    the use of interfaces. Implement them
+                                    in your objects as Flint's way to add
+                                    polymorphism to an otherwise entirely
+                                    static language.
                                 </span>
                             </div>
                         </div>
                         <div class="step">
                             <div class="num">4</div>
                             <div>
-                                <strong>Similar in use to Objects</strong>
+                                <strong>Objects</strong>
                                 <span>
-                                    Entities can be used similar to objects
-                                    in OOP languages, but they are not the
-                                    same. DCMP is strictly composition-based
-                                    so there exist no concepts of
-                                    inheritance.
+                                    Compose data and behavior together
+                                    declaratively. Objects aim to feel
+                                    as similar to "regular" objects in
+                                    OOP-based languages despite Flint's
+                                    compositional core.
                                 </span>
                             </div>
                         </div>
@@ -813,7 +815,7 @@
                 </div>
 
                 <div class="panel">
-                    <h3 style="margin: 0 0 10px">DCMP Example</h3>
+                    <h3 style="margin: 0 0 10px">Composition Example</h3>
                     <pre><code><span class="ct">use</span> <span class="ty">Core</span>.print
 
 <span class="cm">// Define data</span>
@@ -827,13 +829,12 @@
     <span class="kw">def</span> <span class="fn">fly</span>():
         <span class="fn">print</span>($<span class="str">"Flying for </span>{w.flight_time}<span class="str"> seconds\n"</span>);
 
-<span class="cm">// Compose into entity</span>
-<span class="kw">entity</span> <span class="ty">Bird</span>:
+<span class="cm">// Compose into object</span>
+<span class="kw">object</span> <span class="ty">Bird</span>:
     data: Wings;
     func: Fly;
     <span class="ty">Bird</span>(<span class="ty">Wings</span>);
 
-<span class="cm">// Use entities like objects</span>
 <span class="kw">def</span> <span class="fn">main</span>():
     bird := <span class="ty">Bird</span>(<span class="ty">Wings</span>(10, 20));
     bird.<span class="fn">fly</span>();
@@ -850,7 +851,7 @@
                         The FIP (Flint Interop Protocol) is a protocol-based
                         communication library aiming to unify interop
                         between languages. The Flint compiler communicates
-                        with specialized Interop Modules over that protocol,
+                        with specialized Interop Modules over this protocol,
                         to enable native interop with other (compiled)
                         languages. The C interop module is the only one
                         working so far, but more will follow.
@@ -888,10 +889,9 @@
                             <div>
                                 <strong>Protocol-Based Communication</strong>
                                 <span>
-                                    Each Interop Module is a master in it's
-                                    own language, the Flint compiler does
-                                    not need know about other languages at
-                                    all.
+                                    Each Interop Module is a master in its
+                                    own language, the Flint compiler does not
+                                    need to know about other languages at all.
                                 </span>
                             </div>
                         </div>
@@ -903,7 +903,7 @@
                                     Through FIP the compiler can detect
                                     which functions or symbols are missing
                                     or nonexistent at parse-time. No more
-                                    ambiguous "symbol not found" linking
+                                    hard to diagnose "symbol not found" linking
                                     errors!
                                 </span>
                             </div>
@@ -927,13 +927,13 @@
         <section id="callables" class="section">
             <div class="section-head">
                 <div>
-                    <h2>Callables And Variable Persistence</h2>
+                    <h2>Callables and Variable Persistence</h2>
                     <p class="sub">
                         In Flint, every function can be referenced as a callable and passed around as a value. By
                         referencing functions as callables, its persistent local state is preserved across invocations.
                         Through this, callables enable powerful patterns like counters, rate limiters, state machines,
-                        accumulators, and more. This all is possible thanks to Flints unique runtime which, again, aims
-                        to be as lean and transparent as possible.
+                        accumulators, and more. This all is possible thanks to Flint's runtime. How everything shown here
+                        works under the hood is explained in-detail in the Wiki.
                     </p>
                 </div>
             </div>
@@ -971,7 +971,8 @@
                                 <span>
                                     Persistent locals are just regular local variables for regular function calls and
                                     can be used as such. Flint does not differentiate between callables and regular
-                                    functions at the lowest level, the same code is executed for both.
+                                    functions at the lowest level, the same code is executed for both. This means that
+                                    <strong>every</strong> user-defined function is allowed to be referenced as a callable.
                                 </span>
                             </div>
                         </div>
