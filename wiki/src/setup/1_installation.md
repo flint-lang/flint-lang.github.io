@@ -31,7 +31,13 @@ The Flint compiler is still a [work in progress](https://github.com/NixOS/nixpkg
 
 ### Ubuntu
 
-I simply cannot publish anything on [Launchpad](https://launchpad.net/ubuntu) since I never recieve the verification E-Mail, no matter what I try. I would appreciate some help if you have some experience with launching packages on Launchpad.
+The Flint compiler has been published to [launchpad](https://launchpad.net/~zweiler1/+archive/ubuntu/flint). You can install it with these commands:
+
+```sh
+sudo add-apt-repository ppa:zweiler1/flint
+sudo apt update
+sudo apt install flintc
+```
 
 ### Manual installation
 

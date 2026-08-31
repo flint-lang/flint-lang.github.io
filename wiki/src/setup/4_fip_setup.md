@@ -29,7 +29,11 @@ The C Interop Module, just like the main compiler, is still a [work in progress]
 
 ### Ubuntu
 
-I simply cannot publish anything on [Launchpad](https://launchpad.net/ubuntu) since I never recieve the verification E-Mail, no matter what I try. I would appreciate some help if you have some experience with launching packages on Launchpad.
+The C Interop Module has been published to [launchpad](https://launchpad.net/~zweiler1/+archive/ubuntu/flint). You can install it with these commands:
+
+```sh
+sudo apt install fip-c
+```
 
 ### Manual Installation
 
