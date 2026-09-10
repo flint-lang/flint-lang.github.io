@@ -143,7 +143,7 @@ Similar to how all data automatically collapses to an anonymous struct for what 
 ```ft
 use Core.print
 
-extern def do_something(data<i32, i32, f32, bool> d) -> (i32, i32, f32, bool);
+extern def do_something(data[i32, i32, f32, bool] d) -> (i32, i32, f32, bool);
 
 def main():
     d := (10, 10, 3.2, false);

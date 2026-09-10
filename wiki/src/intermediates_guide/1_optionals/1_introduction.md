@@ -15,7 +15,7 @@ Lets discuss what happens here under the hood within the compiler and within Fli
 
 ```ft
 def main():
-    data<bool, i32> maybe = (false, 0);
+    data[bool, i32] maybe = (false, 0);
 ```
 
 A boolean `false` is simply `0` in memory, as you already know. The `none` literal just means to fill the entire optional structure with zeroes. It's a `zeroinitializer` if you know this from C, its a `{0}`. Because the flag is `0` when `false` we can set all values to zeroes through the `none` type. This means that the `value` field of the optional structure will also be set to zeroes when storing a `none` literal on it. But here, when using the tuple, we need to specify the `value` we want to store in it, even if we want to store `none` (`(false, 0)`) on it.

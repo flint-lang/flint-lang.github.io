@@ -6,23 +6,23 @@ Callables are function values. They are Thread-Stack-managed: referencing a func
 
 ```ft
 // no params, no return
-fn<() -> void>
+fn[() -> void]
 
 // two params, one return
-fn<i32, i32 -> i32>
+fn[i32, i32 -> i32]
 
 // multiple returns: no parens
-fn<i32, i32 -> i32, i32>
+fn[i32, i32 -> i32, i32]
 ```
 
 Special-case notations:
 
 ```ft
 // params only, no return (-> void omitted)
-fn<i32>
+fn[i32]
 
 // neither params nor return
-fn<>
+fn[]
 ```
 
 ## Function References
@@ -33,7 +33,7 @@ def greet():
 
 def main():
     // '::' is the reference operator
-    fn<() -> void> g = ::greet;
+    fn[() -> void] g = ::greet;
     g();
 ```
 
@@ -45,18 +45,18 @@ def main():
 Pass, return, and mutate callables like any value:
 
 ```ft
-def apply_op(fn<i32, i32 -> i32> op, i32 x, i32 y) -> i32:
+def apply_op(fn[i32, i32 -> i32] op, i32 x, i32 y) -> i32:
     return op(x, y);
 
-def get_sub() -> fn<i32, i32 -> i32>:
+def get_sub() -> fn[i32, i32 -> i32]:
     return ::sub;
 
 // callables pass by reference
-def set_sub(mut fn<i32, i32 -> i32> op):
+def set_sub(mut fn[i32, i32 -> i32] op):
     op = ::sub;
 
 def main():
-    fn<i32, i32 -> i32> op = get_sub();
+    fn[i32, i32 -> i32] op = get_sub();
     i32 res = apply_op(op, 20, 10);
     set_sub(op);
     res = apply_op(op, res, 5);
@@ -75,8 +75,8 @@ def counter() -> i32:
     return current;
 
 def main():
-    fn<() -> i32> c1 = ::counter;
-    fn<() -> i32> c2 = ::counter;
+    fn[() -> i32] c1 = ::counter;
+    fn[() -> i32] c2 = ::counter;
     c1(); // 0
     c1(); // 1
     c2(); // 0
@@ -91,7 +91,7 @@ Use cases: counters, rate-limiters (with `Core.time`), state machines, accumulat
 
 ```ft
 // possible errors in the fn type
-fn<bool {ErrAssert}> f = ::may_fail;
+fn[bool {ErrAssert}] f = ::may_fail;
 
 f(true) catch err:
     switch err:
@@ -102,8 +102,8 @@ f(true) catch err:
 An unspecified error set expands to `{anyerror}`:
 
 ```ft
-// This expands to the type fn<bool -> void {anyerror}>
-fn<bool> f = ::may_fail;
+// This expands to the type fn[bool -> void {anyerror}]
+fn[bool] f = ::may_fail;
 ```
 
 so any function reference can be stored regardless of the errors it may throw.

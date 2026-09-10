@@ -27,8 +27,8 @@ def counter() -> i32:
     return current;
 
 def main():
-    fn<() -> i32> c1 = ::counter;
-    fn<() -> i32> c2 = ::counter;
+    fn[() -> i32] c1 = ::counter;
+    fn[() -> i32] c2 = ::counter;
     print($"c1() = {c1()}\n");
     print($"c1() = {c1()}\n");
     print($"c2() = {c2()}\n");
@@ -66,7 +66,7 @@ use Core.time
 def execute_function():
 	print("Executed\n");
 
-def execute_maybe(fn<> function) -> bool:
+def execute_maybe(fn[] function) -> bool:
 	persistent TimeStamp last = now();
 	TimeStamp current = now();
 	Duration elapsed = duration(last, current);
@@ -79,8 +79,8 @@ def execute_maybe(fn<> function) -> bool:
 	return true;
 
 def main():
-	fn<> task = ::execute_function;
-	fn<fn<> -> bool> throttled = ::execute_maybe;
+	fn[] task = ::execute_function;
+	fn[fn[] -> bool] throttled = ::execute_maybe;
 	i32 c = 0;
 	while c < 4:
 		if throttled(task):
@@ -122,7 +122,7 @@ def execute_next_phase():
 			state = State.S1;
 
 def main():
-	fn<> state_handler = ::execute_next_phase;
+	fn[] state_handler = ::execute_next_phase;
 	for (_, _) in 0..6:
 		state_handler();
 ```
@@ -161,7 +161,7 @@ def mul(i32 x, i32 y) -> i32:
 def div(i32 x, i32 y) -> i32:
 	return x / y;
 
-def accumulator(fn<i32, i32 -> i32>? operation, i32 y) -> i32:
+def accumulator(fn[i32, i32 -> i32]? operation, i32 y) -> i32:
 	persistent i32 x = 0;
 	switch operation:
 		none:
@@ -171,7 +171,7 @@ def accumulator(fn<i32, i32 -> i32>? operation, i32 y) -> i32:
 			return x;
 
 def main():
-	operations := fn<i32, i32 -> i32>[4](::add);
+	operations := fn[i32, i32 -> i32][4](::add);
 	operations[1] = ::sub;
 	operations[2] = ::mul;
 	operations[3] = ::div;

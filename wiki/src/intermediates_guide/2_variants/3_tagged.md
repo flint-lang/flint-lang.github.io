@@ -6,13 +6,13 @@ Until now we have learnt how to declare variants and how to extract values of a 
 use Core.print
 
 variant MyVariant:
-	i32, f32, data<i32, f32, bool8>;
+	i32, f32, data[i32, f32, bool8];
 
 def print_var(MyVariant var):
 	switch var:
 		i32(i): print($"holds i32 value of {i}\n");
 		f32(f): print($"holds f32 value of {f}\n");
-		data<i32, f32, bool8>(t): print($"holds tuple value of ({t.$0}, {t.$1}, {t.$2})\n");
+		data[i32, f32, bool8](t): print($"holds tuple value of ({t.$0}, {t.$1}, {t.$2})\n");
 
 def main():
 	MyVariant var = i32(-5);
@@ -21,7 +21,7 @@ def main():
 	var = f32(3.4);
 	print_var(var);
 
-	var = data<i32, f32, bool8>{5, 6.9, bool8(u8(33))};
+	var = data[i32, f32, bool8]{5, 6.9, bool8(u8(33))};
 	print_var(var);
 ```
 
@@ -33,7 +33,7 @@ This program will print these lines to the console:
 > holds tuple value of (5, 6.9, 00100001)
 > ```
 
-As you can see it is very very tedious to write the type `data<i32, f32, bool8>` **every single time** you want to use a variation of that type. And we have a solution for that: **Tags**. A Tag is nothing else than a "name" you give to a variation of a variant. This name can be any identifier. Here is the exact same program as above, but re-written using Tags:
+As you can see it is very very tedious to write the type `data[i32, f32, bool8]` **every single time** you want to use a variation of that type. And we have a solution for that: **Tags**. A Tag is nothing else than a "name" you give to a variation of a variant. This name can be any identifier. Here is the exact same program as above, but re-written using Tags:
 
 ```ft
 use Core.print
@@ -66,7 +66,7 @@ This program will print these lines to the console:
 > holds tuple value of (5, 6.9, 00100001)
 > ```
 
-You may notice that we have removed the `data<...>` part of the tuple definition in the variant, but why? Well, because nothing else than tuples can hold multiple data at once and is anonymous as well. If we would have a `data` component defined somewhere, we would write the type of said component in between the parenthesis instead. Parenthesis are not part of any type definition and this is the reason to why we can have the syntax `NAME(TYPE)` for variant tagging. Well, they actually are used to define `fn` typed variables which take no arguments, but you will learn about them later on. Comma-separated values in between the parenthesis define a tuple type as one possible variation of that variant.
+You may notice that we have removed the `data[...]` part of the tuple definition in the variant, but why? Well, because nothing else than tuples can hold multiple data at once and is anonymous as well. If we would have a `data` component defined somewhere, we would write the type of said component in between the parenthesis instead. Parenthesis are not part of any type definition and this is the reason to why we can have the syntax `NAME(TYPE)` for variant tagging. Well, they actually are used to define `fn` typed variables which take no arguments, but you will learn about them later on. Comma-separated values in between the parenthesis define a tuple type as one possible variation of that variant.
 
 When accessing / extracting the actual value of a tagged variant, we **need** to prefix the extraction with the type of the variant to signify we actually want to get a tag, not a type. Here is an example of why we need it:
 
@@ -101,7 +101,7 @@ This decision might annoy you at first, but we hope that you will be able to see
 
 ## Empty Payloads
 
-For tagged variants, it is also possible to declare the type of the variant as `void`, meaning that this variation does not hold any payload. This capability has some implications. First of all, you *always* need to write the type `void` for an empty payload when defining a tagged variant, like:
+For tagged variants, it is also possible to declare the type of the variant as `void`, meaning that this variation does not hold any payload. This capability has some implications. First of all, you _always_ need to write the type `void` for an empty payload when defining a tagged variant, like:
 
 ```ft
 variant MyVariant:

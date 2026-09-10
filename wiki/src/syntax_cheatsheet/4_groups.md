@@ -2,7 +2,7 @@
 
 Groups are swizzles: a way to operate on multiple values at the same time, like expressing simultaneity natively. They have **no runtime footprint** (the values live only in CPU registers/cache) and are not stored anywhere. Whenever possible, grouped operations vectorize (see [Vectors](./2_data.md#vectors)).
 
-Groups are not *just* swizzles, they are a broader concept of expressing simultaneity *including* swizzling.
+Groups are not _just_ swizzles, they are a broader concept of expressing simultaneity _including_ swizzling.
 
 ## Grouped Assignment & Swaps
 
@@ -77,7 +77,7 @@ if x < (2, 4, 6):
     ...
 ```
 
-A group where all elements share a type is a **homogeneous group**. Set-like comparison does **not** apply splatting, as this would break some conditions like `(x, x, x) == (1, 2, 3)` will always result in `false` because `x` cannot be *all of them* at the same time.
+A group where all elements share a type is a **homogeneous group**. Set-like comparison does **not** apply splatting, as this would break some conditions like `(x, x, x) == (1, 2, 3)` will always result in `false` because `x` cannot be _all of them_ at the same time.
 
 ## Enum Groups
 
@@ -91,6 +91,6 @@ if me == MyEnum.(VAL1, VAL3, VAL5):
 ## Related Grouped Syntax
 
 - Multiple returns: `return (a, b);` received via `(a, b) := split();`.
-- Tuples `data<i32, f32, str>`: index via `t.$0`, grouped via `t.($0, $1, $2)`.
+- Tuples `data[i32, f32, str]`: index via `t.$0`, grouped via `t.($0, $1, $2)`.
 - Vectors `i32x3 v = (1, 2, 3);` are group-like primitives with first-class SIMD arithmetic.
 - Iteration context groups: `for (idx, elem) in arr:`.

@@ -11,7 +11,7 @@ def may_fail(bool fail) {ErrAssert}:
 	assert(not fail);
 
 def main():
-	fn<bool> f = ::may_fail;
+	fn[bool] f = ::may_fail;
 	f(false);
 	f(true);
 ```
@@ -25,9 +25,9 @@ This program will print these lines to the console:
 >  └─ ErrAssert.AssertionFailed: "The assertion has failed"
 > ```
 
-As you can see, the callable call `f(true);` failed and let the error bubble up to the main function. You can also see that the type of `f` is *not* the same as the type of the function `may_fail`. The function `may_fail` has the type `fn<bool -> void {ErrAssert}>`. The `-> void` can be omitted, so it has the type of `fn<bool {ErrAssert}>` but we store it on a callable of type `fn<bool>`, how is that possible?
+As you can see, the callable call `f(true);` failed and let the error bubble up to the main function. You can also see that the type of `f` is *not* the same as the type of the function `may_fail`. The function `may_fail` has the type `fn[bool -> void {ErrAssert}]`. The `-> void` can be omitted, so it has the type of `fn[bool {ErrAssert}]` but we store it on a callable of type `fn[bool]`, how is that possible?
 
-Simply said: the frame structure is the exact same anyways, and because the error `ErrAssert` is a specialized error set of the `anyerror` set, we can store it on a `fn<bool>`. What happens when we define a fn type like `fn<bool>` is that Flint will expand that type to this type: `fn<bool -> void {anyerror}>`. So, it's a function which takes a bool, returns nothing, and might throw any error. This means that we can store any function reference on that callable, independent of that referenced functions possible thrown error sets.
+Simply said: the frame structure is the exact same anyways, and because the error `ErrAssert` is a specialized error set of the `anyerror` set, we can store it on a `fn[bool]`. What happens when we define a fn type like `fn[bool]` is that Flint will expand that type to this type: `fn[bool -> void {anyerror}]`. So, it's a function which takes a bool, returns nothing, and might throw any error. This means that we can store any function reference on that callable, independent of that referenced functions possible thrown error sets.
 
 ## Specifying the error sets
 
@@ -42,7 +42,7 @@ def may_fail(bool fail) {ErrAssert}:
 	assert(not fail);
 
 def main():
-	fn<bool {ErrAssert}> f = ::may_fail;
+	fn[bool {ErrAssert}] f = ::may_fail;
 	f(false);
 	f(true);
 ```
@@ -71,7 +71,7 @@ def may_fail(bool fail) {ErrAssert}:
 	assert(not fail);
 
 def main():
-	fn<bool {ErrAssert}> f = ::may_fail;
+	fn[bool {ErrAssert}] f = ::may_fail;
 	f(false) catch err:
 		switch err:
 			ErrAssert(e):

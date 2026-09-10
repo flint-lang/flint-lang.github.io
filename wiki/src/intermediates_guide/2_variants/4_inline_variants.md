@@ -7,14 +7,14 @@ Here is a small example of just that:
 ```ft
 use Core.print
 
-def print_var(variant<i32, f32, str> var):
+def print_var(variant[i32, f32, str] var):
 	switch var:
 		i32(i): print($"i = {i}\n");
 		f32(f): print($"f = {f}\n");
 		str(s): print($"s = {s}\n");
 
 def main():
-	variant<i32, f32, str> var = i32(-55);
+	variant[i32, f32, str] var = i32(-55);
 	print_var(var);
 
 	var = f32(3.14);
@@ -49,10 +49,10 @@ use Core.print
 
 data MyData:
 	bool8 flags;
-	variant<i32, f32> value;
+	variant[i32, f32] value;
 
 def main():
-	variant<i32, f32> var = i32(-10);
+	variant[i32, f32] var = i32(-10);
 	MyData md = MyData{u8(0), var};
 	print($"flags = {md.flags}\n");
 	switch md.value:

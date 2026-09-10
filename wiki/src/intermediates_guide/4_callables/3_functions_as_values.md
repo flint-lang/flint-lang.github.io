@@ -17,11 +17,11 @@ def mul(i32 x, i32 y) -> i32:
 def div(i32 x, i32 y) -> i32:
 	return x / y;
 
-def apply_op(fn<i32, i32 -> i32> op, i32 x, i32 y) -> i32:
+def apply_op(fn[i32, i32 -> i32] op, i32 x, i32 y) -> i32:
 	return op(x, y);
 
 def main():
-	fn<i32, i32 -> i32> op = ::add;
+	fn[i32, i32 -> i32] op = ::add;
 	i32 res = apply_op(op, 20, 10);
 	print($"res = {res}\n");
 
@@ -62,14 +62,14 @@ def add(i32 x, i32 y) -> i32:
 def sub(i32 x, i32 y) -> i32:
 	return x - y;
 
-def get_sub() -> fn<i32, i32 -> i32>:
+def get_sub() -> fn[i32, i32 -> i32]:
 	return ::sub;
 
-def apply_op(fn<i32, i32 -> i32> op, i32 x, i32 y) -> i32:
+def apply_op(fn[i32, i32 -> i32] op, i32 x, i32 y) -> i32:
 	return op(x, y);
 
 def main():
-	fn<i32, i32 -> i32> op = ::add;
+	fn{i32, i32 -> i32] op = ::add;
 	i32 res = apply_op(op, 20, 10);
 	print($"res = {res}\n");
 
@@ -98,14 +98,14 @@ def add(i32 x, i32 y) -> i32:
 def sub(i32 x, i32 y) -> i32:
 	return x - y;
 
-def set_sub(mut fn<i32, i32 -> i32> op):
+def set_sub(mut fn[i32, i32 -> i32] op):
 	op = ::sub;
 
-def apply_op(fn<i32, i32 -> i32> op, i32 x, i32 y) -> i32:
+def apply_op(fn[i32, i32 -> i32] op, i32 x, i32 y) -> i32:
 	return op(x, y);
 
 def main():
-	fn<i32, i32 -> i32> op = ::add;
+	fn[i32, i32 -> i32] op = ::add;
 	i32 res = apply_op(op, 20, 10);
 	print($"res = {res}\n");
 

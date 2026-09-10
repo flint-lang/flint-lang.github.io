@@ -33,7 +33,7 @@ This program will print this line to the console:
 
 As you notice, we implicitely switch on the error value, which means that the whole `catch:` body becomes the body of the `switch`. The main reason to why we added this is to reduce the nesting level of the code when catching errors. Catching errors is already verbose enough, so reducing the visual clutter to keep you focused on the actual errors you want to catch is important for readability.
 
-Because we switch on the possible error set types (the returned variant) we are only able to inline-switch on a function which returns at least one known error type. If the function would only return an `anyerror` as its error return, then we would not be able to switch on it. Inline-switching is explicitely meant for switching on the `variant<anyerror, ErrInline, ...>` error variant.
+Because we switch on the possible error set types (the returned variant) we are only able to inline-switch on a function which returns at least one known error type. If the function would only return an `anyerror` as its error return, then we would not be able to switch on it. Inline-switching is explicitely meant for switching on the `variant[anyerror, ErrInline, ...]` error variant.
 
 So, this code:
 

@@ -20,7 +20,7 @@ typedef struct {
 
 Under the hood, both Flint's `data` component and C's `struct` are exactly the same. They are just collections of data packed into a struct. So, what are tuples then? Well, tuples are collections of data, packed into a struct too. But with two big differences:
 
-1. They are **anonymous**, meaning that they dont get a *type name*
+1. They are **anonymous**, meaning that they dont get a _type name_
 2. They are not DIMA-managed (you will learn the implications of this later)
 
 But when looking at the lowest level, `data` and tuples are very similar.
@@ -31,7 +31,7 @@ Because tuples are anonymous they are not defined like data components are. They
 
 ```ft
 def main():
-    data<i32, f32, str> tuple = (3, 2.2, "hello!");
+    data[i32, f32, str] tuple = (3, 2.2, "hello!");
 ```
 
 Do you recognize the `data` keyword? This is the reason i told you earlier that tuples and data are pretty much the same thing, but one is named while the other one is not. This connection and the understanding of it is crucial to understand tuples, because otherwise you now would be really confused by the syntax: "Wait, what does the `data` keyword have to do with tuples here?".
@@ -48,7 +48,7 @@ In Flint, we access the fields of a tuple by its "index". The first field of the
 use Core.print
 
 def main():
-    data<i32, f32, str> tuple = (3, 2.2, "hello!");
+    data[i32, f32, str] tuple = (3, 2.2, "hello!");
 
     i32 first = tuple.$0;
     f32 second = tuple.$1;
@@ -71,7 +71,7 @@ As you can clearly see, we access the elements of the tuple with the `.$N` synta
 
 ```ft
 def main():
-    data<i32, f32, str> tuple = (3, 2.2, "hello!");
+    data[i32, f32, str] tuple = (3, 2.2, "hello!");
     i32 x = tuple.$3;
 ```
 
@@ -83,7 +83,7 @@ This program will produce this compile error:
 > 1 │ def main():
 > 3 │ »   i32 x = tuple.$3;
 > ┌─┴───────────────────┘
-> ├─ Out of bounds access on tuple type 'data<i32, f32, str>'
+> ├─ Out of bounds access on tuple type 'data[i32, f32, str]'
 > └─ The tuples last element is '$2'
 > ```
 
@@ -95,7 +95,7 @@ Just like we can access elements from a tuple, we can also assign new values to 
 use Core.print
 
 def main():
-    data<i32, f32, str> tuple = (3, 2.2, "hello!");
+    data[i32, f32, str> tuple = (3, 2.2, "hello!");
 
     tuple.$0 = 7;
     tuple.$1 = 4.7;
@@ -122,7 +122,7 @@ Just like with data components you can do grouped field accesses and assignments
 use Core.print
 
 def main():
-    data<i32, f32, str> tuple = (3, 2.2, "hello!");
+    data[i32, f32, str] tuple = (3, 2.2, "hello!");
     tuple.($0, $1, $2) = (7, 4.7, "yes");
     print($"tuple.($0, $1, $2) = ({tuple.$0}, {tuple.$1}, \"{tuple.$2}\")\n");
 ```
@@ -143,7 +143,7 @@ Tuples are not allowed to be defined as a type that can be represented with a ve
 use Core.print
 
 def main():
-    data<i32, i32, i32> tuple = (1, 1, 1);
+    data[i32, i32, i32] tuple = (1, 1, 1);
     tuple.($0, $1, $2) = (2, 3, 4);
     print($"tuple.($0, $1, $2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
 ```
@@ -154,12 +154,12 @@ will result in this compilation error:
 > Parse Error at main.ft:4:5
 > └─┬┤E0000│
 > 3 │ def main():
-> 4 │ »   data<i32, i32, i32> tuple = (1, 1, 1);
+> 4 │ »   data[i32, i32, i32] tuple = (1, 1, 1);
 > ┌─┴─────┘
 > └─ Cannot create a tuple type which overlaps with a vector
 > ```
 
-The compiler simply won't let you use the `data<i32, i32, i32>` type, you need to use `i32x3` instead. There is no technical reason to this choice other than nudging users towards using the right tool for the job.
+The compiler simply won't let you use the `data[i32, i32, i32]` type, you need to use `i32x3` instead. There is no technical reason to this choice other than nudging users towards using the right tool for the job.
 
 ### Returning Tuples
 
@@ -168,12 +168,12 @@ It is not allowed to return a tuple from a function if its the only return type 
 ```ft
 use Core.print
 
-def get_tuple(i32 a, f32 b, str c) -> data<i32, f32, str>:
-    data<i32, f32, str> tuple = (a, b, c);
+def get_tuple(i32 a, f32 b, str c) -> data[i32, f32, str]:
+    data[i32, f32, str] tuple = (a, b, c);
     return tuple;
 
 def main():
-    data<i32, f32, str> tuple = get_tuple(1, 4.7, "hello");
+    data[i32, f32, str] tuple = get_tuple(1, 4.7, "hello");
     print($"tuple.($0, $1, $2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
 ```
 
@@ -182,7 +182,7 @@ will produce this compile error telling you to use a group of type `(i32, f32, s
 > ```
 > Parse Error at main.ft:3:39
 > └─┬┤E0000│
-> 3 │ def get_tuple(i32 a, f32 b, str c) -> data<i32, f32, str>:
+> 3 │ def get_tuple(i32 a, f32 b, str c) -> data[i32, f32, str]:
 > ┌─┴───────────────────────────────────────┘
 > ├─ Functions cannot return a tuple type directly.
 > └─ If you want to return multiple values, change the return type to '(i32, f32, str)'
@@ -197,7 +197,7 @@ def get_tuple(i32 a, f32 b, str c) -> (i32, f32, str):
     return (a, b, c);
 
 def main():
-    data<i32, f32, str> tuple = get_tuple(1, 4.7, "hello");
+    data[i32, f32, str] tuple = get_tuple(1, 4.7, "hello");
     print($"tuple.($0, $1, $2) = ({tuple.$0}, {tuple.$1}, {tuple.$2})\n");
 ```
 
@@ -214,11 +214,11 @@ Tuples can also be passed to functions as any value can:
 ```ft
 use Core.print
 
-def print_tuple(data<i32, f32, str> tuple):
+def print_tuple(data[i32, f32, str] tuple):
     print($"tuple.(i32, f32, str) = ({tuple.$0}, {tuple.$1}, \"{tuple.$2}\")\n");
 
 def main():
-    data<i32, f32, str> tuple = (1, 2.2, "three");
+    data[i32, f32, str] tuple = (1, 2.2, "three");
     print_tuple(tuple);
 ```
 
@@ -233,11 +233,11 @@ Also, like data components, tuples can be passed to functions as mutable referen
 ```ft
 use Core.print
 
-def change_tuple(mut data<i32, f32, str> tuple):
+def change_tuple(mut data[i32, f32, str] tuple):
     tuple.($0, $1, $2) = (2, 3.3, "four");
 
 def main():
-    data<i32, f32, str> tuple = (1, 2.2, "three");
+    data[i32, f32, str] tuple = (1, 2.2, "three");
     print($"tuple.(i32, f32, str) = ({tuple.$0}, {tuple.$1}, \"{tuple.$2}\")\n");
 
     change_tuple(tuple);
@@ -259,10 +259,10 @@ Just like `data` components, tuples also can be constructed using the `T{}` synt
 use Core.print
 
 def main():
-	t1 := data<i32, f32, str>{1, 2.2, "three"};
+	t1 := data[i32, f32, str]{1, 2.2, "three"};
 	print($"t1.($0, $1, $2) = {t1.($0, $1, $2)}\n");
 
-	t2 := data<i32, f32, str>{ .$0 = 100, .$1 = 2.222, .$2 = "four" };
+	t2 := data[i32, f32, str]{ .$0 = 100, .$1 = 2.222, .$2 = "four" };
 	print($"t2.($0, $1, $2) = {t2.($0, $1, $2)}\n");
 ```
 
@@ -273,4 +273,4 @@ This program will print these lines to the console:
 > t2.($0, $1, $2) = (100, 2.222, four)
 > ```
 
-Tuples are, just like `data` components, default-constructible if all their fields are default-constructible too. So you also can write `data<i32, f32, str> t = _;` for example.
+Tuples are, just like `data` components, default-constructible if all their fields are default-constructible too. So you also can write `data[i32, f32, str] t = _;` for example.

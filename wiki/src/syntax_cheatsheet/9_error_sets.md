@@ -49,7 +49,7 @@ def divide(i32 x, i32 y) -> i32 {ErrArithmetic}:
 
 - `{ErrSet}` after the return type declares the possible errors; multiple: `{A, B}`.
 - Without it, the function's error return is `anyerror?`.
-- With it, the error becomes `variant<anyerror, ErrArithmetic>?`, and `err` in the catch is the unwrapped variant:
+- With it, the error becomes `variant[anyerror, ErrArithmetic]?`, and `err` in the catch is the unwrapped variant:
 
 ```ft
 i32 res = divide(10, 0) catch err:
@@ -97,7 +97,7 @@ Default messages come from the set definition; a custom message overrides them.
 
 ```ft
 def crash():
-    // no set definition needed 
+    // no set definition needed
     throw error.Crash("Custom Message");
 ```
 

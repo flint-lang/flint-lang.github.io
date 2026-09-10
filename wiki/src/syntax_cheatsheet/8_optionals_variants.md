@@ -132,13 +132,13 @@ Tags must always be qualified (`MyVariant.Int`) to disambiguate from types. Empt
 ### Inline Variants
 
 ```ft
-def print_var(variant<i32, f32, str> var):
+def print_var(variant[i32, f32, str] var):
     switch var:
         i32(i): ...
         str(s): ...
 
 def main():
-    variant<i32, f32, str> var = i32(-55);
+    variant[i32, f32, str] var = i32(-55);
     print_var(var);
 ```
 

@@ -75,7 +75,7 @@ Mutability: locals are mutable by default (`const` opts out), parameters immutab
 
 ```ft
 // anonymous, typed inline
-data<i32, f32, str> t = (3, 2.2, "hello!");
+data[i32, f32, str] t = (3, 2.2, "hello!");
 
 // index-based accesses
 t.$0 = 7;
@@ -85,7 +85,7 @@ t.($0, $1, $2) = (7, 4.7, "yes");
 ```
 
 - Not DIMA-managed; cannot be returned from a function directly (return a group `(T, T)` instead).
-- A tuple type overlapping a vector type is not allowed (`data<i32, i32, i32>` -> use `i32x3`).
+- A tuple type overlapping a vector type is not allowed (`data[i32, i32, i32]` -> use `i32x3`).
 
 ## Vectors
 
@@ -110,7 +110,7 @@ Types: `u8xN`…`i64xN` widths 2–4 (and 8 for some), `f32xN`, `f64xN`, `bool8`
 
 ```ft
 // clause: no semicolon
-type SomeTuple data<i32, f32, u64>
+type SomeTuple data[i32, f32, u64]
 type Int i32
 
 def main():

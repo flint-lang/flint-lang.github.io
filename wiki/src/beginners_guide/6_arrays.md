@@ -4,7 +4,7 @@ In the previous chapter we learned the importance of `data`, groups, vectors, tu
 
 ## What are Arrays?
 
-An array is a collection of the same type which can be resized and filled with values. While vectors and tuples are great for storing a small amount of values, what if we want to store a hundred of them? Using a tuple to store 100 elements would not only be extremely tedious but also extremely verbose. Just imagine writing `i32, ` a hundred times inside the `data<..>` type.
+An array is a collection of the same type which can be resized and filled with values. While vectors and tuples are great for storing a small amount of values, what if we want to store a hundred of them? Using a tuple to store 100 elements would not only be extremely tedious but also extremely verbose. Just imagine writing `i32, ` a hundred times inside the `data[..]` type.
 
 You already know an array type: Strings! The `str` type is just an array of characters (`u8`) but you will also learn how strings work under the hood in this chapter!
 

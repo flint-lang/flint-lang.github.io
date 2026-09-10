@@ -11,7 +11,7 @@ def greet():
 	print("Hello, World!\n");
 ```
 
-does not have any parameters nor does it return any values. Not returning a value is the same as returning a `void` value. So, the signature of this function would be `fn<() -> void>`. The `()` denotes that the function does not have any parameters. This type, `fn<() -> void>`, already *is* the type of the `greet` function. The type of functions is always notated with the `fn` type.
+does not have any parameters nor does it return any values. Not returning a value is the same as returning a `void` value. So, the signature of this function would be `fn[() -> void]`. The `()` denotes that the function does not have any parameters. This type, `fn[() -> void]`, already *is* the type of the `greet` function. The type of functions is always notated with the `fn` type.
 
 Let's have a look at a more "complex" function, for example the `add` function:
 
@@ -20,14 +20,14 @@ def add(i32 x, i32 y) -> i32:
 	return x + y;
 ```
 
-The type of that function itself is `fn<i32, i32 -> i32>`. As you can clearly see, everything to the left of the `->` marks parameter types while everything to the right of the `->` marks return types. The `fn` type syntax directly follows a syntax which is very similar to the one when functions are defined. Note that a function returning multiple values returns a group, but when you define a function like this:
+The type of that function itself is `fn[i32, i32 -> i32]`. As you can clearly see, everything to the left of the `->` marks parameter types while everything to the right of the `->` marks return types. The `fn` type syntax directly follows a syntax which is very similar to the one when functions are defined. Note that a function returning multiple values returns a group, but when you define a function like this:
 
 ```ft
 def div(i32 x, i32 y) -> (i32, i32):
 	return (x / y, x % y);
 ```
 
-then it's type is not `fn<i32, i32 -> (i32, i32)>` but it's `fn<i32, i32 -> i32, i32>` instead. So, when defining a `fn` type of a function returning multiple values, the parenthesis must be left out in the return type.
+then it's type is not `fn[i32, i32 -> (i32, i32)]` but it's `fn[i32, i32 -> i32, i32]` instead. So, when defining a `fn` type of a function returning multiple values, the parenthesis must be left out in the return type.
 
 ### Special cases
 
@@ -45,13 +45,13 @@ def print_value(i32 value):
 	print($"value = {value}\n");
 
 def main():
-	fn<i32> p = ::print_value;
+	fn[i32] p = ::print_value;
 	p(10);
 ```
 
-has the signature of `fn<i32 -> void>` but the `fn` type can be notated as simply `fn<i32>`. It is quite common of functions to only have parameters and not return anything, this is the reason to why this more ergonomic notation exists. The above example will simply print `value = 10` to the console.
+has the signature of `fn[i32 -> void]` but the `fn` type can be notated as simply `fn[i32]`. It is quite common of functions to only have parameters and not return anything, this is the reason to why this more ergonomic notation exists. The above example will simply print `value = 10` to the console.
 
-The second special case is when the referenced function neither has any return values nor does it have any parameters, in that case both the parameters and the return types can be omitted, so instead of writing `fn<() -> void>` we can write `fn<>` as well, this case is completely unambiguous:
+The second special case is when the referenced function neither has any return values nor does it have any parameters, in that case both the parameters and the return types can be omitted, so instead of writing `fn[() -> void]` we can write `fn[]` as well, this case is completely unambiguous:
 
 ```ft
 use Core.print
@@ -60,7 +60,7 @@ def greet():
 	print("Hello, World!\n");
 
 def main():
-	fn<> g = ::greet;
+	fn[] g = ::greet;
 	g();
 ```
 
@@ -77,7 +77,7 @@ def greet():
 	print("Hello, World!\n");
 
 def main():
-	fn<() -> void> g = ::greet;
+	fn[() -> void] g = ::greet;
 	g();
 ```
 
@@ -107,7 +107,7 @@ In this example the `p := ::print;` line was added directly after the `g();` lin
 
 You have already seen a **Callable** before. Whenever we store a function on a variable, this variable is now named a **callable**, because it's a *callable variable*. So, we have been using callables throughout this chapter already.
 
-It is very important to understand the Thread Stack in order to be able to understand callables. If we have a variable like `fn<() -> void> g = ...` then we need to know the type and the structure of that type in memory. In the last chapter the structure of the function frame has been discussed, and this knowledge is needed now. As per the rules of the last chapter, the function frame of the `greet` function looks like this:
+It is very important to understand the Thread Stack in order to be able to understand callables. If we have a variable like `fn[() -> void] g = ...` then we need to know the type and the structure of that type in memory. In the last chapter the structure of the function frame has been discussed, and this knowledge is needed now. As per the rules of the last chapter, the function frame of the `greet` function looks like this:
 
 ```c
 struct function_frame_t__greet {
@@ -115,7 +115,7 @@ struct function_frame_t__greet {
 };
 ```
 
-No arguments, no return values, no local variables. A function as small as it gets. If now a function reference is done, like `::greet`, then the function reference operator will allocate the above function frame type on the heap using `malloc` under the hood. But the variable `g` can have *any* function stored on it which has the signature of `fn<() -> void>`:
+No arguments, no return values, no local variables. A function as small as it gets. If now a function reference is done, like `::greet`, then the function reference operator will allocate the above function frame type on the heap using `malloc` under the hood. But the variable `g` can have *any* function stored on it which has the signature of `fn[() -> void]`:
 
 ```ft
 use Core.print
@@ -128,7 +128,7 @@ def greet2():
 	print($"Hello from second greeting! local = {local}\n");
 
 def main():
-	fn<() -> void> g = ::greet;
+	fn[() -> void] g = ::greet;
 	g();
 
 	g = ::greet2;
