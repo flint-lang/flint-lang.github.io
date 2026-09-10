@@ -8,8 +8,6 @@ Composition-based; **no inheritance**.
 object Player:
     // composed data
     data: Transform t;
-    // object constructor
-    Player(t);
 
     // methods (owning)
     def move():
@@ -19,7 +17,7 @@ object Player:
         print($"t.pos = {t.pos}\n");
 
 def main():
-    Player player = Player(Transform((1.2, 3.4), (4.5, 6.7), 0.12));
+    Player player = Player{Transform{y(1.2, 3.4), (4.5, 6.7), 0.12}};
     player.move();
 ```
 
@@ -52,20 +50,18 @@ Desugars to `def Movement.move(mut Transform t):`. Required types must be unique
 object Dog:
     data: Legs;
     func: Run, Jump;
-    Dog(Legs);
 
 object Bird:
     data: Wings, Legs;
     func: Fly, Run, Jump;
-    Bird(Wings, Legs);
 ```
 
 ```ft
-d := Dog(...);
+d := Dog{...};
 d.run();
 d.jump();
 
-b := Bird(...);
+b := Bird{...};
 b.fly();
 ```
 
@@ -105,7 +101,6 @@ interface Serializable:
 // implements clause is used to define which interfaces this object implements
 object Object1 implements(Serializable):
     data: Data d;
-    Object1(d);
 
     // concrete implementation
     const def to_string() -> str:
@@ -119,10 +114,10 @@ def serialize(Serializable s):
     print($"s.to_string() = {s.to_string()}\n");
 
 def main():
-    o1 := ObjectType1(...);
+    o1 := ObjectType1{...};
     serialize(o1);
 
-    o2 := ObjectType2(...);
+    o2 := ObjectType2{...};
     serialize(o2);
 ```
 

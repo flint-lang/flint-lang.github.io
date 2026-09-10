@@ -6,17 +6,15 @@
 data Vector2:
     i32 x;
     i32 y;
-    // Data definitions need a constructor: order of fields to pass when instantiating data
-    Vector2(x, y);
 ```
 
-Fields, then a constructor line listing how to initialize them. Defining `data` creates a new type.
+Defining `data` creates a new type.
 
 ## Instantiation & Field Access
 
 ```ft
-// x = 10, y = 20
-Vector2 v2 = Vector2(10, 20);
+// x = 10, y = 20 using positional initialization
+Vector2 v2 = Vector2{10, 20};
 
 // single field write
 v2.x = 15;
@@ -31,14 +29,13 @@ Grouped field access, e.g. `v3.(x, y, z) = (1, 2, 3)`, is covered in [Groups](./
 data MyData:
     i32 x = 5;
     i32 y = 7;
-    MyData(x, y);
 
 def main():
     // x uses default 5
-    MyData a = MyData(_, 20);
+    MyData a = MyData{ .y = 20 };
 
-    // all defaults (only if every field has one)
-    MyData b = MyData(_);
+    // all defaults (only if every field is default-constructible)
+    MyData b = MyData{};
 ```
 
 Using `_` on a field without a default is a compile error.
@@ -49,7 +46,6 @@ Using `_` on a field without a default is a compile error.
 data Rectangle:
     Point top_left;
     Point bottom_right;
-    Rectangle(top_left, bottom_right);
 ```
 
 Construction **deep-clones**; later changes to the source fields do not affect the copy. Data cannot contain itself (use optionals `T?` for linked lists).
@@ -66,7 +62,7 @@ def increment_by(mut Point p):
     p.(x, y) += (1, 1);
 
 def create_point(i32 x, i32 y) -> Point:
-    return Point(x, y);
+    return Point{x, y};
 ```
 
 Mutability: locals are mutable by default (`const` opts out), parameters immutable by default (`mut` opts in). Only pass mutable arguments to `mut` params.
@@ -122,7 +118,7 @@ def main():
 ```ft
 const data Globals:
     i32 x = 10;
-    MyData md = MyData(10, 38.2, "Hello 2");
+    MyData md = MyData{10, 38.2, "Hello 2"};
 ```
 
 Compile-time globals which are substituted at compile-time. `Globals.x` is a literal expression substitution (like `#define`); function calls inside are still executed at runtime.

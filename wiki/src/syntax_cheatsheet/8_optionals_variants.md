@@ -75,7 +75,7 @@ ref!.(x, y) = (7, 6.28);
 
 MyData? ref2 = none;
 if true:
-    MyData val = MyData(10, 3.14, "segfault");
+    MyData val = MyData{10, 3.14, "segfault"};
     // outlives the scope, refcount bumped
     ref2 = val;
 ```

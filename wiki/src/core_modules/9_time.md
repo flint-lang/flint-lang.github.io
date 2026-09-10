@@ -8,13 +8,12 @@ The `time` module provides time-related functions and types used for profiling, 
 
 | Function Name |     Parameter Types      | Return Types | Possible Errors |
 | ------------: | :----------------------: | :----------: | :-------------: |
-|         `now` |            No            |  `TimeStamp` |        No       |
-|    `duration` | `TimeStamp`, `TimeStamp` |  `Duration`  |        No       |
-|     `as_unit` |  `Duration`, `TimeUnit`  |    `f64`     |        No       |
-|       `sleep` |        `Duration`        |      No      |        No       |
-|       `sleep` |    `u64`, `TimeUnit`     |      No      |        No       |
-|        `from` |    `u64`, `TimeUnit`     |  `Duration`  |        No       |
-
+|         `now` |            No            | `TimeStamp`  |       No        |
+|    `duration` | `TimeStamp`, `TimeStamp` |  `Duration`  |       No        |
+|     `as_unit` |  `Duration`, `TimeUnit`  |    `f64`     |       No        |
+|       `sleep` |        `Duration`        |      No      |       No        |
+|       `sleep` |    `u64`, `TimeUnit`     |      No      |       No        |
+|        `from` |    `u64`, `TimeUnit`     |  `Duration`  |       No        |
 
 ## types
 
@@ -39,10 +38,9 @@ A `TimeStamp` is a fixed point in time.
 ```ft
 data TimeStamp:
     u64 value;
-    TimeStamp(value);
 ```
 
-The `value` of a time stamp is *always* in the highest resolution available. On Windows, where the minimal precision is most likely at 10 MHz or `100 ns`, the value will be in incremental steps of `100 ns` most likely. But as a general rule of thumb: do NOT assume ANY unit with the `value` value, since it's unit might very well change over time! A `TimeStamp` is unitless and could mean *anything*, it could even be the number of cycles counted on the CPU for example, so do not assume any unit with a timestamp, it should only be used as an abstract thing.
+The `value` of a time stamp is _always_ in the highest resolution available. On Windows, where the minimal precision is most likely at 10 MHz or `100 ns`, the value will be in incremental steps of `100 ns` most likely. But as a general rule of thumb: do NOT assume ANY unit with the `value` value, since it's unit might very well change over time! A `TimeStamp` is unitless and could mean _anything_, it could even be the number of cycles counted on the CPU for example, so do not assume any unit with a timestamp, it should only be used as an abstract thing.
 
 ### Duration
 
@@ -51,17 +49,16 @@ A `Duration` is a time difference between two `TimeStamp`s.
 ```ft
 data Duration:
     u64 value;
-    Duration(value);
 ```
 
 Like the `TimeStamp`, the `value` of the `Duration` is in the highest possible resolution, `ns`. Unlike the `TimeStamp` which is unitless and abstract, the `Duration` value will always have a unit of nanoseconds, so if you want to you can directly use the `duration.value` as a nanosecond value.
 
-Because durations *always* have the unit of `ns` you can freely add and subtract durations from one another and create new durations this way:
+Because durations _always_ have the unit of `ns` you can freely add and subtract durations from one another and create new durations this way:
 
 ```ft
 Duration d1 = from(10, TimeUnit.MS);
 Duration d2 = from(200, TimeUnit.US);
-Duration d3 = Duration(d1.value + d2.value); // d3 is now 10.2 ms long
+Duration d3 = Duration{d1.value + d2.value}; // d3 is now 10.2 ms long
 ```
 
 Keep in mind that for actually printing durations you should use the `as` function as described below.
@@ -122,7 +119,7 @@ This program will print something like this to the console:
 
 ### as_unit
 
-The `as_unit` function is used to "cast" any given `Duration` to a given `TimeUnit`, the result is a `64 bit` floating point value. It is meant for displaying time, for example when displaying a duration as milliseconds then this function can be used. As a general rule of thumb: Always use the `as_unit` function to *display* durations but do not use the provided value for further calculations (because of floating point rounding erros and inprecision).
+The `as_unit` function is used to "cast" any given `Duration` to a given `TimeUnit`, the result is a `64 bit` floating point value. It is meant for displaying time, for example when displaying a duration as milliseconds then this function can be used. As a general rule of thumb: Always use the `as_unit` function to _display_ durations but do not use the provided value for further calculations (because of floating point rounding erros and inprecision).
 
 ```ft
 use Core.print
@@ -154,6 +151,7 @@ This program will print something like this to the console:
 The `sleep` function has two variations to it, but they both are used for the same thing: To let a thread sleep for a given amount of time. For example after sending a command to an external program we could sleep before checking if it has responded yet instead of constantly checking if it has responded. The `sleep` function is a way to do blocked waiting. If you are more interested in the difference of busy waiting and blocked waiting I recommend a look [here](https://stackoverflow.com/questions/26541119/whats-different-between-the-blocked-and-busy-waiting). It's a topic about threading and scheduling, so it will be the topic of a later chapter for sure.
 
 It is also important to note that the precision of the `sleep` function is platform-dependent:
+
 - Windows: ~1-15ms
 - Linux / macOS: ~1µs - 100µs
 
@@ -182,7 +180,7 @@ Just like how we can call `sleep(100, TimeUnit.MS)` to sleep for 100 ms, we coul
 
 ### from
 
-The `from` function is used to get a `Duration` *from* a given raw value + a `TimeUnit`. One could, in theory, calculate it directly too since the `Duration` is in the unit of `ns` internally anyway.
+The `from` function is used to get a `Duration` _from_ a given raw value + a `TimeUnit`. One could, in theory, calculate it directly too since the `Duration` is in the unit of `ns` internally anyway.
 
 ```ft
 use Core.time
@@ -215,7 +213,7 @@ This program will print a line like that:
 
 to the console exactly `5` times. It is limited to 5 times to not have an infinite loop here. But, in a game you could use this very same setup to do your physics rendering all `100ms` (alltough in a game this would likely be `20ms`).
 
-This program showcases an important concept: Executing things in roughly the fixed rate, in this case executing `do_operation` every `100ms`. This function actually checks the time over and over again in a busy loop. We could also make it waiting. We know that we want to execute it roughly all `100ms` so we *could* just sleep for `100ms` after the operation too like so:
+This program showcases an important concept: Executing things in roughly the fixed rate, in this case executing `do_operation` every `100ms`. This function actually checks the time over and over again in a busy loop. We could also make it waiting. We know that we want to execute it roughly all `100ms` so we _could_ just sleep for `100ms` after the operation too like so:
 
 ```ft
 use Core.time
@@ -230,4 +228,3 @@ def main():
 ```
 
 This could work too, but now the thread is blocked, we are blocked waiting. If we would want to do other stuff while not calling `do_operation` (for example if the loop would be a lot longer with more time checks and more different functions and intervals) then the first example should be used.
-

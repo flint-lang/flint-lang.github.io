@@ -44,7 +44,7 @@ use Core.print
 use Fip.c as c
 
 def main():
-    c.MyStruct s1 = c.MyStruct(-112, 22.1, 33_302);
+    c.MyStruct s1 = c.MyStruct{-112, 22.1, 33_302};
     // The `&` operator is the same as in C, address-of
     c.add_structs(&s1, s2);
     c.print_enum(c.MyEnum.VAL3);
@@ -67,21 +67,20 @@ use Fip.sdl as sdl
 
 ## Type Translation
 
-| Flint | C               |
-|-------|-----------------|
-| bool  | `bool`          |
-| u8    | `unsigned char` |
-| i8    | `signed char`   |
-| u16   | `unsigned short`|
-| i16   | `short`         |
-| u32   | `unsigned int`  |
-| i32   | `int`           |
-| u64   | `unsigned long` |
-| i64   | `long`          |
-| f32   | `float`         |
-| f64   | `double`        |
-| str   | `char*`         |
-
+| Flint | C                |
+| ----- | ---------------- |
+| bool  | `bool`           |
+| u8    | `unsigned char`  |
+| i8    | `signed char`    |
+| u16   | `unsigned short` |
+| i16   | `short`          |
+| u32   | `unsigned int`   |
+| i32   | `int`            |
+| u64   | `unsigned long`  |
+| i64   | `long`           |
+| f32   | `float`          |
+| f64   | `double`         |
+| str   | `char*`          |
 
 - `data` -> C struct; FIP only cares about the field layout, not the name (two Flint data types with the same layout can't both bind one extern function).
 - Tuples/groups -> anonymous structs
@@ -114,7 +113,6 @@ data Container:
     // maps to void*
     opaque value;
     u64 len;
-    Container(value, len);
 
 def main():
     // extern def malloc(u64) -> opaque

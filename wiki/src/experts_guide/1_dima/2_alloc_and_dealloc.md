@@ -5,7 +5,7 @@ Now that you know the basic structures, lets go through the entire process of ho
 When we write a line like
 
 ```ft
-MyData d = MyData(10, 20);
+MyData d = MyData{10, 20};
 ```
 
 in Flint, where `MyData` is a `data` type, several things happen under the hood. First of all, the `allocate` function is called which roughly looks like this:

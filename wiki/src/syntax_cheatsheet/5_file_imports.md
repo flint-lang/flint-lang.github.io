@@ -48,7 +48,7 @@ Types from aliased files are qualified too:
 use "data.ft" as d
 
 def main():
-    d.Vec3 v3 = d.Vec3(10.0, 20.0, 30.0);
+    d.Vec3 v3 = d.Vec3{10.0, 20.0, 30.0};
 ```
 
 ## Alias Chains
