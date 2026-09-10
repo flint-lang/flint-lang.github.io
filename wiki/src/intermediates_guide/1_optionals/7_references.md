@@ -9,10 +9,9 @@ data MyData:
 	i32 x;
 	f32 y;
 	str v;
-	MyData(x, y, v);
 
 def main():
-	MyData md = MyData(-5, 3.14, "Hello There");
+	MyData md = MyData{-5, 3.14, "Hello There"};
 	MyData? ref = md;
 
 	ref!.(x, y) = (7, 6.28);
@@ -39,12 +38,11 @@ data MyData:
 	i32 x;
 	f32 y;
 	str v;
-	MyData(x, y, v);
 
 def main():
 	MyData? ref = none;
 	if true:
-		MyData val = MyData(10, 3.14, "segfault");
+		MyData val = MyData{10, 3.14, "segfault"};
 		ref = val;
 	print($"ref.x = {ref!.x}\n");
 ```

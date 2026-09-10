@@ -81,7 +81,6 @@ data Vec3:
     f32 x;
     f32 y;
     f32 z;
-    Vec3(x, y, z);
 
 def add(mut Vec3 v1, Vec3 v2):
     v1.(x, y, z) += v2.(x, y, z);
@@ -95,8 +94,8 @@ use Core.print
 use "data.ft" as d
 
 def main():
-    d.Vec3 v3 = d.Vec3(10.0, 20.0, 30.0);
-    d.add(v3, d.Vec3(5.0, 5.0, 5.0));
+    d.Vec3 v3 = d.Vec3{10.0, 20.0, 30.0};
+    d.add(v3, d.Vec3{5.0, 5.0, 5.0});
     print($"v3 = ({v3.x}, {v3.y}, {v3.z})\n");
 ```
 
@@ -105,17 +104,3 @@ This program will print this line to the console:
 > ```
 > v3 = (15.0, 25.0, 35.0)
 > ```
-
-<div class="warning">
-
-The output differs in the current version of the compiler
-
-As with other places when printing floating point values, the output differs in the current version of the compiler. The above output is the correct output, but currently the output looks like this instead:
-
-> ```
-> v3 = (15, 25, 35)
-> ```
-
-So, if you see this output, do not worry, it will be fixed in some later release!
-
-</div>

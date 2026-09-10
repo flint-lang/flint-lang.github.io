@@ -1,19 +1,19 @@
 # Groups 2
 
-Until now everything you know about groups is to use them when returning multiple values from a function, when swapping variables and when accessing or assigning multiple values of data and tuples at the same time, but there is still a lot more to learn about them than just this.
+Until now everything you know about groups is to use them when returning multiple values from a function, when swapping variables and when accessing or assigning multiple values of data, tuples and vectors at the same time, but there is still a lot more to learn about them than just this.
 
 ## Vectorization
 
 In Flint it is trivial to essentially write vector operations in one line of code. Through the use of groups we can easily express that some things, like multiplying all values of a data structure, need to happen at the same time.
 A **vector** operation essentially means that the same operation is applied to multiple different values. Each of those values is called a **scalar**. A sclar operation would be something like `vec4.x += 5` for example, or even a simple addition like `x + y` is considered a scalar operation, because it's an operation applied to two scalar (single) values. Vector operations are pretty common in modern processors, essentially every single processor has support for them. Most modern CPUs have the capability to perform vector operations up to at least `256 bits`, sometimes even higher.
 
-If you want to know more about this topic, it is recommended to research terms like **SIMD** or **Vectorization** (as noted in the last chapter). But essentially this means that the CPU has a 256 bit "budget" for vectorized operations, which means it can apply the same operation on 4 `64 bit` values or 8 `32 bit` values at the same time. And these are also the types supported by vectors: `i64x4` and `i32x8`. So, everything you need to know is that the vectorized code has the potential to run as much as **8x faster** than scalar code. So, if you can, *always* use vectors.
+If you want to know more about this topic, it is recommended to research terms like **SIMD** or **Vectorization** (as noted in the last chapter). But essentially this means that the CPU has a 256 bit "budget" for vectorized operations, which means it can apply the same operation on 4 `64 bit` values or 8 `32 bit` values at the same time. And these are also the types supported by vectors: `i64x4` and `i32x8`. So, everything you need to know is that the vectorized code has the potential to run as much as **8x faster** than scalar code. So, if you can, *always* use vectors. (I am aware that there are some CPUs supporting more than `256` bits wide vector instructions, but the largest vector type in Flint is `x8` to make all vector types atmost single-digit wide).
 
-But to pull the circle back to grouped operations. Whenever possible, Flint will try to vectorize grouped operations. So, not only are they less to write and easier to read (compared to multiple lines of scalar operations) but they also have the potential to be magnitudes faster than scalar operations. Just note that it is *not guaranteed* for a grouped operation to compile down to a vectorized operation, unlike vector types where it *is guaranteed*.
+But to pull the circle back to grouped operations; Whenever possible, Flint will try to vectorize grouped operations. So, not only are they simpler to write and easier to read (compared to multiple lines of scalar operations) but they also have the potential to be magnitudes faster than scalar operations. Just note that it is *not guaranteed* for a grouped operation to compile down to a vectorized operation, unlike vector types where it *is guaranteed*.
 
 ## Splatting
 
-Splatting is the act of expanding a **scalar** value to a **homogeneous group of size `N`**. A [Splat](https://releases.llvm.org/20.1.0/docs/Lexicon.html) refers to a vector of identical scalar elements, and the act of creating such vector is called splatting. In Flint, however, this is not only limited to vectors but can be used more broadly for groups in general. It is pretty simple in action.
+Splatting is the act of expanding a **scalar** value to a **homogeneous group of size `N`**. A [Splat](https://releases.llvm.org/20.1.0/docs/Lexicon.html) refers to a vector of identical scalar elements, and the act of creating such vector is called splatting. In Flint, however, this is not only limited to vectors but can be used more broadly for groups in general. It is pretty simple in action:
 
 ```ft
 use Core.print
@@ -33,7 +33,7 @@ This program will print these lines to the console:
 > vec3 = (40, 80, 120)
 > ```
 
-Here, the scalar value `2` is expanded to a `(i32, i32, i32)` group where every element of the group holds the element of `2`, so a group like `(2, 2, 2)` is created.
+Here, the scalar value `2` is expanded to a `(i32, i32, i32)` group where every element of the group holds the element of `2`, so a group like `(2, 2, 2)` is created. Note that you can also manually splat scalar values to vectors by using type-casting. For example you could write `f32x3(x)` and this would try to cast `x` to an `f32` and then splat the result of that cast to form a vector of width `3`.
 
 ## Set-Like Comparisons
 

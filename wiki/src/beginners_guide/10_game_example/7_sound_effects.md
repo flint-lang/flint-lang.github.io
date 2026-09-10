@@ -32,7 +32,6 @@ data DAudio:
 	u32 total_frames = 0;
 	u32 frames_written = 0;
 	bool playing = false;
-	DAudio(stream, buffer, phase, frequency, total_frames, frames_written, playing);
 ```
 
 The data has quite a lot of fields this time around. This is because we initially need to set some values and then call `update` to incrementally play back more audio. As you can see, we default-initialze the `buffer` to be zero-filled and of size `BUFFER_SIZE`. The important type, however, is the `rl.AudioStream` here which will be default-initialized using `rl.LoadAudioStream`. If we look at the `raylib.ft` these two look like that:
@@ -44,7 +43,6 @@ data AudioStream:
 	u32 sampleRate;
 	u32 sampleSize;
 	u32 channels;
-	AudioStream(buffer, processor, sampleRate, sampleSize, channels);
 
 extern def LoadAudioStream(mut u32 sampleRate, mut u32 sampleSize, mut u32 channels) -> AudioStream;
 ```
@@ -75,7 +73,6 @@ Next up we create the `Audio` object with the functions all unimplemented for no
 ```ft
 object Audio:
 	data: DAudio a;
-	Audio(a);
 
 	def play(f32 freq, Duration duration):
 		return;
@@ -99,7 +96,7 @@ def init_audio() -> Audio:
 	print("init audio\n");
 	rl.InitAudioDevice();
 	rl.SetAudioStreamBufferSizeDefault(AudioConfig.BUFFER_SIZE);
-	return Audio(DAudio(_));
+	return Audio{};
 ```
 
 The `InitAudioDevice` and `SetAudioStreamBufferSizeDefault` functions look like this in `raylib.ft`:

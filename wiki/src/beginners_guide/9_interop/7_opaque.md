@@ -4,7 +4,7 @@ An `opaque` type is simply a pointer to memory where Flint neither knows **where
 
 If you are familiar with C, then the concept of opaque pointers should be nothing new to you: In C an opaque pointer is the type `void*`. It's not a pointer which points "to nothing", it can be seen more as a pointer which could point **to anything**. For example the `malloc` function in C returns a `void*` to the allocated memory and then needs to be cast to other pointer types to be used.
 
-Flint has no internal langauge concept of pointers (other than to use them for interop), so if you define a "normal" function or variable they **cannot** be of any pointer type, like `i32*`. But when using C libraries it is very common for functions and even data itself to contain opaque pointers. Take this C struct type for example:
+Flint has no internal langauge concept of pointers (other than to use them for interop) yet, so if you define a "normal" function or variable they **cannot** be of any pointer type, like `i32*`. But when using C libraries it is very common for functions and even data itself to contain opaque pointers. Take this C struct type for example:
 
 ```c
 typedef struct Container {
@@ -19,7 +19,6 @@ For this type to be translatable to Flint types we need a concept of types in Fl
 data Container:
 	opaque value;
 	u64 len;
-	Container(value, len);
 ```
 
 As you can see, the `value` has the type `opaque` in Flint and this enables us to interact with C and C types even though we do *not* know of which type they are.
@@ -57,7 +56,7 @@ use Core.print
 use Fip.c
 
 def main():
-	c := Container(null, 0);
+	c := Container{null, 0};
 	print($"c.value = {c.value}\n");
 	print($"c.len = {c.len}\n");
 
@@ -76,19 +75,18 @@ This program will print these lines to the console:
 > con.len = 100
 > ```
 
-And this `c.ft` file being generated in `.fip/generated/c.ft`:
+And this `c.ft` file will be generated in `.fip/generated/c.ft`:
 
 ```ft
 data Container:
 	opaque value;
 	u64 len;
-	Container(value, len);
 
 extern def create() -> Container;
 extern def destroy(mut Container* c);
 ```
 
-There is quite a lot to unpack here. First of all, lets start with the `null` literal. The `null` literal is the same as `NULL` in C or `nullptr` in C++ (and newer C). It's just a nullpointer, e.g. `0x0`. The `null` literal in Flint is of type `void*` and can be cast to any pointer and any opaque type of Flint. The type of `void*` was chosen because that type is not possible to define in Flint, thanks to the addition of the `opaque` type. Note that `opaque` is a distinct type in Flint, so it's *not* a `void*` in the eyes of the parser.
+There is quite a lot to unpack here. First of all, lets start with the `null` literal. The `null` literal is the same as `NULL` in C or `nullptr` in C++ (and newer C). It's just a nullpointer, e.g. `0x0`. The `null` literal in Flint is of type `void*` and can be cast to any pointer and any opaque type of Flint. The type of `void*` was chosen because that type is not possible to define in Flint, thanks to the addition of the `opaque` type. Note that `opaque` is a distinct type in Flint, so it's *not* a `void*` in the eyes of Flint's type-system.
 
 As you can also see, the `opaque` type is part of the builtin types and can be cast to a string as a consequence. Note that the exact memory adress of your program might differ, so the exact output might not match exactly to the output shown above.
 
@@ -103,7 +101,7 @@ use Core.print
 use Fip.c
 
 def main():
-	c := Container(null, 0);
+	c := Container{null, 0};
 	print($"c.value = {c.value}\n");
 	print($"c.len = {c.len}\n");
 
@@ -134,14 +132,14 @@ As you can see, it always is pretty easy to tell if a pointer is a null pointer 
 
 Opaque values point to memory. Even though we do not know where they point to, we can check *if* they point to something. Because of this, Flint has a very easy and straight forward leak detection system. It simply checks each `opaque` typed value (both variables and fields of data) if they are `null` whenever they go out of scope / out of memory and if the `opaque` value still points somewhere in memory then it is considered to be still in-use memory, e.g. was not freed yet. Flint does not free `opaque` values by itself, instead it throws a runtime panic about leak detection at you.
 
-Here is a small example of exactly this behaviour. Take the same example as above bt remove the `destroy(&con);` line:
+Here is a small example of exactly this behaviour. Take the same example as above but remove the `destroy(&con);` line:
 
 ```ft
 use Core.print
 use Fip.c
 
 def main():
-	c := Container(null, 0);
+	c := Container{null, 0};
 	print($"c.value = {c.value}\n");
 	print($"c.len = {c.len}\n");
 
@@ -169,7 +167,7 @@ The behaviour of the leak-detection for `opaque` types can be controlled with th
 
 ## Low level calls
 
-This whole design of opaque types has a very profound side-effect: we are now able to manually call things like `malloc` or `free` from within Flint itself. We cannot use the allocated values, however, that still needs to be done by extern C code. You can think about it like that: `malloc` *is* an extern C function so "ownership" of the allocated thing naturally is at C. And when freeing it, by calling `free` we "tell C to free it". We just had a `opaque` pointer to the memory but Flint cannot do anything with it. Here is a small example, now the `extern.c` file changes:
+This whole design of opaque types has a side-effect: we are now able to manually call things like `malloc` or `free` from within Flint itself. We cannot use the allocated values, however, that still needs to be done by extern C code. You can think about it like that: `malloc` *is* an extern C function so "ownership" of the allocated thing naturally is at the C-side. And when freeing it, by calling `free` we "tell C to free it". We just had a `opaque` pointer to the memory but Flint cannot do anything with it. Here is a small example, now the `extern.c` file changes:
 
 ```c
 void *malloc(unsigned long n);

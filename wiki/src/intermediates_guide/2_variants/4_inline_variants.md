@@ -40,8 +40,7 @@ Inline-defined variants become useful when we do not want to pullute our global 
 
 The below example does not work yet because of several reasons
 
-Firstly, it is not possible to switch on a non-variable expression at the moment. It will take some time until Flint is robust enough to support switching on more things when switching on optionals and varaints. This is due to the references, in our case `i` and `f` which at the moment only work properly with varaible expressions, so everything that isn't a variable in the switch statement will throw an compile error.
-And secondly, some other things regarding how the variants are defined in data is horribly wrong too, which leads to all sorts of unexpected code generation output. So, it is best to avoid using variants within data for now.
+It is not possible to switch on a non-variable expression at the moment. It will take some time until Flint is robust enough to support switching on more things when switching on optionals and varaints. This is due to the references, in our case `i` and `f` which at the moment only work properly with varaible expressions, so everything that isn't a variable in the switch statement will throw an compile error.
 
 </div>
 
@@ -51,11 +50,10 @@ use Core.print
 data MyData:
 	bool8 flags;
 	variant<i32, f32> value;
-	MyData(flags, value);
 
 def main():
 	variant<i32, f32> var = i32(-10);
-	MyData md = MyData(u8(0), var);
+	MyData md = MyData{u8(0), var};
 	print($"flags = {md.flags}\n");
 	switch md.value:
 		i32(i): print($"i = {i}\n");

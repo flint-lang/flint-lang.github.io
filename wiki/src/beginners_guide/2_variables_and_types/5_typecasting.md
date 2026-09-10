@@ -108,11 +108,3 @@ Notice how we did not write _any_ explicit casting whatsoever? This program prin
 > ```
 
 Note that the floating point to string conversion happened implicitely?
-
-<div class="warning">
-
-This behaves differntly in the current release of Flint
-
-Currently, you won't see `fval = 3.0` printed to the console, but rather `fval = 3`. This is not a big deal, it only happens when the fractional part of the floating point value is zero, but this behaviour is a bit misleading, as you now could think that the value used to print `3` is an integer type, not a floating point type. Printing `3.0` makes this unambiguous and is considered the correct way to do it.
-
-</div>

@@ -146,6 +146,35 @@ This program will print this line to the console:
 > sum = (6, 8, 10, 12)
 > ```
 
+## Constructors
+
+Vectors can also be constructed using the constructor syntax `T{}`:
+
+```ft
+use Core.print
+
+def main():
+	v1 := i32x4{};                 // Default-construction
+	v2 := i32x4{.x = 3, .z = 5};   // Selective named-field-construction
+	v3 := i32x8{.$1 = 2, .$2 = 3}; // Using IDs for large vectors
+	v4 := i32x3{10, 30, 40};       // Positional construction
+
+	print($"v1 = {v1}\n");
+	print($"v2 = {v2}\n");
+	print($"v3 = {v3}\n");
+	print($"v4 = {v4}\n");
+```
+
+This program will print these lines to the console:
+
+> ```
+> v1 = (0, 0, 0, 0)
+> v2 = (3, 0, 5, 0)
+> v3 = (0, 2, 3, 0, 0, 0, 0, 0)
+> v4 = (10, 30, 40)
+> ```
+
 ## Important Note
 
 When using vectors you gain free access to SIMD instructions. SIMD means **S**ingle **I**nstruction, **M**ultiple **D**ata and its a very optimized way of doing operations, such as additions. For example, adding two `i32x4` variables is just as fast as adding a single `i32` variable. This makes Flint's vectors both very fast and very easy to use.
+

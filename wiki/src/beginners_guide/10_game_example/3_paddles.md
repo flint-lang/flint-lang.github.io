@@ -16,7 +16,6 @@ data DPaddle:
 	i32x2 size;
 	f32x2 pos;
 	f32 speed;
-	DPaddle(size, pos, speed);
 ```
 
 which we put into a new file, `paddle.ft`. We also know that we need a `draw` function to be able to draw the paddle to the screen. With this information we can now create the `func` component and the `object`. The `func` component will be called `FPaddleCommon` since it contains the common functionality both our paddles (`Cpu` and `Player`) will contain:
@@ -29,7 +28,6 @@ func FPaddleCommon requires(DPaddle paddle):
 object Paddle:
 	data: DPaddle;
 	func: FPaddleCommon;
-	Paddle(DPaddle);
 ```
 
 The next thing which needs to be done, now that the overall composition structure is up, is to implement the `draw` function:
@@ -37,7 +35,12 @@ The next thing which needs to be done, now that the overall composition structur
 ```ft
 	const def draw():
 		i32x2 render_pos = i32x2(paddle.pos) - paddle.size / 2;
-		rl.Rectangle rec = rl.Rectangle(render_pos.x, render_pos.y, paddle.size.x, paddle.size.y);
+		rl.Rectangle rec = rl.Rectangle{
+			f32(render_pos.x),
+			f32(render_pos.y),
+			f32(paddle.size.x),
+			f32(paddle.size.y),
+			};
 		rl.DrawRectangleRounded(rec, 0.8, 0, Colors.white);
 ```
 
@@ -50,9 +53,9 @@ extern def DrawRectangleRounded(mut Rectangle rec, mut f32 roundness, mut i32 se
 Lets now add the paddle to the main file. We need to create a paddle together with the ball:
 
 ```ft
-	ball := Ball(DBall(_));
+	ball := Ball{};
 	ball.reset();
-	paddle := Paddle(DPaddle(_, f32x2(screen / 2), _));
+	paddle := Paddle{DPaddle{ .pos = f32x2(screen / 2) }};
 ```
 
 And then draw it in the game loop:

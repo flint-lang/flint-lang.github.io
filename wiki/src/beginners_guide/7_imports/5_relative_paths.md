@@ -68,7 +68,7 @@ Okay, lets use the exact same files as with the previous example, but this time 
 flintc main.ft
 ```
 
-We will then get this compilation error (the `VERSION` will be the compiler version in use, like `v0.4.0-core` for example):
+We will then get this compilation error (the `VERSION` will be the compiler version in use, like `v0.4.1-core` for example):
 
 > ```
 > Parse Error at main.ft:1:5

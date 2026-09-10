@@ -2,7 +2,7 @@
 
 Const data in Flint are compile-time constant globals. This means that they are data which has no runtime footprint, cannot be initialized and does not exist after compilation. This is especially useful for configuration files or global variables. A const data definition is **not** a data component.
 
-There are two categories of global variables in Flint: Compile-time globals as `const data` and runtime globals as `shared data`. We will talk about `shared data` in the next chapter, this chapter focuses on `const data`. The design of `const data` has emerged from the fact how default-values of data fields work under the hood, but let's look at a simple example first:
+There are two categories of global variables in Flint: Compile-time globals as `const data` and runtime globals as `shared data`. We will talk about `shared data` in the next chapter, this chapter focuses on `const data`. The design of `const data` has emerged from the fact how default-values of data fields work under the hood, but lets look at a simple example first:
 
 ```ft
 use Core.print
@@ -20,7 +20,7 @@ This program will print this line to the console:
 > x = 10
 > ```
 
-As you can see, the `const data Globals` does not contain an initializer for its "fields". That is because it is not usable as a runtime-type like all data components are. We can access the global constant variables defined in `Globals` by writing `Globals.x`.
+We can access the global constant variables defined in `Globals` by writing `Globals.x`.
 
 ## Expression Substitution
 
@@ -42,11 +42,10 @@ data MyData:
 	i32 x = 4;
 	f32 y = 3.14;
 	str s = "Hi there!";
-	MyData(x, y, s);
 
 const data Globals:
 	i32 x = 10;
-	MyData md = MyData(10, 38.2, "Hello 2");
+	MyData md = MyData{10, 38.2, "Hello 2"};
 
 def main():
 	print($"x = {Globals.x}\n");
@@ -61,7 +60,7 @@ This program will print these lines to the console:
 > md.(x, y, s) = (10, 38.200001, "Hello 2")
 > ```
 
-But what exactly happened here? Well because the expression `Globals.md` got **replaced (substituted)** with `MyData(10, 38.2, "Hello 2")`, what we actually wrote was this code right here:
+But what exactly happened here? Because the expression `Globals.md` got **replaced (substituted)** with `MyData{10, 38.2, "Hello 2"}`, what we actually wrote was this code right here:
 
 ```ft
 use Core.print
@@ -70,15 +69,14 @@ data MyData:
 	i32 x = 4;
 	f32 y = 3.14;
 	str s = "Hi there!";
-	MyData(x, y, s);
 
 def main():
 	print($"x = {10}\n");
-	md := MyData(10, 38.2, "Hello 2");
+	md := MyData{10, 38.2, "Hello 2"};
 	print($"md.(x, y, s) = ({md.x}, {md.y}, \"{md.s}\")\n");
 ```
 
-This also means that *any function call* within the `const data` will *not* happen at compile-time but at runtime since we literally just copy and paste the expression into the correct place:
+This also means that *any function call* within the `const data` definition will *not* be executed at compile-time but at runtime since we literally just copy and paste the expression into the correct place:
 
 ```ft
 use Core.print
@@ -102,3 +100,5 @@ This program will print these lines to the console:
 > ```
 
 As you can see, `const data` is essentially a lightweight-macro system akin to C's `#define` macros, but `const data` is **far less powerful** than C macros are, it's just a simple expression-substitution rule, nothing more and nothing less.
+
+The exact same thing about `const data` also applies to default-values set to "regular" data components fields. When default-initializing data like `MyData{}` the compiler will first check the default-values set as the rhs of the data definition and will try to substitute the values. Only if substitution fails because no value was provided will the compiler try to default-initialize the field value when default-initializing data.

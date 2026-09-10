@@ -21,7 +21,7 @@ def Movement.print_position(mut Transform t):
 	print($"t.pos = {t.pos}\n");
 ```
 
-The **signature** of the function is nothing else than the "desugared" form of that function. In case of `Movement.move` the signature of it is `mut Transform -> void` and the signature of `Movement.print_position` is the exact same. When we talk about signatures we mostly refer to the name of the function and the parameter + return types of the function.
+The **signature** of the function is nothing else than the "desugared" form of that function. In case of `Movement.move` the signature of it is `mut Transform -> void` and the signature of `Movement.print_position` is the exact same. When we talk about signatures we mostly refer the parameter + return types of the function and sometimes we add the name of the function to the mix too.
 
 As you can see, **all required data is mutable by default**. But what if we want to create a function inside a func component which does not modify its data? For example, all above functions are *not* callable when we have a constant object instance, so a call like `o.move()` would lead to a compile error:
 
@@ -32,7 +32,6 @@ data Transform:
 	f32x2 pos;
 	f32x2 dir;
 	f32 speed;
-	Transform(pos, dir, speed);
 
 func Movement requires(Transform t):
 	def move():
@@ -44,10 +43,9 @@ func Movement requires(Transform t):
 object Object:
 	data: Transform;
 	func: Movement;
-	Object(Transform);
 
 def main():
-	const Object o = Object(Transform((1.2, 3.4), (4.5, 6.7), 0.12));
+	const Object o = Object{Transform{(1.2, 3.4), (4.5, 6.7), 0.12}};
 	o.print_position();
 	o.move();
 	o.print_position();
@@ -56,15 +54,15 @@ def main():
 This program will produce this compilation error:
 
 > ```
-> Parse Error at main.ft:23:5
+> Parse Error at main.ft:21:5
 > └──┬┤E0000│
-> 21 │ def main():
-> 23 │ »   o.print_position();
+> 19 │ def main():
+> 21 │ »   o.print_position();
 > ┌──┴─────┘
 > └─ Calls which are not marked 'const' are not allowed on const instance 'o'
 > ```
 
-So, what does this "marked as `const`" mean?
+So, what does this "marked `const`" mean?
 
 ## `const` functions
 
@@ -77,7 +75,6 @@ data Transform:
 	f32x2 pos;
 	f32x2 dir;
 	f32 speed;
-	Transform(pos, dir, speed);
 
 func Movement requires(Transform t):
 	def move():
@@ -89,10 +86,9 @@ func Movement requires(Transform t):
 object Object:
 	data: Transform;
 	func: Movement;
-	Object(Transform);
 
 def main():
-	const Object o = Object(Transform((1.2, 3.4), (4.5, 6.7), 0.12));
+	const Object o = Object{Transform{(1.2, 3.4), (4.5, 6.7), 0.12}};
 	o.print_position();
 	// o.move();
 	// o.print_position();
@@ -127,11 +123,9 @@ use Core.print
 
 data DCounter:
 	i32 value;
-	DCounter(value);
 
 object Counter:
 	data: DCounter c;
-	Counter(c);
 	
 	def inc(i32 n):
 		c.value += n;
@@ -140,7 +134,7 @@ object Counter:
 		return c.value;
 
 def main():
-	c := Counter(DCounter(0));
+	c := Counter{DCounter{0}};
 	c.inc(10);
 	Counter.inc(c, 5);
 	print($"c.get() = {c.get()}\n");
@@ -155,7 +149,7 @@ This program will print this line to the console:
 When we look at the functions from the above example, they would look like this:
 
 ```ft
-def Counter.inc(mut Counter self, n):
+def Counter.inc(mut Counter self, const i32 n):
 	self.c.value += n;
 
 def Counter.get(const Counter self):
@@ -171,7 +165,6 @@ use Core.print
 
 data Data:
 	i32 value;
-	Data(value);
 
 func Func1 requires(Data d):
 	const def fn1():
@@ -186,7 +179,6 @@ object Object:
 		Data d;
 	func:
 		Func1, Func2;
-	Object(d);
 	
 	def do_stuff():
 		self.fn1();
@@ -194,7 +186,7 @@ object Object:
 		self.fn2();
 
 def main():
-	o := Object(Data(10));
+	o := Object{Data{10}};
 	o.do_stuff();
 ```
 
@@ -205,12 +197,12 @@ This program will print these lines to the console:
 > fn2: 15
 > ```
 
-As you can see, we composed two different func components inside one new object type and then we created a "wrapper" function `do_stuff` which first calls a function of the first func component `Func1`, then increments the value and then calls the function of the second func component `Func2`. For this very reason, the `self` parameter is needed. We need it to delegate further calls on the object itself. In this particular case we also could have written `Func1.fn1(d);` instead of `self.fn1();`, but what happens when you want to call a function defined within the object from a different function defined inside the same object? We need some way to pass the object instance to the function.
+As you can see, we composed two different func components inside one new object type and then we created a "wrapper" function `do_stuff` which first calls a function of the first func component `Func1`, then increments the value and then calls the function of the second func component `Func2`. For this very reason, the `self` parameter is needed. We need it to delegate further calls on the object itself. In this particular case we also could have written `Func1.fn1(d);` instead of `self.fn1();`, but what happens when you want to call a function defined within the object from a different function defined inside the same object? We need some way to pass the object instance to the function, so we need a way to access this instance directly, and we do this through `self`.
 
-There is nothing magical about functions defined in objects, just like there is nothing magical about func components.
+There is nothing magical about functions defined in objects, just like there is nothing magical about func components. At the end of the day, they are all just plain old functions, just with some parameters added to them and their names changed up a bit to make name clashes impossible.
 
 ## Implicit vs explicit signatures
 
-The difference between **explicit** and **implicit** signatures is pretty simple to explain. The **explicit** signature is **always** the signature we explicitely write. For example in a func component which requires some data, we might write `def print():` meaning that the **explicit** signature will be `() -> void`, no args, no return value. But the **implicit** signature is the "desugared" signature, so maybe `mut Data1, mut Data2 -> void` in the case of `print`, depending on which data the func component requires.
+The **explicit** signature is **always** the signature we explicitely write. For example in a func component which requires some data, we might write `def print():` meaning that the **explicit** signature will be `() -> void`, no args, no return value. But the **implicit** signature is the "desugared" signature, so maybe `mut Data1, mut Data2 -> void` in the case of `print`, depending on which data the func component requires.
 
-This is also the exact same for objects. The explicit signature is the one we write down while the implicit signature is the resolved signature.
+This is also the exact same for objects. The explicit signature is the one we write down while the implicit signature is the resolved signature containing the self parameter.

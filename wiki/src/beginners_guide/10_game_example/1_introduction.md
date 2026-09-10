@@ -29,13 +29,13 @@ The first thing we will do is to spawn a raylib window. So, we will create two f
 use Fip.raylib as rl
 
 const data Colors:
-	rl.Color black = rl.Color(0, 0, 0, 255);
-	rl.Color white = rl.Color(190, 190, 190, 255);
-	rl.Color gray = rl.Color(100, 100, 100, 255);
-	rl.Color green = rl.Color(38, 185, 154, 255);
-	rl.Color dark_green = rl.Color(20, 160, 133, 255);
-	rl.Color light_green = rl.Color(129, 204, 184, 255);
-	rl.Color yellow = rl.Color(243, 213, 91, 255);
+	rl.Color black = rl.Color{0, 0, 0, 255};
+	rl.Color white = rl.Color{190, 190, 190, 255};
+	rl.Color gray = rl.Color{100, 100, 100, 255};
+	rl.Color green = rl.Color{38, 185, 154, 255};
+	rl.Color dark_green = rl.Color{20, 160, 133, 255};
+	rl.Color light_green = rl.Color{129, 204, 184, 255};
+	rl.Color yellow = rl.Color{243, 213, 91, 255};
 ```
 
 As you can see, the file just contains a bunch of const data expressions used later on. We do not need them *just yet* but we need them shortly. Lets not focus too much on that file and instead move on to the `main.ft` file:

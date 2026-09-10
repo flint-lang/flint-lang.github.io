@@ -14,11 +14,10 @@ use Fip.raylib as rl
 use "colors.ft"
 
 data DBall:
-	f32x2 pos = f32x2(0, 0);
-	f32x2 dir = f32x2(0, 0);
+	f32x2 pos = f32x2(0);
+	f32x2 dir = f32x2(0);
 	f32 speed = 0;
 	f32 radius = 20;
-	DBall(pos, dir, speed, radius);
 ```
 
 We will not need a reusable `func` component for the ball here, as the balls functionality is not shared with any other object. So, we just define our `Ball` object with defined the functions directly in it. For now, we will just add one function to the `Ball` object: `draw`.
@@ -26,7 +25,6 @@ We will not need a reusable `func` component for the ball here, as the balls fun
 ```ft
 object Ball:
 	data: DBall ball;
-	Ball(ball);
 
 	const def draw():
 		rl.DrawCircle(i32(ball.pos.x), i32(ball.pos.y), ball.radius, Colors.yellow);
@@ -40,7 +38,7 @@ Now that we created the `ball.ft` file we want to create and render the ball in 
 
 ```ft
 	// Initialize game objects
-	ball := Ball(DBall(f32x2(screen / 2), f32x2(1, 1), 100, 20));
+	ball := Ball{DBall{f32x2(screen / 2), f32x2(1), 100, 20}};
 
 	while not rl.WindowShouldClose():
 		// ...
@@ -78,7 +76,7 @@ def main():
 	rl.InitWindow(screen.x, screen.y, "Pong");
 
 	// Initialize game objects
-	ball := Ball(DBall(f32x2(screen / 2), f32x2(1, 1), 100, 20));
+	ball := Ball{DBall{f32x2(screen / 2), f32x2(1), 100, 20}};
 
 	while not rl.WindowShouldClose():
 		screen = (rl.GetScreenWidth(), rl.GetScreenHeight());
@@ -159,7 +157,7 @@ For now the ball will always fly to the bottom right. But the ball should either
 
 		ball.speed = 400.0;
 		ball.dir = ball_dir;
-		ball.pos = f32x2(rl.GetScreenWidth() / 2, rl.GetScreenHeight() / 2);
+		ball.pos = f32x2(i32x2{rl.GetScreenWidth(), rl.GetScreenHeight()} / 2);
 ```
 
 Since we call mathematical functions here, we need to include the `Core.math` module at the very top to gain access to `cos` and `sin`. I will not explain the mathematics here. We get a random angle between `-40` and `40` degrees and randomly choose whether the ball will fly to the left or to the right and then we reset the ball to start at the middle of the screen and set the speed and direction to their respective default values.
@@ -167,7 +165,7 @@ Since we call mathematical functions here, we need to include the `Core.math` mo
 This means that in the `main.ft` file, we now no longer need to "properly" initialize the ball at all, we can change the ball initialization line to these two lines instead:
 
 ```ft
-	ball := Ball(DBall(_));
+	ball := Ball{};
 	ball.reset();
 ```
 

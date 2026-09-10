@@ -7,7 +7,6 @@ In Flint, `data` is essentially just a `struct` from C, if you have seen that on
 data Vector2:
     i32 x;
     i32 y;
-    Vector2(x, y);
 ```
 
 we could do something similar in C which would look like this:
@@ -35,9 +34,9 @@ def main():
     data<i32, f32, str> tuple = (3, 2.2, "hello!");
 ```
 
-Do you recognize the `data` keyword? This is the reason i told you earlier that tuples and data are actually pretty much the same thing, but one is named while the other one is not. This connection and the understanding of it is crucial to understand tuples, because otherwise you now would be really confused by the syntax: "Wait, what does the `data` keyword have to do with tuples here?".
+Do you recognize the `data` keyword? This is the reason i told you earlier that tuples and data are pretty much the same thing, but one is named while the other one is not. This connection and the understanding of it is crucial to understand tuples, because otherwise you now would be really confused by the syntax: "Wait, what does the `data` keyword have to do with tuples here?".
 
-And here we have another very nice property of Flint's groups – they enable seemless interoperability between different types! As you can see, the "initializer" for a tuple is a group with the same types as the tuple itself. So, the "initializer" of a tuple could also be a grouped field access (d.(a, b, c)` or a group from multiple variables or anything else you can do with groups. As you can see, groups form a whole layer of unifying syntax for a lot of systems.
+And here we have another very nice property of Flint's groups – they enable seemless interoperability between different types! As you can see, the "initializer" for a tuple is a group with the same types as the tuple itself. So, the "initializer" of a tuple could also be a grouped field access (`d.(a, b, c)`) or a group from multiple variables or anything else you can do with groups. As you can see, groups form a whole layer of unifying syntax for a lot of systems.
 
 ## Tuple Access
 
@@ -251,3 +250,27 @@ This program will print these lines to the console:
 > tuple.(i32, f32, str) = (1, 2.2, "three")
 > tuple.(i32, f32, str) = (2, 3.3, "four")
 > ```
+
+### Constructors
+
+Just like `data` components, tuples also can be constructed using the `T{}` syntax. This works on both "named" field construction and positional construction:
+
+```ft
+use Core.print
+
+def main():
+	t1 := data<i32, f32, str>{1, 2.2, "three"};
+	print($"t1.($0, $1, $2) = {t1.($0, $1, $2)}\n");
+
+	t2 := data<i32, f32, str>{ .$0 = 100, .$1 = 2.222, .$2 = "four" };
+	print($"t2.($0, $1, $2) = {t2.($0, $1, $2)}\n");
+```
+
+This program will print these lines to the console:
+
+> ```
+> t1.($0, $1, $2) = (1, 2.2, three)
+> t2.($0, $1, $2) = (100, 2.222, four)
+> ```
+
+Tuples are, just like `data` components, default-constructible if all their fields are default-constructible too. So you also can write `data<i32, f32, str> t = _;` for example.

@@ -1,6 +1,6 @@
 # Type Aliasing
 
-A type alias is a pretty simple concept, honestly. It's exactly what it sounds like, aliasing one type to a new type name, here is a very simple example:
+Type aliasing is the act of creating a new (most times simpler) alias which refers to an already-existent type. Lets look at a very simple example, where we alias an tuple type since that type is very verbose to write out manually often:
 
 ```ft
 use Core.print
@@ -44,4 +44,4 @@ This program will print this line to the console:
 > i: -10, f: 3.5
 > ```
 
-While this is possible, it is generally not recommended to alias builtin types since it makes the code more unreadable. Use type aliasing with caution, as it has great potential to confuse other developers when looking at your code. But, in cases like the tuple type alias, aliasing can really improve the code's readability and extnesibility (since you do not need to write down the same tuple type in a lot of different places).
+While this is possible, it is generally not recommended to alias primitive types since it makes the code more unreadable for other Flint developers. Use type aliasing with caution, as it has great potential to confuse other developers when looking at your code. But, in cases like the tuple type alias, aliasing can really improve the code's readability and extnesibility (since you do not need to write down the same tuple type in a lot of different places).

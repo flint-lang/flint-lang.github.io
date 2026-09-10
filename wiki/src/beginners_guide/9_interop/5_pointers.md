@@ -30,7 +30,7 @@ This program will print this line to the console:
 
 You can also spot the `&` operator here. Its role is very simple: It acts like a *reference-of* operator and the result of this operation is a pointer, so the expression `&x` has the type of `i32*` because `x` is of type `i32`.
 
-Pointer types are **only** allowed in an external context. Lets look at a small example to showcase what this means. Lets say you would want to use pointers outside of an external context in Flint:
+Pointer types are **only** allowed in an external context. Lets look at a small example to showcase what this means. Lets say you would want to use pointers outside of an external context (e.g. internal context) in Flint:
 
 ```ft
 use Core.print

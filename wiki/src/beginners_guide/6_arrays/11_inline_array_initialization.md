@@ -113,3 +113,11 @@ This program will print this compile error:
 > ```
 
 because...why would we want to?? It makes no sense to store a _fixed_ empty array. We know that this array will **always** be empty, which means it could be removed from a codebase entirely and nothing would have changed. The `.len` will always return `0`, every access is an out-of-bounds access, since there are no elements in the array, and it has no runtime size either.
+
+## Default-Construction
+
+Arrays can be default-constructed but default-constructibility differes between dynamic and fixed arrays. A dynamic array is the easier case. Default-initializing a dynamic array means to initialize an array of length `0`, this means that we do not need to initialize even a single value. This means that the base-type of the array does **not** need to be default-initializeable to be able to default-initialize a dynamic array of that type.
+
+A fixed array can *only* be default-initialized when its base-type is also default-initializable, since we need to create `N` actual values for the array. For example, default-initializing `T[N]`, `T` needs to be default-initializable since we need to create `N` values of type `T`.
+
+This means that something like `T[][100]` *is* fully default-initializable, since `T[]` is default-initializable (as per the rules above) and `T` does not need to be default-initializable at all.

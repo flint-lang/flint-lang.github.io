@@ -8,13 +8,12 @@ use Core.print
 data Point:
     i32 x;
     i32 y;
-    Point(x, y);
 
 def print_point(Point p):
     print($"Point(x: {p.x}, y: {p.y})\n");
 
 def main():
-    Point p = Point(3, 4);
+    Point p = Point{3, 4};
     print_point(p);
 ```
 
@@ -34,13 +33,12 @@ use Core.print
 data Point:
     i32 x;
     i32 y;
-    Point(x, y);
 
 def increment_by(Point p, i32 value):
     p.(x, y) += (value, value);
 
 def main():
-    Point p = Point(3, 4);
+    Point p = Point{3, 4};
     increment_by(p, 3);
     print($"Point(x: {p.x}, y: {p.y})\n");
 ```
@@ -48,10 +46,10 @@ def main():
 If you try to compile this program you will get a compile error:
 
 > ```
-> Parse Error at main.ft:9:5
+> Parse Error at main.ft:8:5
 > └─┬┤E0000│
-> 8 │ def increment_by(Point p, i32 value):
-> 9 │ »   p.(x, y) += (value, value);
+> 7 │ def increment_by(Point p, i32 value):
+> 8 │ »   p.(x, y) += (value, value);
 > ┌─┴─────┘
 > └─ Variable 'p' is marked as 'const' and cannot be modified!
 > ```
@@ -71,13 +69,12 @@ use Core.print
 data Point:
     i32 x;
     i32 y;
-    Point(x, y);
 
 def increment_by(mut Point p, i32 value):
     p.(x, y) += (value, value);
 
 def main():
-    Point p = Point(3, 4);
+    Point p = Point{3, 4};
     increment_by(p, 3);
     print($"Point(x: {p.x}, y: {p.y})\n");
 ```
@@ -96,13 +93,12 @@ use Core.print
 data Point:
     i32 x;
     i32 y;
-    Point(x, y);
 
 def increment_by(mut Point p, i32 value):
     p.(x, y) += (value, value);
 
 def main():
-    const Point p = Point(3, 4);
+    const Point p = Point{3, 4};
     increment_by(p, 3);
     print($"Point(x: {p.x}, y: {p.y})\n");
 ```
@@ -110,12 +106,12 @@ def main():
 will not compile again. Because now we have declared `p` to be immutable, but we try to pass it to to the call `increment_by` which expects a mutable `Point` argument, so we have a type mismatch here. We get this compile error:
 
 > ```
-> Parse Error at main.ft:9:5
-> └─┬┤E0000│
-> 8 │ def increment_by(Point p, i32 value):
-> 9 │ »   p.(x, y) += (value, value);
-> ┌─┴─────┘
-> └─ Expression is marked as constant and cannot be modified!
+> Parse Error at main.ft:12:18
+> └──┬┤E0000│
+> 10 │ def main():
+> 12 │ »   increment_by(p, 3);
+> ┌──┴──────────────────┘
+> └─ Variable 'p' is marked as 'const' and cannot be modified!
 > ```
 
 ## Returning Data from Functions
@@ -128,10 +124,9 @@ use Core.print
 data Point:
     i32 x;
     i32 y;
-    Point(x, y);
 
 def create_point(i32 x, i32 y) -> Point:
-    return Point(x, y);
+    return Point{x, y};
 
 def main():
     Point p = create_point(5, 7);

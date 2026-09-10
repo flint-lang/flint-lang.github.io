@@ -77,7 +77,6 @@ And now we have an interface with all the functionality a paddle should have. An
 object Player implements(IPaddle):
 	data: DPaddle paddle;
 	func: FPaddleCommon;
-	Player(paddle);
 
 	const def ball_passed(Ball ball) -> bool:
 		return false;
@@ -91,13 +90,14 @@ and
 object Cpu implements(IPaddle):
 	data: DPaddle paddle;
 	func: FPaddleCommon;
-	Cpu(paddle);
 
 	const def ball_passed(Ball ball) -> bool:
 		return false;
 
 	// ...
 ```
+
+Both files also need to have the line `use "ball.ft"` added to them, since they now depend on the ball.
 
 Since now we added polymorphic behaviour to our paddles, we need to change the signature of the `check_collisions` function to not use a `FPaddleCommon` but a `IPaddle` instead, and now we are able to call `ball_passed` on the `player` and `cpu` instances:
 

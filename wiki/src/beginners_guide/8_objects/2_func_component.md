@@ -11,7 +11,6 @@ data Transform:
 	f32x2 pos;
 	f32x2 dir;
 	f32 speed;
-	Transform(pos, dir, speed);
 
 func Movement requires(Transform t):
 	def move():
@@ -21,7 +20,7 @@ func Movement requires(Transform t):
 		print($"t.pos = {t.pos}\n");
 
 def main():
-	t := Transform((1.2, 3.4), (4.5, 6.7), 0.12);
+	t := Transform{(1.2, 3.4), (4.5, 6.7), 0.12};
 	Movement.print_position(t);
 	Movement.move(t);
 	Movement.print_position(t);
@@ -48,7 +47,7 @@ def Movement.print_position(mut Transform t):
 	print($"t.pos = {t.pos}\n");
 ```
 
-at compile-time. But if this would be the only thing we need the func component for, it would be very boring indeed. But, as you can see clearly, the types defined in the `requires(..)` clause become the first implicit N parameters of the functions within a `func` component.
+at compile-time. But if this would be the only thing we need the func component for, it would be very boring indeed. But, as you can see clearly, the types defined in the `requires(..)` clause become the first implicit `N` parameters of the functions within a `func` component.
 
 ## Requiring the same data twice
 
@@ -60,7 +59,6 @@ use Core.print
 data MyData:
 	i32x2 pos;
 	i32x2 size;
-	MyData(pos, size);
 
 func MyFunc requires(MyData d1, MyData d2):
 	def move(i32 x, i32 y):
@@ -70,7 +68,7 @@ func MyFunc requires(MyData d1, MyData d2):
 		print($"pos: {d.pos}, size: {d.size}\n");
 
 def main():
-	d := MyData(i32x2(100, 100), i32x2(100, 100));
+	d := MyData{i32x2(100), i32x2(100)};
 	MyFunc.print(d);
 	MyFunc.move(d, 10, 20);
 	MyFunc.print(d);
@@ -79,9 +77,9 @@ def main():
 This program will result in this compilation error:
 
 > ```
-> Parse Error at main.ft:8:33
+> Parse Error at main.ft:7:33
 > └─┬┤E0000│
-> 8 │ func MyFunc requires(MyData d1, MyData d2):
+> 7 │ func MyFunc requires(MyData d1, MyData d2):
 > ┌─┴─────────────────────────────────┘
 > ├─ Requiring the same type twice: MyData
 > └─ Each required data type needs to be unique
@@ -95,7 +93,9 @@ Func components are not limited to require only one data component, you can requ
 
 Feedback is welcome here
 
-Regarding the `requires(i32 x)`, is there a use case where something like this would be useful, at all? I would love feedback on this design decision, as I am not able to see any practical benefit to it but my gut feeling tells me there *could* be something interesting hiding in plain sight here.
+Regarding the `requires(i32 x)`, is there a use case where something like this would be useful, at all? I would love feedback on this design decision, as I am not able to see any practical benefit to it but my gut feeling tells me there *could* be something interesting hiding in plain sight here, like namespacing-functions for primitives or something like that. For example a func-component called `I32` where you can do `I32.thing` and the first parameter is always of type `i32` but... idk, feedback is welcome.
+
+(I think the added complexity of something like this does outweight the added capabilities by a lot, and because of this imbalance I tend towards not adding sometihng like that.)
 
 </div>
 
@@ -107,22 +107,20 @@ use Core.print
 data MyData:
 	i32x2 pos;
 	i32x2 size;
-	MyData(pos, size);
 
 data Data2:
 	f32x2 dir;
-	Data2(dir);
 
 func MyFunc requires(MyData d1, Data2 d2):
 	def move(i32 x, i32 y):
-		d1.pos = d1.pos + i32x2(f32(x) * d2.dir.x, f32(y) * d2.dir.y);
+		d1.pos = d1.pos + i32x2{i32(f32(x) * d2.dir.x), i32(f32(y) * d2.dir.y)};
 
 	def print():
 		print($"pos: {d1.pos}, size: {d1.size}, dir: {d2.dir}\n");
 
 def main():
-	d1 := MyData(i32x2(100, 100), i32x2(100, 100));
-	d2 := Data2(f32x2(3.3, 2.2));
+	d1 := MyData{i32x2(100), i32x2(100)};
+	d2 := Data2{f32x2{3.3, 2.2}};
 	MyFunc.print(d1, d2);
 	MyFunc.move(d1, d2, 10, 20);
 	MyFunc.print(d1, d2);

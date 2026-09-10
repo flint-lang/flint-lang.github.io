@@ -8,17 +8,15 @@ use Core.print
 data Point:
     i32 x;
     i32 y;
-    Point(x, y);
 
 data Rectangle:
     Point top_left;
     Point bottom_right;
-    Rectangle(top_left, bottom_right);
 
 def main():
-    Point p1 = Point(0, 0);
-    Point p2 = Point(10, 10);
-    Rectangle rect = Rectangle(p1, p2);
+    Point p1 = Point{0, 0};
+    Point p2 = Point{10, 10};
+    Rectangle rect = Rectangle{p1, p2};
     print($"rect.top_left.(x, y) = ({rect.top_left.x}, {rect.top_left.y})\n");
     print($"rect.bottom_right.(x, y) = ({rect.bottom_right.x}, {rect.bottom_right.y})\n");
 ```
@@ -38,17 +36,15 @@ use Core.print
 data Point:
     i32 x;
     i32 y;
-    Point(x, y);
 
 data Rectangle:
     Point top_left;
     Point bottom_right;
-    Rectangle(top_left, bottom_right);
 
 def main():
-    Point p1 = Point(0, 0);
-    Point p2 = Point(10, 10);
-    Rectangle rect = Rectangle(p1, p2);
+    Point p1 = Point{0, 0};
+    Point p2 = Point{10, 10};
+    Rectangle rect = Rectangle{p1, p2};
 
     print($"p1.(x, y) = ({p1.x}, {p1.y})\n");
     print($"p2.(x, y) = ({p2.x}, {p2.y})\n");
@@ -95,13 +91,12 @@ Flint does not allow a data module to reference itself directly or indirectly li
 data Node:
     i32 value;
     Node next;
-    Node(value, next);
 
 def main():
     return;
 ```
 
-While this may seem restrictive, it is pretty easy explained why this does not work: If you try to initialize a new variable of type `Node` you need to provide both its fields for the initializer. The `value` is fine, you can just pass in a literal, but what about the second field, `next`? To create a new variable of type `Node` you need an already existent variable of the same type to pass into, and thats impossible.
+While this may seem restrictive, it is pretty easy explained why this does not work: If you try to initialize a new variable of type `Node` you need to provide both its fields for the initializer. The `value` is fine, you can just pass in a literal, but what about the second field, `next`? To create a new variable of type `Node` you need an already existent variable of the same type to pass into. And then, when creating a new `Node` you need a new `Node` for that one too and so on. So this is an infinitely recursive type, and thus is impossible to construct.
 
 ## Hint:
 

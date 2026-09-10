@@ -66,8 +66,8 @@ use Core.print
 use Fip.c
 
 def main():
-	s1 := MyStruct(-112, 22.1, 33_302);
-	s2 := MyStruct(12, 17.9, 2_698);
+	s1 := MyStruct{-112, 22.1, 33_302};
+	s2 := MyStruct{12, 17.9, 2_698};
 	add_structs(&s1, s2);
 	print($"s1.(x, y, z) = ({s1.x}, {s1.y}, {s1.z})\n");
 
@@ -81,7 +81,7 @@ def main():
 This program will print these lines to the console:
 
 > ```
-> s1.(x, y, z) = (-100, 40, 36000)
+> s1.(x, y, z) = (-100, 40.0, 36000)
 > is VAL3
 > x = 32
 > ```
@@ -93,7 +93,6 @@ data MyStruct:
 	i32 x;
 	f32 y;
 	u64 z;
-	MyStruct(x, y, z);
 
 enum MyEnum:
 	VAL1 = 0,
@@ -120,8 +119,8 @@ use Core.print
 use Fip.c as c
 
 def main():
-	s1 := c.MyStruct(-112, 22.1, 33_302);
-	s2 := c.MyStruct(12, 17.9, 2_698);
+	s1 := c.MyStruct{-112, 22.1, 33_302};
+	s2 := c.MyStruct{12, 17.9, 2_698};
 	c.add_structs(&s1, s2);
 	print($"s1.(x, y, z) = ({s1.x}, {s1.y}, {s1.z})\n");
 
@@ -135,7 +134,7 @@ def main():
 This program will print these lines to the console:
 
 > ```
-> ps1.(x, y, z) = (-100, 40, 36000)
+> ps1.(x, y, z) = (-100, 40.0, 36000)
 > is VAL3
 > x = 32
 > ```
@@ -182,8 +181,8 @@ use Fip.c as c
 use Fip.ex2 as e
 
 def main():
-	s1 := c.MyStruct(-112, 22.1, 33_302);
-	s2 := c.MyStruct(12, 17.9, 2_698);
+	s1 := c.MyStruct{-112, 22.1, 33_302};
+	s2 := c.MyStruct{12, 17.9, 2_698};
 	c.add_structs(&s1, s2);
 	print($"s1.(x, y, z) = ({s1.x}, {s1.y}, {s1.z})\n");
 
@@ -202,7 +201,7 @@ def main():
 This program will print these lines to the console:
 
 > ```
-> s1.(x, y, z) = (-100, 40, 36000)
+> s1.(x, y, z) = (-100, 40.0, 36000)
 > is VAL3
 > x = 32
 > v3 = (30.200001, 50.400002, 70.599998)
@@ -217,7 +216,7 @@ type Vector3 f32x3
 extern def vadd(const Vector3 v1, const Vector3 v2) -> Vector3;
 ```
 
-Aha! Yes, using FIP the Flint compiler is able to detect when a data type overlaps with a Flint vector. In this case `Vector3` overlaps with the type `f32x3` and that's why Flint emitted a type-alias to be able to use `f32x3` as `Vector3`. As type aliases completely vanish during parse-time it is now possible to assign a value of type `e.Vector3` to one of type `otherexternfile.Vector3` (from example a different vector of a different library). Both `Vector3`'s will be detected to be equal to a vector which means that even if different C libraries provide different `Vector3` types, we can still use them uniformly in Flint.
+Aha! Yes, using FIP the Flint compiler is able to detect when a data type overlaps with a Flint vector. In this case `Vector3` overlaps with the type `f32x3` and that's why Flint emitted a type-alias to be able to use `f32x3` as `Vector3`. As type aliases completely vanish during parse-time it is now possible to assign a value of type `e.Vector3` to one of type `otherexternfile.Vector3` (for example a different vector of a different library). Both `Vector3`'s will be detected to be equal to a vector which means that even if different C libraries provide different `Vector3` types, we can still use them uniformly in Flint.
 
 By using multiple tags for different source files / different libraries we can ensure that there exist no collisions between them. For example you could define your `fip-c.toml` file to look like this:
 

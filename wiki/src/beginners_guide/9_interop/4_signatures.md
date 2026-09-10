@@ -49,12 +49,11 @@ data MyData:
     i32 y;
     f32 speed;
     bool is_something;
-    MyData(x, y, speed, is_something);
 
 extern def do_something(MyData md) -> MyData;
 
 def main():
-    md := MyData(10, 10, 3.2, false);
+    md := MyData{10, 10, 3.2, false};
     print($"md.(x, y, s, i) = ({md.x}, {md.y}, {md.speed}, {md.is_something})\n");
     md = do_something(md);
     print($"md.(x, y, s, i) = ({md.x}, {md.y}, {md.speed}, {md.is_something})\n");
@@ -102,25 +101,23 @@ data MyData:
     i32 y;
     f32 speed;
     bool is_something;
-    MyData(x, y, speed, is_something);
 
 data SomeData:
     i32 x;
     i32 y;
     f32 z;
     bool w;
-    SomeData(x, y, z, w);
 
 extern def do_something(MyData md) -> MyData;
 extern def do_something(SomeData md) -> SomeData;
 
 def main():
-    md := MyData(10, 10, 3.2, false);
+    md := MyData{10, 10, 3.2, false};
     print($"md.(x, y, s, i) = ({md.x}, {md.y}, {md.speed}, {md.is_something})\n");
     md = do_something(md);
     print($"md.(x, y, s, i) = ({md.x}, {md.y}, {md.speed}, {md.is_something})\n");
 
-    sd := SomeData(10, 10, 3.2, false);
+    sd := SomeData{10, 10, 3.2, false};
     print($"sd.(x, y, s, i) = ({sd.x}, {sd.y}, {sd.z}, {sd.w})\n");
     sd = do_something(sd);
     print($"sd.(x, y, s, i) = ({sd.x}, {sd.y}, {sd.z}, {sd.w})\n");
@@ -129,12 +126,12 @@ def main():
 Note that the C source file stayed exactly the same, it did not change. We call **the same** C function twice, just with "different" data. They are different data types in Flint, but what FIP is concerned, they are both just `{ i32, i32, f32, bool }` without any name. Conceptually this should work, but we have decided to not let this code be valid, because the moment you try to reference the same external C function twice through different code paths, the codebase becomes *really* messy *really* quick. So, this example should work conceptually, but it will result in this compile error:
 
 > ```
-> Generation Error at main.ft:18:1
+> Generation Error at main.ft:16:1
 > └──┬┤E0000│
-> 18 │ extern def do_something(SomeData md) -> SomeData;
+> 16 │ extern def do_something(SomeData md) -> SomeData;
 > ┌──┴─┘
 > ├─ Defined extern function 'do_something' twice
-> └─ It was first defined at main.ft:17:1
+> └─ It was first defined at main.ft:15:1
 > ```
 
 There is no reason to why it could not work, other than compiler internal complexity, resulting code complexity and bad practice. If you want to call the same underlying external functions from two different types, you have done something wrong when designing your code, so this definitely is not the fault of FIP or the Flint Compiler.

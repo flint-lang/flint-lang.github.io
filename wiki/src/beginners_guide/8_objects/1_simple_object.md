@@ -9,11 +9,9 @@ data Transform:
 	f32x2 pos;
 	f32x2 dir;
 	f32 speed;
-	Transform(pos, dir, speed);
 
 object Player:
 	data: Transform t;
-	Player(t);
 
 	def move():
 		t.pos += t.dir * t.speed;
@@ -22,7 +20,7 @@ object Player:
 		print($"t.pos = {t.pos}\n");
 
 def main():
-	Player player = Player(Transform((1.2, 3.4), (4.5, 6.7), 0.12));
+	Player player = Player{Transform{(1.2, 3.4), (4.5, 6.7), 0.12}};
 	player.print_position();
 
 	for (_, _) in 0..5:
@@ -46,19 +44,18 @@ Okay, it's not necessarily the **smallest possible** object type, since we have 
 ```ft
 object Player:
 	data: Transform t;
-	Player(t);
 ```
 
 In our case it only contains a single data component, `Transform`. This means that our object `Player` **has** a data component of type `Transform`. In of itself, this is nothing new or special yet. For example in languages like Java or C++ you would be able to define a few member variables and functions inside one class, so what's the difference?
 
-In this very minimal and simple object, the only meaningful difference is that the `data` component is always stored sequentially in memory whereas in a class, the data is stored directly in the object instance.
+In this very minimal and simple object, the only meaningful difference is that the `data` component is always stored sequentially in memory whereas in a class, the data is stored directly in the object instance itself.
 
-Okay, so after defining which data components are included in the object, we write out the constructor of the object, just like we did when crating a data component. The constructor is needed to define the order in which data needs to be passed when constructing an instance of our object in the main function:
+Just like with `data`, we can choose to construct our object by either using *positional construction* or *named field construction*. As with data, we will use positional construction in all examples, but be aware that you very well can construct an object through naming its data accessors:
 
 ```ft
-	Player player = Player(Transform((1.2, 3.4), (4.5, 6.7), 0.12));
+	Player player = Player{ .t = Transform{(1.2, 3.4), (4.5, 6.7), 0.12} };
 ```
 
-As you can see, we construct the data component `Transform` and then pass that constructed data component to the object constructor.
+Also, the same default-constructibility rules apply to objects as they do to data. In our simple example, all fields of the `Transform` data type are default-constructible which means that the `Transform` type itself is default-constructible. Since the object `Player` *only* contains the data `Transform` and nothing else, and that data is default-constructible, the `Player` itself *too* is default-constructible. This means that we also can construct a player using `Player{}` or `_`.
 
 So far so good. The next thing defined in the object type definition are functions, `move` and `print_position`. These are called **methods** and are nothing special in the world of OOP. You will learn *exactly* how they work [soon](./4_signatures.md).

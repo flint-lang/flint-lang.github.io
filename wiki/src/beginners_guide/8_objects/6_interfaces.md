@@ -9,7 +9,7 @@ interface Serializable:
 	const def to_string() -> str;
 ```
 
-The syntax is pretty simple here, we just write the `interface` keyword followed by the name of the interface. And then, the body of the `interface` only contains **virtual functions**. A virtual function means nothing other than that it is a function with no body. An `interface` is **only** allowed to contain virtual functions. You are not allowed to write an actual implementation for the function in an interface definition. Likewise, a `func` component is not allowed to contain any virtual functions (declarations), at all, only concrete functions (definitions).
+The syntax is pretty simple here, we just write the `interface` keyword followed by the name of the interface. And then, the body of the `interface` only contains **virtual functions**. A virtual function means nothing other than that it is a function with no body (also called a function declaration). An `interface` is **only** allowed to contain virtual functions. You are not allowed to write an actual implementation for the function in an interface definition. Likewise, a `func` component is not allowed to contain any virtual functions (declarations), at all, only concrete functions (definitions).
 
 Okay, now that we know how to crate an interface we need to *use* it:
 
@@ -19,11 +19,9 @@ interface Serializable:
 
 data Data:
 	i32 x;
-	Data(x);
 
 object Object implements(Serializable):
 	data: Data d;
-	Object(d);
 
 	const def to_string() -> str:
 		return $"\{ x: {d.x} \}";
@@ -44,11 +42,9 @@ interface Serializable:
 
 data Data:
 	i32 x;
-	Data(x);
 
 object Object1 implements(Serializable):
 	data: Data d;
-	Object1(d);
 
 	const def to_string() -> str:
 		return $"\{ x: {d.x} \}";
@@ -56,13 +52,11 @@ object Object1 implements(Serializable):
 
 data Data2:
 	i32 y;
-	Data2(y);
 
 object Object2 implements(Serializable):
 	data:
 		Data d1,
 		Data2 d2;
-	Object2(d1, d2);
 
 	const def to_string() -> str:
 		return $"\{ x: {d1.x}, y: {d2.y} \}";
@@ -72,8 +66,8 @@ def serialize(Serializable s):
 	print($"s.to_string() = {s.to_string()}\n");
 
 def main():
-	o1 := Object1(Data(10));
-	o2 := Object2(Data(20), Data2(30));
+	o1 := Object1{Data{10}};
+	o2 := Object2{Data{20}, Data2{30}};
 
 	serialize(o1);
 	serialize(o2);
@@ -88,4 +82,4 @@ This program will print these lines to the console:
 
 There is one thing we have not discussed yet: interface instances. The interface type `Serializable` can be used as an instance, we use it in the `serialize` function. This function does not care which object we pass to it, it only cares that the passed-to object `implements` the `Serializable` interface.
 
-As you can see, we can pass two **different** object types to the **same** function and the behaviour **differs**. This is the essence of polymorphism.
+As you can see, we can pass two **different** object types to the **same** function and the behaviour **differs**. This is the essence of what polymorphism is meant to be used for.

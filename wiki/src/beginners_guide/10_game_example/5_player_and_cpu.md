@@ -16,7 +16,6 @@ use "paddle.ft"
 object Paddle:
 	data: DPaddle paddle;
 	func: FPaddleCommon;
-	Paddle(paddle);
 
 	def update(f32 delta):
 		if rl.IsKeyDown(i32(rl.KeyboardKey.KEY_UP)):
@@ -34,16 +33,16 @@ This all should have made absolutely zero difference to the program behaviour, b
 
 ```ft
 	def reset():
-		paddle.pos = f32x2(10 + paddle.size.x / 2, rl.GetScreenHeight() / 2);
+		paddle.pos = f32x2(i32x2{10 + paddle.size.x / 2, rl.GetScreenHeight() / 2});
 ```
 
 and we call it in the `main` function right after creating the player, just like we did with the ball:
 
 ```ft
 	// Initialize game objects
-	ball := Ball(DBall(_));
+	ball := Ball{};
 	ball.reset();
-	player := Player(DPaddle(_));
+	player := Player{};
 	player.reset();
 ```
 
@@ -63,20 +62,22 @@ use "paddle.ft"
 object Cpu:
 	data: DPaddle paddle;
 	func: FPaddleCommon;
-	Cpu(paddle);
 
 	def update(f32 ball_y, f32 delta):
 		// TODO follow ball
 		return;
 
 	def reset():
-		paddle.pos = f32x2(rl.GetScreenWidth() - paddle.size.x / 2 - 10, rl.GetScreenHeight() / 2);
+		paddle.pos = f32x2(i32x2{
+			rl.GetScreenWidth() - paddle.size.x / 2 - 10,
+			rl.GetScreenHeight() / 2,
+			});
 ```
 
 Next up lets add the `use "cpu.ft"` clause to the main function and then initialize, reset, update and draw the cpu in the main file:
 
 ```ft
-	cpu := Cpu(DPaddle(_));
+	cpu := Cpu{};
 	cpu.reset();
 	// ...
 	while not rl.WindowShouldClose():

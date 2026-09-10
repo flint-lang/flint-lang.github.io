@@ -51,9 +51,9 @@ def main():
 	Audio a = init_audio();
 
 	// Initialize game objects
-	ball := Ball(DBall(_));
-	player := Player(DPaddle(_));
-	cpu := Cpu(DPaddle(_));
+	ball := Ball{};
+	player := Player{};
+	cpu := Cpu{};
 	reset_objects(ball, player, cpu);
 
 	u32 player_score = 0;
@@ -131,11 +131,9 @@ data DAudio:
 	u32 total_frames = 0;
 	u32 frames_written = 0;
 	bool playing = false;
-	DAudio(stream, buffer, phase, frequency, total_frames, frames_written, playing);
 
 object Audio:
 	data: DAudio a;
-	Audio(a);
 
 	def play(f32 freq, Duration duration):
 		print($"audio play {freq}Hz for {as_unit(duration, TimeUnit.MS)}ms\n");
@@ -188,7 +186,7 @@ def init_audio() -> Audio:
 	print("init audio\n");
 	rl.InitAudioDevice();
 	rl.SetAudioStreamBufferSizeDefault(AudioConfig.BUFFER_SIZE);
-	return Audio(DAudio(_));
+	return Audio{};
 ```
 
 ### `ball.ft`
@@ -201,15 +199,13 @@ use Fip.raylib as rl
 use "colors.ft"
 
 data DBall:
-	f32x2 pos = f32x2(0, 0);
-	f32x2 dir = f32x2(0, 0);
+	f32x2 pos = f32x2(0);
+	f32x2 dir = f32x2(0);
 	f32 speed = 0;
 	f32 radius = 20;
-	DBall(pos, dir, speed, radius);
 
 object Ball:
 	data: DBall ball;
-	Ball(ball);
 
 	const def get_x() -> f32:
 		return ball.pos.x;
@@ -240,7 +236,7 @@ object Ball:
 
 		ball.speed = 400.0;
 		ball.dir = ball_dir;
-		ball.pos = f32x2(rl.GetScreenWidth() / 2, rl.GetScreenHeight() / 2);
+		ball.pos = f32x2(i32x2{rl.GetScreenWidth(), rl.GetScreenHeight()} / 2);
 
 	def reflect_v():
 		ball.dir = ball.dir * (-1.0, 1.0);
@@ -295,13 +291,13 @@ def check_collisions(mut Audio a, mut Ball ball, IPaddle player, IPaddle cpu) ->
 use Fip.raylib as rl
 
 const data Colors:
-	rl.Color black = rl.Color(0, 0, 0, 255);
-	rl.Color white = rl.Color(190, 190, 190, 255);
-	rl.Color gray = rl.Color(100, 100, 100, 255);
-	rl.Color green = rl.Color(38, 185, 154, 255);
-	rl.Color dark_green = rl.Color(20, 160, 133, 255);
-	rl.Color light_green = rl.Color(129, 204, 184, 255);
-	rl.Color yellow = rl.Color(243, 213, 91, 255);
+	rl.Color black = rl.Color{0, 0, 0, 255};
+	rl.Color white = rl.Color{190, 190, 190, 255};
+	rl.Color gray = rl.Color{100, 100, 100, 255};
+	rl.Color green = rl.Color{38, 185, 154, 255};
+	rl.Color dark_green = rl.Color{20, 160, 133, 255};
+	rl.Color light_green = rl.Color{129, 204, 184, 255};
+	rl.Color yellow = rl.Color{243, 213, 91, 255};
 ```
 
 ### `cpu.ft`
@@ -309,12 +305,12 @@ const data Colors:
 ```ft
 use Fip.raylib as rl
 
+use "ball.ft"
 use "paddle.ft"
 
 object Cpu implements(IPaddle):
 	data: DPaddle paddle;
 	func: FPaddleCommon;
-	Cpu(paddle);
 
 	const def ball_passed(Ball ball) -> bool:
 		return ball.get_x() + ball.get_radius() > paddle.pos.x;
@@ -327,7 +323,10 @@ object Cpu implements(IPaddle):
 		self.clamp_position();
 
 	def reset():
-		paddle.pos = f32x2(rl.GetScreenWidth() - paddle.size.x / 2 - 10, rl.GetScreenHeight() / 2);
+		paddle.pos = f32x2(i32x2{
+			rl.GetScreenWidth() - paddle.size.x / 2 - 10,
+			rl.GetScreenHeight() / 2,
+			});
 ```
 
 ### `paddle.ft`
@@ -335,6 +334,7 @@ object Cpu implements(IPaddle):
 ```ft
 use Fip.raylib as rl
 
+use "ball.ft"
 use "colors.ft"
 
 interface IPaddle:
@@ -345,15 +345,19 @@ interface IPaddle:
 	def reset();
 
 data DPaddle:
-	i32x2 size = i32x2(24, 120);
-	f32x2 pos = f32x2(0, 0);
+	i32x2 size = i32x2{24, 120};
+	f32x2 pos = f32x2(0);
 	f32 speed = 370;
-	DPaddle(size, pos, speed);
 
 func FPaddleCommon requires(DPaddle paddle):
 	const def draw():
 		i32x2 render_pos = i32x2(paddle.pos) - paddle.size / 2;
-		rl.Rectangle rec = rl.Rectangle(render_pos.x, render_pos.y, paddle.size.x, paddle.size.y);
+		rl.Rectangle rec = rl.Rectangle{
+			f32(render_pos.x),
+			f32(render_pos.y),
+			f32(paddle.size.x),
+			f32(paddle.size.y),
+			};
 		rl.DrawRectangleRounded(rec, 0.8, 0, Colors.white);
 
 	const def collides_with(Ball ball) -> bool:
@@ -389,12 +393,12 @@ func FPaddleCommon requires(DPaddle paddle):
 ```ft
 use Fip.raylib as rl
 
+use "ball.ft"
 use "paddle.ft"
 
 object Player implements(IPaddle):
 	data: DPaddle paddle;
 	func: FPaddleCommon;
-	Player(paddle);
 
 	const def ball_passed(Ball ball) -> bool:
 		return ball.get_x() - ball.get_radius() < paddle.pos.x;
@@ -407,5 +411,5 @@ object Player implements(IPaddle):
 		FPaddleCommon.clamp_position(paddle);
 
 	def reset():
-		paddle.pos = f32x2(10 + paddle.size.x / 2, rl.GetScreenHeight() / 2);
+		paddle.pos = f32x2(i32x2{10 + paddle.size.x / 2, rl.GetScreenHeight() / 2});
 ```

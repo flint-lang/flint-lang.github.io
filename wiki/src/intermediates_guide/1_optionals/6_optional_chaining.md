@@ -12,10 +12,9 @@ use Core.print
 data Vec2:
 	i32 x;
 	i32 y;
-	Vec2(x, y);
 
 def main():
-	Vec2 v2 = Vec2(10, 20);
+	Vec2 v2 = Vec2{10, 20};
 	Vec2? v2m = v2;
 
 	i32 x = v2m!.x;
@@ -36,10 +35,9 @@ use Core.print
 data Vec2:
 	i32 x;
 	i32 y;
-	Vec2(x, y);
 
 def main():
-	Vec2 v2 = Vec2(10, 20);
+	Vec2 v2 = Vec2{10, 20};
 	Vec2? v2m = v2;
 
 	(x, y) := v2m!.(x, y);
@@ -80,10 +78,9 @@ use Core.print
 data Vec2:
 	i32 x;
 	i32 y;
-	Vec2(x, y);
 
 def main():
-	Vec2 v2 = Vec2(10, 20);
+	Vec2 v2 = Vec2{10, 20};
 	Vec2? v2m = v2;
 
 	i32? x = v2m?.x;
@@ -115,16 +112,14 @@ use Core.print
 data Vec2:
 	i32 x;
 	i32 y;
-	Vec2(x, y);
 
 data Nested:
 	Vec2? v2m;
-	Nested(v2m);
 
 def main():
-	Vec2 v2 = Vec2(10, 20);
+	Vec2 v2 = Vec2{10, 20};
 	Vec2? v2m = v2;
-	Nested n = Nested(v2m);
+	Nested n = Nested{v2m};
 	Nested? nm = n;
 
 	i32? x = nm?.v2m?.x;
