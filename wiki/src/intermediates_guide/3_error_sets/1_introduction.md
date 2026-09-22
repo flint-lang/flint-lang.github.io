@@ -45,18 +45,14 @@ def main():
 This program will print these lines to the console:
 
 > ```
-> The given error bubbled up to the main function:
->  └─ ErrorSet.Value1: ""
+> Runtime Error: ErrorSet.Value1
+>   │ » 
+>   └─┬── Name ──┬── Location ──┬─ Info ──┐
+>     ├ fail       main.ft:7:5    origin  ┤
+>     └ _main      main.ft:10:5           ┘
 > ```
 
-
-<div class="warning">
-
-Missing stack-traces
-
-Flint currently has no support for printing stack-traces or anything like that. We plan on adding such a feature in the future, but it is not implemented yet. But since every error can contain its own context you can work around that problem by adding a context to thrown errors, as you will see later.
-
-</div>
+As you can see, the printed error contains a stack-trace with information about which function threw the error (in this case `fail`) all the way to the top-level function.
 
 ## Catching errors
 

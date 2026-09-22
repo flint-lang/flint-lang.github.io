@@ -21,8 +21,11 @@ This program will print these lines to the console:
 > ```
 > fail = false
 > fail = true
-> The given error bubbled up to the main function:
->  └─ ErrAssert.AssertionFailed: "The assertion has failed"
+> Runtime Error: ErrAssert.AssertionFailed
+>   │ » The assertion has failed
+>   └─┬── Name ──┬── Location ──┬─ Info ──┐
+>     ├ may_fail   main.ft:6:5    origin  ┤
+>     └ _main      main.ft:11:5           ┘
 > ```
 
 As you can see, the callable call `f(true);` failed and let the error bubble up to the main function. You can also see that the type of `f` is *not* the same as the type of the function `may_fail`. The function `may_fail` has the type `fn[bool -> void {ErrAssert}]`. The `-> void` can be omitted, so it has the type of `fn[bool {ErrAssert}]` but we store it on a callable of type `fn[bool]`, how is that possible?
@@ -52,8 +55,11 @@ This program will print these lines to the console:
 > ```
 > fail = false
 > fail = true
-> The given error bubbled up to the main function:
->  └─ ErrAssert.AssertionFailed: "The assertion has failed"
+> Runtime Error: ErrAssert.AssertionFailed
+>   │ » The assertion has failed
+>   └─┬── Name ──┬── Location ──┬─ Info ──┐
+>     ├ may_fail   main.ft:6:5    origin  ┤
+>     └ _main      main.ft:11:5           ┘
 > ```
 
 As you can see, nothing changed because we did not catch the error.

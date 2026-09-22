@@ -17,8 +17,10 @@ def main():
 This program will print these lines to the console:
 
 > ```
-> The given error bubbled up to the main function:
->  └─ ErrSpecial.B1: ""
+> Runtime Error: ErrSpecial.B1
+>   │ » 
+>   └─┬── Name ──┬── Location ──┬─ Info ──┐
+>     └ _main      main.ft:8:5            ┘
 > ```
 
 The error set `ErrSpecial` is an extension of the error set `ErrBase` and thus contains all values of its base set. The error set `ErrBase` contains the values `[B1, B2]` and the error set `ErrSpecial` contains the values `[B1, B2, S1, S2]`. This is a very important concept in Flint. The more "special" an error becomes the **bigger** does its set become.
