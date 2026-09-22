@@ -6,30 +6,26 @@ use Core.env
 
 The `env` module provides several functions to read from and write to environment variables.
 
-| Function Name |    Parameter Types   | Return Types | Possible Errors |
-| ------------: | :------------------: | :----------: | :-------------: |
-|     `get_env` |         `str`        |    `str`     |    `ErrEnv`     |
-|     `set_env` | `str`, `str`, `bool` |    `bool`    |    `ErrEnv`     |
-
 ## error sets
 
 These are the error sets this Core module provides.
 
-### ErrEnv
-
-This error set does not have a parent error, so it directly and only extends `anyerror` directly. These are the possible values this error could have:
-
-| Error Value    | Description                              |
-| :------------- | :--------------------------------------- |
-| `VarNotFound`  | Requested variable not set               |
-| `InvalidName`  | Name contains illegal characters         |
-| `InvalidValue` | Value cannot be used (e.g. embedded NUL) |
+```ft
+error ErrEnv:
+    VarNotFound("Requested variable not set"),
+    InvalidName("Name contains illegal characters"),
+    InvalidValue("Value cannot be used (e.g. embedded NUL)");
+```
 
 ## functions
 
 These are the functions this Core module provides.
 
 ### get_env
+
+```ft
+def get_env(str variable) -> str {ErrEnv};
+```
 
 The `get_env` function recieves the currently stored value of a given environment variable (`str`). The content of the environment variable is returned as a `str`. This function will throw an error if the requested environment variable does not exist.
 
@@ -48,6 +44,10 @@ This program will print this line to the console:
 > ```
 
 ### set_env
+
+```ft
+def set_env(str variable, str value, bool overwrite) {ErrEnv};
+```
 
 The `set_env` function sets a given environment variable (`str`) to a newly specified value (`str`). The third parameter (`bool`) controls whether the given environment variable should be overwritten if it already exists. If the third parameter is `false` an already existent environment variable wont be overwritten. This function will throw an error if the environment variable or the content of the variable contain invalid characters.
 

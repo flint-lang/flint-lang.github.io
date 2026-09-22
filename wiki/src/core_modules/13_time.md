@@ -6,15 +6,6 @@ use Core.time
 
 The `time` module provides time-related functions and types used for profiling, time measurements and other time-related tasks.
 
-| Function Name |     Parameter Types      | Return Types | Possible Errors |
-| ------------: | :----------------------: | :----------: | :-------------: |
-|         `now` |            No            | `TimeStamp`  |       No        |
-|    `duration` | `TimeStamp`, `TimeStamp` |  `Duration`  |       No        |
-|     `as_unit` |  `Duration`, `TimeUnit`  |    `f64`     |       No        |
-|       `sleep` |        `Duration`        |      No      |       No        |
-|       `sleep` |    `u64`, `TimeUnit`     |      No      |       No        |
-|        `from` |    `u64`, `TimeUnit`     |  `Duration`  |       No        |
-
 ## types
 
 These are the types this Core module provides.
@@ -69,6 +60,10 @@ These are the functions this Core module provides.
 
 ### now
 
+```ft
+def now() -> TimeStamp;
+```
+
 The `now` function is used to get a `TimeStamp` of the current time of the system measured from it's uptime. A `TimeStamp` is unitless, as described earlier. The `TimeStamp` alone is not that useful without interpreting the difference in time stamps and interpreting them as a duration, though.
 
 ```ft
@@ -89,6 +84,10 @@ def main():
 This program will not print anything yet, to be able to use the `Duration` effectively we need the `duration` function.
 
 ### duration
+
+```ft
+def duration(TimeStamp from, TimeStamp to) -> Duration;
+```
 
 The `duration` function is used to calculate a duration from two given `TimeStamp` values. The time stamps can be passed in in any order, so you could write `duration(end, start)` or `duration(start, end)`, the function will not fail but always return the time difference between the two time stamps.
 
@@ -119,6 +118,10 @@ This program will print something like this to the console:
 
 ### as_unit
 
+```ft
+def as_unit(Duration duration, TimeUnit unit) -> f64;
+```
+
 The `as_unit` function is used to "cast" any given `Duration` to a given `TimeUnit`, the result is a `64 bit` floating point value. It is meant for displaying time, for example when displaying a duration as milliseconds then this function can be used. As a general rule of thumb: Always use the `as_unit` function to _display_ durations but do not use the provided value for further calculations (because of floating point rounding erros and inprecision).
 
 ```ft
@@ -147,6 +150,11 @@ This program will print something like this to the console:
 > ```
 
 ### sleep
+
+```ft
+def sleep(Duration duration);
+def sleep(u64 time, TimeUnit unit);
+```
 
 The `sleep` function has two variations to it, but they both are used for the same thing: To let a thread sleep for a given amount of time. For example after sending a command to an external program we could sleep before checking if it has responded yet instead of constantly checking if it has responded. The `sleep` function is a way to do blocked waiting. If you are more interested in the difference of busy waiting and blocked waiting I recommend a look [here](https://stackoverflow.com/questions/26541119/whats-different-between-the-blocked-and-busy-waiting). It's a topic about threading and scheduling, so it will be the topic of a later chapter for sure.
 
@@ -180,7 +188,11 @@ Just like how we can call `sleep(100, TimeUnit.MS)` to sleep for 100 ms, we coul
 
 ### from
 
-The `from` function is used to get a `Duration` _from_ a given raw value + a `TimeUnit`. One could, in theory, calculate it directly too since the `Duration` is in the unit of `ns` internally anyway.
+```ft
+def from(u64 time, TimeUnit unit) -> Duration;
+```
+
+The `from` function is used to get a `Duration` _from_ a given raw value + a `TimeUnit`. One could, in theory, calculate it directly too since the `Duration` is in the unit of `ns` internally, but this function makes it a lot easier.
 
 ```ft
 use Core.time

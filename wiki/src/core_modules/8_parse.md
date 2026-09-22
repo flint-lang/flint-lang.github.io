@@ -6,37 +6,25 @@ use Core.parse
 
 The `parse` module provides functions related to parsing strings into other types.
 
-| Function Name | Parameter Types | Return Types | Possible Errors |
-| :-----------: | :-------------: | :----------: | :-------------: |
-|  `parse_u8`   |      `str`      |    `u8`      |   `ErrParse`    |
-|  `parse_i8`   |      `str`      |    `i8`      |   `ErrParse`    |
-|  `parse_u16`  |      `str`      |    `u16`     |   `ErrParse`    |
-|  `parse_i16`  |      `str`      |    `i16`     |   `ErrParse`    |
-|  `parse_u32`  |      `str`      |    `u32`     |   `ErrParse`    |
-|  `parse_i32`  |      `str`      |    `i32`     |   `ErrParse`    |
-|  `parse_u64`  |      `str`      |    `u64`     |   `ErrParse`    |
-|  `parse_i64`  |      `str`      |    `i64`     |   `ErrParse`    |
-|  `parse_f32`  |      `str`      |    `f32`     |   `ErrParse`    |
-|  `parse_f64`  |      `str`      |    `f64`     |   `ErrParse`    |
-
 ## error sets
 
 These are the error sets this Core module provides.
 
-### ErrParse
-
-This error set does not have a parent error, so it directly and only extends `anyerror` directly. These are the possible values this error could have:
-
-| Error Value        | Description                                       |
-| :----------------- | :------------------------------------------------ |
-| `OutOfBounds`      | The input is out of the bounds of the result      |
-| `InvalidCharacter` | The input contains one or more invalid characters |
+```ft
+error ErrParse:
+    OutOfBounds("The input is out of the bounds of the result"),
+    InvalidCharacter("The input contains one or more invalid characters");
+```
 
 ## functions
 
 These are the functions this Core module provides.
 
 ### parse_u8
+
+```ft
+def parse_u8(str value) -> u8 {ErrParse};
+```
 
 The `parse_u8` function recieves a string which needs to be parsed to an `u8` type. If the string contains characters which are not allowed in an unsigned integer, e.g. any character that's not `[0..9]`, it will throw the `InvalidCharacter` error. If the string contains a negative integer, e.g. `-5` it will throw the `OutOfBounds` error, since a negative integer cannot be converted to an `u8` type. If the value in the string is above or equal to `256` it will also throw the `OutOfBounds` error since these values are too large to fit in an `u8` type too.
 
@@ -73,44 +61,29 @@ This program will print these lines to the console:
 > val = 69
 > ```
 
-### parse_i32
-
-The `parse_i32` function recieves a string which needs to be parsed to an `i32` type. If the string contains characters which are not allowed in an unsigned integer, e.g. any character that's not `[0..9]` or `-`, it will throw the `InvalidCharacter` error. If the value in the string is below or equal to `-2147483649` or if it's above or equal to `2147483648` it will throw the `OutOfBounds` error.
+### parse_i8
 
 ```ft
-use Core.print
-use Core.parse
-
-def main():
-    i32 val = parse_i32("-2147483649") catch err:
-        print("OutOfBounds\n");
-    print($"val = {val}\n");
-
-    val = parse_i32("2147483649") catch err:
-        print("OutOfBounds\n");
-    print($"val = {val}\n");
-
-    val = parse_i32("3.4") catch err:
-        print("InvalidCharacter\n");
-    print($"val = {val}\n");
-
-    val = parse_i32("-34892");
-    print($"val = {val}\n");
+def parse_i8(str value) -> i8 {ErrParse};
 ```
 
-This program will print these lines to the console:
+### parse_u16
 
-> ```
-> OutOfBounds
-> val = 0
-> OutOfBounds
-> val = 0
-> InvalidCharacter
-> val = 0
-> val = -34892
-> ```
+```ft
+def parse_u16(str value) -> u16 {ErrParse};
+```
+
+### parse_i16
+
+```ft
+def parse_i16(str value) -> i16 {ErrParse};
+```
 
 ### parse_u32
+
+```ft
+def parse_u32(str value) -> u32 {ErrParse};
+```
 
 The `parse_u32` function recieves a string which needs to be parsed to an `u32` type. If the string contains characters which are not allowed in an unsigned integer, e.g. any character that's not `[0..9]`, it will throw the `InvalidCharacter` error. If the string contains a negative integer, e.g. `-5` it will throw the `OutOfBounds` error, since a negative integer cannot be converted to an `u32` type. If the value in the string is above or equal to `4294967296` it will also throw the `OutOfBounds` error since these values are too large to fit in an `u32` type too.
 
@@ -147,28 +120,32 @@ This program will print these lines to the console:
 > val = 34892
 > ```
 
-### parse_i64
+### parse_i32
 
-The `parse_i64` function recieves a string which needs to be parsed to an `i64` type. If the string contains characters which are not allowed in an unsigned integer, e.g. any character that's not `[0..9]` or `-`, it will throw the `InvalidCharacter` error. If the value in the string is below or equal to `I64_MIN` or if it's above or equal to `I64_MAX` it will throw the `OutOfBounds` error.
+```ft
+def parse_i32(str value) -> i32 {ErrParse};
+```
+
+The `parse_i32` function recieves a string which needs to be parsed to an `i32` type. If the string contains characters which are not allowed in an unsigned integer, e.g. any character that's not `[0..9]` or `-`, it will throw the `InvalidCharacter` error. If the value in the string is below or equal to `-2147483649` or if it's above or equal to `2147483648` it will throw the `OutOfBounds` error.
 
 ```ft
 use Core.print
 use Core.parse
 
 def main():
-    i64 val = parse_i64("-20000000000000000000") catch err:
+    i32 val = parse_i32("-2147483649") catch err:
         print("OutOfBounds\n");
     print($"val = {val}\n");
 
-    val = parse_i64("20000000000000000000") catch err:
+    val = parse_i32("2147483649") catch err:
         print("OutOfBounds\n");
     print($"val = {val}\n");
 
-    val = parse_i64("3.4") catch err:
+    val = parse_i32("3.4") catch err:
         print("InvalidCharacter\n");
     print($"val = {val}\n");
 
-    val = parse_i64("-34892");
+    val = parse_i32("-34892");
     print($"val = {val}\n");
 ```
 
@@ -185,6 +162,10 @@ This program will print these lines to the console:
 > ```
 
 ### parse_u64
+
+```ft
+def parse_u64(str value) -> u64 {ErrParse};
+```
 
 The `parse_u64` function recieves a string which needs to be parsed to an `u64` type. If the string contains characters which are not allowed in an unsigned integer, e.g. any character that's not `[0..9]`, it will throw the `InvalidCharacter` error. If the string contains a negative integer, e.g. `-5` it will throw the `OutOfBounds` error, since a negative integer cannot be converted to an `u64` type. If the value in the string is above or equal to `U64_MAX` it will also throw the `OutOfBounds` error since these values are too large to fit in an `u64` type too.
 
@@ -221,7 +202,53 @@ This program will print these lines to the console:
 > val = 34892
 > ```
 
+### parse_i64
+
+```ft
+def parse_i64(str value) -> i64 {ErrParse};
+```
+
+The `parse_i64` function recieves a string which needs to be parsed to an `i64` type. If the string contains characters which are not allowed in an unsigned integer, e.g. any character that's not `[0..9]` or `-`, it will throw the `InvalidCharacter` error. If the value in the string is below or equal to `I64_MIN` or if it's above or equal to `I64_MAX` it will throw the `OutOfBounds` error.
+
+```ft
+use Core.print
+use Core.parse
+
+def main():
+    i64 val = parse_i64("-20000000000000000000") catch err:
+        print("OutOfBounds\n");
+    print($"val = {val}\n");
+
+    val = parse_i64("20000000000000000000") catch err:
+        print("OutOfBounds\n");
+    print($"val = {val}\n");
+
+    val = parse_i64("3.4") catch err:
+        print("InvalidCharacter\n");
+    print($"val = {val}\n");
+
+    val = parse_i64("-34892");
+    print($"val = {val}\n");
+```
+
+This program will print these lines to the console:
+
+> ```
+> OutOfBounds
+> val = 0
+> OutOfBounds
+> val = 0
+> InvalidCharacter
+> val = 0
+> val = -34892
+> ```
+
+
 ### parse_f32
+
+```ft
+def parse_f32(str value) -> f32 {ErrParse};
+```
 
 The `parse_f32` function recieves a string which needs to be parsed to an `f32` type. If the string contains characters which are not allowed in a floating point number, e.g. any character that's not `[0..9]`, `-` or `.`, it will throw the `InvalidCharacter` error. If you try to parse a value outside the range of an `f32` it will throw the `OutOfBounds` error.
 
@@ -259,6 +286,10 @@ This program will print these lines to the console:
 > ```
 
 ### parse_f64
+
+```ft
+def parse_f64(str value) -> f64 {ErrParse};
+```
 
 The `parse_f64` function recieves a string which needs to be parsed to an `f64` type. If the string contains characters which are not allowed in a floating point number, e.g. any character that's not `[0..9]`, `-` or `.`, it will throw the `InvalidCharacter` error. If you try to parse a value outside the range of an `f64` it will throw the `OutOfBounds` error.
 

@@ -1,0 +1,143 @@
+# read
+
+```ft
+use Core.read
+```
+
+The `read` module provides several functions to read input from the command line and to read input from the user, like numbers or text entered by the user.
+
+## error sets
+
+These are the error sets this Core module provides.
+
+```ft
+error ErrRead:
+    ReadLines("Could not read lines from console"),
+    ParseInt("Could not parse text to integer"),
+    NegativeUint("Negative input not allowed for unsigned integers"),
+    ParseFloat("Could not parse text to floating‑point");
+```
+
+## functions
+
+These are the functions this Core module provides.
+
+### read_str
+
+```ft
+def read_str() -> str;
+```
+
+The `read_str` function has no parameters and returns a `str` value. It is used to read a whole line from the console. Note that tis function _cannot_ return an error, as there is no input parsing or input validation taking place.
+
+```ft
+use Core.print
+use Core.read
+
+def main():
+    str text = read_str();
+    print($"entered text: \"{text}\"\n");
+```
+
+### read_u32
+
+```ft
+def read_u32() -> u32 {ErrRead};
+```
+
+The `read_u32` function has no parameters and returns a `u32` value. It is used to read `u32` values from the console. It can throw an error if the entered text is not parsable to an unsigned integer value.
+
+```ft
+use Core.print
+use Core.read
+
+def main():
+    u32 num = read_u32();
+    print($"entered u32: {num}\n");
+```
+
+
+### read_i32
+
+```ft
+def read_i32() -> i32 {ErrRead};
+```
+
+The `read_i32` function has no parameters and returns a `i32` value. It is used to read `i32` values from the console. It can throw an error if the entered text is not parsable to an signed integer value.
+
+```ft
+use Core.print
+use Core.read
+
+def main():
+    i32 num = read_i32();
+    print($"entered i32: {num}\n");
+```
+
+### read_u64
+
+```ft
+def read_u64() -> u64 {ErrRead};
+```
+
+The `read_u64` function has no parameters and returns a `u64` value. It is used to read `u64` values from the console. It can throw an error if the entered text is not parsable to an unsigned integer value.
+
+```ft
+use Core.print
+use Core.read
+
+def main():
+    u64 num = read_u64();
+    print($"entered u64: {num}\n");
+```
+
+### read_i64
+
+```ft
+def read_i64() -> i64 {ErrRead};
+```
+
+The `read_i64` function has no parameters and returns a `i64` value. It is used to read `i64` values from the console. It can throw an error if the entered text is not parsable to an signed integer value.
+
+```ft
+use Core.print
+use Core.read
+
+def main():
+    i64 num = read_i64();
+    print($"entered i64: {num}\n");
+```
+
+### read_f32
+
+```ft
+def read_f32() -> f32 {ErrRead};
+```
+
+The `read_f32` function has no parameters and returns a `f32` value. It is used to read `f32` values from the console. It can throw an error if the entered text is not parsable to an floating point value.
+
+```ft
+use Core.print
+use Core.read
+
+def main():
+    f32 num = read_f32();
+    print($"entered f32: {num}\n");
+```
+
+### read_f64
+
+```ft
+def read_f64() -> f64 {ErrRead};
+```
+
+The `read_f64` function has no parameters and returns a `f64` value. It is used to read `f64` values from the console. It can throw an error if the entered text is not parsable to an floating point value.
+
+```ft
+use Core.print
+use Core.read
+
+def main():
+    f64 num = read_f64();
+    print($"entered f64: {num}\n");
+```

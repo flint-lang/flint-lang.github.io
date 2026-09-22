@@ -6,45 +6,32 @@ use Core.filesystem
 
 The `filesystem` module provides several functions to read data from and write data to files.
 
-| Function Name | Parameter Types | Return Types | Possible Errors |
-| ------------: | :-------------: | :----------: | :-------------: |
-|   `read_file` |      `str`      |    `str`     |     `ErrIO`     |
-|  `read_lines` |      `str`      |   `str[]`    |     `ErrFS`     |
-| `file_exists` |      `str`      |    `bool`    |       No        |
-|  `write_file` |   `str`, `str`  |      No      |     `ErrFS`     |
-| `append_file` |   `str`, `str`  |      No      |     `ErrFS`     |
-|     `is_file` |      `str`      |    `bool`    |       No        |
-
 ## error sets
 
 These are the error sets this Core module provides.
 
-### ErrIO
+```ft
+error ErrIO:
+    OpenFailed("Could not open the file"),
+    NotFound("File does not exist"),
+    NotReadable("Exists but is not readable"),
+    NotWritable("Exists but is not writable (permissions)"),
+    UnexpectedEOF("Hit EOF in the middle of a read");
 
-This error set does not have a parent error, so it directly and only extends `anyerror` directly. These are the possible values this error could have:
-
-| Error Value     | Description                              |
-| :-------------- | :--------------------------------------- |
-| `OpenFailed`    | Could not open the file                  |
-| `NotFound`      | File does not exist                      |
-| `NotReadable`   | Exists but is not readable               |
-| `NotWritable`   | Exists but is not writable (permissions) |
-| `UnexpectedEOF` | Hit EOF in the middle of a read          |
-
-### ErrFS
-
-This error set extens the `ErrIO` error set. These are the possible values this error set could have in addition to all the error values from `ErrIO`:
-
-| Error Value   | Description                |
-| :------------ | :------------------------- |
-| `TooLarge`    | File is unreasonably large |
-| `InvalidPath` | Path string is malformed   |
+error ErrFS(ErrIO):
+    TooLarge("File is unreasonably large"),
+    InvalidPath("Path string is malformed");
+```
 
 ## functions
 
 These are the functions this Core module provides.
 
 ### read_file
+
+```ft
+def read_file(str path) -> str {ErrIO};
+```
 
 The `read_file` function takes a `str` parameter, which is the path to the file that wants to be read and returns a `str` value, containing the content of the given file. This function throws an error if the file does not exist or is not readable.
 
@@ -83,6 +70,10 @@ When executing this program with the command `./main main.ft` we get this output
 
 ### read_lines
 
+```ft
+def read_lines(str path) -> str[] {ErrFS};
+```
+
 The `read_lines` function reads a given file (the `str` path to the file) and returns an array of all read lines (`str[]`). This function is really useful for reading a file and iterating through each line after reading the file. This function throws an error if the file does not exist or is not readable.
 
 ```ft
@@ -120,6 +111,10 @@ When executing this program with the command `./main main.ft` we get this output
 
 ### file_exists
 
+```ft
+def file_exists(str path) -> bool;
+```
+
 The `file_exists` function checks whether the given file (`str` path to the file) exists. This function cannot crash, as it checks for a file's existence, so when it does not exist or is not readable, it just returns `false`.
 
 ```ft
@@ -143,6 +138,10 @@ When executing this program with the command `./main main.ft` we get this output
 
 ### write_file
 
+```ft
+def write_file(str path, str content) {ErrFS};
+```
+
 The `write_file` function takes two arguments. The first argument is the path to the file to write to (or create) as a `str` path. The second parameter is the content of the to-be-written file (`str`). This function will create a file at the given path if the file does not exist yet. If the file exists, this function just overwrites it. This function will throw an error if the given file coould not be opened or could not be written to (for example a permission error).
 
 ```ft
@@ -164,6 +163,10 @@ This program will print these lines to the console:
 > ```
 
 ### append_file
+
+```ft
+def append_file(str path, str content) {ErrFS};
+```
 
 The `append_file` function will try to append text to an already existent file. The first parameter of the function is the path to the file the new content is appended (`str` path). The second parameter is the content which will be appended to the file (`str`). This function will throw an error if the given file does not exist or could not be opened with write access.
 
@@ -190,6 +193,10 @@ This program will print these lines to the console:
 > ```
 
 ### is_file
+
+```ft
+def is_file(str path) -> bool;
+```
 
 The `is_file` function checks whether the file at the given path (`str`) even is a file. It will return `false` in the case that the file / directory does not exist. It will also return false if the given "file" is actually a directory. This function cannot throw any errors.
 
