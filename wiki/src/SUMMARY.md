@@ -162,18 +162,8 @@
     - [Error Sets in Callables](./intermediates_guide/4_callables/6_error_sets_in_callables.md)
 
   - [Pipes]()
-    - [Introduction]()
-    - [Chaining Operations]()
-    - [Composing Functions]()
 
   - [Blueprints]()
-    - [Introduction]()
-    - [The `bp` Type]()
-    - [Linearization]()
-    - [fn Implications]()
-    - [Higher-Order Functions]()
-    - [The Eval Function]()
-    - [Performance Implications]()
 
   - [Compile-Time Evaluation]()
 
@@ -183,14 +173,6 @@
 
 - [From Expert to Master](./experts_guide.md)
   - [Concurrency & shared data]()
-    - [Understanding Concurrency]()
-    - [Spawning Threads]()
-    - [Syncronizing Threads]()
-    - [Locking Resources]()
-    - [The Thread Stack]()
-    - [Threading Internals]()
-    - [Shared Data]()
-    - [Annotations]()
 
   - [Paralellism]()
 
@@ -203,7 +185,6 @@
     - [Allocation & Deallocation](./experts_guide/1_dima/2_alloc_and_dealloc.md)
     - [Slot Pinning]()
     - [Defragmentation]()
-    - [Annotations]()
 
 # Reference
 
@@ -223,7 +204,8 @@
   - [time](./core_modules/13_time.md)
 
 - [Annotations](./annotations.md)
-  - [test](./annotations/test.md)
+  - [tests](./annotations/tests.md)
+  - [functions](./annotations/functions.md)
 
 - [Language Specification]()
 
