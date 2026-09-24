@@ -4,12 +4,13 @@ This section contains all annotations which can be applied to `test` definitions
 
 - [#test_should_fail](#test_should_fail)
 - [#test_performance](#test_performance)
-- [#test_output_always](#test_output_always)
-- [#test_output_never](#test_output_never)
+- [#test_output_show_on_success](#test_output_show_on_success)
+- [#test_output_silent_on_failure](#test_output_silent_on_failure)
 - [#test_init](#test_init)
 - [#test_deinit](#test_deinit)
 - [#test_pre](#test_pre)
 - [#test_post](#test_post)
+- [#test_post_always](#test_post_always)
 
 ## `#test_should_fail`
 
@@ -102,15 +103,15 @@ This program will print something like these lines to the console:
 > ✗ 1 test failed!
 > ```
 
-## `#test_output_always`
+## `#test_output_show_on_success`
 
-Whether the test should also output it's captured output even if it succeeds.
+Whether the test should also output its captured output even if it succeeds.
 
 ```ft
 use Core.assert
 use Core.print
 
-#test_output_always
+#test_output_show_on_success
 test "Always printing output":
 	print("Wahooo\n");
 	print("Wololololo\n");
@@ -149,9 +150,9 @@ when compiled using `flintc main.ft --test` the `test` binary should have this o
 > ✗ 1 test failed!
 > ```
 
-## `#test_output_never`
+## `#test_output_silent_on_failure`
 
-Whether the test should not output it's captured output even if it fails. This annotation, in combination with the `#test_output_never` annotation has a very interesting side-effect: Since the `#test_output_always` annotation toggles whether the test outputs on *success* and the `#test_output_never` annotation toggles whether the test outputs on *failure*, using both annotations on the same test leads to the output printing being flipped, now only printing when it succeeds but staying silent when it fails.
+Whether the test should not output its captured output even if it fails. This annotation, in combination with the `#test_output_show_on_success` annotation, flips the output of the test where it then outputs on success but is silent on failure. With these two annotations you are able to control when a tests output, for example you could make it always output or always silent, etc.
 
 ## `#test_init`
 
@@ -333,3 +334,69 @@ If the `post` test fails its failing output will be shown instead of the output 
 In the above example the content of the `post` test was changed to `assert(false);`. As you can see, the output of the `post` test is captured like every other test. The output / performance changing annotations have *no* effect on `init`, `deinit`, `pre` or `post` tests. To make clear that the `post` test failed, the `(post)` text is added to the `failed` text, so even if the test is named something arbitrary, it is always clear that the pre stage failed.
 
 Since the `post` test did not increment `G.x` by one, `Test 2` fails regularly. As you can see, the `post` test is only executed when the test succeeds. For failing tests the `post` test is skipped entirely. That's the reason you see the `(post)` in the first test but not the second one.
+
+The `pre`, actual and `post` tests form a chain. If `pre` fails neither the actual test nor the `post` test are executed. If the actual test fails then `pre` was executed but `post` will not be executed. This means that this example:
+
+```ft
+use Core.assert
+use Core.print
+
+shared data State:
+	u32 id = 0;
+	u32 ok = 0;
+
+#test_pre
+test "pre":
+	assert(State.id == State.ok);
+	State.id++;
+
+#test_post
+test "post":
+	State.ok++;
+
+test "test1":
+	print($"State.(id, ok) = ({State.id}, {State.ok})\n");
+	assert(true);
+
+test "test2":
+	print($"State.(id, ok) = ({State.id}, {State.ok})\n");
+	assert(false);
+
+test "test3":
+	print($"State.(id, ok) = ({State.id}, {State.ok})\n");
+	assert(true);
+```
+
+will show this output when ran:
+
+> ```
+> main.ft:
+>  ├─ test1 ✓ passed
+>  ├─ test2 ✗ failed
+>  │   ├─ Output ────────────────┐
+>  │   │ State.(id, ok) = (2, 1) │
+>  │   └─────────────────────────┘
+>  └─ test3 ✗ failed (pre)
+>      ├─ Output ─┐
+>      └──────────┘
+>
+> ✗ 2 tests failed!
+> ```
+
+As you can see, this behaviour makes it easy to create a chain of tests, for example if `test3` would depend on `test2` succeeding and `test2` depends on `test1` succeeding. You can clearly see that `test2` is the one who is failing and that all later tests are just consequences of that failing.
+
+## `#test_post_always`
+
+You are able to control the "dont run post on failure" behaviour with the `#test_post_always` annotation. This annotation can **only** be used on a test where the `#test_post` annotation is present too. It simply changes the behaviour to run the `post` test unconditionally, even if *either* `pre` or the regular test fail. In the above example, just the `#test_post_always` annotation was added to the `post` test, and now it shows this output:
+
+> ```
+> main.ft:
+>  ├─ test1 ✓ passed
+>  ├─ test2 ✗ failed
+>  │   ├─ Output ────────────────┐
+>  │   │ State.(id, ok) = (2, 1) │
+>  │   └─────────────────────────┘
+>  └─ test3 ✓ passed
+>
+> ✗ 1 test failed!
+> ```

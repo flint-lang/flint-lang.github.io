@@ -1,14 +1,14 @@
 # Annotations
 
-Annotations are a way where you can directly communicate with the Flint compiler. Annotations are used for all places where adding explicit syntax for certain things would completely bloat the language and annotations are a lightweight way of communicating with the compiler. There only exist two annotations at the moment, but there will be more annotations added in the future.
+Annotations are a way where you can directly communicate with the Flint compiler. Annotations are used for all places where adding explicit syntax for certain things would completely bloat the language and annotations are a lightweight way of communicating with the compiler.
 
-An annotation is defined using the `#` symbol. Everything following that symbol is part of the annotation, so there cannot be anything written after an annotation, similar how nothing is able to be written to the right of a single-line comment `//`. Annotations can also be stacked, so more than one annotation can be defined at once to be used for one test.
+An annotation is defined using the `#` symbol. Everything following that symbol is part of the annotation, so there cannot be anything written after an annotation, similar how nothing is able to be written to the right of a single-line comment `//`. Annotations can also be stacked, so more than one annotation can be defined at once to be used for one definition.
 
 This chapter contains all (currently supported) annotations. It will expand in the future once more annotations are added to Flint.
 
 ## Stacking annotations
 
-All annotations can be stacked. So we could define both `#test_should_fail` and `#test_performance` for the same test:
+All annotations can be stacked. So we could define both `#test_should_fail` and `#test_performance` for the same test, for example:
 
 ```ft
 use Core.assert
