@@ -107,7 +107,7 @@
     - [Tags](./beginners_guide/9_interop/6_tags.md)
     - [Opaque Types](./beginners_guide/9_interop/7_opaque.md)
     - [Named Opaque Types](./beginners_guide/9_interop/8_named_opaque.md)
-    - [Exporting]()
+    - [Exporting](./beginners_guide/9_interop/9_exporting.md)
 
   - [Game Example](./beginners_guide/10_game_example.md)
     - [Introduction to Raylib](./beginners_guide/10_game_example/1_introduction.md)
