@@ -165,9 +165,14 @@
 
   - [Blueprints]()
 
-  - [Compile-Time Evaluation]()
-
-  - [Generics]()
+  - [Comptime](./intermediates_guide/7_comptime.md)
+    - [Introduction](./intermediates_guide/7_comptime/1_introduction.md)
+    - [Comptime Parameter List](./intermediates_guide/7_comptime/2_comptime_parameter_list.md)
+    - [Generic Functions](./intermediates_guide/7_comptime/3_generic_functions.md)
+    - [Generic Types](./intermediates_guide/7_comptime/4_generic_types.md)
+    - [Compile-Time Evaluation]()
+    - [Reflection]()
+    - [Predicates]()
 
   - [Generic Library Example]()
 
