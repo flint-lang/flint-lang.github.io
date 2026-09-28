@@ -1,0 +1,377 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Generic Types - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/flint-lang/flintc" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="generic-types"><a class="header" href="#generic-types">Generic Types</a></h1>
+<p>You were already introduced to the concept of generic types in the CPL chapter, but that chapter only focused on the simplest case being generic <code>data</code> components. However, <code>data</code> is not the only type where a CPL can be added to it. Other types which can be generic include <code>variant</code>s, <code>object</code>s, <code>func</code> components and <code>interface</code>s. Since generic <code>data</code> components were already described in the CPL chapter, they are not further explained here.</p>
+<h2 id="variant"><a class="header" href="#variant"><code>variant</code></a></h2>
+<div class="warning">
+<p>The expressions like <code>Option[i32].Ok(100)</code> or <code>Option[i32].None</code> look quite verbose. Flint has no way of inferring the types yet. I want to change it in the future to support syntax more like this:</p>
+<pre><code class="language-ft">def main():
+	Option[i32] maybe = .Ok(100);
+	print($"maybe!(.Ok) = {maybe!(.Ok)}\n");
+
+	maybe = .None;
+	print($"maybe == .None = {maybe == .None}\n");
+</code></pre>
+<p>but this syntax is not implemented yet and does not work. It is planned that <code>.Tag</code> is allowed to be a valid expression, so that the actual type of the variant does not need to be written over and over again. I am pretty confident that this will be added in the future, even though I am not 100% sure yet on the exact syntax because of potential problems / overlaps in other unforeseen places.</p>
+</div>
+<p>One of the most simple example of generic variants is the <code>Option&lt;T&gt;</code> type which Rust relies heavily on. It is, however, impractical <em>for Flint</em> to define such a type as optionals are, as you know, built-in to the langauge using <code>T?</code>. Still, this type is very useful to showcase the CPL being applied on variants:</p>
+<pre><code class="language-ft">use Core.print
+
+variant Option[type T]:
+	Ok(T),
+	None(void);
+
+def main():
+	Option[i32] maybe = Option[i32].Ok(100);
+	print($"maybe!(Option[i32].Ok) = {maybe!(Option[i32].Ok)}\n");
+
+	maybe = Option[i32].None;
+	print($"maybe == Option[i32].None = {maybe == Option[i32].None}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>maybe!(Option[i32].Ok) = 100
+maybe == Option[i32].None = true
+</code></pre>
+</blockquote>
+<p>Okay, so the definition looks exactly like a regular variant would look like, just with the added CPL, as described in the CPL chapter. You should be familiar with this by now. If the <code>Option</code> variant would not be generic, we would initialize and unwrap it using <code>Option.Ok(100)</code> and <code>maybe!(Option.Ok)</code> respectively. As you can see, the only thing different from "regular" syntax is that we need to apply a CVL to specialize the generic <code>Option</code> type, in our case <code>Option[i32]</code>. But other than that, it looks exactly like "regular" variants because post-specilization it <strong>is</strong> just a regular variant.</p>
+<h2 id="func"><a class="header" href="#func"><code>func</code></a></h2>
+<p>A generic <code>func</code> component is rather interesting. Because it contains real, concrete functions, those functions it contains also are generic. The CPL of the func component is directly added to the CPL of the functions in its body. This means that a generic func component <strong>only</strong> contains generic functions.</p>
+<pre><code class="language-ft">use Core.print
+
+data Vec2[type T]:
+	T x;
+	T y;
+
+func Move[type T] requires(Vec2[T] pos):
+	def by(Vec2[T] other):
+		pos.(x, y) += other.(x, y);
+
+	def to(Vec2[T] other):
+		pos.(x, y) = other.(x, y);
+
+def main():
+	v2 := Vec2[i32]{ 10, 20 };
+	diff := Vec2[i32]{ 5, 5 };
+	print($"v2.(x, y) = {v2.(x, y)}\n");
+
+	Move.by[i32](v2, diff);
+	print($"v2.(x, y) = {v2.(x, y)}\n");
+
+	Move.to[i32](v2, diff);
+	print($"v2.(x, y) = {v2.(x, y)}\n");
+</code></pre>
+<p>This program will print these lines to the console</p>
+<blockquote>
+<pre><code>v2.(x, y) = (10, 20)
+v2.(x, y) = (15, 25)
+v2.(x, y) = (5, 5)
+</code></pre>
+</blockquote>
+<p>As you can see, we did <em>not</em> specialize the func component type <code>Move</code> itself when calling a function (<code>Move[i32].by</code>) of it directly. Instead, we specialized the <em>function</em> through <code>Move.by[...]</code>. This is important, as <strong>only</strong> this second form is allowed when targetting the generic functions directly. When you define the <code>func</code> component as a runtime value, for example as a view into an object, you very well can, and need to, write <code>Move[i32] m = ...;</code>. We explicitely decided against allowing <code>Move[i32].by</code> as this would blur the line between the func component and its functions too much. When calling a function defined within a func component directly, you just do a regular call and nothing more, so specialization naturally happens at the function and not at the func component type.</p>
+<h2 id="object"><a class="header" href="#object"><code>object</code></a></h2>
+<p>To showcase generic objects it will be best to show a generic list wrapper type, as you should be aware of linked lists by now this should feel familiar:</p>
+<pre><code class="language-ft">use Core.print
+
+data DListNode[type T]:
+	T value;
+	DListNode[T]? next = none;
+
+data DListHead[type T]:
+	DListNode[T]? head;
+
+object List[type T]:
+	data: DListHead[T] list;
+
+	def append(T value):
+		if list.head == none:
+			list.head = DListNode[T]{value};
+			return;
+		DListNode[T]? current = list.head;
+		while current!.next != none:
+			current = current!.next;
+		current!.next = DListNode[T]{value};
+
+	const def print():
+		DListNode[T]? current = list.head;
+		while current != none:
+			print(str(current!.value));
+			if current!.next != none:
+				print(" -&gt; ");
+			current = current!.next;
+		print("\n");
+
+	const def size() -&gt; u64:
+		u64 size = 0;
+		DListNode[T]? current = list.head;
+		while current != none:
+			size++;
+			current = current!.next;
+		return size;
+
+def main():
+	l1 := List[i32]{};
+	l1.append(10);
+	l1.append(20);
+	l1.append(30);
+	print($"l1.size() = {l1.size()}\n");
+	l1.print();
+
+	l2 := List[f32]{};
+	l2.append(3.14);
+	l2.append(6.9);
+	l2.append(42.0);
+	print($"l2.size() = {l2.size()}\n");
+	l2.print();
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>l1.size() = 3
+10 -&gt; 20 -&gt; 30
+l2.size() = 3
+3.14 -&gt; 6.9 -&gt; 42.0
+</code></pre>
+</blockquote>
+<p>The only thing which is "new" or special compared to other generic types here is the fact that you only needed to ever specialize the type of the list itself, all following member functions need no specializations, as <code>l1</code> and <code>l2</code> are already of a known specialized object type, meaning that there is no open CPL which awaits application for the functions like <code>.append()</code>, <code>.size()</code> or <code>.print()</code>.</p>
+<h2 id="interface"><a class="header" href="#interface"><code>interface</code></a></h2>
+<p>The last example are generic interfaces. You should be rather familiar with generic definitions by now, so they should be rather simple to understand:</p>
+<pre><code class="language-ft">use Core.print
+
+interface IComparable[type T]:
+	def compare_with(T value) -&gt; bool;
+
+data Data[type T]:
+	T x;
+
+object Object[type T] implements(IComparable[T]):
+	data: Data[T] d;
+
+	def compare_with(T value) -&gt; bool:
+		return d.x == value;
+
+def main():
+	o := Object[i32]{Data[i32]{100}};
+	print($"o.compare_with(10)  = {o.compare_with(10)}\n");
+	print($"o.compare_with(100) = {o.compare_with(100)}\n");
+</code></pre>
+<p>This example will print these lines to the console:</p>
+<blockquote>
+<pre><code>o.compare_with(10)  = false
+o.compare_with(100) = true
+</code></pre>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../intermediates_guide/7_comptime/3_generic_functions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../experts_guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../intermediates_guide/7_comptime/3_generic_functions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../experts_guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+        <script src="../../header.js"></script>
+
+
+    </div>
+    </body>
+</html>

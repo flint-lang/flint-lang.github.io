@@ -1,0 +1,282 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Comptime Parameter List - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/flint-lang/flintc" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="comptime-parameter-list"><a class="header" href="#comptime-parameter-list">Comptime Parameter List</a></h1>
+<div class="warning">
+<p>The Comptime Parameter List currently <strong>only</strong> supports parameters of type <code>type</code>.</p>
+<p>Once CTE (compile-time evaluation) lands this will be expanded, meaning that you will be able to pass <strong>any</strong> arbitrary value to a definition expecting a comptime parameter.</p>
+</div>
+<p>The comptime parameter list sits at the center of many advanced comptime features of Flint. It essentially is just a way to be able to define a list of compile-time parameters (like its name suggests) which we then can pass to definitions like types, functions etc. When defining types and functions we can optionally add the comptime parameter list after the name of the definition we just defined. Adding a CPL to a definition makes this definition <strong>generic</strong>. Even though the CPL and generics aren't the same thing exactly, I will use this term from now on to describe types or functions containing a CPL because it's the most industry-standard description of it. The most simple example of a <strong>generic definition</strong> would be a <code>data</code> definition containing a CPL:</p>
+<pre><code class="language-ft">use Core.print
+
+data Node[type T]:
+	T value;
+	Node[T]? next;
+
+def main():
+	n := Node[i32]{ .value = 10, .next = Node[i32]{.value = 20} };
+	print($"n.next!.value = {n.next!.value}\n");
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>n.next!.value = 20
+</code></pre>
+</blockquote>
+<p>We have quite a lot to go through here, so lets start with the generic definition itself. After the name of the defined data component <code>Node</code> we added the CPL which is written as <code>[...]</code>. Inside this CPL we can add any parameter of any type we would like, for now we only added a value of type <code>type</code>. The <code>type</code> type is, just like <code>int</code> and <code>float</code>, a compile-time only type. You have used values of this type a lot until now, for example <code>i32</code> itself, is a type. So, this means that the generic definition <code>Node</code> expects one value of type <code>type</code> to be able to be <strong>specialized</strong> (more on that shortly).</p>
+<p>Inside the body of the generic definition, we can use the comptime parameters freely. Because <code>T</code> is of type <code>type</code> it can be used in every place where Flint expects a type, for example in the <code>T value</code> field. The syntax in the next line is new, as <code>Node[T]?</code> is not something we have seen yet. Just like we <strong>define</strong> the CPL using <code>[...]</code> we can pass values to a generic definition using the same bracket syntax <code>[...]</code>. <code>T</code> in the case of <code>Node[T]?</code> is a <strong>compile-time value</strong>. It's a value we get as a parameter from the CPL and we can further pass the parameter to generic definitions.</p>
+<p>Oh, on a side note: Generic types (like the unresolved <code>Node</code>) are also compile-time only types. This means that you are not able to write a declaration like <code>Node n = ...;</code> as <code>Node</code> has not been specialized and thus is a pure comptime type.</p>
+<h2 id="specialization"><a class="header" href="#specialization">Specialization</a></h2>
+<p>When we write something like <code>Node[i32]</code> then we <strong>specialize</strong> the generic type <code>Node[type T]</code> with a comptime value passed to it. So lets say we specialize <code>Node</code> once with a <code>i32</code> and once with a <code>f32</code> value:</p>
+<pre><code class="language-ft">use Core.print
+
+data Node[type T]:
+	T value;
+	Node[T]? next;
+
+def main():
+	n1 := Node[i32]{ .value = 10, .next = Node[i32]{.value = 20} };
+	print($"n1.next!.value = {n1.next!.value}\n");
+
+	n2 := Node[f32]{ .value = 4.23, .next = Node[f32]{.value = 72.34} };
+	print($"n2.next!.value = {n2.next!.value}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>n1.next!.value = 20
+n2.next!.value = 72.339996
+</code></pre>
+</blockquote>
+<p>As you can see, we <em>specialized</em> the generic type definition <code>Node</code> twice, once with <code>i32</code> and once with <code>f32</code>. The generic type <code>Node</code>, however, does not exist at runtime. As specialization is the act of applying a list of comptime values (CVL) to a generic definition, the result of this specialization is a "regular" (resolved) definition. So, the above example actually looks more like something like this internally:</p>
+<pre><code class="language-ft">use Core.print
+
+data Node__i32:
+	i32 value;
+	Node__i32? next;
+
+data Node__f32:
+	f32 value;
+	Node__f32? next;
+
+def main():
+	n1 := Node__i32{ .value = 10, .next = Node__i32{.value = 20} };
+	print($"n1.next!.value = {n1.next!.value}\n");
+
+	n2 := Node__f32{ .value = 4.23, .next = Node__f32{.value = 72.34} };
+	print($"n2.next!.value = {n2.next!.value}\n");
+</code></pre>
+<p>Note that the names like <code>Node__i32</code> and <code>Node__f32</code> are invented, their names are different internally containing characters a regular identifier cannot contain. So, don't worry about potential name-overlaps of generic types with your types, you are unable to define a type manually with the same internal name as a specialized generic type.</p>
+<p>At runtime, the type <code>Node</code> disappeared entirely and left over are only the "real" types produced by specializing that generic type. This process, of specializing generic definitions, is called <a href="https://en.wikipedia.org/wiki/Monomorphization">Monomorphization</a>. Even though this exact terminology is more commonly used to just describe the specialization of <strong>functions</strong>, it can also be used to describe the specialization of types.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../intermediates_guide/7_comptime/1_introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../intermediates_guide/7_comptime/3_generic_functions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../intermediates_guide/7_comptime/1_introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../intermediates_guide/7_comptime/3_generic_functions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+        <script src="../../header.js"></script>
+
+
+    </div>
+    </body>
+</html>

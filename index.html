@@ -432,6 +432,7 @@
         }
 
         @media (max-width: 980px) {
+
             .hero,
             .roadmap,
             .grid {
@@ -627,7 +628,7 @@
     <span class="kw">return</span> c++;
 
 <span class="kw">def</span> <span class="fn">main</span>():
-    <span class="ty">fn</span><() -> <span class="ty">i32</span>> c = ::<span class="fn">counter</span>; <span class="cm">// fn referencing</span>
+    <span class="ty">fn</span>[() -> <span class="ty">i32</span>] c = ::<span class="fn">counter</span>; <span class="cm">// fn referencing</span>
     <span class="fn">print</span>($<span class="str">"counter = </span>{<span class="fn">c</span>()}<span class="str">\n"</span>); <span class="cm">// 'counter = 0'</span>
     <span class="fn">print</span>($<span class="str">"counter = </span>{<span class="fn">c</span>()}<span class="str">\n"</span>); <span class="cm">// 'counter = 1'</span></code></pre>
                         </article>
@@ -932,7 +933,8 @@
                         In Flint, every function can be referenced as a callable and passed around as a value. By
                         referencing functions as callables, its persistent local state is preserved across invocations.
                         Through this, callables enable powerful patterns like counters, rate limiters, state machines,
-                        accumulators, and more. This all is possible thanks to Flint's runtime. How everything shown here
+                        accumulators, and more. This all is possible thanks to Flint's runtime. How everything shown
+                        here
                         works under the hood is explained in-detail in the Wiki.
                     </p>
                 </div>
@@ -972,7 +974,8 @@
                                     Persistent locals are just regular local variables for regular function calls and
                                     can be used as such. Flint does not differentiate between callables and regular
                                     functions at the lowest level, the same code is executed for both. This means that
-                                    <strong>every</strong> user-defined function is allowed to be referenced as a callable.
+                                    <strong>every</strong> user-defined function is allowed to be referenced as a
+                                    callable.
                                 </span>
                             </div>
                         </div>
@@ -998,7 +1001,7 @@
 <span class="kw">def</span> <span class="fn">execute_function</span>():
     <span class="fn">print</span>(<span class="str">"Executed\n"</span>);
 
-<span class="kw">def</span> <span class="fn">execute_maybe</span>(<span class="ty">fn</span><> function) -> <span class="ty">bool</span>:
+<span class="kw">def</span> <span class="fn">execute_maybe</span>(<span class="ty">fn</span>[] function) -> <span class="ty">bool</span>:
     <span class="ct">persistent</span> <span class="ty">TimeStamp</span> last = <span class="fn">now</span>();
     <span class="ty">TimeStamp</span> current = <span class="fn">now</span>();
     <span class="ty">Duration</span> elapsed = <span class="fn">duration</span>(last, current);
@@ -1011,8 +1014,8 @@
     <span class="kw">return</span> <span class="ct">true</span>;
 
 <span class="kw">def</span> <span class="fn">main</span>():
-    <span class="ty">fn</span><> task = ::<span class="fn">execute_function</span>;
-    <span class="ty">fn</span><<span class="ty">fn</span><> -> <span class="ty">bool</span> throttled = ::<span class="fn">execute_maybe</span>;
+    <span class="ty">fn</span>[] task = ::<span class="fn">execute_function</span>;
+    <span class="ty">fn</span>[<span class="ty">fn</span>[] -> <span class="ty">bool</span>] throttled = ::<span class="fn">execute_maybe</span>;
     <span class="ty">i32</span> c = 0;
     <span class="kw">while</span> c < 4:
         <span class="kw">if</span> <span class="fn">throttled</span>(task):

@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Exporting - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/flint-lang/flintc" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="exporting"><a class="header" href="#exporting">Exporting</a></h1>
+<div class="warning">
+<p>This feature is experimental.</p>
+<p>This feature works but is still marked as experimental as not much testing was done to test it in all various scenarios. The shown examples work, but expect to run into bugs when using this feature extensively. It normally takes a bit of time for features to show their bugs, and as this feature is new, expect that there are still plenty of bugs in it.</p>
+</div>
+<div class="warning">
+<p>This feature currently does not work on Windows.</p>
+<p>You are able to create the <code>mylib.obj</code> file and header file without a problem, and you can link to the <code>builtins.lib</code> no problem too. The problem is that Windows currently only supports a <code>windows-msvc</code> target. The <code>windows-gnu</code> target is (currently) Linux-only. Because of this, the compiler on Windows fails to compile since it targets gnu but the produced <code>mylib.obj</code> uses the msvc ABI. If you use an MSVC compiler, this feature should work fine for you. If you, however, use any GNU-based C compiler on Windows, this feature will not work. Support for <code>windows-gnu</code> <em>on</em> Windows will land some time in the next couple of releases.</p>
+</div>
+<p>Flint now is callable from the outside world. In the below examples, this "ouside world" is the <code>C</code> programming language.</p>
+<h2 id="the---lib-flag"><a class="header" href="#the---lib-flag">The <code>--lib</code> flag</a></h2>
+<p>The first thing we need to look at is the new <code>--lib &lt;name&gt;</code> flag of the Flint compiler. Lets assume we have a small program like this:</p>
+<pre><code class="language-ft">use Core.print
+
+def add(i32 x, i32 y) -&gt; i32:
+	return x + y;
+
+def main():
+	print($"add(10, 20) = {add(10, 20)}\n");
+</code></pre>
+<p>And we compile it using</p>
+<pre><code class="language-sh">flintc main.ft --lib mylib
+</code></pre>
+<p>then the compiler will <strong>not</strong> produce a binary, like it normally would. Instead, it produces a <code>mylib.o</code> and <code>mylib.h</code> file and dumps them into the curent working directory. However, the <code>.h</code> file is completely empty. This is because we have not yet defined any function as <code>export</code>.</p>
+<h2 id="exported-functions"><a class="header" href="#exported-functions"><code>export</code>ed functions</a></h2>
+<p>In the above example, lets just change the <code>add</code> function definition:</p>
+<pre><code class="language-ft">export def add(i32 x, i32 y) -&gt; i32:
+	return x + y;
+</code></pre>
+<p>When we now re-run the above command the <code>mylib.h</code> file will have a content, and it will look like this:</p>
+<pre><code class="language-h">#pragma once
+
+#include &lt;stdbool.h&gt;
+#include &lt;stdint.h&gt;
+
+#ifndef FLINT_OPT
+#define FLINT_OPT(T) struct { bool has_value; T value; }
+#endif
+
+/// @brief Returns 'false' on failure and 'true' if everything was OK
+extern bool mylib_init(void) asm("flint.init.mylib");
+
+int32_t mylib_add(const int32_t x, const int32_t y) asm("HIjDPBBd.add.export");
+</code></pre>
+<p>The <code>FLINT_OPT</code> is flints internal representation of optionals, its macro is emitted even if no optional types are used in the exported file, you can ignore it for now.</p>
+<p>The important parts are the <code>mylib_ini</code> and the <code>mylib_add</code>. As you can see, these names are only exposed to C, but internally in Flint (and in the emitted <code>.o</code> file) they are called <code>flint.init.mylib</code> and <code>HIjDPBBd.add.export</code> respectively.</p>
+<h2 id="using-the-exported-h-and-o-files"><a class="header" href="#using-the-exported-h-and-o-files">Using the exported <code>.h</code> and <code>.o</code> files</a></h2>
+<p>Lets now create a small <code>mylib.c</code> file in which we use the <code>mylib.h</code> file:</p>
+<pre><code class="language-c">#include "mylib.h"
+
+#include &lt;stdio.h&gt;
+
+int main(void) {
+	int result = mylib_add(10, 20);
+	printf("result = %i\n", result);
+	return 0;
+}
+</code></pre>
+<p>Okay, when we now try to compile the <code>mylib.c</code> file using this command (or any C compiler you want):</p>
+<pre><code class="language-sh">clang mylib.c mylib.o -o main
+</code></pre>
+<p>we get these linking errors:</p>
+<blockquote>
+<pre><code>/usr/bin/ld: mylib.o: In Funktion »flint.dima.init.mylib«:
+main:(.text.flint.dima.init.mylib+0x7): undefinierter Verweis auf »TD1zR4xj.dima.head.data.TimeStamp«
+/usr/bin/ld: main:(.text.flint.dima.init.mylib+0x69): undefinierter Verweis auf »TD1zR4xj.dima.head.data.TimeStamp«
+/usr/bin/ld: main:(.text.flint.dima.init.mylib+0xc4): undefinierter Verweis auf »TD1zR4xj.dima.head.data.Duration«
+/usr/bin/ld: mylib.o: In Funktion »flint.clone«:
+main:(.text.flint.clone+0x19b): undefinierter Verweis auf »TD1zR4xj.dima.head.data.Duration«
+/usr/bin/ld: main:(.text.flint.clone+0x1a0): undefinierter Verweis auf »flint.dima.allocate«
+/usr/bin/ld: main:(.text.flint.clone+0x1cc): undefinierter Verweis auf »TD1zR4xj.dima.head.data.TimeStamp«
+/usr/bin/ld: main:(.text.flint.clone+0x1d1): undefinierter Verweis auf »flint.dima.allocate«
+/usr/bin/ld: mylib.o: In Funktion »flint.error.get_str«:
+main:(.text.flint.error.get_str+0x51): undefinierter Verweis auf »flint.string.create_str«
+/usr/bin/ld: mylib.o: In Funktion »Z5OgXomk.add.0«:
+/home/zweiler1/env/flint/flintc/tests/wiki/beginners_guide/interop/24_export_c/main.ft:4:(.text.Z5OgXomk.add.0+0x74): undefinierter Verweis auf »flint.arithmetic.i32_safe_add«
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+</code></pre>
+</blockquote>
+<p>This is because some DIMA types of Flint (more on that later) are part of the <code>libbuiltins.a</code> of Flint, a library of all builtin library stuff which the Flint runtime needs to function properly. But where is it? To get the path to the <code>libbuiltins.a</code> file you can just run</p>
+<pre><code class="language-sh">flintc --print-libbuiltins-path
+</code></pre>
+<p>which will just print your path to the console, in my case this path:</p>
+<blockquote>
+<pre><code>/home/zweiler1/.cache/flintc
+</code></pre>
+</blockquote>
+<p>To get C to compile, we thus need to add this directory as a library path and then link with the <code>builtins</code> library:</p>
+<pre><code class="language-sh">clang mylib.c mylib.o -o main -L$(flintc --print-libbuiltins-path) -lbuiltins
+</code></pre>
+<p>And now we have an executable <code>main</code> which we can run, and when we run it we get this output:</p>
+<blockquote>
+<pre><code>fish: Job 1, './main' terminated by signal SIGSEGV (Adressbereichsfehler)
+</code></pre>
+</blockquote>
+<p>But why does it crash?</p>
+<h2 id="the-mylib_init-function"><a class="header" href="#the-mylib_init-function">The <code>mylib_init</code> function</a></h2>
+<p>You saw the <code>mylib_init</code> function earlier in the <code>mylib.h</code> header file. To "fix" the above problem, you need to call the <code>mylib_init</code> function before calling <strong>any</strong> other function of the "library" <code>mylib</code> created by Flint:</p>
+<pre><code class="language-c">#include "mylib.h"
+
+#include &lt;stdio.h&gt;
+
+int main(void) {
+    if (!mylib_init()) {
+        printf("mylib_init failed\n");
+        return 1;
+    }
+    int result = mylib_add(10, 20);
+    printf("result = %i\n", result);
+    return 0;
+}
+</code></pre>
+<p>And now when we compile it using</p>
+<pre><code class="language-sh">clang mylib.c mylib.o -o main -L$(flintc --print-libbuiltins-path) -lbuiltins
+</code></pre>
+<p>again and run the built <code>main</code> we finally get this output:</p>
+<blockquote>
+<pre><code>result = 30
+</code></pre>
+</blockquote>
+<p>The <code>mylib_init</code> function is very important to Flints runtime, as it initializes a lot of internal stuff needed by the runtime to even be able to evaluate a simple function like <code>add</code>. You will learn about those internals <a href="../../intermediates_guide/4_callables/1_thread_stack.html">later</a>. The <code>mylib_init</code> is checks internally if the things it initialized are already initialized. So, calling this function multiple times is well-defined, all later calls just early-return and do nothing. If you use Flint as a library in C, it is recommended to just call the init function at the very beginning of the program like shown above.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../beginners_guide/9_interop/8_named_opaque.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../beginners_guide/10_game_example.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../beginners_guide/9_interop/8_named_opaque.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../beginners_guide/10_game_example.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+        <script src="../../header.js"></script>
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE HTML>
+<html lang="en" class="flint sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Generic Functions - The Flint Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/flint.css">
+        <link rel="stylesheet" href="../../theme/flint-highlight.css">
+        <link rel="stylesheet" href="../../version_select.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "flint";
+            const default_dark_theme = "flint";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('flint')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Flint Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/flint-lang/flintc" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="generic-functions"><a class="header" href="#generic-functions">Generic Functions</a></h1>
+<p>Generic functions are nothing truly special in Flint compared to other languages which have monomorphization capabilites. You can add the CPL to the function definition, just like you were able to add it to the <code>data</code> definition in the last chapter. Lets start with a simple and small function, <code>add</code>, as usual:</p>
+<pre><code class="language-ft">use Core.print
+
+def add[type T](T x, T y) -&gt; T:
+	return x + y;
+
+def main():
+	i32 res1 = add[i32](10, 20);
+	print($"res1 = {res1}\n");
+
+	f32 res2 = add[f32](3.14, 4.5);
+	print($"res2 = {res2}\n");
+
+	str res3 = add[str]("Hello", ", there!");
+	print($"res3 = {res3}\n");
+</code></pre>
+<p>This program will print these lines to the console:</p>
+<blockquote>
+<pre><code>res1 = 30
+res2 = 7.64
+res3 = Hello, there!
+</code></pre>
+</blockquote>
+<p>Just like with generic data, generic functions are specialized when used. The specialization of generic functions, however, is a bit more involved compared to generic data components. In the case of generic data components, the "body" of the definitions is parsed exactly once. For generic functions, however, the body cannot be parsed just once because body-parsing requires type-information. Because of this, the body of any generic function is simply registered as text (tokens) and parsed on-demand for every specialization.</p>
+<p>This means that a generic function which is never specialized can, quite literally, contain <strong>anything</strong> in its body and it is never parsed, and thus never checked in any way:</p>
+<pre><code class="language-ft">use Core.print
+
+def foo[type T](T x) -&gt; T:
+	ahahsdl := alsdfba(T);
+
+def main():
+	print("Hello, World!\n");
+</code></pre>
+<p>This program just prints hello world, even though the body of the <code>foo</code> function clearly is completely wrong. You need to use the generic function at least once in order to parse it:</p>
+<pre><code class="language-ft">use Core.print
+
+def foo[type T](T x) -&gt; T:
+	ahahsdl := alsdfba(T);
+
+def main():
+	print("Hello, World!\n");
+	i32 res = foo[i32](10);
+</code></pre>
+<p>This program will result in this compile error:</p>
+<blockquote>
+<pre><code>Parse Error at main.ft:4:16
+└─┬┤E0000│
+3 │ def foo[type T](T x) -&gt; T:
+4 │ »   ahahsdl := alsdfba(T);
+┌─┴────────────────┘
+└─ Call of undefined function 'alsdfba(i32)'
+
+Parse Error at main.ft:8:15
+└─┬┤E0000│
+6 │ def main():
+8 │ »   i32 res = foo[i32](10);
+┌─┴───────────────┘
+├─ Call of undefined function 'foo(int)'
+└─ Possible functions you could mean:
+    └─ foo[type T](const T x) from file 'main.ft'
+</code></pre>
+</blockquote>
+<p>As you can see, we get two compile errors. First the fact that <code>alsdfba(i32)</code> does not exist and this is the reason specialization of the <code>foo</code> function fails. Because specialization failed, the specialized <code>foo</code> function never was added to the file, only the generic <code>foo</code> function exists in it. This is the reason for the second compile error, which tells us that only the generic function <code>foo</code> exists but no specialized version of it was found.</p>
+<h2 id="generic-type-inferrence"><a class="header" href="#generic-type-inferrence">Generic type inferrence</a></h2>
+<p>When calling generic functions we need to provide the CVL and then provide the actual parameter of the call. However, it often happens that the parameters we pass to a function contain one of the types we defined in the CPL. For this very reason, Flint supports the ability to infer the type in the CPL from the runtime parameter list of a call instead:</p>
+<pre><code class="language-ft">use Core.array
+use Core.print
+
+def append[type T](mut T[] arr, T value):
+	insert[_](arr, value, arr.len);
+
+def print[type T](T[] arr):
+	print("[");
+	for (i, elem) in arr:
+		if i &gt; 0:
+			print(", ");
+		print(str(elem));
+	print("]\n");
+
+def main():
+	i32[] arr = i32[_]{1, 2, 3, 4};
+	append[_](arr, 5);
+	append[_](arr, 6);
+	print[_](arr);
+</code></pre>
+<p>This program will print this line to the console:</p>
+<blockquote>
+<pre><code>[1, 2, 3, 4, 5, 6]
+</code></pre>
+</blockquote>
+<p>As you can see, we did not specify the type <code>T</code> explicitely even once, it was inferred entirely from the parameter of type <code>T[]</code> passed to the functions. This is also the first time you see the <code>Core.array</code> module in action. It contains only generic functions which lower to low-level code regarding array manipulation and now that you are aware of generic functions, you can use them effectively. The default-operator <code>_</code> is used in this example, like everywhere else, to note "infer", "default" or "discard", as these are the only operations this operator is used for, as you most likely know by now.</p>
+<h2 id="important-note"><a class="header" href="#important-note">Important note</a></h2>
+<p>Generic functions are <strong>not</strong> able to be defined as <code>export</code>ed or <code>extern</code>. Every extern and exported function needs to be a concrete, "real" function without a comptime parameter list.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../intermediates_guide/7_comptime/2_comptime_parameter_list.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../intermediates_guide/7_comptime/4_generic_types.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../intermediates_guide/7_comptime/2_comptime_parameter_list.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../intermediates_guide/7_comptime/4_generic_types.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../version_select.js"></script>
+        <script src="../../header.js"></script>
+
+
+    </div>
+    </body>
+</html>
