@@ -8,6 +8,14 @@ This feature works but is still marked as experimental as not much testing was d
 
 </div>
 
+<div class="warning">
+
+This feature currently does not work on Windows.
+
+You are able to create the `mylib.obj` file and header file without a problem, and you can link to the `builtins.lib` no problem too. The problem is that Windows currently only supports a `windows-msvc` target. The `windows-gnu` target is (currently) Linux-only. Because of this, the compiler on Windows fails to compile since it targets gnu but the produced `mylib.obj` uses the msvc ABI. If you use an MSVC compiler, this feature should work fine for you. If you, however, use any GNU-based C compiler on Windows, this feature will not work. Support for `windows-gnu` *on* Windows will land some time in the next couple of releases.
+
+</div>
+
 Flint now is callable from the outside world. In the below examples, this "ouside world" is the `C` programming language.
 
 ## The `--lib` flag
