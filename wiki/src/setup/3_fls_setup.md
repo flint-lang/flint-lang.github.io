@@ -31,3 +31,7 @@ If you have the VSCode extension installed (described in the [previous](./syntax
 ### NeoVim
 
 If you enabled the package from the [previous](./syntax_highlighting.md) page, the langauge server should also just work correctly.
+
+### Zed
+
+If you installed the zed extension following the instructions from the [previous](./syntax_highlighting.md) page, the language server setup should already be complete too.

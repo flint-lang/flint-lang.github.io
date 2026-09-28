@@ -26,3 +26,13 @@ require('lazy').setup({
 ```
 
 to your `init.lua` file. That's it, you do not need to add anything else to get syntax highlighting working for NeoVim.
+
+## Zed
+
+Flint now also has syntax-highlighting support for the Zed editor. To install it you first need to install `rustup` with your favourite package manager regardless of platform, then execute
+
+```sh
+rustup target add wasm32-wasip2 
+```
+
+and then you need to clone the [https://github.com/flint-lang/flint-zed](https://github.com/flint-lang/flint-zed) extension to a directory of your choice. Then open Zed, press `Ctrl+Shift+X` to open the command palette and search for `Install Dev Extension` and naviage to the cloned repository. It then will compile and install the extension on your system.
